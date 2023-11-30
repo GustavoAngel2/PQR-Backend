@@ -4,6 +4,7 @@ import { Almacen } from '../models/almacen.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { AlmacenesInsertComponent } from '../almacenes-insert/almacenes-insert.component';
+import { AlmacenesUpdateComponent } from '../almacenes-update/almacenes-update.component';
 // import { InsertarComponent } from '../insertar/insertar.component';
 // import { EditarDepartamentoComponent } from '../editar-departamento/editar-departamento.component';
 
@@ -58,31 +59,31 @@ export class AlmacenesComponent implements OnInit {
       // Manejar los resultados cuando la modal se cierre
     });
   }
-  // eliminarDepartamento(id: number) {
-  //   // Aquí puedes agregar una confirmación antes de eliminar si lo deseas
-  //   if (confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
-  //     this.departamentoService.eliminarDepartamento(id).subscribe({
-  //       next: (response) => {
-  //         // Aquí puedes eliminar el elemento del dataSource o volver a cargar los datos
-  //         this.dataSource.data = this.dataSource.data.filter((departamento: Departamento) => departamento.Id !== id);
-  //       },
-  //       error: (error) => {
-  //         // Manejar el error aquí
-  //         console.error('Hubo un error al eliminar el departamento', error);
-  //       }
-  //     });
-  //   }
-  // }
-  // abrirEditarModal(departamento: Departamento) {
-  //   const dialogRef = this.dialog.open(EditarDepartamentoComponent, {
-  //     width: '250px',
-  //     data: departamento // Pasa el objeto de departamento a la modal
-  //   });
+  eliminarAlmacen(id: number) {
+    // Aquí puedes agregar una confirmación antes de eliminar si lo deseas
+    if (confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
+      this.AlmacenesService.deleteAlmacenes(id).subscribe({
+        next: (response) => {
+          // Aquí puedes eliminar el elemento del dataSource o volver a cargar los datos
+          this.dataSource.data = this.dataSource.data.filter((almacen: Almacen) => almacen.Id !== id);
+        },
+        error: (error) => {
+          // Manejar el error aquí
+          console.error('Hubo un error al eliminar el departamento', error);
+        }
+      });
+    }
+  }
+  abrirEditarModal(almacen: Almacen) {
+    const dialogRef = this.dialog.open(AlmacenesUpdateComponent, {
+      width: '250px',
+      data: almacen // Pasa el objeto de departamento a la modal
+    });
   
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if (result) {
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
         
-  //     }
-  //   });
-  // }
+      }
+    });
+  }
 }
