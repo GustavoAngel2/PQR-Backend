@@ -2,3 +2,14 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+mat-toolbar{
+    background-color: rgb(255, 166, 0)!important; 
+
+}
+
+td{
+    width: 200px;
+    height: 25px;
+    border-color: black;
+}
