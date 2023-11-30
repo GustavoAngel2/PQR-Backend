@@ -1,1 +1,26 @@
-<p>almacenes-update works!</p>
+<h1 mat-dialog-title>Editar almace</h1>
+<div mat-dialog-content class="mat-dialog-grid">
+  <!-- Fila para el formulario -->
+  <div class="mat-dialog-row">
+    <!-- Columna para el campo de nombre -->
+    <div class="mat-dialog-cell">
+      <mat-form-field>
+        <mat-label>Nombre</mat-label>
+        <input matInput placeholder="Ingresa el nombre" [(ngModel)]="almacen.Nombre">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Nombre</mat-label>
+        <input matInput placeholder="Ingresa el nombre" [(ngModel)]="almacen.Direccion">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Nombre</mat-label>
+        <input matInput placeholder="Ingresa el nombre" [(ngModel)]="almacen.Usuario">
+      </mat-form-field>
+    </div>
+  </div>
+  <!-- Puedes agregar más filas con más campos aquí -->
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-button (click)="guardar()">Guardar Cambios</button>
+</div>

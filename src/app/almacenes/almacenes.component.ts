@@ -14,7 +14,7 @@ import { AlmacenesUpdateComponent } from '../almacenes-update/almacenes-update.c
   styleUrls: ['./almacenes.component.css']
  })
 export class AlmacenesComponent implements OnInit {
-  displayedColumns: string[] = ['Id', 'Nombre', 'Direccion', 'Usuario', 'FechaAct','FechaReg'];
+  displayedColumns: string[] = ['Id', 'Nombre', 'Direccion', 'Usuario', 'FechaAct','FechaReg','Acciones'];
   dataSource: MatTableDataSource<Almacen>;
 
   constructor(private AlmacenesService: AlmacenesService, public dialog:MatDialog) {
