@@ -26,11 +26,7 @@ export interface Almacen {
     Usuario: number;
   }
 
-  // export interface deleteAlmacenes{
-  //   Id: number;
-  //   Nombre: string;
-  //   FechaHora: string;
-  //   Activo: number;
-  //   Usuario: number;
-  // }
+   export interface deleteAlmacenes{
+     Id: number;
+   }
   
