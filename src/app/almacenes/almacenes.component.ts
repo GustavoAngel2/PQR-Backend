@@ -3,6 +3,7 @@ import { AlmacenesService } from '../data.service';
 import { Almacen } from '../models/almacen.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import { AlmacenesInsertComponent } from '../almacenes-insert/almacenes-insert.component';
 // import { InsertarComponent } from '../insertar/insertar.component';
 // import { EditarDepartamentoComponent } from '../editar-departamento/editar-departamento.component';
 
@@ -15,7 +16,7 @@ export class AlmacenesComponent implements OnInit {
   displayedColumns: string[] = ['Id', 'Nombre', 'Direccion', 'Usuario', 'FechaAct','FechaReg'];
   dataSource: MatTableDataSource<Almacen>;
 
-  constructor(private AlmacenesService: AlmacenesService) {
+  constructor(private AlmacenesService: AlmacenesService, public dialog:MatDialog) {
     this.dataSource = new MatTableDataSource<Almacen>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
 
@@ -47,16 +48,16 @@ export class AlmacenesComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-  // abrirInsertarModal() {
-  //   const dialogRef = this.dialog.open(InsertarComponent, {
-  //     width: '550px',
-  //     // Puedes pasar datos al componente de la modal si es necesario
-  //   });
+  abrirInsertarModal() {
+    const dialogRef = this.dialog.open(AlmacenesInsertComponent, {
+      width: '550px',
+      // Puedes pasar datos al componente de la modal si es necesario
+    });
 
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     // Manejar los resultados cuando la modal se cierre
-  //   });
-  // }
+    dialogRef.afterClosed().subscribe(result => {
+      // Manejar los resultados cuando la modal se cierre
+    });
+  }
   // eliminarDepartamento(id: number) {
   //   // Aquí puedes agregar una confirmación antes de eliminar si lo deseas
   //   if (confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
