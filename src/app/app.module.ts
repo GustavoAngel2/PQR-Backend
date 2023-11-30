@@ -24,10 +24,14 @@ import { AlmacenesComponent } from './almacenes/almacenes.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AlmacenesInsertComponent } from './almacenes-insert/almacenes-insert.component';
 import {AlmacenesUpdateComponent} from './almacenes-update/almacenes-update.component';
+import { ClientesComponent } from './clientes/clientes.component';
+import { ClientesInsertComponent } from './clientes-insert/clientes-insert.component';
+import { ClientesUpdateComponent } from './clientes-update/clientes-update.component';
 
 
 const appRoutes: Routes =[
-  {path: 'almacenes', component: AlmacenesComponent}
+  {path: 'almacenes', component: AlmacenesComponent},
+  {path:'clientes', component: ClientesComponent}
 ]
 
 
@@ -36,7 +40,10 @@ const appRoutes: Routes =[
     AppComponent,
     AlmacenesComponent,
     AlmacenesUpdateComponent,
-    AlmacenesInsertComponent
+    AlmacenesInsertComponent,
+    ClientesComponent,
+    ClientesInsertComponent,
+    ClientesUpdateComponent
     
   ],
   imports: [
