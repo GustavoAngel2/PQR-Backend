@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Almacen, ApiResponse, UpdateAlmacen, deleteAlmacenes } from './models/almacen.model';
 import{Clientes, UpdateClientes,deleteClientes} from './models/cliente.model';
+import{articulos,updateArticulos,deleteCArticulos} from './models/articulo.model';
 
 @Injectable({
   providedIn: 'root'
@@ -78,5 +79,49 @@ deleteClientes(Id : number): Observable<any> {
     }
     console.log('Enviando solicitud con el siguiente cuerpo:', body);
     return this.http.put<ApiResponse>(`${this.apiUrl}/Clientes/Update`, body);
+  }
+}
+//----------------------------------------------------------------------------------------------------------------------------------------
+@Injectable({
+  providedIn: 'root'
+})
+export class ArticulosService {
+  private  apiUrl= 'http://localhost:5020/api'; 
+  constructor(private http:HttpClient) { }
+
+  getArticulos(): Observable<ApiResponse>{
+  return  this.http.get<ApiResponse>(`${this.apiUrl}/articulos/Get`)
+  }
+
+
+insertarArticulos(ArticulosData: { descripcion: string; codigo: string;UM:string;costo:number;precio:number;Usuario: number }): Observable<ApiResponse> {
+  
+  const body = {
+    descripcion: ArticulosData.descripcion,
+    codigo: ArticulosData.codigo,
+    um:ArticulosData.UM,
+    Usuario: ArticulosData.Usuario,
+    costo: ArticulosData.costo,
+    precio: ArticulosData.precio ,
+  };
+  return this.http.post<ApiResponse>(`${this.apiUrl}/articulos/Insert`, body)
+}
+
+deleteArticulos(Id : number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/articulos/Delete`, { Id });
+  }
+
+  updateArticulos(ArticulosData: updateArticulos): Observable<ApiResponse> {
+    const body ={
+      id:ArticulosData.Id,
+      descripcion: ArticulosData.Descripcion,
+      codigo: ArticulosData.Codigo,
+      um:ArticulosData.UM,
+      Usuario: ArticulosData.Usuario,
+      costo: ArticulosData.Costo,
+      precio: ArticulosData.Precio ,
+    }
+    console.log('Enviando solicitud con el siguiente cuerpo:', body);
+    return this.http.put<ApiResponse>(`${this.apiUrl}/articulos/Update`, body);
   }
 }
