@@ -43,6 +43,9 @@ deleteAlmacenes(Id : number): Observable<any> {
   }
 }
 //----------------------------------------------------------------------------------------------------------------------------------------
+@Injectable({
+  providedIn: 'root'
+})
 export class ClientesService {
   private  apiUrl= 'http://localhost:5020/api'; 
   constructor(private http:HttpClient) { }

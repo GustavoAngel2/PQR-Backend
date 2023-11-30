@@ -5,8 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientesInsertComponent } from '../clientes-insert/clientes-insert.component';
 import { ClientesUpdateComponent } from '../clientes-update/clientes-update.component';
-// import { AlmacenesInsertComponent } from '../almacenes-insert/almacenes-insert.component';
-// import { AlmacenesUpdateComponent } from '../almacenes-update/almacenes-update.component';
+
 
 @Component({
   selector: 'app-clientes',

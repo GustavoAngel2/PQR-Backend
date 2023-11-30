@@ -5,8 +5,8 @@ export interface Clientes {
     Nombre: string;
     Direccion: string;
     Usuario: String;
-    FechaAct:Date;
-    FechaReg:Date;
+    FechaActualiza:Date;
+    FechaRegistro:Date;
   }
 
   export interface ApiResponse {
