@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiResponse } from './models/almacen.model';
+import { Almacen, ApiResponse, UpdateAlmacen } from './models/almacen.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,5 +24,18 @@ insertarAlmacenes(AlmacenesData: { nombre: string; direccion: string; usuario: n
   };
   return this.http.post<ApiResponse>(`${this.apiUrl}/Almacenes/Insert`, body)
 }
-
+deleteAlmacenes(id: number): Observable<any> {
+    // Asegúrate de que el endpoint y la forma en que pasas el ID son correctos según tu API
+    return this.http.post(`${this.apiUrl}/Almacenes/Delete`, { id });
+  }
+  updateAlmacenes(AlmacenesData: UpdateAlmacen): Observable<ApiResponse> {
+    const body ={
+      id: AlmacenesData.Id,
+      nombre: AlmacenesData.Nombre,
+      direccion: AlmacenesData.Direccion,
+      usuario:AlmacenesData.Usuario
+    }
+    console.log('Enviando solicitud con el siguiente cuerpo:', body);
+    return this.http.post<ApiResponse>(`${this.apiUrl}/Almacenes/Update`, body);
+  }
 }

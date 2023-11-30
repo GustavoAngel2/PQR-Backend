@@ -23,7 +23,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { AlmacenesComponent } from './almacenes/almacenes.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AlmacenesInsertComponent } from './almacenes-insert/almacenes-insert.component';
-// import {UpdateAlmacenesComponent} from './almacenes/almacenes-update.component';
+import {AlmacenesUpdateComponent} from './almacenes-update/almacenes-update.component';
 
 
 const appRoutes: Routes =[
@@ -35,7 +35,7 @@ const appRoutes: Routes =[
   declarations: [
     AppComponent,
     AlmacenesComponent,
-    // UpdateAlmacenesComponent
+    AlmacenesUpdateComponent,
     AlmacenesInsertComponent
     
   ],
