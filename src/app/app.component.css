@@ -19,7 +19,6 @@
   padding-top: 16px;
   padding-bottom: 16px;
   border:0;
-  overflow: hidden;
   transition: .5s;
 }
 
@@ -28,10 +27,11 @@
   font-size: 20px;
   transition:.5s;
 }
-.menu-btn:active{
-  margin-bottom: #ff5900;
-  transition: .5s;
+
+.menu-brn:active{
+  border-bottom: solid #fff 3px;
 }
+
 
 .lista {
   height: 100%;
