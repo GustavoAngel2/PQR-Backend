@@ -24,10 +24,14 @@ import { AlmacenesUpdateComponent } from './almacenes-update/almacenes-update.co
 import { ClientesComponent } from './clientes/clientes.component';
 import { ClientesInsertComponent } from './clientes-insert/clientes-insert.component';
 import { ClientesUpdateComponent } from './clientes-update/clientes-update.component';
+import { RutasComponent } from './rutas/rutas.component';
+import { RutasInsertComponent } from './rutas-insert/rutas-insert.component';
+import { RutasUpdateComponent } from './rutas-update/rutas-update.component';
 
 const appRoutes: Routes = [
   { path: 'almacenes', component: AlmacenesComponent },
-  { path: 'clientes', component: ClientesComponent }
+  { path: 'clientes', component: ClientesComponent },
+  { path: 'rutas', component: RutasComponent}
 ];
 
 @NgModule({
@@ -38,7 +42,10 @@ const appRoutes: Routes = [
     AlmacenesInsertComponent,
     ClientesComponent,
     ClientesInsertComponent,
-    ClientesUpdateComponent
+    ClientesUpdateComponent,
+    RutasComponent,
+    RutasInsertComponent,
+    RutasUpdateComponent
   ],
   imports: [
     HttpClientModule,

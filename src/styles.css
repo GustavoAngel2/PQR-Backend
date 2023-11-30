@@ -18,6 +18,11 @@ td{
     color:red
   }
   
-  .green{
-    color:rgb(26, 228, 26);
-  }
+.green{
+  color:rgb(26, 228, 26);
+}
+
+.action-btn{
+  position: relative;
+  padding-left: 30px;
+}

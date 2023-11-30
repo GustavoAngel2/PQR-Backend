@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { AlmacenesService } from './data.service';
 import { ClientesService } from './data.service';
+import { RutasService } from './data.service';
 
 describe('DataService', () => {
   let service: AlmacenesService;
@@ -24,6 +25,19 @@ describe('DataService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(ClientesService);
+  });
+
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+});
+
+describe('DataService', () => {
+  let service: RutasService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(RutasService);
   });
 
   it('should be created', () => {

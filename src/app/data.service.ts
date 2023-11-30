@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Almacen, ApiResponse, UpdateAlmacen, deleteAlmacenes } from './models/almacen.model';
 import{Clientes, UpdateClientes,deleteClientes} from './models/cliente.model';
+import {UpdateRutas} from './models/ruta.model';
 
 @Injectable({
   providedIn: 'root'
@@ -78,5 +79,44 @@ deleteClientes(Id : number): Observable<any> {
     }
     console.log('Enviando solicitud con el siguiente cuerpo:', body);
     return this.http.put<ApiResponse>(`${this.apiUrl}/Clientes/Update`, body);
+  }
+}
+//----------------------------------------------------------------------------------------------------------------------------------------
+@Injectable({
+  providedIn: 'root'
+})
+export class RutasService {
+  private  apiUrl= 'http://localhost:5020/api'; 
+  constructor(private http:HttpClient) { }
+
+  getRutas(): Observable<ApiResponse>{
+  return  this.http.get<ApiResponse>(`${this.apiUrl}/Rutas/Get`)
+  }
+
+
+insertarRutas(RutasData: { nombre: string;usuario: number }): Observable<ApiResponse> {
+  
+  const body = {
+    nombre: RutasData.nombre,
+    usuario: RutasData.usuario
+  };
+  return this.http.post<ApiResponse>(`${this.apiUrl}/Rutas/Insert`, body)
+}
+
+deleteRutas(Id : number): Observable<any> {
+    const body = {
+      id : Id
+    }
+    return this.http.put(`${this.apiUrl}/Rutas/Delete`, body);
+  }
+
+  updateRutas(RutasData: UpdateRutas): Observable<ApiResponse> {
+    const body ={
+      Id: RutasData.Id,
+      Nombre: RutasData.Nombre,
+      Usuario:RutasData.Usuario
+    }
+    console.log('Enviando solicitud con el siguiente cuerpo:', body);
+    return this.http.put<ApiResponse>(`${this.apiUrl}/Rutas/Update`, body);
   }
 }
