@@ -19,6 +19,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AlmacenesComponent } from './almacenes/almacenes.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AlmacenesInsertComponent } from './almacenes-insert/almacenes-insert.component';
+// import {UpdateAlmacenesComponent} from './almacenes/almacenes-update.component';
 
 
 const appRoutes: Routes =[
@@ -29,7 +31,10 @@ const appRoutes: Routes =[
 @NgModule({
   declarations: [
     AppComponent,
-    AlmacenesComponent
+    AlmacenesComponent,
+    // UpdateAlmacenesComponent
+    AlmacenesInsertComponent
+    
   ],
   imports: [
     HttpClientModule,

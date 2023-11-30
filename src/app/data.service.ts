@@ -13,4 +13,16 @@ export class AlmacenesService {
   getAlmacenes(): Observable<ApiResponse>{
   return  this.http.get<ApiResponse>(`${this.apiUrl}/Almacenes/Get`)
   }
+
+
+insertarAlmacenes(AlmacenesData: { nombre: string; direccion: string; usuario: number }): Observable<ApiResponse> {
+  
+  const body = {
+    nombre: AlmacenesData.nombre,
+    direccion: AlmacenesData.direccion,
+    usuario: AlmacenesData.usuario  ,
+  };
+  return this.http.post<ApiResponse>(`${this.apiUrl}/Almacenes/Insert`, body)
+}
+
 }

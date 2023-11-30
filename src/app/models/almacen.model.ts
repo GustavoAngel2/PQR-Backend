@@ -19,10 +19,10 @@ export interface Almacen {
     };
   }
 
-  // export interface EditarDepartamento{
-  //   Id: number;
-  //   Nombre: string;
-  //   FechaHora: string;
-  //   Activo: number;
-  //   Usuario: number;
-  // }
+  export interface EditarDepartamento{
+    Id: number;
+    Nombre: string;
+    FechaHora: string;
+    Activo: number;
+    Usuario: number;
+  }
