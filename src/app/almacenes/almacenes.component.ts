@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlmacenesService } from '../data.service';
-import { Almacen } from '../models/almacen.model';
+import { Almacen, deleteAlmacenes } from '../models/almacen.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { AlmacenesInsertComponent } from '../almacenes-insert/almacenes-insert.component';
@@ -59,13 +59,13 @@ export class AlmacenesComponent implements OnInit {
       // Manejar los resultados cuando la modal se cierre
     });
   }
-  eliminarAlmacen(id: number) {
+  eliminarAlmacen(deleteAlmacen:deleteAlmacenes) {
     // Aquí puedes agregar una confirmación antes de eliminar si lo deseas
     if (confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
-      this.AlmacenesService.deleteAlmacenes(id).subscribe({
+      this.AlmacenesService.deleteAlmacenes(deleteAlmacen).subscribe({
         next: (response) => {
-          // Aquí puedes eliminar el elemento del dataSource o volver a cargar los datos
-          this.dataSource.data = this.dataSource.data.filter((almacen: Almacen) => almacen.Id !== id);
+          console.log(response);
+          this.dataSource.data = this.dataSource.data.filter((almacen: Almacen) => almacen.Id !== deleteAlmacen.Id);
         },
         error: (error) => {
           // Manejar el error aquí

@@ -30,11 +30,11 @@ export class AlmacenesUpdateComponent implements OnInit {
   guardar(): void {
     this.almacenesService.updateAlmacenes(this.almacen).subscribe({
       next: (response) => {
-        // Cerrar la modal y posiblemente actualizar la tabla
-        this.dialogRef.close(this.almacen);
+        this.dialogRef.close(response);
+        location.reload();
       },
       error: (error) => {
-        // Manejar errores aquí
+        console.error(error);
       }
     });
   }
