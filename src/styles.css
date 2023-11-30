@@ -13,3 +13,11 @@ td{
     height: 25px;
     border-color: black;
 }
+
+.red{
+    color:red
+  }
+  
+  .green{
+    color:rgb(26, 228, 26);
+  }
