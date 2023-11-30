@@ -1,35 +1,51 @@
-.right{
-    position: relative;
-    margin: 5px;
-    left:calc(100% - 325px);
-  }
-  
-  .Hamburguesa {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-  
-  }
+.Hamburguesa {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  padding: 0;
+}
 
-  .menu-btn{
-    width:100%;
-    margin:0;
-    border-bottom: #222222;
-  }
+  .menu-container{
+  margin:0;
+  padding:0;
+  width: 300px;
+}
 
-  .lista {
-    height: 100%;
-    width: 300px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  }
+.menu-btn{
+  color:#fff;
+  font-size: 17px;
+  background-color: #f86d21;
+  width:100%;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border:0;
+  overflow: hidden;
+  transition: .5s;
+}
+
+.menu-btn:hover{
+  background-color: #c25114;
+  font-size: 20px;
+  transition:.5s;
+}
+.menu-btn:active{
+  margin-bottom: #ff5900;
+  transition: .5s;
+}
+
+.lista {
+  height: 100%;
+  width: 300px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
   
-  .hide {
-    display: none;
-  }
+.hide {
+  display: none;
+}
   
-  mat-sidenav-content.mat-drawer-content.mat-sidenav-content.bg {
-    background-color: #222222;
-  }
+mat-sidenav-content.mat-drawer-content.mat-sidenav-content.bg {
+  background-color: rgb(255, 222, 131);
+}
   

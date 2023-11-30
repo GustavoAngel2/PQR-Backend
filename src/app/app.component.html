@@ -1,12 +1,23 @@
 <mat-sidenav-container class="Hamburguesa">
-    <mat-sidenav #sidenav mode="over" class="bg">
-        <mat-list role="list" class="lista">
-          <mat-list-item role="listitem"><button mat-raised-button routerLink="almacenes" color="primary">Almacenes</button></mat-list-item>
+    <mat-sidenav #sidenav mode="over">
+        <mat-list role="list" class="lista menu-container">
+          <button class="menu-btn" routerLink="almacenes" ><strong>Almacenes</strong></button>
+          <button class="menu-btn" routerLink="almacenes" ><strong>Articulos</strong></button>
+          <button class="menu-btn" routerLink="almacenes" ><strong>Clientes</strong></button>
+          <button class="menu-btn" routerLink="almacenes" ><strong>Detalle de movimiento</strong></button>
+          <button class="menu-btn" routerLink="almacenes" ><strong>Detalle de ticket</strong></button>
+          <button class="menu-btn" routerLink="almacenes" ><strong>Existencias</strong></button>
+          <button class="menu-btn" routerLink="almacenes" ><strong>Movimientos de inventario</strong></button>
+          <button class="menu-btn" routerLink="almacenes" ><strong>Personas</strong></button>
+          <button class="menu-btn" routerLink="almacenes" ><strong>Rutas</strong></button>
+          <button class="menu-btn" routerLink="almacenes" ><strong>Tickets</strong></button>
+          <button class="menu-btn" routerLink="almacenes" ><strong>Usuarios permitidos</strong></button>
+          <button class="menu-btn" routerLink="almacenes" ><strong>Vendedores</strong></button>
         </mat-list>
     </mat-sidenav>
     <mat-sidenav-content class="bg">
       <mat-toolbar color="primary">
-        <button class="menu-btn" mat-icon-button (click)="sidenav.toggle()">
+        <button mat-icon-button (click)="sidenav.toggle()">
           <mat-icon>menu</mat-icon>
         </button>
         <span>FritoMenú</span>
