@@ -27,6 +27,9 @@ import { ClientesUpdateComponent } from './clientes-update/clientes-update.compo
 import { ArticulosComponent } from './articulos/articulos.component';
 import { ArticulosInsertComponent } from './articulos-insert/articulos-insert.component';
 import { ArticulosUpdateComponent } from './articulos-update/articulos-update.component';
+import { PersonasComponent } from './personas/personas.component';
+import { PersonasInsertComponent } from './personas-insert/personas-insert.component';
+import { PersonasUpdateComponent } from './personas-update/personas-update.component';
 
 const appRoutes: Routes = [
   { path: 'almacenes', component: AlmacenesComponent },
@@ -45,7 +48,10 @@ const appRoutes: Routes = [
     ClientesUpdateComponent,
     ArticulosComponent,
     ArticulosInsertComponent,
-    ArticulosUpdateComponent
+    ArticulosUpdateComponent,
+    PersonasComponent,
+    PersonasInsertComponent,
+    PersonasUpdateComponent
   ],
   imports: [
     HttpClientModule,
