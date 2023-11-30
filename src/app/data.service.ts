@@ -66,7 +66,6 @@ insertarClientes(ClientesData: { nombre: string; direccion: string; usuario: num
 }
 
 deleteClientes(Id : number): Observable<any> {
-    // Asegúrate de que el endpoint y la forma en que pasas el ID son correctos según tu API
     return this.http.put(`${this.apiUrl}/Clientes/Delete`, { Id });
   }
 

@@ -15,7 +15,7 @@ export interface Clientes {
     fecha: string;
     message: string;
     response: {
-      data: Clientes[]; };
+      data: Clientes };
   }
 
   export interface UpdateClientes{
