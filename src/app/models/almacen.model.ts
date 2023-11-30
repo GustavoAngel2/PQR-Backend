@@ -15,8 +15,7 @@ export interface Almacen {
     fecha: string;
     message: string;
     response: {
-      data: Almacen[];
-    };
+      data: Almacen[]; };
   }
 
   export interface UpdateAlmacen{

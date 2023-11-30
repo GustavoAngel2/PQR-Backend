@@ -24,13 +24,12 @@ insertarAlmacenes(AlmacenesData: { nombre: string; direccion: string; usuario: n
   };
   return this.http.post<ApiResponse>(`${this.apiUrl}/Almacenes/Insert`, body)
 }
-deleteAlmacenes(deleteAlmacenes:deleteAlmacenes): Observable<ApiResponse> {
+
+deleteAlmacenes(Id : number): Observable<any> {
     // Asegúrate de que el endpoint y la forma en que pasas el ID son correctos según tu API
-    const body = {
-      Id : deleteAlmacenes.Id
-    }
-    return this.http.delete(`${this.apiUrl}/Almacenes/Delete`, body );
+    return this.http.put(`${this.apiUrl}/Almacenes/Delete`, { Id });
   }
+
   updateAlmacenes(AlmacenesData: UpdateAlmacen): Observable<ApiResponse> {
     const body ={
       id: AlmacenesData.Id,

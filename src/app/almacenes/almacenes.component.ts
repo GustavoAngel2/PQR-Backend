@@ -59,13 +59,13 @@ export class AlmacenesComponent implements OnInit {
       // Manejar los resultados cuando la modal se cierre
     });
   }
-  eliminarAlmacen(deleteAlmacen:deleteAlmacenes) {
+  eliminarAlmacen(Id: number) {
     // Aquí puedes agregar una confirmación antes de eliminar si lo deseas
     if (confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
-      this.AlmacenesService.deleteAlmacenes(deleteAlmacen).subscribe({
+      this.AlmacenesService.deleteAlmacenes(Id).subscribe({
         next: (response) => {
           console.log(response);
-          this.dataSource.data = this.dataSource.data.filter((almacen: Almacen) => almacen.Id !== deleteAlmacen.Id);
+          this.dataSource.data = this.dataSource.data.filter((almacen: Almacen) => almacen.Id !== Id);
         },
         error: (error) => {
           // Manejar el error aquí
