@@ -24,10 +24,22 @@ import { AlmacenesComponent } from './almacenes/almacenes.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AlmacenesInsertComponent } from './almacenes-insert/almacenes-insert.component';
 import {AlmacenesUpdateComponent} from './almacenes-update/almacenes-update.component';
+import { DetalleMovimientoComponent } from './detalle-movimiento/detalle-movimiento.component';
+import { DetalleMoviemientoInsertComponent } from './detalle-moviemiento-insert/detalle-moviemiento-insert.component';
+import { DetalleMovimientoUpdateComponent } from './detalle-movimiento-update/detalle-movimiento-update.component';
+import { TicketsComponent } from './tickets/tickets.component';
+import { TicketsInsertComponent } from './tickets-insert/tickets-insert.component';
+import { TicketsUpdateComponent } from './tickets-update/tickets-update.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { UsuariosInsertComponent } from './usuarios-insert/usuarios-insert.component';
+import { UsuarioUpdateComponent } from './usuario-update/usuario-update.component';
 
 
 const appRoutes: Routes =[
-  {path: 'almacenes', component: AlmacenesComponent}
+  {path: 'almacenes', component: AlmacenesComponent},
+  {path: 'detallemovimiento', component: DetalleMovimientoComponent},
+  {path: 'tickets', component: TicketsComponent},
+  {path: 'usuarios', component: UsuariosComponent}
 ]
 
 
@@ -36,7 +48,16 @@ const appRoutes: Routes =[
     AppComponent,
     AlmacenesComponent,
     AlmacenesUpdateComponent,
-    AlmacenesInsertComponent
+    AlmacenesInsertComponent,
+    DetalleMovimientoComponent,
+    DetalleMoviemientoInsertComponent,
+    DetalleMovimientoUpdateComponent,
+    TicketsComponent,
+    TicketsInsertComponent,
+    TicketsUpdateComponent,
+    UsuariosComponent,
+    UsuariosInsertComponent,
+    UsuarioUpdateComponent
     
   ],
   imports: [
