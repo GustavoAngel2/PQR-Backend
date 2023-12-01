@@ -1,31 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { ClientesService, PersonasService } from '../data.service';
-import { Personas,DeletePersonas } from '../models/personas.model';
+import { RutasService } from '../data.service';
+import{Rutas, deleteRutas} from '../models/rutas.model'
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 
-import { PersonasInsertComponent } from '../personas-insert/personas-insert.component';
-import { PersonasUpdateComponent } from '../personas-update/personas-update.component';
+import { RutasInsertComponent } from '../rutas-insert/rutas-insert.component';
+import { RutasUpdateComponent } from '../rutas-update/rutas-update.component';
+
 
 @Component({
-  selector: 'app-personas',
-  templateUrl: './personas.component.html',
-  styleUrls: ['./personas.component.css']
+  selector: 'app-rutas',
+  templateUrl: './rutas.component.html',
+  styleUrls: ['./rutas.component.css']
 })
-export class PersonasComponent implements OnInit{
-  displayedColumns: string[] = ['Id', 'Nombre', 'ApPaterno','ApMaterno','Direccion', 'Usuario', 'FechaAct','FechaReg','Acciones'];
-  dataSource: MatTableDataSource<Personas>;
+export class RutasComponent implements OnInit {
+  displayedColumns: string[] = ['Id', 'Nombre', 'Usuario', 'FechaAct','FechaReg','Acciones'];
+  dataSource: MatTableDataSource<Rutas>;
 
-  constructor(private PersonasService: PersonasService, public dialog:MatDialog) {
-    this.dataSource = new MatTableDataSource<Personas>(); // Inicializa dataSource como una instancia de MatTableDataSource
+  constructor(private RutasService: RutasService, public dialog:MatDialog) {
+    this.dataSource = new MatTableDataSource<Rutas>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
 
   ngOnInit() {
-    this.dataSource.filterPredicate = (data: Personas, filter: string) => {
+    this.dataSource.filterPredicate = (data: Rutas, filter: string) => {
       return data.Nombre.toLowerCase().includes(filter) || 
              data.Id.toString().includes(filter); // Puedes añadir más campos si es necesario
     };
-    this.PersonasService.getPersonas().subscribe({
+    this.RutasService.getRutas().subscribe({
       next: (response) => {
         console.log('Respuesta del servidor:', response); 
         if (response && Array.isArray(response)&&response.length>0) {
@@ -49,7 +50,7 @@ export class PersonasComponent implements OnInit{
     }
   }
   abrirInsertarModal() {
-    const dialogRef = this.dialog.open(PersonasInsertComponent, {
+    const dialogRef = this.dialog.open(RutasInsertComponent, {
       width: '550px',
       // Puedes pasar datos al componente de la modal si es necesario
     });
@@ -58,25 +59,25 @@ export class PersonasComponent implements OnInit{
       // Manejar los resultados cuando la modal se cierre
     });
   }
-  eliminarPersona(Id: number) {
+  eliminarRutas(Id: number) {
     // Aquí puedes agregar una confirmación antes de eliminar si lo deseas
     if (confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
-      this.PersonasService.deletePersonas(Id).subscribe({
+      this.RutasService.deleteRutas(Id).subscribe({
         next: (response) => {
           console.log(response);
-          this.dataSource.data = this.dataSource.data.filter((Persona: Personas) => Persona.Id !== Id);
+          this.dataSource.data = this.dataSource.data.filter((rutas: Rutas) => rutas.Id !== Id);
         },
         error: (error) => {
           // Manejar el error aquí
-          console.error('Hubo un error al eliminar a la persona', error);
+          console.error('Hubo un error al eliminar el departamento', error);
         }
       });
     }
   }
-  abrirEditarModal(personas: Personas) {
-    const dialogRef = this.dialog.open(PersonasUpdateComponent, {
+  abrirEditarModal(rutas: Rutas) {
+    const dialogRef = this.dialog.open(RutasUpdateComponent, {
       width: '250px',
-      data: personas // Pasa el objeto de departamento a la modal
+      data: rutas // Pasa el objeto de departamento a la modal
     });
   
     dialogRef.afterClosed().subscribe(result => {

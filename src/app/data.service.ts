@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { Almacen, ApiResponse, UpdateAlmacen, deleteAlmacenes } from './models/almacen.model';
 import{Clientes, UpdateClientes,deleteClientes} from './models/cliente.model';
 import{articulos,updateArticulos,deleteCArticulos} from './models/articulo.model';
+import { Personas,UpdatePersonas,DeletePersonas } from './models/personas.model';
+import { Rutas,UpdateRutas,deleteRutas } from './models/rutas.model';
 
 @Injectable({
   providedIn: 'root'
@@ -123,5 +125,88 @@ deleteArticulos(Id : number): Observable<any> {
     }
     console.log('Enviando solicitud con el siguiente cuerpo:', body);
     return this.http.put<ApiResponse>(`${this.apiUrl}/articulos/Update`, body);
+  }
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+@Injectable({
+  providedIn: 'root'
+})
+export class PersonasService {
+  private  apiUrl= 'http://localhost:5020/api'; 
+  constructor(private http:HttpClient) { }
+
+  getPersonas(): Observable<ApiResponse>{
+  return  this.http.get<ApiResponse>(`${this.apiUrl}/Personas/Get`)
+  }
+
+
+insertarClientes(PersonasData: { nombre: string;ApPaterno: string;ApMaterno: string; direccion: string; usuario: number }): Observable<ApiResponse> {
+  
+  const body = {
+    nombre: PersonasData.nombre,
+    ApPaterno: PersonasData.ApPaterno,
+    ApMaterno: PersonasData.ApMaterno,
+    direccion: PersonasData.direccion,
+    usuario: PersonasData.usuario ,
+    Direccion: PersonasData.direccion,
+    Usuario: PersonasData.usuario  ,
+  };
+  return this.http.post<ApiResponse>(`${this.apiUrl}/Personas/Insert`, body)
+}
+
+deletePersonas(Id : number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/Personas/Delete`, { Id });
+  }
+
+  updatePersonas(PersonasData: UpdatePersonas): Observable<ApiResponse> {
+    const body ={
+      id: PersonasData.Id,
+      nombre: PersonasData.Nombre,
+      ApPaterno: PersonasData.ApPaterno,
+      ApMaterno: PersonasData.ApMaterno,
+      direccion: PersonasData.Direccion,
+      usuario: PersonasData.Usuario,
+      Direccion: PersonasData.Direccion,
+
+    }
+    console.log('Enviando solicitud con el siguiente cuerpo:', body);
+    return this.http.put<ApiResponse>(`${this.apiUrl}/Personas/Update`, body);
+  }
+}
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+@Injectable({
+  providedIn: 'root'
+})
+export class RutasService {
+  private  apiUrl= 'http://localhost:5020/api'; 
+  constructor(private http:HttpClient) { }
+
+  getRutas(): Observable<ApiResponse>{
+  return  this.http.get<ApiResponse>(`${this.apiUrl}/Rutas/Get`)
+  }
+
+
+insertarRutas(RutasData: { nombre: string;  usuario: number }): Observable<ApiResponse> {
+  const body = {
+    nombre: RutasData.nombre,
+    usuario: RutasData.usuario  ,
+  };
+  return this.http.post<ApiResponse>(`${this.apiUrl}/Rutas/Insert`, body)
+}
+
+deleteRutas(Id : number): Observable<any> {
+    // Asegúrate de que el endpoint y la forma en que pasas el ID son correctos según tu API
+    return this.http.put(`${this.apiUrl}/Rutas/Delete`, { Id });
+  }
+
+  updateRutas(RutasData: UpdateRutas): Observable<ApiResponse> {
+    const body ={
+      Id: RutasData.Id,
+      Nombre: RutasData.Nombre,
+      Usuario:RutasData.Usuario
+    }
+    console.log('Enviando solicitud con el siguiente cuerpo:', body);
+    return this.http.put<ApiResponse>(`${this.apiUrl}/Rutas/Update`, body);
   }
 }
