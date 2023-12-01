@@ -74,57 +74,78 @@ describe('DataService', () => {
 //-------------------------------------------------------------------------------------------------------------describe('DataService', () => {
   describe('DataService', () => {
     let service: DetalleMovService;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(DetalleMovService);
-
-
+  
+    beforeEach(() => {
+      TestBed.configureTestingModule({});
+      service = TestBed.inject(DetalleMovService);
+    });
+  
+    it('should be created', () => {
+      expect(service).toBeTruthy();
+    });
+  });
+//-------------------------------------------------------------------------------------------------------------
 describe('DataService', () => {
-  let service: ExistenciasSerexivice;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(ExistenciasService);
+    let service: TicketsSevice;
+  
+    beforeEach(() => {
+      TestBed.configureTestingModule({});
+      service = TestBed.inject(TicketsSevice);
+    });
+  
+    it('should be created', () => {
+      expect(service).toBeTruthy();
+    });
   });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-});
-
+//-------------------------------------------------------------------------------------------------------------
 describe('DataService', () => {
-  let service: TicketsSevice;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(TicketsSevice);
-  let service: movInventarioService;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(movInventarioService);
+    let service: UsuarioSevice;
+  
+    beforeEach(() => {
+      TestBed.configureTestingModule({});
+      service = TestBed.inject(UsuarioSevice);
+    });
+  
+    it('should be created', () => {
+      expect(service).toBeTruthy();
+    });
   });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  //-------------------------------------------------------------------------------------------------------------
+  describe('DataService', () => {
+    let service: ExistenciasService;
+  
+    beforeEach(() => {
+      TestBed.configureTestingModule({});
+      service = TestBed.inject(ExistenciasService);
+    });
+  
+    it('should be created', () => {
+      expect(service).toBeTruthy();
+    });
   });
-});
-
-describe('DataService', () => {
-  let service: UsuarioSevice;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(UsuarioSevice);
-  let service: DetalleTicketService;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(DetalleTicketService);
+  //-------------------------------------------------------------------------------------------------------------
+  describe('DataService', () => {
+    let service: movInventarioService;
+  
+    beforeEach(() => {
+      TestBed.configureTestingModule({});
+      service = TestBed.inject(movInventarioService);
+    });
+  
+    it('should be created', () => {
+      expect(service).toBeTruthy();
+    });
   });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  //-------------------------------------------------------------------------------------------------------------
+  describe('DataService', () => {
+    let service: DetalleTicketService;
+  
+    beforeEach(() => {
+      TestBed.configureTestingModule({});
+      service = TestBed.inject(DetalleTicketService);
+    });
+  
+    it('should be created', () => {
+      expect(service).toBeTruthy();
+    });
   });
-});

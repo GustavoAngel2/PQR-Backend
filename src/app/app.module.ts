@@ -96,7 +96,7 @@ const appRoutes: Routes = [
     TicketsUpdateComponent,
     UsuariosComponent,
     UsuariosInsertComponent,
-    UsuarioUpdateComponent
+    UsuarioUpdateComponent,
     ExistenciasComponent,
     ExistenciasInsertComponent,
     ExistenciasUpdateComponent,

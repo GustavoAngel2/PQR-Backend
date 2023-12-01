@@ -320,7 +320,7 @@ insertarUsuario(UsuarioData: { nombre: string; contrasena: string; rol: number; 
     Contrasena: UsuarioData.contrasena,
     Rol: UsuarioData.rol,
     Usuario: UsuarioData.usuario,
-   
+  
   };
   return this.http.post<ApiResponse>(`${this.apiUrl}/Usuarios/Insert`, body)
 }
@@ -341,7 +341,7 @@ deleteUsuarios(Id : number): Observable<any> {
     console.log('Enviando solicitud con el siguiente cuerpo:', body);
     return this.http.put<ApiResponse>(`${this.apiUrl}/Usuarios/Update`, body);
   }
-
+}
 
 @Injectable({
   providedIn: 'root'
