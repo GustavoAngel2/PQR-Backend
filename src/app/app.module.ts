@@ -20,26 +20,41 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { AlmacenesComponent } from './almacenes/almacenes.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AlmacenesInsertComponent } from './almacenes-insert/almacenes-insert.component';
-import { AlmacenesUpdateComponent } from './almacenes-update/almacenes-update.component';
+import {AlmacenesUpdateComponent} from './almacenes-update/almacenes-update.component';
+import { DetalleMovimientoComponent } from './detalle-movimiento/detalle-movimiento.component';
+import { DetalleMoviemientoInsertComponent } from './detalle-moviemiento-insert/detalle-moviemiento-insert.component';
+import { DetalleMovimientoUpdateComponent } from './detalle-movimiento-update/detalle-movimiento-update.component';
+import { TicketsComponent } from './tickets/tickets.component';
+import { TicketsInsertComponent } from './tickets-insert/tickets-insert.component';
+import { TicketsUpdateComponent } from './tickets-update/tickets-update.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { UsuariosInsertComponent } from './usuarios-insert/usuarios-insert.component';
+import { UsuarioUpdateComponent } from './usuario-update/usuario-update.component';
 import { ClientesComponent } from './clientes/clientes.component';
+import { ArticulosComponent } from './articulos/articulos.component';
+import { PersonasComponent } from './personas/personas.component';
+import { RutasComponent } from './rutas/rutas.component';
 import { ClientesInsertComponent } from './clientes-insert/clientes-insert.component';
 import { ClientesUpdateComponent } from './clientes-update/clientes-update.component';
-import { ArticulosComponent } from './articulos/articulos.component';
 import { ArticulosInsertComponent } from './articulos-insert/articulos-insert.component';
 import { ArticulosUpdateComponent } from './articulos-update/articulos-update.component';
-import { PersonasComponent } from './personas/personas.component';
 import { PersonasInsertComponent } from './personas-insert/personas-insert.component';
 import { PersonasUpdateComponent } from './personas-update/personas-update.component';
-import { RutasComponent } from './rutas/rutas.component';
 import { RutasInsertComponent } from './rutas-insert/rutas-insert.component';
 import { RutasUpdateComponent } from './rutas-update/rutas-update.component';
+
+
+
 
 const appRoutes: Routes = [
   { path: 'almacenes', component: AlmacenesComponent },
   { path: 'clientes', component: ClientesComponent },
   { path: 'articulos', component: ArticulosComponent },
   { path: 'personas', component: PersonasComponent },
-  {path:'rutas', component: RutasComponent}
+  {path:'rutas', component: RutasComponent},
+  {path: 'detallemovimiento', component: DetalleMovimientoComponent},
+  {path: 'tickets', component: TicketsComponent},
+  {path: 'usuarios', component: UsuariosComponent}
 ];
 
 @NgModule({
@@ -59,7 +74,17 @@ const appRoutes: Routes = [
     PersonasUpdateComponent,
     RutasComponent,
     RutasInsertComponent,
-    RutasUpdateComponent
+    RutasUpdateComponent,
+    DetalleMovimientoComponent,
+    DetalleMoviemientoInsertComponent,
+    DetalleMovimientoUpdateComponent,
+    TicketsComponent,
+    TicketsInsertComponent,
+    TicketsUpdateComponent,
+    UsuariosComponent,
+    UsuariosInsertComponent,
+    UsuarioUpdateComponent
+    
   ],
   imports: [
     HttpClientModule,
