@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
 import { RutasService } from '../data.service';
+import { MatDialogRef } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-rutas-insert',
@@ -8,13 +9,12 @@ import { RutasService } from '../data.service';
   styleUrls: ['./rutas-insert.component.css']
 })
 export class RutasInsertComponent {
-  nombreRuta: string = '';
-  direccion: string = '';
+  Ruta: string = '';
   usuario: number = 0;
 
   constructor(
     public dialogRef: MatDialogRef<RutasInsertComponent>,
-    private RutasService: RutasService
+    private rutasService: RutasService
   ) {}
 
   onNoClick(): void {
@@ -22,13 +22,13 @@ export class RutasInsertComponent {
   }
 
   insertar(): void {
-    const nuevoRuta = {
-      nombre: this.nombreRuta, 
+    const nuevaRuta = {
+      nombre: this.Ruta,
       usuario: this.usuario  
     };
 
     // Aquí asumo que tienes un método en tu servicio para insertar el departamento
-    this.RutasService.insertarRutas(nuevoRuta).subscribe({
+    this.rutasService.insertarRutas(nuevaRuta).subscribe({
       next: (response) => {
         // Puedes cerrar la modal y/o actualizar la tabla aquí si es necesario
         this.dialogRef.close(response);

@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AlmacenesService } from '../data.service';
-import { Almacen, deleteAlmacenes } from '../models/almacen.model';
+import { Almacen } from '../models/almacen.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { AlmacenesInsertComponent } from '../almacenes-insert/almacenes-insert.component';
 import { AlmacenesUpdateComponent } from '../almacenes-update/almacenes-update.component';
-// import { InsertarComponent } from '../insertar/insertar.component';
-// import { EditarDepartamentoComponent } from '../editar-departamento/editar-departamento.component';
+
 
 @Component({
   selector: 'app-almacenes',

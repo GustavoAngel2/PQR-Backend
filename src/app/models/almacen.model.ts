@@ -1,10 +1,8 @@
-import { AlmacenesService } from "../data.service";
-
 export interface Almacen {
     Id: number;
     Nombre: string;
     Direccion: string;
-    Usuario: String;
+    UsuarioActualiza: String;
     FechaAct:Date;
     FechaReg:Date;
   }

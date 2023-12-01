@@ -1,8 +1,9 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RutasService } from '../data.service';
-import { Rutas } from '../models/ruta.model';
+import{Rutas, deleteRutas} from '../models/rutas.model'
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+
 import { RutasInsertComponent } from '../rutas-insert/rutas-insert.component';
 import { RutasUpdateComponent } from '../rutas-update/rutas-update.component';
 
@@ -17,7 +18,7 @@ export class RutasComponent implements OnInit {
   dataSource: MatTableDataSource<Rutas>;
 
   constructor(private RutasService: RutasService, public dialog:MatDialog) {
-    this.dataSource = new MatTableDataSource<Rutas>();
+    this.dataSource = new MatTableDataSource<Rutas>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
 
   ngOnInit() {
@@ -58,25 +59,25 @@ export class RutasComponent implements OnInit {
       // Manejar los resultados cuando la modal se cierre
     });
   }
-  eliminarRuta(Id: number) {
-
-    if (confirm('¿Estás seguro de que deseas eliminar esta ruta?')) {
+  eliminarRutas(Id: number) {
+    // Aquí puedes agregar una confirmación antes de eliminar si lo deseas
+    if (confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
       this.RutasService.deleteRutas(Id).subscribe({
         next: (response) => {
           console.log(response);
-          this.dataSource.data = this.dataSource.data.filter((ruta: Rutas) => ruta.Id !== Id);
+          this.dataSource.data = this.dataSource.data.filter((rutas: Rutas) => rutas.Id !== Id);
         },
         error: (error) => {
-          
-          console.error('Hubo un error al eliminar el ruta', error);
+          // Manejar el error aquí
+          console.error('Hubo un error al eliminar el departamento', error);
         }
       });
     }
   }
-  abrirEditarModal(ruta: Rutas) {
+  abrirEditarModal(rutas: Rutas) {
     const dialogRef = this.dialog.open(RutasUpdateComponent, {
       width: '250px',
-      data: ruta // Pasa el objeto de departamento a la modal
+      data: rutas // Pasa el objeto de departamento a la modal
     });
   
     dialogRef.afterClosed().subscribe(result => {
