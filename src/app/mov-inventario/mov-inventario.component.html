@@ -1,0 +1,49 @@
+
+<mat-form-field>
+    <mat-label>Filtrar</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
+</mat-form-field>
+  <div class="mat-elevation-z8">
+    <div class="toolbar" style="text-align: center;">
+        <button mat-button (click)="abrirInsertarModal()" style="background-color: green;color: white;">Insertar movimiento de inventario</button>
+    </div>
+    <br>
+    <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="Id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let movInventario"> {{movInventario.Id}} </td>
+        </ng-container>
+        <ng-container matColumnDef="IdTipoMov">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> TIPO DE MOVIMIENTO </th>
+            <td mat-cell *matCellDef="let movInventario"> {{movInventario.IdTipoMov}} </td>
+        </ng-container>
+        <ng-container matColumnDef="IdAlmacen">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ALMACEN </th>
+            <td mat-cell *matCellDef="let movInventario"> {{movInventario.IdAlmacen}} </td>
+        </ng-container>
+        <ng-container matColumnDef="fechaMovimiento">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> FECHA DEL MOVIMIENTO </th>
+            <td mat-cell *matCellDef="let movInventario"> {{movInventario.fechaMovimiento}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Usuario">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> USUARIO </th>
+            <td mat-cell *matCellDef="let movInventario"> {{movInventario.Usuario}} </td>
+        </ng-container>
+        <ng-container matColumnDef="FechaActualiza">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> FECHA DE ACTUALIZACION </th>
+            <td mat-cell *matCellDef="let movInventario"> {{movInventario.FechaActualiza}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Acciones">
+        <th mat-header-cell *matHeaderCellDef> ACCIONES </th>
+        <td mat-cell *matCellDef="let elemento">
+            <mat-icon ></mat-icon>
+
+            <mat-icon (click)="abrirEditarModal(elemento)">edit</mat-icon>
+            <mat-icon ></mat-icon>
+            <mat-icon (click)="eliminarExistencia(elemento.Id)">delete</mat-icon>
+        </td>
+        </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </table>
+  </div>

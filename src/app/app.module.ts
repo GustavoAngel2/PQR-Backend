@@ -42,6 +42,16 @@ import { PersonasInsertComponent } from './personas-insert/personas-insert.compo
 import { PersonasUpdateComponent } from './personas-update/personas-update.component';
 import { RutasInsertComponent } from './rutas-insert/rutas-insert.component';
 import { RutasUpdateComponent } from './rutas-update/rutas-update.component';
+import { ExistenciasComponent } from './existencias/existencias.component';
+import { ExistenciasInsertComponent } from './existencias-insert/existencias-insert.component';
+import { ExistenciasUpdateComponent } from './existencias-update/existencias-update.component';
+import { MovInventarioComponent } from './mov-inventario/mov-inventario.component';
+import { MovInventarioInsertComponent } from './mov-inventario-insert/mov-inventario-insert.component';
+import { MovInventarioUpdateComponent } from './mov-inventario-update/mov-inventario-update.component';
+import { DetalleTicketComponent } from './detalle-ticket/detalle-ticket.component';
+import { DetalleTicketInsertComponent } from './detalle-ticket-insert/detalle-ticket-insert.component';
+import { DetalleTicketUpdateComponent } from './detalle-ticket-update/detalle-ticket-update.component';
+
 
 
 
@@ -54,7 +64,10 @@ const appRoutes: Routes = [
   {path:'rutas', component: RutasComponent},
   {path: 'detallemovimiento', component: DetalleMovimientoComponent},
   {path: 'tickets', component: TicketsComponent},
-  {path: 'usuarios', component: UsuariosComponent}
+  {path: 'usuarios', component: UsuariosComponent},
+  {path: 'existencias', component: ExistenciasComponent},
+  {path: 'movinventarios', component: MovInventarioComponent},
+  {path: 'detalleticket', component: DetalleTicketComponent}
 ];
 
 @NgModule({
@@ -84,6 +97,15 @@ const appRoutes: Routes = [
     UsuariosComponent,
     UsuariosInsertComponent,
     UsuarioUpdateComponent
+    ExistenciasComponent,
+    ExistenciasInsertComponent,
+    ExistenciasUpdateComponent,
+    MovInventarioComponent,
+    MovInventarioInsertComponent,
+    MovInventarioUpdateComponent,
+    DetalleTicketComponent,
+    DetalleTicketInsertComponent,
+    DetalleTicketUpdateComponent
     
   ],
   imports: [

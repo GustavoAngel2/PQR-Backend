@@ -1,5 +1,3 @@
-import { AlmacenesService } from "../data.service";
-
 export interface Almacen {
     Id: number;
     Nombre: string;

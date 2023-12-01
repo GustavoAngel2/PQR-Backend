@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Editar movimientos en el inventario</h1>
+<div mat-dialog-content class="mat-dialog-grid">
+  <!-- Fila para el formulario -->
+  <div class="mat-dialog-row">
+    <!-- Columna para el campo de nombre -->
+    <div class="mat-dialog-cell">
+        <mat-form-field>
+            <mat-label>Tipo de movimiento</mat-label>
+            <input matInput placeholder="Ingresa el tipo de movimiento" [(ngModel)]="movinventario.idTipoMov">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Almacen</mat-label>
+            <input matInput placeholder="Ingresa el almacen" [(ngModel)]="movinventario.idAlmacen">
+          </mat-form-field>
+          <mat-form-field>
+          <mat-label>Usuario</mat-label>
+            <input matInput placeholder="Ingresa el usuario" [(ngModel)]="movinventario.usuarioActualiza">
+          </mat-form-field>
+    </div>
+  </div>
+  <!-- Puedes agregar más filas con más campos aquí -->
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-button (click)="guardar()">Guardar Cambios</button>
+</div>
