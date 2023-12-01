@@ -13,3 +13,24 @@ td{
     height: 25px;
     border-color: black;
 }
+
+
+
+td{
+    width: 200px;
+    height: 25px;
+    border-color: black;
+}
+
+.red{
+    color:red
+  }
+
+.green{
+  color:rgb(26, 228, 26);
+}
+
+.action-btn{
+  position: relative;
+  padding-left: 30px;
+}
