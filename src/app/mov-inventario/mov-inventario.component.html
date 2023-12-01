@@ -38,9 +38,9 @@
         <td mat-cell *matCellDef="let elemento">
             <mat-icon ></mat-icon>
 
-            <mat-icon (click)="abrirEditarModal(elemento)">edit</mat-icon>
+            <mat-icon class="action-btn green" (click)="abrirEditarModal(elemento)">edit</mat-icon>
             <mat-icon ></mat-icon>
-            <mat-icon (click)="eliminarExistencia(elemento.Id)">delete</mat-icon>
+            <mat-icon class="action-btn red" (click)="eliminarExistencia(elemento.Id)">delete</mat-icon>
         </td>
         </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
