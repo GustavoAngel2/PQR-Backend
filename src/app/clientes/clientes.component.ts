@@ -1,31 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import { AlmacenesService } from '../data.service';
-import { Almacen } from '../models/almacen.model';
+import { ClientesService } from '../data.service';
+import { Clientes, deleteClientes } from '../models/cliente.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { AlmacenesInsertComponent } from '../almacenes-insert/almacenes-insert.component';
-import { AlmacenesUpdateComponent } from '../almacenes-update/almacenes-update.component';
+import { ClientesInsertComponent } from '../clientes-insert/clientes-insert.component';
+import { ClientesUpdateComponent } from '../clientes-update/clientes-update.component';
 
 
 @Component({
-  selector: 'app-almacenes',
-  templateUrl: './almacenes.component.html',
-  styleUrls: ['./almacenes.component.css']
- })
-export class AlmacenesComponent implements OnInit {
+  selector: 'app-clientes',
+  templateUrl: './clientes.component.html',
+  styleUrls: ['./clientes.component.css']
+})
+export class ClientesComponent implements OnInit {
   displayedColumns: string[] = ['Id', 'Nombre', 'Direccion', 'Usuario', 'FechaAct','FechaReg','Acciones'];
-  dataSource: MatTableDataSource<Almacen>;
+  dataSource: MatTableDataSource<Clientes>;
 
-  constructor(private AlmacenesService: AlmacenesService, public dialog:MatDialog) {
-    this.dataSource = new MatTableDataSource<Almacen>(); // Inicializa dataSource como una instancia de MatTableDataSource
+  constructor(private ClientesService: ClientesService, public dialog:MatDialog) {
+    this.dataSource = new MatTableDataSource<Clientes>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
 
   ngOnInit() {
-    this.dataSource.filterPredicate = (data: Almacen, filter: string) => {
+    this.dataSource.filterPredicate = (data: Clientes, filter: string) => {
       return data.Nombre.toLowerCase().includes(filter) || 
              data.Id.toString().includes(filter); // Puedes añadir más campos si es necesario
     };
-    this.AlmacenesService.getAlmacenes().subscribe({
+    this.ClientesService.getClientes().subscribe({
       next: (response) => {
         console.log('Respuesta del servidor:', response); 
         if (response && Array.isArray(response)&&response.length>0) {
@@ -49,7 +49,7 @@ export class AlmacenesComponent implements OnInit {
     }
   }
   abrirInsertarModal() {
-    const dialogRef = this.dialog.open(AlmacenesInsertComponent, {
+    const dialogRef = this.dialog.open(ClientesInsertComponent, {
       width: '550px',
       // Puedes pasar datos al componente de la modal si es necesario
     });
@@ -58,25 +58,25 @@ export class AlmacenesComponent implements OnInit {
       // Manejar los resultados cuando la modal se cierre
     });
   }
-  eliminarAlmacen(Id: number) {
+  eliminarCliente(Id: number) {
     // Aquí puedes agregar una confirmación antes de eliminar si lo deseas
     if (confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
-      this.AlmacenesService.deleteAlmacenes(Id).subscribe({
+      this.ClientesService.deleteClientes(Id).subscribe({
         next: (response) => {
           console.log(response);
-          this.dataSource.data = this.dataSource.data.filter((almacen: Almacen) => almacen.Id !== Id);
+          this.dataSource.data = this.dataSource.data.filter((cliente: Clientes) => cliente.Id !== Id);
         },
         error: (error) => {
           // Manejar el error aquí
-          console.error('Hubo un error al eliminar el departamento', error);
+          console.error('Hubo un error al eliminar el cliente', error);
         }
       });
     }
   }
-  abrirEditarModal(almacen: Almacen) {
-    const dialogRef = this.dialog.open(AlmacenesUpdateComponent, {
+  abrirEditarModal(Cliente: Clientes) {
+    const dialogRef = this.dialog.open(ClientesUpdateComponent, {
       width: '250px',
-      data: almacen // Pasa el objeto de departamento a la modal
+      data: Cliente // Pasa el objeto de departamento a la modal
     });
   
     dialogRef.afterClosed().subscribe(result => {

@@ -1,31 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import { AlmacenesService } from '../data.service';
-import { Almacen } from '../models/almacen.model';
+import { ArticulosService } from '../data.service';
+import { articulos, deleteCArticulos } from '../models/articulo.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { AlmacenesInsertComponent } from '../almacenes-insert/almacenes-insert.component';
-import { AlmacenesUpdateComponent } from '../almacenes-update/almacenes-update.component';
 
+import { ArticulosInsertComponent } from '../articulos-insert/articulos-insert.component';
+import { ArticulosUpdateComponent } from '../articulos-update/articulos-update.component';
 
 @Component({
-  selector: 'app-almacenes',
-  templateUrl: './almacenes.component.html',
-  styleUrls: ['./almacenes.component.css']
- })
-export class AlmacenesComponent implements OnInit {
-  displayedColumns: string[] = ['Id', 'Nombre', 'Direccion', 'Usuario', 'FechaAct','FechaReg','Acciones'];
-  dataSource: MatTableDataSource<Almacen>;
+  selector: 'app-articulos',
+  templateUrl: './articulos.component.html',
+  styleUrls: ['./articulos.component.css']
+})
+export class ArticulosComponent {
+  displayedColumns: string[] = ['Id', 'Codigo', 'Descripcion', 'UM', 'Usuario','Costo','Precio','FechaReg','FechaAct','Acciones'];
+  dataSource: MatTableDataSource<articulos>;
 
-  constructor(private AlmacenesService: AlmacenesService, public dialog:MatDialog) {
-    this.dataSource = new MatTableDataSource<Almacen>(); // Inicializa dataSource como una instancia de MatTableDataSource
+  constructor(private articulosService: ArticulosService, public dialog:MatDialog) {
+    this.dataSource = new MatTableDataSource<articulos>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
 
   ngOnInit() {
-    this.dataSource.filterPredicate = (data: Almacen, filter: string) => {
-      return data.Nombre.toLowerCase().includes(filter) || 
+    this.dataSource.filterPredicate = (data: articulos, filter: string) => {
+      return data.Descripcion.toLowerCase().includes(filter) || 
              data.Id.toString().includes(filter); // Puedes añadir más campos si es necesario
     };
-    this.AlmacenesService.getAlmacenes().subscribe({
+    this.articulosService.getArticulos().subscribe({
       next: (response) => {
         console.log('Respuesta del servidor:', response); 
         if (response && Array.isArray(response)&&response.length>0) {
@@ -49,7 +49,7 @@ export class AlmacenesComponent implements OnInit {
     }
   }
   abrirInsertarModal() {
-    const dialogRef = this.dialog.open(AlmacenesInsertComponent, {
+    const dialogRef = this.dialog.open(ArticulosInsertComponent, {
       width: '550px',
       // Puedes pasar datos al componente de la modal si es necesario
     });
@@ -58,13 +58,13 @@ export class AlmacenesComponent implements OnInit {
       // Manejar los resultados cuando la modal se cierre
     });
   }
-  eliminarAlmacen(Id: number) {
+  eliminarArticulo(Id: number) {
     // Aquí puedes agregar una confirmación antes de eliminar si lo deseas
     if (confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
-      this.AlmacenesService.deleteAlmacenes(Id).subscribe({
+      this.articulosService.deleteArticulos(Id).subscribe({
         next: (response) => {
           console.log(response);
-          this.dataSource.data = this.dataSource.data.filter((almacen: Almacen) => almacen.Id !== Id);
+          this.dataSource.data = this.dataSource.data.filter((articulo: articulos) => articulo.Id !== Id);
         },
         error: (error) => {
           // Manejar el error aquí
@@ -73,10 +73,10 @@ export class AlmacenesComponent implements OnInit {
       });
     }
   }
-  abrirEditarModal(almacen: Almacen) {
-    const dialogRef = this.dialog.open(AlmacenesUpdateComponent, {
+  abrirEditarModal(articulos: articulos) {
+    const dialogRef = this.dialog.open(ArticulosUpdateComponent, {
       width: '250px',
-      data: almacen // Pasa el objeto de departamento a la modal
+      data: articulos // Pasa el objeto de departamento a la modal
     });
   
     dialogRef.afterClosed().subscribe(result => {

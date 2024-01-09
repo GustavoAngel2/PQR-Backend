@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Editar Usuario</h1>
+<h1 mat-dialog-title>Editar Clientes</h1>
 <div mat-dialog-content class="mat-dialog-grid">
   <!-- Fila para el formulario -->
   <div class="mat-dialog-row">
@@ -6,19 +6,15 @@
     <div class="mat-dialog-cell">
       <mat-form-field>
         <mat-label>Nombre</mat-label>
-        <input matInput placeholder="Nombre" [(ngModel)]="usuario.Nombre">
+        <input matInput placeholder=" " [(ngModel)]="clientes.Nombre">
       </mat-form-field>
       <mat-form-field>
-        <mat-label>Contraseña</mat-label>
-        <input matInput placeholder="Contraseña" [(ngModel)]="usuario.Contrasena">
-    </mat-form-field>
-      <mat-form-field>
-        <mat-label>Rol</mat-label>
-        <input matInput placeholder="Rol" [(ngModel)]="usuario.Rol">
+        <mat-label>Direccion</mat-label>
+        <input matInput placeholder=" " [(ngModel)]="clientes.Direccion">
       </mat-form-field>
       <mat-form-field>
         <mat-label>Usuario</mat-label>
-        <input matInput placeholder="usuario" [(ngModel)]="usuario.Usuario">
+        <input matInput placeholder=" "  [(ngModel)]="clientes.Usuario">
       </mat-form-field>
     </div>
   </div>

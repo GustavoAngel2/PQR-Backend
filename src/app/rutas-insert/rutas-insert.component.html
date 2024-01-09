@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Editar almacen</h1>
+<h1 mat-dialog-title>Nuevo Almacen</h1>
 <div mat-dialog-content class="mat-dialog-grid">
   <!-- Fila para el formulario -->
   <div class="mat-dialog-row">
@@ -6,21 +6,18 @@
     <div class="mat-dialog-cell">
       <mat-form-field>
         <mat-label>Nombre</mat-label>
-        <input matInput placeholder="Ingresa el nombre" [(ngModel)]="almacen.Nombre">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Direccion</mat-label>
-        <input matInput placeholder="Ingresa la direccion" [(ngModel)]="almacen.Direccion">
+        <input matInput placeholder="Ingresa el nombre" [(ngModel)]="Ruta">
       </mat-form-field>
       <mat-form-field>
         <mat-label>Usuario</mat-label>
-        <input matInput placeholder="Ingresa el Usuario" [(ngModel)]="almacen.Usuario">
+        <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuario">
       </mat-form-field>
+      
     </div>
   </div>
   <!-- Puedes agregar más filas con más campos aquí -->
 </div>
 <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Cancelar</button>
-    <button mat-button (click)="guardar()">Guardar Cambios</button>
+    <button mat-button cdkFocusInitial (click)="insertar()">Insertar</button>
 </div>
