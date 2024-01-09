@@ -1,11 +1,15 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
+import {
+  DetalleMovService,
+  TicketsSevice,
+  UsuarioSevice,
+} from "./data.service";
+import { AlmacenesService } from "./data.service";
+import { ExistenciasService } from "./data.service";
+import { movInventarioService } from "./data.service";
+import { DetalleTicketService } from "./data.service";
 
-import { AlmacenesService } from './data.service';
-import { ExistenciasService } from './data.service';
-import { movInventarioService } from './data.service';
-import { DetalleTicketService } from './data.service';
-
-describe('DataService', () => {
+describe("DataService", () => {
   let service: AlmacenesService;
 
   beforeEach(() => {
@@ -13,47 +17,46 @@ describe('DataService', () => {
     service = TestBed.inject(AlmacenesService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });
 
-
-describe('DataService', () => {
-  let service: ExistenciasService;
+describe("DataService", () => {
+  let service: DetalleMovService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ExistenciasService);
+    service = TestBed.inject(DetalleMovService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });
 
-describe('DataService', () => {
-  let service: movInventarioService;
+describe("DataService", () => {
+  let service: TicketsSevice;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(movInventarioService);
+    service = TestBed.inject(TicketsSevice);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });
 
-describe('DataService', () => {
-  let service: DetalleTicketService;
+describe("DataService", () => {
+  let service: UsuarioSevice;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DetalleTicketService);
+    service = TestBed.inject(UsuarioSevice);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });
