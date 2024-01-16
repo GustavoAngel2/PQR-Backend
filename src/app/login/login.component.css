@@ -1,0 +1,21 @@
+.background {
+  position: relative;
+  z-index: 6;
+  background-color: rgb(255, 222, 131);
+  top: -64px;
+}
+
+.login-bg {
+  position: relative;
+  left: calc(50% - 128px);
+  width: 512px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background-color: rgb(255, 153, 0);
+  width: max-content;
+  padding: 25px;
+  border-radius: 10px;
+  align-items: center;
+  box-shadow: 8px 8px 16px rgb(126, 76, 1);
+}
