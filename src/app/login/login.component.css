@@ -5,17 +5,41 @@
   top: -64px;
 }
 
+.logoimg {
+  border-radius: 12px;
+  width: 128px;
+  height: 128px;
+  border: 3px solid rgb(173, 102, 21);
+}
+
 .login-bg {
   position: relative;
   left: calc(50% - 128px);
   width: 512px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 4px;
   background-color: rgb(255, 153, 0);
   width: max-content;
   padding: 25px;
   border-radius: 10px;
   align-items: center;
   box-shadow: 8px 8px 16px rgb(126, 76, 1);
+}
+
+.redBtn {
+  background-color: red;
+  border: 2px solid rgb(150, 13, 13);
+  color: rgb(80, 10, 10);
+  border-radius: 3px;
+  margin: 10px;
+  padding: 4px;
+}
+.greenBtn {
+  background-color: rgb(243, 171, 78);
+  border: 2px solid rgb(173, 102, 21);
+  color: rgb(156, 92, 18);
+  border-radius: 3px;
+  margin: 10px;
+  padding: 4px;
 }

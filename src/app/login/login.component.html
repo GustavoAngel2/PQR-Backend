@@ -1,10 +1,7 @@
 <div class="background">
   <br />
   <div class="login-bg">
-    <img
-      src="./assets/loginlogo.jpg"
-      style="border-radius: 50%; width: 256px; height: 256px"
-    />
+    <img src="./assets/loginlogo.jpg" class="logoimg" />
     <br />
     <div mat-dialog-content class="mat-dialog-grid">
       <!-- Fila para el formulario -->
@@ -25,11 +22,10 @@
           </mat-form-field>
         </div>
       </div>
-      <!-- Puedes agregar más filas con más campos aquí -->
     </div>
     <div mat-dialog-actions>
-      <button mat-button>Salir</button>
-      <button mat-button cdkFocusInitial>Iniciar sesión</button>
+      <button class="redBtn">Salir</button>
+      <button class="greenBtn">Iniciar sesión</button>
     </div>
   </div>
 </div>
