@@ -54,7 +54,6 @@ import { DetalleTicketUpdateComponent } from "./detalle-ticket-update/detalle-ti
 import { LoginComponent } from "./login/login.component";
 
 const appRoutes: Routes = [
-  { path: "inicio", component: AppComponent},
   { path: "almacenes", component: AlmacenesComponent },
   { path: "clientes", component: ClientesComponent },
   { path: "articulos", component: ArticulosComponent },
