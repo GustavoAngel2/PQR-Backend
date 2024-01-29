@@ -55,6 +55,7 @@ import { LoginComponent } from "./login/login.component";
 import { InicioComponent } from './inicio/inicio.component';
 
 const appRoutes: Routes = [
+
   { path: "inicio", component:InicioComponent },
   { path: "almacenes", component: AlmacenesComponent },
   { path: "clientes", component: ClientesComponent },
