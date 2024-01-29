@@ -52,8 +52,10 @@ import { DetalleTicketComponent } from "./detalle-ticket/detalle-ticket.componen
 import { DetalleTicketInsertComponent } from "./detalle-ticket-insert/detalle-ticket-insert.component";
 import { DetalleTicketUpdateComponent } from "./detalle-ticket-update/detalle-ticket-update.component";
 import { LoginComponent } from "./login/login.component";
+import { InicioComponent } from './inicio/inicio.component';
 
 const appRoutes: Routes = [
+  { path: "inicio", component:InicioComponent },
   { path: "almacenes", component: AlmacenesComponent },
   { path: "clientes", component: ClientesComponent },
   { path: "articulos", component: ArticulosComponent },
@@ -105,6 +107,7 @@ const appRoutes: Routes = [
     DetalleTicketInsertComponent,
     DetalleTicketUpdateComponent,
     LoginComponent,
+    InicioComponent,
   ],
   imports: [
     HttpClientModule,
