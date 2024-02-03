@@ -5,6 +5,21 @@
   top: -64px;
 }
 
+.btn-login{
+  color:white; 
+  font-size: 24px; 
+  border-radius: 12px;
+  border: 0;
+  padding: 12px;
+  background-color: rgb(87, 40, 7);
+  transition: .5s;
+}
+
+.btn-login:hover{
+  letter-spacing: 3px;
+  transition: .5s;
+}
+
 .logoimg {
   border-radius: 12px;
   width: 128px;
