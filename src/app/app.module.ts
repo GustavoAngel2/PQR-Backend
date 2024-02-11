@@ -52,11 +52,16 @@ import { DetalleTicketComponent } from "./detalle-ticket/detalle-ticket.componen
 import { DetalleTicketInsertComponent } from "./detalle-ticket-insert/detalle-ticket-insert.component";
 import { DetalleTicketUpdateComponent } from "./detalle-ticket-update/detalle-ticket-update.component";
 import { LoginComponent } from "./login/login.component";
-import { InicioComponent } from './inicio/inicio.component';
+import { InicioComponent } from "./inicio/inicio.component";
+import { EmpleadosComponent } from "./empleados/empleados.component";
+import { EmpleadosInsertComponent } from "./empleados-insert/empleados-insert.component";
+import { EmpleadosUpdateComponent } from "./empleados-update/empleados-update.component";
+import { PuestosComponent } from "./puestos/puestos.component";
+import { PuestosInsertComponent } from "./puestos-insert/puestos-insert.component";
+import { PuestosUpdateComponent } from "./puestos-update/puestos-update.component";
 
 const appRoutes: Routes = [
-
-  { path: "inicio", component:InicioComponent },
+  { path: "inicio", component: InicioComponent },
   { path: "almacenes", component: AlmacenesComponent },
   { path: "clientes", component: ClientesComponent },
   { path: "articulos", component: ArticulosComponent },
@@ -69,6 +74,8 @@ const appRoutes: Routes = [
   { path: "movinventarios", component: MovInventarioComponent },
   { path: "detalleticket", component: DetalleTicketComponent },
   { path: "login", component: LoginComponent },
+  { path: "empleados", component: EmpleadosComponent },
+  { path: "puestos", component: PuestosComponent },
 ];
 
 @NgModule({
@@ -109,6 +116,12 @@ const appRoutes: Routes = [
     DetalleTicketUpdateComponent,
     LoginComponent,
     InicioComponent,
+    EmpleadosComponent,
+    EmpleadosInsertComponent,
+    EmpleadosUpdateComponent,
+    PuestosComponent,
+    PuestosInsertComponent,
+    PuestosUpdateComponent,
   ],
   imports: [
     HttpClientModule,
