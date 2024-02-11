@@ -72,6 +72,7 @@ const appRoutes: Routes = [
   { path: "movinventarios", component: MovInventarioComponent },
   { path: "detalleticket", component: DetalleTicketComponent },
   { path: "login", component: LoginComponent },
+  {path: "modulos",component: ModulosComponent}
 ];
 
 @NgModule({
