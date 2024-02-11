@@ -6,6 +6,7 @@ import { ArticulosService } from './data.service';
 import { ExistenciasService } from './data.service';
 import { movInventarioService } from './data.service';
 import { DetalleTicketService } from './data.service';
+import { CategoriaModuloService } from './data.service';
 
 describe('DataService', () => {
   let service: AlmacenesService;
@@ -143,6 +144,19 @@ describe('DataService', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({});
       service = TestBed.inject(DetalleTicketService);
+    });
+  
+    it('should be created', () => {
+      expect(service).toBeTruthy();
+    });
+  });
+  //-------------------------------------------------------------------------------------------------------------
+  describe('DataService', () => {
+    let service: CategoriaModuloService;
+  
+    beforeEach(() => {
+      TestBed.configureTestingModule({});
+      service = TestBed.inject(CategoriaModuloService);
     });
   
     it('should be created', () => {

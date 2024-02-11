@@ -53,6 +53,9 @@ import { DetalleTicketInsertComponent } from "./detalle-ticket-insert/detalle-ti
 import { DetalleTicketUpdateComponent } from "./detalle-ticket-update/detalle-ticket-update.component";
 import { LoginComponent } from "./login/login.component";
 import { InicioComponent } from './inicio/inicio.component';
+import { CategoriaModuloComponent } from './categoria-modulo/categoria-modulo.component';
+import { CategoriaModuloInsertComponent } from './categoria-modulo-insert/categoria-modulo-insert.component';
+import { CategoriaModuloUpdateComponent } from './categoria-modulo-update/categoria-modulo-update.component';
 
 const appRoutes: Routes = [
 
@@ -68,6 +71,7 @@ const appRoutes: Routes = [
   { path: "existencias", component: ExistenciasComponent },
   { path: "movinventarios", component: MovInventarioComponent },
   { path: "detalleticket", component: DetalleTicketComponent },
+  { path: "categoriamodulo", component: CategoriaModuloComponent },
   { path: "login", component: LoginComponent },
 ];
 
@@ -109,6 +113,9 @@ const appRoutes: Routes = [
     DetalleTicketUpdateComponent,
     LoginComponent,
     InicioComponent,
+    CategoriaModuloComponent,
+    CategoriaModuloInsertComponent,
+    CategoriaModuloUpdateComponent,
   ],
   imports: [
     HttpClientModule,
