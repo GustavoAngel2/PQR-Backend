@@ -1,12 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AlmacenesService, DetalleMovService, PersonasService, RutasService, TicketsSevice, UsuarioSevice } from './data.service';
+import { AlmacenesService, DetalleMovService, ModUsuarioService, PersonasService, RutasService, TicketsSevice, UsuarioSevice } from './data.service';
 import { ClientesService } from './data.service';
 import { ArticulosService } from './data.service';
 import { ExistenciasService } from './data.service';
 import { movInventarioService } from './data.service';
 import { DetalleTicketService } from './data.service';
 import { ModulosService } from './data.service';
+
 
 describe('DataService', () => {
   let service: AlmacenesService;
@@ -157,6 +158,19 @@ describe('DataService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(ModulosService);
+  });
+
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+});
+/* ---------------------------------------------------------------------------------------------------------------------------- */
+describe('DataService', () => {
+  let service: ModUsuarioService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(ModUsuarioService);
   });
 
   it('should be created', () => {

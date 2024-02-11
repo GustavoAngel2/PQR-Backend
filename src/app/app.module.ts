@@ -56,6 +56,9 @@ import { InicioComponent } from './inicio/inicio.component';
 import { ModulosComponent } from './modulos/modulos.component';
 import { ModulosInsertComponent } from './modulos-insert/modulos-insert.component';
 import { ModulosUpdateComponent } from './modulos-update/modulos-update.component';
+import { ModUsuarioComponent } from './mod-usuario/mod-usuario.component';
+import { ModUsuarioInsertComponent } from './mod-usuario-insert/mod-usuario-insert.component';
+import { ModUsuarioUpdateComponent } from './mod-usuario-update/mod-usuario-update.component';
 
 const appRoutes: Routes = [
 
@@ -72,7 +75,8 @@ const appRoutes: Routes = [
   { path: "movinventarios", component: MovInventarioComponent },
   { path: "detalleticket", component: DetalleTicketComponent },
   { path: "login", component: LoginComponent },
-  {path: "modulos",component: ModulosComponent}
+  {path: "modulos",component: ModulosComponent},
+  {path: "ModuloUsuario",component: ModUsuarioComponent}
 ];
 
 @NgModule({
@@ -116,6 +120,9 @@ const appRoutes: Routes = [
     ModulosComponent,
     ModulosInsertComponent,
     ModulosUpdateComponent,
+    ModUsuarioComponent,
+    ModUsuarioInsertComponent,
+    ModUsuarioUpdateComponent,
   ],
   imports: [
     HttpClientModule,

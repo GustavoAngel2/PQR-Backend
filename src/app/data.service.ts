@@ -13,6 +13,7 @@ import { UpdateExistencia } from './models/existencia.model';
 import { UpdateMovInventario } from './models/movInventario.model';
 import { UpdateDetalleTicket } from './models/detalleTicket.model';
 import { UpdateModulo } from './models/modulo.model';
+import { UpdateModuloUsuario } from './models/modusuario.model';
 
 @Injectable({
   providedIn: 'root'
@@ -503,5 +504,40 @@ deleteModulos(Id : number): Observable<any> {
     }
     console.log('Enviando solicitud con el siguiente cuerpo:', body);
     return this.http.put<ApiResponse>(`${this.apiUrl}/Modulos/Update`, body);
+  }
+}
+/* ------------------------------------------------------------------------------------------------------------------------------------- */
+@Injectable({
+  providedIn: 'root'
+})
+export class ModUsuarioService {
+  private apiUrl = 'http://localhost:5020/api'; 
+
+  constructor(private http: HttpClient) { }
+
+  getModulosUsuario(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/ModUser/Get`);
+  }
+
+  insertModulosUsuario(ModulosUserData: { Modulo: number; Usuario: number }): Observable<ApiResponse> {
+    const body = {   
+      modulo: ModulosUserData.Modulo,
+      usuario: ModulosUserData.Usuario,
+    };
+    return this.http.post<ApiResponse>(`${this.apiUrl}/ModUser/Insert`, body);
+  }
+
+  deleteModulosUsuario(Id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/ModUser/Delete`, { Id });
+  }
+
+  updateModulos(ModulosUserData: UpdateModuloUsuario): Observable<ApiResponse> {
+    const body = {
+      id: ModulosUserData.Id,
+      modulo: ModulosUserData.Modulo,
+      usuario: ModulosUserData.Usuario,
+    };
+    console.log('Enviando solicitud con el siguiente cuerpo:', body);
+    return this.http.put<ApiResponse>(`${this.apiUrl}/ModUser/Update`, body);
   }
 }
