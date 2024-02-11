@@ -3,37 +3,35 @@
   height: 100%;
   position: absolute;
   padding: 0;
+  background-color: #f86d21;
 }
 
-  .menu-container{
-  margin:0;
-  padding:0;
+.menu-container {
+  margin: 0;
+  padding: 0;
   width: 300px;
 }
 
-
-
-.menu-btn{
-  color:#fff;
+.menu-btn {
+  color: #fff;
   font-size: 17px;
   background-color: #f86d21;
-  width:100%;
+  width: 100%;
   padding-top: 16px;
   padding-bottom: 16px;
-  border:0;
-  transition: .5s;
+  border: 0;
+  transition: 0.5s;
 }
 
-.menu-btn:hover{
+.menu-btn:hover {
   background-color: #c25114;
   font-size: 20px;
-  transition:.5s;
+  transition: 0.5s;
 }
 
-.menu-brn:active{
-  border-bottom: solid #fff 3px;
+.menu-btn:active {
+  border-bottom: solid #ffffff 3px;
 }
-
 
 .lista {
   height: 100%;
@@ -42,11 +40,11 @@
   align-items: center;
   flex-direction: column;
 }
-  
+
 .hide {
   display: none;
 }
-  
+
 mat-sidenav-content.mat-drawer-content.mat-sidenav-content.bg {
   background-color: rgb(255, 222, 131);
 }

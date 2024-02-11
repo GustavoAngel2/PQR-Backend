@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { AlmacenesService, DetalleMovService, ModUsuarioService, PersonasService, RutasService, TicketsSevice, UsuarioSevice } from './data.service';
+import { AlmacenesService, DetalleMovService, ModUsuarioService,EmpleadosService, PersonasService, PuestosService, RutasService, TicketsSevice, UsuarioSevice } from './data.service';
 import { ClientesService } from './data.service';
 import { ArticulosService } from './data.service';
 import { ExistenciasService } from './data.service';
@@ -9,7 +9,8 @@ import { DetalleTicketService } from './data.service';
 import { ModulosService } from './data.service';
 
 
-describe('DataService', () => {
+
+describe("DataService", () => {
   let service: AlmacenesService;
 
   beforeEach(() => {
@@ -17,12 +18,12 @@ describe('DataService', () => {
     service = TestBed.inject(AlmacenesService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });
 //-------------------------------------------------------------------------------------------------------------
-describe('DataService', () => {
+describe("DataService", () => {
   let service: ClientesService;
 
   beforeEach(() => {
@@ -30,12 +31,12 @@ describe('DataService', () => {
     service = TestBed.inject(ClientesService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });
 //-------------------------------------------------------------------------------------------------------------
-describe('DataService', () => {
+describe("DataService", () => {
   let service: ArticulosService;
 
   beforeEach(() => {
@@ -43,12 +44,12 @@ describe('DataService', () => {
     service = TestBed.inject(ArticulosService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });
 //-------------------------------------------------------------------------------------------------------------
-describe('DataService', () => {
+describe("DataService", () => {
   let service: PersonasService;
 
   beforeEach(() => {
@@ -56,12 +57,12 @@ describe('DataService', () => {
     service = TestBed.inject(PersonasService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });
 //-------------------------------------------------------------------------------------------------------------
-describe('DataService', () => {
+describe("DataService", () => {
   let service: RutasService;
 
   beforeEach(() => {
@@ -69,74 +70,56 @@ describe('DataService', () => {
     service = TestBed.inject(RutasService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });
 //-------------------------------------------------------------------------------------------------------------describe('DataService', () => {
-  describe('DataService', () => {
-    let service: DetalleMovService;
-  
-    beforeEach(() => {
-      TestBed.configureTestingModule({});
-      service = TestBed.inject(DetalleMovService);
-    });
-  
-    it('should be created', () => {
-      expect(service).toBeTruthy();
-    });
+describe("DataService", () => {
+  let service: DetalleMovService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(DetalleMovService);
   });
+
+  it("should be created", () => {
+    expect(service).toBeTruthy();
+  });
+});
 //-------------------------------------------------------------------------------------------------------------
-describe('DataService', () => {
-    let service: TicketsSevice;
-  
-    beforeEach(() => {
-      TestBed.configureTestingModule({});
-      service = TestBed.inject(TicketsSevice);
-    });
-  
-    it('should be created', () => {
-      expect(service).toBeTruthy();
-    });
+describe("DataService", () => {
+  let service: TicketsSevice;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(TicketsSevice);
   });
+
+  it("should be created", () => {
+    expect(service).toBeTruthy();
+  });
+});
 //-------------------------------------------------------------------------------------------------------------
-describe('DataService', () => {
-    let service: UsuarioSevice;
-  
-    beforeEach(() => {
-      TestBed.configureTestingModule({});
-      service = TestBed.inject(UsuarioSevice);
-    });
-  
-    it('should be created', () => {
-      expect(service).toBeTruthy();
-    });
+describe("DataService", () => {
+  let service: UsuarioSevice;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(UsuarioSevice);
   });
-  //-------------------------------------------------------------------------------------------------------------
-  describe('DataService', () => {
-    let service: ExistenciasService;
-  
-    beforeEach(() => {
-      TestBed.configureTestingModule({});
-      service = TestBed.inject(ExistenciasService);
-    });
-  
-    it('should be created', () => {
-      expect(service).toBeTruthy();
-    });
+
+  it("should be created", () => {
+    expect(service).toBeTruthy();
   });
-  //-------------------------------------------------------------------------------------------------------------
-  describe('DataService', () => {
-    let service: movInventarioService;
-  
-    beforeEach(() => {
-      TestBed.configureTestingModule({});
-      service = TestBed.inject(movInventarioService);
-    });
-  
-    it('should be created', () => {
-      expect(service).toBeTruthy();
-    });
+});
+//-------------------------------------------------------------------------------------------------------------
+describe("DataService", () => {
+  let service: ExistenciasService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(ExistenciasService);
   });
   //-------------------------------------------------------------------------------------------------------------
   describe('DataService', () => {
@@ -174,6 +157,63 @@ describe('DataService', () => {
   });
 
   it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+});
+
+  it("should be created", () => {
+    expect(service).toBeTruthy();
+  });
+});
+//-------------------------------------------------------------------------------------------------------------
+describe("DataService", () => {
+  let service: movInventarioService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(movInventarioService);
+  });
+
+  it("should be created", () => {
+    expect(service).toBeTruthy();
+  });
+});
+//-------------------------------------------------------------------------------------------------------------
+describe("DataService", () => {
+  let service: DetalleTicketService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(DetalleTicketService);
+  });
+
+  it("should be created", () => {
+    expect(service).toBeTruthy();
+  });
+});
+//---------------------------------------------------------------------------------------
+describe("DataService", () => {
+  let service: EmpleadosService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(EmpleadosService);
+  });
+
+  it("should be created", () => {
+    expect(service).toBeTruthy();
+  });
+});
+//--------------------------------------------------------------------------------------------------------
+describe("DataService", () => {
+  let service: PuestosService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(PuestosService);
+  });
+
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });

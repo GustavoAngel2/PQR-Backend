@@ -1,0 +1,34 @@
+<h1 mat-dialog-title>Editar Clientes</h1>
+<div mat-dialog-content class="mat-dialog-grid">
+  <!-- Fila para el formulario -->
+  <div class="mat-dialog-row">
+    <!-- Columna para el campo de nombre -->
+    <div class="mat-dialog-cell">
+      <mat-form-field>
+        <mat-label>Persona</mat-label>
+        <input matInput placeholder=" " [(ngModel)]="empleado.IdPersona" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Sucursal</mat-label>
+        <input matInput placeholder=" " [(ngModel)]="empleado.IdSucursal" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Puesto</mat-label>
+        <input matInput placeholder=" " [(ngModel)]="empleado.IdPuesto" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Usuario</mat-label>
+        <input
+          matInput
+          placeholder=" "
+          [(ngModel)]="empleado.usuarioActualiza"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+  <!-- Puedes agregar más filas con más campos aquí -->
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button (click)="guardar()">Guardar Cambios</button>
+</div>

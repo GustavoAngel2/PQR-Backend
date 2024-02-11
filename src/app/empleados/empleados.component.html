@@ -1,0 +1,68 @@
+<mat-form-field>
+  <mat-label>Filtrar</mat-label>
+  <input
+    matInput
+    (keyup)="applyFilter($event)"
+    placeholder="Buscar..."
+    #input
+  />
+</mat-form-field>
+<div class="mat-elevation-z8">
+  <div class="toolbar" style="text-align: center">
+    <button
+      mat-button
+      (click)="abrirInsertarModal()"
+      style="background-color: green; color: white"
+    >
+      Insertar Empleado
+    </button>
+  </div>
+  <br />
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="Id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let empleados">{{ empleados.Id }}</td>
+    </ng-container>
+    <ng-container matColumnDef="Persona">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+      <td mat-cell *matCellDef="let empleado">{{ empleado.Persona }}</td>
+    </ng-container>
+    <ng-container matColumnDef="Sucursal">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Sucursal</th>
+      <td mat-cell *matCellDef="let empleado">{{ empleado.Sucursal }}</td>
+    </ng-container>
+    <ng-container matColumnDef="Puesto">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Puesto</th>
+      <td mat-cell *matCellDef="let empleado">{{ empleado.Puesto }}</td>
+    </ng-container>
+    <ng-container matColumnDef="UsuarioActualiza">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        UsuarioActualiza
+      </th>
+      <td mat-cell *matCellDef="let empleado">
+        {{ empleado.UsuarioActualiza }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="fechaRegistro">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>fechaRegistro</th>
+      <td mat-cell *matCellDef="let empleado">{{ empleado.fechaRegistro }}</td>
+    </ng-container>
+    <ng-container matColumnDef="fechaActualiza">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>fechaActualiza</th>
+      <td mat-cell *matCellDef="let empleado">{{ empleado.fechaActualiza }}</td>
+    </ng-container>
+    <ng-container matColumnDef="Acciones">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let elemento">
+        <mat-icon class="action-btn green" (click)="abrirEditarModal(elemento)"
+          >edit</mat-icon
+        >
+        <mat-icon class="action-btn red" (click)="eliminarCliente(elemento.Id)"
+          >delete</mat-icon
+        >
+      </td>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </table>
+</div>
