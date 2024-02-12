@@ -89,7 +89,8 @@ const appRoutes: Routes = [
   {path: "modulos",component: ModulosComponent},
   {path: "ModuloUsuario",component: ModUsuarioComponent},
   {path:"empleados", component:EmpleadosComponent},
-  {path:"puestos",component:PuestosComponent}
+  {path:"puestos",component:PuestosComponent},
+  {path: "categoriamodulo", component:PuestosComponent}
 ];
 
 @NgModule({
