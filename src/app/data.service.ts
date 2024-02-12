@@ -6,6 +6,7 @@ import{Clientes, UpdateClientes,deleteClientes} from './models/cliente.model';
 import{articulos,updateArticulos,deleteCArticulos} from './models/articulo.model';
 import { Personas,UpdatePersonas,DeletePersonas } from './models/personas.model';
 import { Rutas,UpdateRutas,deleteRutas } from './models/rutas.model';
+import { UpdateDetallePerfil } from './models/detallePerfil.model';
 import { UpdateDetalleMov } from './models/detalleMov.model';
 import { UpdateTickets } from './models/tickets.model';
 import { UpdateUsuario } from './models/usuarios.models';
@@ -464,5 +465,45 @@ deleteDetalleTicket(id : number): Observable<any> {
     }
     console.log('Enviando solicitud con el siguiente cuerpo:', body);
     return this.http.put<ApiResponse>(`${this.apiUrl}/DetalleTicket/Update`, body);
+  }
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DetallePerfilService {
+  private  apiUrl= 'http://localhost:5020/api'; 
+  constructor(private http:HttpClient) { }
+
+  getDetallePerfil(): Observable<ApiResponse>{
+  return  this.http.get<ApiResponse>(`${this.apiUrl}/DetallePerfil/Get`)
+  }
+
+
+insertarDetallePerfil(DetallePerfilData: { idPerfil: number; idModelo: number; acceso: number; usuarioActualiza: number; }): Observable<ApiResponse> {
+  
+  const body = {
+    idPerfil: DetallePerfilData.idPerfil,
+    idModelo: DetallePerfilData.idModelo,
+    acceso: DetallePerfilData.acceso,
+    usuarioActualiza: DetallePerfilData.usuarioActualiza
+  };
+  return this.http.post<ApiResponse>(`${this.apiUrl}/DetallePerfil/Insert`, body)
+}
+
+deleteDetallePerfil(id : number): Observable<any> {
+    // Asegúrate de que el endpoint y la forma en que pasas el ID son correctos según tu API
+    return this.http.put(`${this.apiUrl}/DetallePerfil/Delete`, { id });
+  }
+
+  updateDetallePerfil(DetallePerfilData: UpdateDetallePerfil): Observable<ApiResponse> {
+    const body = {
+      id: AlmacenesData.Id,
+      nombre: AlmacenesData.Nombre,
+      direccion: AlmacenesData.Direccion,
+      usuario:AlmacenesData.Usuario
+    }
+    console.log('Enviando solicitud con el siguiente cuerpo:', body);
+    return this.http.put<ApiResponse>(`${this.apiUrl}/Almacenes/Update`, body);
   }
 }
