@@ -2,8 +2,8 @@ export interface ModuloUsuario {
   Id: number;
   Modulo: string;
   Usuario: string;
-  FechaAct: string;
-  FechaReg: string;
+  FechaRegistro: string;
+  FechaActualiza: string;
 }
 
 export interface ApiResponse {
