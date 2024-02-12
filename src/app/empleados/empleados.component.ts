@@ -17,7 +17,7 @@ export class EmpleadosComponent implements OnInit {
     "Persona",
     "Sucursal",
     "Puesto",
-    "UsuarioActualiza",
+    "usuarioActualiza",
     "fechaRegistro",
     "fechaActualiza",
     "Acciones",
