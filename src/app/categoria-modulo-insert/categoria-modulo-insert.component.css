@@ -1,0 +1,14 @@
+.mat-dialog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    /* ajusta el tamaño mínimo y máximo de las columnas /
+    gap: 16px; / espacio entre los campos */
+}
+
+.mat-dialog-row {
+    display: contents;
+}
+
+.mat-dialog-cell {
+    display: grid;
+}

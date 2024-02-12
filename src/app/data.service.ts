@@ -16,6 +16,7 @@ import { UpdateModulo } from './models/modulo.model';
 import { UpdateModuloUsuario } from './models/modusuario.model';
 import { insertEmpleado, updateEmpleado } from "./models/empleados.model";
 import { UpdatePuesto } from "./models/puestos.model";
+import { UpdateCategoriaModulo } from './models/categoriaModulo.model';
 
 @Injectable({
   providedIn: "root",
@@ -698,5 +699,44 @@ export class PuestosService {
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
     return this.http.put<ApiResponse>(`${this.apiUrl}/Puestos/Update`, body);
+  }
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CategoriaModuloService {
+  private  apiUrl= 'http://localhost:5020/api'; 
+  constructor(private http:HttpClient) { }
+
+  getCategoriaModulo(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/CatModulo/Get`);
+  }
+
+
+insertCategoriaModulo(CatModuloData: { nombre: string; descripcion: string; usuario: number }): Observable<ApiResponse> {
+  
+  const body = {
+    nombre: CatModuloData.nombre,
+    descripcion: CatModuloData.descripcion,  
+    usuario: CatModuloData.usuario
+  };
+  return this.http.post<ApiResponse>(`${this.apiUrl}/CatModulo/Insert`, body)
+}
+
+deleteCategoriaModulo(id : number): Observable<any> {
+    // Asegúrate de que el endpoint y la forma en que pasas el ID son correctos según tu API
+    return this.http.put(`${this.apiUrl}/CatModulo/Delete`, { id });
+  }
+
+  updateCategoriaModulo(catModuloData: UpdateCategoriaModulo): Observable<ApiResponse> {
+    const body ={
+      Id: catModuloData.Id,
+      nombre: catModuloData.Nombre,
+      descripcion: catModuloData.Descripcion,  
+      usuario: catModuloData.Usuario
+    }
+    console.log('Enviando solicitud con el siguiente cuerpo:', body);
+    return this.http.put<ApiResponse>(`${this.apiUrl}/CatModulo/Update`, body);
   }
 }

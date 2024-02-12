@@ -65,6 +65,9 @@ import { EmpleadosUpdateComponent } from "./empleados-update/empleados-update.co
 import { PuestosComponent } from "./puestos/puestos.component";
 import { PuestosInsertComponent } from "./puestos-insert/puestos-insert.component";
 import { PuestosUpdateComponent } from "./puestos-update/puestos-update.component";
+import { CategoriaModuloComponent } from './categoria-modulo/categoria-modulo.component';
+import { CategoriaModuloInsertComponent } from "./categoria-modulo-insert/categoria-modulo-insert.component";
+import { CategoriaModuloUpdateComponent } from "./categoria-modulo-update/categoria-modulo-update.component";
 
 
 const appRoutes: Routes = [
@@ -81,6 +84,7 @@ const appRoutes: Routes = [
   { path: "existencias", component: ExistenciasComponent },
   { path: "movinventarios", component: MovInventarioComponent },
   { path: "detalleticket", component: DetalleTicketComponent },
+  { path: "categoriamodulo", component: CategoriaModuloComponent },
   { path: "login", component: LoginComponent },
   {path: "modulos",component: ModulosComponent},
   {path: "ModuloUsuario",component: ModUsuarioComponent},
@@ -137,7 +141,12 @@ const appRoutes: Routes = [
     EmpleadosUpdateComponent,
     PuestosComponent,
     PuestosInsertComponent,
-    PuestosUpdateComponent
+    PuestosUpdateComponent,
+    CategoriaModuloComponent,
+    CategoriaModuloInsertComponent,
+    CategoriaModuloUpdateComponent
+
+
   ],
   imports: [
     HttpClientModule,
