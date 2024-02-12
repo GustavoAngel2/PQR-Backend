@@ -53,6 +53,7 @@ import { DetalleTicketInsertComponent } from "./detalle-ticket-insert/detalle-ti
 import { DetalleTicketUpdateComponent } from "./detalle-ticket-update/detalle-ticket-update.component";
 import { LoginComponent } from "./login/login.component";
 import { InicioComponent } from './inicio/inicio.component';
+import { DetallePerfilComponent } from './detalle-perfil/detalle-perfil.component';
 
 const appRoutes: Routes = [
 
@@ -109,6 +110,7 @@ const appRoutes: Routes = [
     DetalleTicketUpdateComponent,
     LoginComponent,
     InicioComponent,
+    DetallePerfilComponent,
   ],
   imports: [
     HttpClientModule,
