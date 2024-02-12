@@ -59,6 +59,13 @@ import { ModulosUpdateComponent } from './modulos-update/modulos-update.componen
 import { ModUsuarioComponent } from './mod-usuario/mod-usuario.component';
 import { ModUsuarioInsertComponent } from './mod-usuario-insert/mod-usuario-insert.component';
 import { ModUsuarioUpdateComponent } from './mod-usuario-update/mod-usuario-update.component';
+import { EmpleadosComponent } from "./empleados/empleados.component";
+import { EmpleadosInsertComponent } from "./empleados-insert/empleados-insert.component";
+import { EmpleadosUpdateComponent } from "./empleados-update/empleados-update.component";
+import { PuestosComponent } from "./puestos/puestos.component";
+import { PuestosInsertComponent } from "./puestos-insert/puestos-insert.component";
+import { PuestosUpdateComponent } from "./puestos-update/puestos-update.component";
+
 
 const appRoutes: Routes = [
 
@@ -76,7 +83,9 @@ const appRoutes: Routes = [
   { path: "detalleticket", component: DetalleTicketComponent },
   { path: "login", component: LoginComponent },
   {path: "modulos",component: ModulosComponent},
-  {path: "ModuloUsuario",component: ModUsuarioComponent}
+  {path: "ModuloUsuario",component: ModUsuarioComponent},
+  {path:"empleados", component:EmpleadosComponent},
+  {path:"puestos",component:PuestosComponent}
 ];
 
 @NgModule({
@@ -123,6 +132,12 @@ const appRoutes: Routes = [
     ModUsuarioComponent,
     ModUsuarioInsertComponent,
     ModUsuarioUpdateComponent,
+    EmpleadosComponent,
+    EmpleadosInsertComponent,
+    EmpleadosUpdateComponent,
+    PuestosComponent,
+    PuestosInsertComponent,
+    PuestosUpdateComponent
   ],
   imports: [
     HttpClientModule,
