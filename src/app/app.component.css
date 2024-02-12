@@ -9,6 +9,13 @@
 .menu-container {
   margin: 0;
   padding: 0;
+  background-color: #00000000;
+}
+
+.lista{
+  margin:0;
+  padding:0;
+  background-color: #00000000;
   width: 300px;
 }
 
@@ -31,6 +38,8 @@
 
 .menu-btn:active {
   border-bottom: solid #ffffff 3px;
+ margin-bottom: 5px solid red;
+  transition:.5s;
 }
 
 .lista {
@@ -39,6 +48,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  background-color: #00000000;
 }
 
 .hide {
@@ -47,4 +57,8 @@
 
 mat-sidenav-content.mat-drawer-content.mat-sidenav-content.bg {
   background-color: rgb(255, 222, 131);
+}
+
+mat-sidenav{
+  background-color: #f86d21;
 }

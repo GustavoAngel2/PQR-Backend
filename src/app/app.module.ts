@@ -68,7 +68,7 @@ import { PuestosUpdateComponent } from "./puestos-update/puestos-update.componen
 import { CategoriaModuloComponent } from './categoria-modulo/categoria-modulo.component';
 import { CategoriaModuloInsertComponent } from "./categoria-modulo-insert/categoria-modulo-insert.component";
 import { CategoriaModuloUpdateComponent } from "./categoria-modulo-update/categoria-modulo-update.component";
-
+import { DetallePerfilComponent } from './detalle-perfil/detalle-perfil.component';
 
 const appRoutes: Routes = [
 
@@ -145,9 +145,8 @@ const appRoutes: Routes = [
     PuestosUpdateComponent,
     CategoriaModuloComponent,
     CategoriaModuloInsertComponent,
-    CategoriaModuloUpdateComponent
-
-
+    CategoriaModuloUpdateComponent,
+    DetallePerfilComponent,
   ],
   imports: [
     HttpClientModule,

@@ -1,5 +1,5 @@
 <mat-sidenav-container class="Hamburguesa">
-    <mat-sidenav #sidenav mode="over">
+    <mat-sidenav #sidenav mode="side">
         <mat-list role="list" class="lista menu-container">
           <button class="menu-btn" routerLink="inicio" ><strong>Inicio</strong></button>
           <button class="menu-btn" routerLink="almacenes" ><strong>Almacenes</strong></button>
@@ -19,6 +19,7 @@
           <button class="menu-btn" routerLink="empleados"><strong>Empleados</strong></button>
           <button class="menu-btn" routerLink="categoriamodulo"><strong>CategoriaModulo</strong></button>
           <button style="color:red;" class="menu-btn" (click)="sidenav.toggle()" routerLink="login" ><strong>Cerrar sesion</strong></button>
+          <button class="menu-btn" (click)="sidenav.toggle()" routerLink="login" ><strong>Cerrar sesion</strong></button>
         </mat-list>
     </mat-sidenav>
     <mat-sidenav-content class="bg">
