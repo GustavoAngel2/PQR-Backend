@@ -1,47 +1,52 @@
-
 <mat-form-field>
-    <mat-label>Filtrar</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
+  <mat-label>Filtrar</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
 </mat-form-field>
-  <div class="mat-elevation-z8">
-    <div class="toolbar" style="text-align: center;">
-        <button mat-button (click)="abrirInsertarModal()" style="background-color: green;color: white;">Insertar Modulo-Usuario</button>
-    </div>
-    <br>
-    <table mat-table [dataSource]="dataSource" matSort>
-        <ng-container matColumnDef="Id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-            <td mat-cell *matCellDef="let ModuloUsuario"> {{ModuloUsuario.Id}} </td>
-        </ng-container>
-        <ng-container matColumnDef="Modulo">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Modulo </th>
-            <td mat-cell *matCellDef="let ModuloUsuario"> {{ModuloUsuario.Modulo}} </td>
-        </ng-container>
-        <ng-container matColumnDef="Usuario">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
-            <td mat-cell *matCellDef="let ModuloUsuario"> {{ModuloUsuario.Usuario}} </td>
-        </ng-container>
-        <ng-container matColumnDef="FechaAct">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> FechaAct </th>
-            <td mat-cell *matCellDef="let ModuloUsuario"> {{ModuloUsuario.FechaAct}} </td>
-        </ng-container>
-        <ng-container matColumnDef="FechaReg">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> FechaReg </th>
-            <td mat-cell *matCellDef="let ModuloUsuario"> {{ModuloUsuario.FechaReg}} </td>
-        </ng-container>
-        <ng-container matColumnDef="Acciones">
-        <th mat-header-cell *matHeaderCellDef> Acciones </th>
-        <td mat-cell *matCellDef="let elemento">
-            <mat-icon ></mat-icon>
 
-            <mat-icon class="action-btn green"(click)="abrirEditarModal(elemento)">edit</mat-icon>
-            <mat-icon ></mat-icon>
-            <mat-icon class="action-btn red" (click)="eliminarModuloUsuario(elemento.Id)">delete</mat-icon>
-        </td>
-        </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </table>
+<div class="mat-elevation-z8">
+  <div class="toolbar" style="text-align: center;">
+    <button mat-button (click)="abrirInsertarModal()" style="background-color: green; color: white;">Insertar Modulo-Usuario</button>
   </div>
+  <br>
 
+  <table mat-table [dataSource]="dataSource" matSort>
+    <!-- Column definitions -->
+    <ng-container matColumnDef="Id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let elemento">{{ elemento.Id }}</td>
+    </ng-container>
 
+    <ng-container matColumnDef="Modulo">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Modulo</th>
+      <td mat-cell *matCellDef="let elemento">{{ elemento.Modulo }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Usuario">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Usuario</th>
+      <td mat-cell *matCellDef="let elemento">{{ elemento.Usuario }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="FechaReg">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>FechaAct</th>
+      <td mat-cell *matCellDef="let elemento">{{ elemento.FechaRegistro | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="FechaAct">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>FechaReg</th>
+      <td mat-cell *matCellDef="let elemento">{{ elemento.FechaActualiza | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+    </ng-container>
+
+    <!-- Acciones column -->
+    <ng-container matColumnDef="Acciones">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let elemento">
+        <!-- Aquí puedes agregar tus acciones, como botones o íconos -->
+        <!-- Por ejemplo: <button mat-icon-button (click)="editarElemento(elemento)">Editar</button> -->
+      </td>
+    </ng-container>
+
+    <!-- Table rows -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

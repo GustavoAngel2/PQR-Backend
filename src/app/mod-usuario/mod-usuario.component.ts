@@ -12,7 +12,7 @@ import { ModUsuarioUpdateComponent } from '../mod-usuario-update/mod-usuario-upd
   styleUrls: ['./mod-usuario.component.css']
  })
 export class ModUsuarioComponent implements OnInit {
-  displayedColumns: string[] = ['Id', 'Modulo', 'Usuario', 'FechaAct','FechaReg','Acciones'];
+  displayedColumns: string[] = ['Id', 'Modulo', 'Usuario', 'FechaReg','FechaAct','Acciones'];
   dataSource: MatTableDataSource<ModuloUsuario>;
 
   constructor(private ModuloUsuarioService: ModUsuarioService, public dialog:MatDialog) {
