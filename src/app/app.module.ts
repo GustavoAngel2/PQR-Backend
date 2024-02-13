@@ -54,6 +54,8 @@ import { DetalleTicketUpdateComponent } from "./detalle-ticket-update/detalle-ti
 import { LoginComponent } from "./login/login.component";
 import { InicioComponent } from './inicio/inicio.component';
 import { DetallePerfilComponent } from './detalle-perfil/detalle-perfil.component';
+import { DetallePerfilInsertComponent } from './detalle-perfil-insert-component/detalle-perfil-insert-component.component';
+import { DetallePerfilUpdateComponent } from './detalle-perfil-update/detalle-perfil-update.component';
 
 const appRoutes: Routes = [
 
@@ -70,6 +72,7 @@ const appRoutes: Routes = [
   { path: "movinventarios", component: MovInventarioComponent },
   { path: "detalleticket", component: DetalleTicketComponent },
   { path: "login", component: LoginComponent },
+  { path: "detallePerfil", component: DetallePerfilComponent}
 ];
 
 @NgModule({
@@ -111,6 +114,8 @@ const appRoutes: Routes = [
     LoginComponent,
     InicioComponent,
     DetallePerfilComponent,
+    DetallePerfilInsertComponent,
+    DetallePerfilUpdateComponent,
   ],
   imports: [
     HttpClientModule,

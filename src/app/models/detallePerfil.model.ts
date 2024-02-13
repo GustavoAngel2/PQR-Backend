@@ -1,13 +1,10 @@
-export interface DetalleTicket {
-    Id: number;
-    idTicket: number;
-    codigo: string;
-    Articulo: string;
-    cantidad: number;
-    precioVenta: number;
-    Total: number;
-    usuario: string;
-    Estatus: string;
+export interface DetallePerfil {
+  id: number;
+  idPerfil: number;
+  idModulo: number;
+  acceso: number;
+  usuarioActualiza: number;
+  estatus: number;
   }
 
   export interface ApiResponse {
@@ -16,7 +13,7 @@ export interface DetalleTicket {
     fecha: string;
     message: string;
     response: {
-      data: DetalleTicket[]; };
+      data: DetallePerfil[]; };
   }
 
   export interface UpdateDetallePerfil{
@@ -24,13 +21,19 @@ export interface DetalleTicket {
     idPerfil: number;
     idModulo: number;
     acceso: number;
-    Preci: number;
-    Estatus: number;
-    Usuario: number;
+    usuarioActualiza: number;
+    estatus: number;
+  }
+
+  export interface InsertDetallePerfil{
+    idPerfil: number;
+    idModulo: number;
+    acceso: number;
+    usuarioActualiza: number;
   }
   
-  export interface DetalleTicket{
-    Id: number;
+  export interface DeleteDetallePerfil{
+    id: number;
   }
 
   	

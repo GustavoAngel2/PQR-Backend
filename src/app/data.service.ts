@@ -480,11 +480,11 @@ export class DetallePerfilService {
   }
 
 
-insertarDetallePerfil(DetallePerfilData: { idPerfil: number; idModelo: number; acceso: number; usuarioActualiza: number; }): Observable<ApiResponse> {
+insertarDetallePerfil(DetallePerfilData: { idPerfil: number; idModulo: number; acceso: number; usuarioActualiza: number; }): Observable<ApiResponse> {
   
   const body = {
     idPerfil: DetallePerfilData.idPerfil,
-    idModelo: DetallePerfilData.idModelo,
+    idModulo: DetallePerfilData.idModulo,
     acceso: DetallePerfilData.acceso,
     usuarioActualiza: DetallePerfilData.usuarioActualiza
   };
@@ -498,12 +498,14 @@ deleteDetallePerfil(id : number): Observable<any> {
 
   updateDetallePerfil(DetallePerfilData: UpdateDetallePerfil): Observable<ApiResponse> {
     const body = {
-      id: AlmacenesData.Id,
-      nombre: AlmacenesData.Nombre,
-      direccion: AlmacenesData.Direccion,
-      usuario:AlmacenesData.Usuario
+      id: DetallePerfilData.id,
+      idPerfil: DetallePerfilData.idPerfil,
+      idModulo: DetallePerfilData.idModulo,
+      acceso: DetallePerfilData.acceso,
+      estatus: DetallePerfilData.estatus,
+      usuarioActualiza: DetallePerfilData.usuarioActualiza
     }
     console.log('Enviando solicitud con el siguiente cuerpo:', body);
-    return this.http.put<ApiResponse>(`${this.apiUrl}/Almacenes/Update`, body);
+    return this.http.put<ApiResponse>(`${this.apiUrl}/DetallePerfil/Update`, body);
   }
 }

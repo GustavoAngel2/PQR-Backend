@@ -1,0 +1,33 @@
+<div>
+  <h1 mat-dialog-title>Nuevo Detalle Movimiento</h1>
+  <div mat-dialog-content class="mat-dialog-grid">
+    <!-- Fila para el formulario -->
+    <div class="mat-dialog-row">
+      <!-- Columna para el campo de nombre -->
+      <div class="mat-dialog-cell">
+        <mat-form-field>
+          <mat-label>Id de perfil</mat-label>
+          <input type="number" matInput placeholder="Ingresa el id del perfil" [(ngModel)]="idPerfil">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Id de modulo</mat-label>
+          <input  type="number" matInput placeholder="Codigo" [(ngModel)]="idModulo">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Acceso</mat-label>
+          <input type="number" matInput placeholder="1 con acceso, 0 sin acceso" [(ngModel)]="acceso">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Usuario Actualiza</mat-label>
+          <input  type="number" matInput placeholder="Id del usuario que actualiza" [(ngModel)]="usuarioActualiza">
+        </mat-form-field>
+        
+      </div>
+    </div>
+    <!-- Puedes agregar más filas con más campos aquí -->
+  </div>
+  <div mat-dialog-actions>
+      <button mat-button (click)="onNoClick()">Cancelar</button>
+      <button mat-button cdkFocusInitial (click)="insertar()">Insertar</button>
+  </div>
+</div>

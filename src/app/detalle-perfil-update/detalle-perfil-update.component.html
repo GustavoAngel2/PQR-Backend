@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>Editar informacion de perfil</h1>
+<div mat-dialog-content class="mat-dialog-grid">
+  <!-- Fila para el formulario -->
+  <div class="mat-dialog-row">
+    <!-- Columna para el campo de nombre -->
+    <div class="mat-dialog-cell">
+      <mat-form-field style="display: none;">
+        <mat-label>Id del perfil</mat-label>
+        <input matInput placeholder="Ingresa el id del perfil" [(ngModel)]="DetallePerfil.id">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Id del perfil</mat-label>
+        <input matInput placeholder="Ingresa el id del perfil" [(ngModel)]="DetallePerfil.idPerfil">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Id del modulo</mat-label>
+        <input matInput placeholder="Ingresa el id del modulo" [(ngModel)]="DetallePerfil.idModulo">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Acceso</mat-label>
+        <input matInput placeholder="1 con acceso, 0 sin acceso" [(ngModel)]="DetallePerfil.acceso">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Usuario actualiza</mat-label>
+        <input matInput placeholder="Ingresa el id de usuario" [(ngModel)]="DetallePerfil.usuarioActualiza">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Estado</mat-label>
+        <input matInput placeholder="1 disponible, 0 no disponible" [(ngModel)]="DetallePerfil.estatus">
+      </mat-form-field>
+    </div>
+  </div>
+  <!-- Puedes agregar más filas con más campos aquí -->
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-button (click)="guardar()">Guardar Cambios</button>
+</div>
