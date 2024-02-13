@@ -69,9 +69,14 @@ Este modulo nos sirve para mostrar, insertar y actualizar datos relacionados a d
 
 
 Integrantes del Equipo
-//==========================================================================
+//=============================================================================
+
 -Jose Reynaldo Silla Guerrero
+
 -Jonathan Cortes Perez
+
 -Brandon Arturo Saravia Gonzalez
+
 -Gustavo Angel Borrego Ramirez
+
 -Carlos Alvarez Montes
