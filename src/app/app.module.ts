@@ -56,9 +56,6 @@ import { InicioComponent } from './inicio/inicio.component';
 import { ModulosComponent } from './modulos/modulos.component';
 import { ModulosInsertComponent } from './modulos-insert/modulos-insert.component';
 import { ModulosUpdateComponent } from './modulos-update/modulos-update.component';
-import { ModUsuarioComponent } from './mod-usuario/mod-usuario.component';
-import { ModUsuarioInsertComponent } from './mod-usuario-insert/mod-usuario-insert.component';
-import { ModUsuarioUpdateComponent } from './mod-usuario-update/mod-usuario-update.component';
 import { EmpleadosComponent } from "./empleados/empleados.component";
 import { EmpleadosInsertComponent } from "./empleados-insert/empleados-insert.component";
 import { EmpleadosUpdateComponent } from "./empleados-update/empleados-update.component";
@@ -87,7 +84,6 @@ const appRoutes: Routes = [
   { path: "categoriamodulo", component: CategoriaModuloComponent },
   { path: "login", component: LoginComponent },
   {path: "modulos",component: ModulosComponent},
-  {path: "ModuloUsuario",component: ModUsuarioComponent},
   {path:"empleados", component:EmpleadosComponent},
   {path:"puestos",component:PuestosComponent},
   {path: "categoriamodulo", component:PuestosComponent}
@@ -134,9 +130,6 @@ const appRoutes: Routes = [
     ModulosComponent,
     ModulosInsertComponent,
     ModulosUpdateComponent,
-    ModUsuarioComponent,
-    ModUsuarioInsertComponent,
-    ModUsuarioUpdateComponent,
     EmpleadosComponent,
     EmpleadosInsertComponent,
     EmpleadosUpdateComponent,
