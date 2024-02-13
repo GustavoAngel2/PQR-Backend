@@ -17,7 +17,7 @@ export interface DetallePerfil {
   }
 
   export interface UpdateDetallePerfil{
-    id: number;
+    Id: number;
     idPerfil: number;
     idModulo: number;
     acceso: number;

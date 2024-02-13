@@ -498,7 +498,7 @@ deleteDetallePerfil(id : number): Observable<any> {
 
   updateDetallePerfil(DetallePerfilData: UpdateDetallePerfil): Observable<ApiResponse> {
     const body = {
-      id: DetallePerfilData.id,
+      id: DetallePerfilData.Id,
       idPerfil: DetallePerfilData.idPerfil,
       idModulo: DetallePerfilData.idModulo,
       acceso: DetallePerfilData.acceso,

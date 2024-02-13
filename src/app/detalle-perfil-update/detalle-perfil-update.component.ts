@@ -21,7 +21,6 @@ export class DetallePerfilUpdateComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    console.log(this.DetallePerfil)
   }
 
   onNoClick(): void {
@@ -32,8 +31,7 @@ export class DetallePerfilUpdateComponent implements OnInit{
     this.DetallePerfilService.updateDetallePerfil(this.DetallePerfil).subscribe({
       next: (response) => {
         this.dialogRef.close(response);
-        //location.reload();
-        console.log(response)
+        location.reload();
       },
       error: (error) => {
         console.error(error);
