@@ -57,3 +57,9 @@ Este modulo muestra los empleados registrados en la tabla
 
 ![Puestos](image-24.png)
 Esto modulo muestra los puestos registrados en la tabla
+
+![CategoriaModulo](image-25.png)
+Este modulo muestra las categorias registrados en la tabla y darle la categoria al modulo
+
+![Modulo](image-26.png)
+Este modulo nos sirve para relacionar el perfil y la categoria del modulo
