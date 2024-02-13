@@ -66,6 +66,8 @@ import { CategoriaModuloComponent } from './categoria-modulo/categoria-modulo.co
 import { CategoriaModuloInsertComponent } from "./categoria-modulo-insert/categoria-modulo-insert.component";
 import { CategoriaModuloUpdateComponent } from "./categoria-modulo-update/categoria-modulo-update.component";
 import { DetallePerfilComponent } from './detalle-perfil/detalle-perfil.component';
+import { DetallePerfilInsertComponent } from './detalle-perfil-insert-component/detalle-perfil-insert-component.component';
+import { DetallePerfilUpdateComponent } from './detalle-perfil-update/detalle-perfil-update.component';
 
 const appRoutes: Routes = [
 
@@ -87,6 +89,7 @@ const appRoutes: Routes = [
   {path:"empleados", component:EmpleadosComponent},
   {path:"puestos",component:PuestosComponent},
   {path: "categoriamodulo", component:PuestosComponent}
+  { path: "detallePerfil", component: DetallePerfilComponent}
 ];
 
 @NgModule({
@@ -140,6 +143,8 @@ const appRoutes: Routes = [
     CategoriaModuloInsertComponent,
     CategoriaModuloUpdateComponent,
     DetallePerfilComponent,
+    DetallePerfilInsertComponent,
+    DetallePerfilUpdateComponent,
   ],
   imports: [
     HttpClientModule,
