@@ -88,7 +88,7 @@ const appRoutes: Routes = [
   {path: "modulos",component: ModulosComponent},
   {path:"empleados", component:EmpleadosComponent},
   {path:"puestos",component:PuestosComponent},
-  {path: "categoriamodulo", component:PuestosComponent}
+  {path: "categoriamodulo", component:PuestosComponent},
   { path: "detallePerfil", component: DetallePerfilComponent}
 ];
 

@@ -36,10 +36,7 @@
         <ng-container matColumnDef="Acciones">
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
         <td mat-cell *matCellDef="let elemento">
-            
-
             <mat-icon class="action-btn green" (click)="abrirEditarModal(elemento)">edit</mat-icon>
-            <mat-icon ></mat-icon>
             <mat-icon class="action-btn red" (click)="eliminarRutas(elemento.Id)">delete</mat-icon>
         </td>
         </ng-container>
