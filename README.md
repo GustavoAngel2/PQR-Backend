@@ -63,3 +63,6 @@ Este modulo muestra las categorias registrados en la tabla y darle la categoria 
 
 ![Modulo](image-26.png)
 Este modulo nos sirve para relacionar el perfil y la categoria del modulo
+
+![Detalle Perfil](image-27.png)
+Este modulo nos sirve para mostrar, insertar y actualizar datos relacionados a detalle perfil
