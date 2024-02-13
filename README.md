@@ -49,7 +49,7 @@ V01
 ![TicketsInsert](image-20.png)
 ![Usuarios](image-21.png)
 ![UsuariosInsert](image-22.png)
-
+//==================================================================================================================
 Proyecto Primer Parcial TICSM05
 
 ![Empleadosn](image-23.png)
