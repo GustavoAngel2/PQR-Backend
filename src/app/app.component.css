@@ -33,12 +33,7 @@
 .menu-btn:hover {
   background-color: #c25114;
   font-size: 20px;
-  transition: 0.5s;
-}
-
-.menu-btn:active {
-  border-bottom: solid #ffffff 3px;
- margin-bottom: 5px solid red;
+  border-bottom: solid #ffffff 2px;
   transition:.5s;
 }
 
