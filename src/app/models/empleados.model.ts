@@ -5,7 +5,7 @@ export interface empleado {
   Persona: String;
   Sucursal: String;
   Puesto: String;
-  UsuarioActualiza: String;
+  usuarioActualiza: String;
   fechaRegistro: Date;
   fechaActualiza: Date;
 }

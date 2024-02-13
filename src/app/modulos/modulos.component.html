@@ -5,42 +5,44 @@
 </mat-form-field>
   <div class="mat-elevation-z8">
     <div class="toolbar" style="text-align: center;">
-        <button mat-button (click)="abrirInsertarModal()" style="background-color: green;color: white;">Insertar Ruta</button>
+        <button mat-button (click)="abrirInsertarModal()" style="background-color: green;color: white;">Insertar Modulo</button>
     </div>
     <br>
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-            <td mat-cell *matCellDef="let ruta"> {{ruta.Id}} </td>
+            <td mat-cell *matCellDef="let Modulo"> {{Modulo.Id}} </td>
         </ng-container>
-        <ng-container matColumnDef="Nombre">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
-            <td mat-cell *matCellDef="let ruta"> {{ruta.Nombre}} </td>
+        <ng-container matColumnDef="NombreModulo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Modulo </th>
+            <td mat-cell *matCellDef="let Modulo"> {{Modulo.NombreModulo}} </td>
         </ng-container>
-        <ng-container matColumnDef="Direccion">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Direccion </th>
-            <td mat-cell *matCellDef="let ruta"> {{ruta.Direccion}} </td>
+        <ng-container matColumnDef="CategoriaModulo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Categoria </th>
+            <td mat-cell *matCellDef="let Modulo"> {{Modulo.CategoriaModulo}} </td>
         </ng-container>
         <ng-container matColumnDef="Usuario">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
-            <td mat-cell *matCellDef="let ruta"> {{ruta.Usuario}} </td>
+            <td mat-cell *matCellDef="let Modulo"> {{Modulo.Usuario}} </td>
         </ng-container>
         <ng-container matColumnDef="FechaAct">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> FechaAct </th>
-            <td mat-cell *matCellDef="let ruta"> {{ruta.FechaActualiza}} </td>
+            <td mat-cell *matCellDef="let Modulo"> {{Modulo.FechaAct}} </td>
         </ng-container>
         <ng-container matColumnDef="FechaReg">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> FechaReg </th>
-            <td mat-cell *matCellDef="let ruta"> {{ruta.FechaRegristro}} </td>
+            <td mat-cell *matCellDef="let Modulo"> {{Modulo.FechaReg}} </td>
         </ng-container>
         <ng-container matColumnDef="Acciones">
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
         <td mat-cell *matCellDef="let elemento">
-            <mat-icon class="action-btn green" (click)="abrirEditarModal(elemento)">edit</mat-icon>
-            <mat-icon class="action-btn red" (click)="eliminarRutas(elemento.Id)">delete</mat-icon>
+
+            <mat-icon class="action-btn green"(click)="abrirEditarModal(elemento)">edit</mat-icon>
+            <mat-icon class="action-btn red" (click)="eliminarModulo(elemento.Id)">delete</mat-icon>
         </td>
         </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </table>
   </div>
+

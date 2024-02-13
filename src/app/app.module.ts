@@ -52,16 +52,26 @@ import { DetalleTicketComponent } from "./detalle-ticket/detalle-ticket.componen
 import { DetalleTicketInsertComponent } from "./detalle-ticket-insert/detalle-ticket-insert.component";
 import { DetalleTicketUpdateComponent } from "./detalle-ticket-update/detalle-ticket-update.component";
 import { LoginComponent } from "./login/login.component";
-import { InicioComponent } from "./inicio/inicio.component";
+import { InicioComponent } from './inicio/inicio.component';
+import { ModulosComponent } from './modulos/modulos.component';
+import { ModulosInsertComponent } from './modulos-insert/modulos-insert.component';
+import { ModulosUpdateComponent } from './modulos-update/modulos-update.component';
 import { EmpleadosComponent } from "./empleados/empleados.component";
 import { EmpleadosInsertComponent } from "./empleados-insert/empleados-insert.component";
 import { EmpleadosUpdateComponent } from "./empleados-update/empleados-update.component";
 import { PuestosComponent } from "./puestos/puestos.component";
 import { PuestosInsertComponent } from "./puestos-insert/puestos-insert.component";
 import { PuestosUpdateComponent } from "./puestos-update/puestos-update.component";
+import { CategoriaModuloComponent } from './categoria-modulo/categoria-modulo.component';
+import { CategoriaModuloInsertComponent } from "./categoria-modulo-insert/categoria-modulo-insert.component";
+import { CategoriaModuloUpdateComponent } from "./categoria-modulo-update/categoria-modulo-update.component";
+import { DetallePerfilComponent } from './detalle-perfil/detalle-perfil.component';
+import { DetallePerfilInsertComponent } from './detalle-perfil-insert-component/detalle-perfil-insert-component.component';
+import { DetallePerfilUpdateComponent } from './detalle-perfil-update/detalle-perfil-update.component';
 
 const appRoutes: Routes = [
-  { path: "inicio", component: InicioComponent },
+
+  { path: "inicio", component:InicioComponent },
   { path: "almacenes", component: AlmacenesComponent },
   { path: "clientes", component: ClientesComponent },
   { path: "articulos", component: ArticulosComponent },
@@ -73,9 +83,13 @@ const appRoutes: Routes = [
   { path: "existencias", component: ExistenciasComponent },
   { path: "movinventarios", component: MovInventarioComponent },
   { path: "detalleticket", component: DetalleTicketComponent },
+  { path: "categoriamodulo", component: CategoriaModuloComponent },
   { path: "login", component: LoginComponent },
-  { path: "empleados", component: EmpleadosComponent },
-  { path: "puestos", component: PuestosComponent },
+  {path: "modulos",component: ModulosComponent},
+  {path:"empleados", component:EmpleadosComponent},
+  {path:"puestos",component:PuestosComponent},
+  {path: "categoriamodulo", component:PuestosComponent},
+  { path: "detallePerfil", component: DetallePerfilComponent}
 ];
 
 @NgModule({
@@ -116,12 +130,21 @@ const appRoutes: Routes = [
     DetalleTicketUpdateComponent,
     LoginComponent,
     InicioComponent,
+    ModulosComponent,
+    ModulosInsertComponent,
+    ModulosUpdateComponent,
     EmpleadosComponent,
     EmpleadosInsertComponent,
     EmpleadosUpdateComponent,
     PuestosComponent,
     PuestosInsertComponent,
     PuestosUpdateComponent,
+    CategoriaModuloComponent,
+    CategoriaModuloInsertComponent,
+    CategoriaModuloUpdateComponent,
+    DetallePerfilComponent,
+    DetallePerfilInsertComponent,
+    DetallePerfilUpdateComponent,
   ],
   imports: [
     HttpClientModule,

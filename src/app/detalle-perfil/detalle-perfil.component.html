@@ -1,0 +1,50 @@
+<mat-form-field>
+    <mat-label>Filtrar</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
+</mat-form-field>
+<div class="toolbar" style="text-align: center;">
+    <button mat-button (click)="abrirInsertarModal()" style="background-color: green;color: white;">Insertar Detalle Movimiento</button>
+</div>
+<br>
+    <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let detallePerfil"> {{detallePerfil.Id}} </td>
+        </ng-container>
+        <ng-container matColumnDef="nombreModulo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre de modulo </th>
+            <td mat-cell *matCellDef="let detallePerfil"> {{detallePerfil.nombreModulo}} </td>
+        </ng-container>
+        <ng-container matColumnDef="rol">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Rol </th>
+            <td mat-cell *matCellDef="let detallePerfil"> {{detallePerfil.Rol}} </td>
+        </ng-container>
+        <ng-container matColumnDef="acceso">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Acceso </th>
+            <td mat-cell *matCellDef="let detallePerfil"> {{detallePerfil.Acceso}} </td>
+        </ng-container>
+        <ng-container matColumnDef="fechaRegistro">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de registro </th>
+            <td mat-cell *matCellDef="let detallePerfil"> {{detallePerfil.fechaRegistro}} </td>
+        </ng-container>
+        <ng-container matColumnDef="fechaActualiza">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de actualizacion </th>
+            <td mat-cell *matCellDef="let detallePerfil"> {{detallePerfil.fechaActualiza}} </td>
+        </ng-container>
+        <ng-container matColumnDef="UsuarioActualiza">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
+            <td mat-cell *matCellDef="let detallePerfil"> {{detallePerfil.UsuarioActualiza}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Acciones">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let elemento">
+
+            <mat-icon (click)="abrirEditarModal(elemento)">edit</mat-icon>
+            <mat-icon (click)="eliminarDetallePerfil(elemento.Id)">delete</mat-icon>
+        </td>
+        </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </table>
+
+
