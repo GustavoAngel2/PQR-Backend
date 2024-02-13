@@ -29,8 +29,16 @@ import { UpdateUsuario } from "./models/usuarios.models";
 import { UpdateExistencia } from "./models/existencia.model";
 import { UpdateMovInventario } from "./models/movInventario.model";
 import { UpdateDetalleTicket } from "./models/detalleTicket.model";
+<<<<<<< Updated upstream
 import { insertEmpleado, updateEmpleado } from "./models/empleados.model";
 import { UpdatePuesto } from "./models/puestos.model";
+=======
+import { UpdateModulo } from "./models/modulo.model";
+import { UpdateModuloUsuario } from "./models/modusuario.model";
+import { insertEmpleado, updateEmpleado } from "./models/empleados.model";
+import { UpdatePuesto } from "./models/puestos.model";
+import { UpdateCategoriaModulo } from "./models/categoriaModulo.model";
+>>>>>>> Stashed changes
 
 @Injectable({
   providedIn: "root",
@@ -554,6 +562,87 @@ export class DetalleTicketService {
     );
   }
 }
+<<<<<<< Updated upstream
+=======
+/* -------------------------------------------------------------------------------------------------------------------------------- */
+@Injectable({
+  providedIn: "root",
+})
+export class ModulosService {
+  private apiUrl = "http://localhost:5020/api";
+  constructor(private http: HttpClient) {}
+
+  getModulos(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/Modulos/Get`);
+  }
+
+  InsertModulos(ModulosData: {
+    nombreModulo: string;
+    categoriaModulo: number;
+    usuario: number;
+  }): Observable<ApiResponse> {
+    const body = {
+      nombreModulo: ModulosData.nombreModulo,
+      categoriaModulo: ModulosData.categoriaModulo,
+      usuario: ModulosData.usuario,
+    };
+    return this.http.post<ApiResponse>(`${this.apiUrl}/Modulos/Insert`, body);
+  }
+
+  deleteModulos(Id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/Modulos/Delete`, { Id });
+  }
+
+  updateModulos(ModulosData: UpdateModulo): Observable<ApiResponse> {
+    const body = {
+      id: ModulosData.Id,
+      nombreModulo: ModulosData.NombreModulo,
+      categoriaModulo: ModulosData.CategoriaModulo,
+      usuario: ModulosData.Usuario,
+    };
+    console.log("Enviando solicitud con el siguiente cuerpo:", body);
+    return this.http.put<ApiResponse>(`${this.apiUrl}/Modulos/Update`, body);
+  }
+}
+/* ------------------------------------------------------------------------------------------------------------------------------------- */
+@Injectable({
+  providedIn: "root",
+})
+export class ModUsuarioService {
+  private apiUrl = "http://localhost:5020/api";
+
+  constructor(private http: HttpClient) {}
+
+  getModulosUsuario(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/ModUser/Get`);
+  }
+
+  insertModulosUsuario(ModulosUserData: {
+    Modulo: string;
+    Usuario: number;
+  }): Observable<ApiResponse> {
+    const body = {
+      modulo: ModulosUserData.Modulo,
+      usuario: ModulosUserData.Usuario,
+    };
+    return this.http.post<ApiResponse>(`${this.apiUrl}/ModUser/Insert`, body);
+  }
+
+  deleteModulosUsuario(Id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/ModUser/Delete`, { Id });
+  }
+
+  updateModulos(ModulosUserData: UpdateModuloUsuario): Observable<ApiResponse> {
+    const body = {
+      id: ModulosUserData.Id,
+      modulo: ModulosUserData.Modulo,
+      usuario: ModulosUserData.Usuario,
+    };
+    console.log("Enviando solicitud con el siguiente cuerpo:", body);
+    return this.http.put<ApiResponse>(`${this.apiUrl}/ModUser/Update`, body);
+  }
+}
+>>>>>>> Stashed changes
 //--------------------------------------------------------------------------------------------//
 @Injectable({
   providedIn: "root",
@@ -642,3 +731,49 @@ export class PuestosService {
     return this.http.put<ApiResponse>(`${this.apiUrl}/Puestos/Update`, body);
   }
 }
+<<<<<<< Updated upstream
+=======
+
+@Injectable({
+  providedIn: "root",
+})
+export class CategoriaModuloService {
+  private apiUrl = "http://localhost:5020/api";
+  constructor(private http: HttpClient) {}
+
+  getCategoriaModulo(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/CatModulo/Get`);
+  }
+
+  insertCategoriaModulo(CatModuloData: {
+    nombre: string;
+    descripcion: string;
+    usuario: number;
+  }): Observable<ApiResponse> {
+    const body = {
+      nombre: CatModuloData.nombre,
+      descripcion: CatModuloData.descripcion,
+      usuario: CatModuloData.usuario,
+    };
+    return this.http.post<ApiResponse>(`${this.apiUrl}/CatModulo/Insert`, body);
+  }
+
+  deleteCategoriaModulo(id: number): Observable<any> {
+    // Asegúrate de que el endpoint y la forma en que pasas el ID son correctos según tu API
+    return this.http.put(`${this.apiUrl}/CatModulo/Delete`, { id });
+  }
+
+  updateCategoriaModulo(
+    catModuloData: UpdateCategoriaModulo
+  ): Observable<ApiResponse> {
+    const body = {
+      Id: catModuloData.Id,
+      nombre: catModuloData.Nombre,
+      descripcion: catModuloData.Descripcion,
+      usuario: catModuloData.Usuario,
+    };
+    console.log("Enviando solicitud con el siguiente cuerpo:", body);
+    return this.http.put<ApiResponse>(`${this.apiUrl}/CatModulo/Update`, body);
+  }
+}
+>>>>>>> Stashed changes
