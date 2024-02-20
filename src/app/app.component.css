@@ -3,51 +3,16 @@
   height: 100%;
   position: absolute;
   padding: 0;
-  background-color: #f86d21;
-}
-
-.menu-container {
-  margin: 0;
-  padding: 0;
-  background-color: #00000000;
-}
-
-.lista{
-  margin:0;
-  padding:0;
-  background-color: #00000000;
-  width: 300px;
-}
-
-.menu-btn {
-  color: #fff;
-  font-size: 17px;
-  background-color: #f86d21;
-  width: 100%;
-  padding-top: 16px;
-  padding-bottom: 16px;
-  border: 0;
-  transition: 0.5s;
-}
-
-.menu-btn:hover {
-  background-color: #c25114;
-  font-size: 20px;
-  transition: 0.5s;
-}
-
-.menu-btn:active {
-  border-bottom: solid #ffffff 3px;
- margin-bottom: 5px solid red;
-  transition:.5s;
+  background-color: #e65e15;
 }
 
 .lista {
+  margin: 0;
+  padding: 0;
   height: 100%;
-  width: 300px;
-  display: flex;
+  width: 100%;
+  display: grid;
   align-items: center;
-  flex-direction: column;
   background-color: #00000000;
 }
 
@@ -55,10 +20,51 @@
   display: none;
 }
 
-mat-sidenav-content.mat-drawer-content.mat-sidenav-content.bg {
-  background-color: rgb(255, 222, 131);
+
+.menu-btn {
+  position: relative;
+  text-decoration: none;
+  text-align: center;
+  color: #fff;
+  font-size: 17px;
+  background-color: #f9722a;
+  width: 100%;
+  padding-top: 32px;
+  padding-bottom: 32px;
+  border: 0;
+  transition: 0.5s;
 }
 
-mat-sidenav{
-  background-color: #f86d21;
+.menu-btn:hover {
+  background-color: #8a370b;
+  letter-spacing: 3px;
+  transition:.5s;
+}
+
+.menu-btn i
+{
+	position: absolute;
+	inset: 0;
+	display: block;
+}
+  
+.menu-btn i::after
+{
+	content: '';
+  color: red;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 5px;
+	background: #fff;
+	transform: scale(0,1);
+	transition: 0.3s ease;
+}
+
+.menu-btn:hover i::after
+{
+	border-radius: 5px;
+  transform: scale(1,1);
+  transition: .3s ease;
 }

@@ -3,12 +3,24 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: 'Poppins', sans-serif; }
+body { margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
 
 mat-toolbar{
     background-color: rgb(255, 166, 0)!important; 
 
 }
+
+mat-sidenav-content.mat-drawer-content.mat-sidenav-content.bg {
+  background-color: rgb(255, 222, 131);
+}
+
+
+
+mat-sidenav{
+  background-color: #f86d21;
+  width: 400px;
+}
+
 
 th{
   width: 100%;
@@ -22,7 +34,7 @@ td{
 
 .red{
     color:red
-  }
+}
   
 .green{
   color:rgb(26, 228, 26);
@@ -35,3 +47,4 @@ td{
 .lista{
   background-color: #00000000;
 }
+
