@@ -10,8 +10,9 @@
         <mat-label>Filtrar</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
     </mat-form-field>
-    <button (click)="abrirInsertarModal()" class="btn right">Insertar<i></i></button>
+    <button (click)="abrirInsertarModal()" class="btn right">Insertar<i class="underline"></i></button>
 </div>
+
 <div class="table-container">
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Id">
