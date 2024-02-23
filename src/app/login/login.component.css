@@ -1,8 +1,9 @@
 .background {
   position: relative;
   z-index: 6;
-  background-color: rgb(255, 222, 131);
-  top: -64px;
+  background: rgb(212,109,19);
+  background: linear-gradient(0deg, rgba(212,109,19,1) 0%, rgb(252, 212, 101) 100%);
+  margin-top: -64px;
 }
 
 .btn-login{
