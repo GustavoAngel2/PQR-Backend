@@ -9,6 +9,10 @@
         <input matInput placeholder="Ingresa el nombre" [(ngModel)]="nombre" />
       </mat-form-field>
       <mat-form-field>
+        <mat-label>rol</mat-label>
+        <input matInput placeholder="Ingresa el nombre" [(ngModel)]="rol" />
+      </mat-form-field>
+      <mat-form-field>
         <mat-label>Contraseña</mat-label>
         <input matInput placeholder="Contrasena" [(ngModel)]="contrasena" />
       </mat-form-field>
@@ -16,11 +20,10 @@
         <mat-label>Nombre</mat-label> -->
       <div class="container">
         <!-- <input matInput placeholder="Ingresa el nombre" [(ngModel)]="nombreCatModulo"> -->
-        <select [(ngModel)]="ComboUsuario" class="form-control">
-          <option>Selecccione...</option>
-          <option *ngFor="let usuario of ComboUsuario" [value]="usuario">
-            {{ usuario.Rol }}
-          </option>
+        <select [(ngModel)]="ComboRoles" (change)="dev($event)" class="form-control">
+         
+            <option *ngFor="let rol of ComboRoles" value={{rol.Id}}>{{ rol.Rol }}</option>
+        
         </select>
         <mat-form-field>
           <mat-label>Usuario</mat-label>

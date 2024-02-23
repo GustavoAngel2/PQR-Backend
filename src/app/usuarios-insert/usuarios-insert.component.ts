@@ -1,6 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { MatDialogRef } from "@angular/material/dialog";
 import { UsuarioSevice } from "../data.service";
+import { RolesService } from "../data.service"; 
 
 @Component({
   selector: "app-usuarios-insert",
@@ -12,20 +13,27 @@ export class UsuariosInsertComponent {
   contrasena: string = "";
   rol: number = 0;
   usuario: number = 0;
-  ComboUsuario: any;
+  ComboRoles: any;
 
   constructor(
     public dialogRef: MatDialogRef<UsuariosInsertComponent>,
-    private usuarioService: UsuarioSevice
+    private usuarioService: UsuarioSevice,
+    private rolesService: RolesService
   ) {}
+  
   ngOnInit(): void {
-    this.usuarioService.getUsuarios().subscribe((data: any) => {
-      this.ComboUsuario = data;
+    this.rolesService.getRoles().subscribe((data: any) => {
+      this.ComboRoles = data;
+      console.log(this.ComboRoles)
     });
   }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  dev(e:any):void{
+    this.rol=e.target.value
   }
 
   insertar(): void {
