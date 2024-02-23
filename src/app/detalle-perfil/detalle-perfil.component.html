@@ -9,11 +9,11 @@
 <br>
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
             <td mat-cell *matCellDef="let detallePerfil"> {{detallePerfil.Id}} </td>
         </ng-container>
         <ng-container matColumnDef="nombreModulo">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre de modulo </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Modulo </th>
             <td mat-cell *matCellDef="let detallePerfil"> {{detallePerfil.nombreModulo}} </td>
         </ng-container>
         <ng-container matColumnDef="rol">
@@ -33,7 +33,7 @@
             <td mat-cell *matCellDef="let detallePerfil"> {{detallePerfil.fechaActualiza}} </td>
         </ng-container>
         <ng-container matColumnDef="UsuarioActualiza">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario Actualiza</th>
             <td mat-cell *matCellDef="let detallePerfil"> {{detallePerfil.UsuarioActualiza}} </td>
         </ng-container>
         <ng-container matColumnDef="Acciones">
