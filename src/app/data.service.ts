@@ -1,44 +1,22 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import {
-  Almacen,
-  ApiResponse,
-  UpdateAlmacen,
-  deleteAlmacenes,
-} from "./models/almacen.model";
-import {
-  Clientes,
-  UpdateClientes,
-  deleteClientes,
-} from "./models/cliente.model";
-import {
-  articulos,
-  updateArticulos,
-  deleteCArticulos,
-} from "./models/articulo.model";
-import {
-  Personas,
-  UpdatePersonas,
-  DeletePersonas,
-} from "./models/personas.model";
-import { Rutas, UpdateRutas, deleteRutas } from "./models/rutas.model";
-import { UpdateDetalleMov } from "./models/detalleMov.model";
-import { UpdateTickets } from "./models/tickets.model";
-import { UpdateUsuario } from "./models/usuarios.models";
-import { UpdateExistencia } from "./models/existencia.model";
-import { UpdateMovInventario } from "./models/movInventario.model";
-import { UpdateDetalleTicket } from "./models/detalleTicket.model";
-<<<<<<< Updated upstream
-import { insertEmpleado, updateEmpleado } from "./models/empleados.model";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ApiResponse, UpdateAlmacen } from './models/almacen.model';
+import{ UpdateClientes } from './models/cliente.model';
+import{ updateArticulos } from './models/articulo.model';
+import { UpdatePersonas } from './models/personas.model';
+import { UpdateRutas } from './models/rutas.model';
+import { UpdateDetallePerfil } from './models/detallePerfil.model';
+import { UpdateDetalleMov } from './models/detalleMov.model';
+import { UpdateTickets } from './models/tickets.model';
+import { UpdateUsuario } from './models/usuarios.models';
+import { UpdateExistencia } from './models/existencia.model';
+import { UpdateMovInventario } from './models/movInventario.model';
+import { UpdateDetalleTicket } from './models/detalleTicket.model';
+import { UpdateModulo } from './models/modulo.model';
+import { updateEmpleado } from "./models/empleados.model";
 import { UpdatePuesto } from "./models/puestos.model";
-=======
-import { UpdateModulo } from "./models/modulo.model";
-import { UpdateModuloUsuario } from "./models/modusuario.model";
-import { insertEmpleado, updateEmpleado } from "./models/empleados.model";
-import { UpdatePuesto } from "./models/puestos.model";
-import { UpdateCategoriaModulo } from "./models/categoriaModulo.model";
->>>>>>> Stashed changes
+import { UpdateCategoriaModulo } from './models/categoriaModulo.model';
 
 @Injectable({
   providedIn: "root",
@@ -562,87 +540,45 @@ export class DetalleTicketService {
     );
   }
 }
-<<<<<<< Updated upstream
-=======
 /* -------------------------------------------------------------------------------------------------------------------------------- */
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root'
 })
 export class ModulosService {
-  private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient) {}
+  private  apiUrl= 'http://localhost:5020/api'; 
+  constructor(private http:HttpClient) { }
 
-  getModulos(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/Modulos/Get`);
+  getModulos(): Observable<ApiResponse>{
+  return  this.http.get<ApiResponse>(`${this.apiUrl}/Modulos/Get`)
   }
 
-  InsertModulos(ModulosData: {
-    nombreModulo: string;
-    categoriaModulo: number;
-    usuario: number;
-  }): Observable<ApiResponse> {
-    const body = {
-      nombreModulo: ModulosData.nombreModulo,
-      categoriaModulo: ModulosData.categoriaModulo,
-      usuario: ModulosData.usuario,
-    };
-    return this.http.post<ApiResponse>(`${this.apiUrl}/Modulos/Insert`, body);
-  }
 
-  deleteModulos(Id: number): Observable<any> {
+InsertModulos(ModulosData: { nombreModulo: string; categoriaModulo: number; usuario: number }): Observable<ApiResponse> {
+  
+  const body = {
+    nombreModulo: ModulosData.nombreModulo,
+    categoriaModulo: ModulosData.categoriaModulo,
+    usuario: ModulosData.usuario,
+  };
+  return this.http.post<ApiResponse>(`${this.apiUrl}/Modulos/Insert`, body)
+}
+
+deleteModulos(Id : number): Observable<any> {
     return this.http.put(`${this.apiUrl}/Modulos/Delete`, { Id });
   }
 
   updateModulos(ModulosData: UpdateModulo): Observable<ApiResponse> {
-    const body = {
-      id: ModulosData.Id,
-      nombreModulo: ModulosData.NombreModulo,
-      categoriaModulo: ModulosData.CategoriaModulo,
-      usuario: ModulosData.Usuario,
-    };
-    console.log("Enviando solicitud con el siguiente cuerpo:", body);
+    const body ={
+    id: ModulosData.Id,
+    nombreModulo: ModulosData.NombreModulo,
+    categoriaModulo: ModulosData.CategoriaModulo,
+    usuario: ModulosData.Usuario,
+    }
+    console.log('Enviando solicitud con el siguiente cuerpo:', body);
     return this.http.put<ApiResponse>(`${this.apiUrl}/Modulos/Update`, body);
   }
 }
-/* ------------------------------------------------------------------------------------------------------------------------------------- */
-@Injectable({
-  providedIn: "root",
-})
-export class ModUsuarioService {
-  private apiUrl = "http://localhost:5020/api";
 
-  constructor(private http: HttpClient) {}
-
-  getModulosUsuario(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/ModUser/Get`);
-  }
-
-  insertModulosUsuario(ModulosUserData: {
-    Modulo: string;
-    Usuario: number;
-  }): Observable<ApiResponse> {
-    const body = {
-      modulo: ModulosUserData.Modulo,
-      usuario: ModulosUserData.Usuario,
-    };
-    return this.http.post<ApiResponse>(`${this.apiUrl}/ModUser/Insert`, body);
-  }
-
-  deleteModulosUsuario(Id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/ModUser/Delete`, { Id });
-  }
-
-  updateModulos(ModulosUserData: UpdateModuloUsuario): Observable<ApiResponse> {
-    const body = {
-      id: ModulosUserData.Id,
-      modulo: ModulosUserData.Modulo,
-      usuario: ModulosUserData.Usuario,
-    };
-    console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponse>(`${this.apiUrl}/ModUser/Update`, body);
-  }
-}
->>>>>>> Stashed changes
 //--------------------------------------------------------------------------------------------//
 @Injectable({
   providedIn: "root",
@@ -731,49 +667,95 @@ export class PuestosService {
     return this.http.put<ApiResponse>(`${this.apiUrl}/Puestos/Update`, body);
   }
 }
-<<<<<<< Updated upstream
-=======
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root'
 })
 export class CategoriaModuloService {
-  private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient) {}
+  private  apiUrl= 'http://localhost:5020/api'; 
+  constructor(private http:HttpClient) { }
 
   getCategoriaModulo(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(`${this.apiUrl}/CatModulo/Get`);
   }
 
-  insertCategoriaModulo(CatModuloData: {
-    nombre: string;
-    descripcion: string;
-    usuario: number;
-  }): Observable<ApiResponse> {
-    const body = {
-      nombre: CatModuloData.nombre,
-      descripcion: CatModuloData.descripcion,
-      usuario: CatModuloData.usuario,
-    };
-    return this.http.post<ApiResponse>(`${this.apiUrl}/CatModulo/Insert`, body);
-  }
 
-  deleteCategoriaModulo(id: number): Observable<any> {
+insertCategoriaModulo(CatModuloData: { nombre: string; descripcion: string; usuario: number }): Observable<ApiResponse> {
+  
+  const body = {
+    nombre: CatModuloData.nombre,
+    descripcion: CatModuloData.descripcion,  
+    usuario: CatModuloData.usuario
+  };
+  return this.http.post<ApiResponse>(`${this.apiUrl}/CatModulo/Insert`, body)
+}
+
+deleteCategoriaModulo(id : number): Observable<any> {
     // Asegúrate de que el endpoint y la forma en que pasas el ID son correctos según tu API
     return this.http.put(`${this.apiUrl}/CatModulo/Delete`, { id });
   }
 
-  updateCategoriaModulo(
-    catModuloData: UpdateCategoriaModulo
-  ): Observable<ApiResponse> {
-    const body = {
+  updateCategoriaModulo(catModuloData: UpdateCategoriaModulo): Observable<ApiResponse> {
+    const body ={
       Id: catModuloData.Id,
       nombre: catModuloData.Nombre,
-      descripcion: catModuloData.Descripcion,
-      usuario: catModuloData.Usuario,
-    };
-    console.log("Enviando solicitud con el siguiente cuerpo:", body);
+      descripcion: catModuloData.Descripcion,  
+      usuario: catModuloData.Usuario
+    }
+    console.log('Enviando solicitud con el siguiente cuerpo:', body);
     return this.http.put<ApiResponse>(`${this.apiUrl}/CatModulo/Update`, body);
   }
 }
->>>>>>> Stashed changes
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DetallePerfilService {
+  private  apiUrl= 'http://localhost:5020/api'; 
+  constructor(private http:HttpClient) { }
+
+  getDetallePerfil(): Observable<ApiResponse>{
+  return  this.http.get<ApiResponse>(`${this.apiUrl}/DetallePerfil/Get`)
+  }
+
+
+insertarDetallePerfil(DetallePerfilData: { idPerfil: number; idModulo: number; acceso: number; usuarioActualiza: number; }): Observable<ApiResponse> {
+  
+  const body = {
+    idPerfil: DetallePerfilData.idPerfil,
+    idModulo: DetallePerfilData.idModulo,
+    acceso: DetallePerfilData.acceso,
+    usuarioActualiza: DetallePerfilData.usuarioActualiza
+  };
+  return this.http.post<ApiResponse>(`${this.apiUrl}/DetallePerfil/Insert`, body)
+}
+
+deleteDetallePerfil(id : number): Observable<any> {
+    // Asegúrate de que el endpoint y la forma en que pasas el ID son correctos según tu API
+    return this.http.put(`${this.apiUrl}/DetallePerfil/Delete`, { id });
+  }
+
+  updateDetallePerfil(DetallePerfilData: UpdateDetallePerfil): Observable<ApiResponse> {
+    const body = {
+      id: DetallePerfilData.Id,
+      idPerfil: DetallePerfilData.idPerfil,
+      idModulo: DetallePerfilData.idModulo,
+      acceso: DetallePerfilData.acceso,
+      estatus: DetallePerfilData.estatus,
+      usuarioActualiza: DetallePerfilData.usuarioActualiza
+    }
+    console.log('Enviando solicitud con el siguiente cuerpo:', body);
+    return this.http.put<ApiResponse>(`${this.apiUrl}/DetallePerfil/Update`, body);
+  }
+}
+@Injectable({
+  providedIn: 'root'
+})
+export class RolesService {
+  private apiUrl = "http://localhost:5020/api";
+  constructor(private http: HttpClient) {}
+
+  getRoles(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/Roles/Get`);
+  }
+}

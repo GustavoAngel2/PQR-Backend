@@ -75,7 +75,7 @@ export class AlmacenesComponent implements OnInit {
   }
   abrirEditarModal(almacen: Almacen) {
     const dialogRef = this.dialog.open(AlmacenesUpdateComponent, {
-      width: '250px',
+      width: '550px',
       data: almacen // Pasa el objeto de departamento a la modal
     });
   
