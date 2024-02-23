@@ -1,6 +1,6 @@
 import { TestBed } from "@angular/core/testing";
 
-import { AlmacenesService, DetalleMovService,EmpleadosService, PersonasService, PuestosService, RutasService, TicketsSevice, UsuarioSevice, CategoriaModuloService } from './data.service';
+import { AlmacenesService, DetalleMovService,EmpleadosService, PersonasService, PuestosService, RutasService, TicketsSevice, UsuarioSevice, CategoriaModuloService, RolesService } from './data.service';
 import { ClientesService } from './data.service';
 import { ArticulosService } from './data.service';
 import { ExistenciasService } from './data.service';
@@ -207,6 +207,19 @@ describe("DataService", () => {
     beforeEach(() => {
       TestBed.configureTestingModule({});
       service = TestBed.inject(CategoriaModuloService);
+    });
+  
+    it('should be created', () => {
+      expect(service).toBeTruthy();
+    });
+  });
+  //-------------------------------------------------------------------------------------------------------------
+  describe('DataService', () => {
+    let service: RolesService;
+  
+    beforeEach(() => {
+      TestBed.configureTestingModule({});
+      service = TestBed.inject(RolesService);
     });
   
     it('should be created', () => {

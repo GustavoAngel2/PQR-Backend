@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Almacen, ApiResponse, UpdateAlmacen, deleteAlmacenes } from './models/almacen.model';
-import{Clientes, UpdateClientes,deleteClientes} from './models/cliente.model';
-import{articulos,updateArticulos,deleteCArticulos} from './models/articulo.model';
-import { Personas,UpdatePersonas,DeletePersonas } from './models/personas.model';
-import { Rutas,UpdateRutas,deleteRutas } from './models/rutas.model';
+import { ApiResponse, UpdateAlmacen } from './models/almacen.model';
+import{ UpdateClientes } from './models/cliente.model';
+import{ updateArticulos } from './models/articulo.model';
+import { UpdatePersonas } from './models/personas.model';
+import { UpdateRutas } from './models/rutas.model';
 import { UpdateDetallePerfil } from './models/detallePerfil.model';
 import { UpdateDetalleMov } from './models/detalleMov.model';
 import { UpdateTickets } from './models/tickets.model';
@@ -14,8 +14,7 @@ import { UpdateExistencia } from './models/existencia.model';
 import { UpdateMovInventario } from './models/movInventario.model';
 import { UpdateDetalleTicket } from './models/detalleTicket.model';
 import { UpdateModulo } from './models/modulo.model';
-import { UpdateModuloUsuario } from './models/modusuario.model';
-import { insertEmpleado, updateEmpleado } from "./models/empleados.model";
+import { updateEmpleado } from "./models/empleados.model";
 import { UpdatePuesto } from "./models/puestos.model";
 import { UpdateCategoriaModulo } from './models/categoriaModulo.model';
 
@@ -747,5 +746,16 @@ deleteDetallePerfil(id : number): Observable<any> {
     }
     console.log('Enviando solicitud con el siguiente cuerpo:', body);
     return this.http.put<ApiResponse>(`${this.apiUrl}/DetallePerfil/Update`, body);
+  }
+}
+@Injectable({
+  providedIn: 'root'
+})
+export class RolesService {
+  private apiUrl = "http://localhost:5020/api";
+  constructor(private http: HttpClient) {}
+
+  getRoles(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/Roles/Get`);
   }
 }

@@ -41,14 +41,14 @@
   transition:.5s;
 }
 
-.menu-btn i
+.menu-btn .underline
 {
 	position: absolute;
 	inset: 0;
 	display: block;
 }
   
-.menu-btn i::after
+.menu-btn .underline::after
 {
 	content: '';
   color: red;
@@ -62,10 +62,16 @@
 	transition: 0.3s ease;
 }
 
-.menu-btn:hover i::after
+.menu-btn:hover .underline::after
 {
 	border-radius: 5px;
   transform: scale(1,1);
   transition: .3s ease;
+}
+
+.icon{
+  padding-top: 12px;
+  padding-right: 10px;
+  font-size: 24px;
 }
 
