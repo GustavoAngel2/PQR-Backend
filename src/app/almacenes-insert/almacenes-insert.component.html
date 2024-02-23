@@ -1,5 +1,6 @@
 <div class="window-header">
 <h1 mat-dialog-title>Nuevo Almacen</h1>
+<button class="btn-close" (click)="onNoClick()"><i class="bi bi-x-square-fill "></i></button>
 </div>
 
 <div class="window-content">
@@ -27,6 +28,5 @@
 </div>
 
 <div mat-dialog-actions class="window-footer" >
-    <button mat-button (click)="onNoClick()">Cancelar</button>
-    <button mat-button cdkFocusInitial (click)="insertar()">Insertar</button>
+    <button mat-button cdkFocusInitial (click)="insertar()"><i class="bi bi-cloud-upload-fill icon"></i> Insertar</button>
 </div>

@@ -21,9 +21,8 @@
       <div class="container">
         <!-- <input matInput placeholder="Ingresa el nombre" [(ngModel)]="nombreCatModulo"> -->
         <select [(ngModel)]="ComboRoles" (change)="dev($event)" class="form-control">
-         
+            <option value="0">--Seleccione un usuario--</option>
             <option *ngFor="let rol of ComboRoles" value={{rol.Id}}>{{ rol.Rol }}</option>
-        
         </select>
         <mat-form-field>
           <mat-label>Usuario</mat-label>

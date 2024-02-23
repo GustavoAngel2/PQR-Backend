@@ -19,16 +19,14 @@ html, body { height: 100%; }
 body { margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
 
 mat-toolbar{
-    background-color: rgb(255, 166, 0)!important; 
-    box-shadow: 1px 25px 15px 10px rgba(191, 112, 8, 0.5);
+    background-color: rgb(200, 100, 12)!important; 
+    box-shadow: 1px 25px 15px 10px rgba(161, 76, 5, 0.599);
 }
 
 mat-sidenav-content.mat-drawer-content.mat-sidenav-content.bg {
   background: rgb(212,109,19);
   background: linear-gradient(0deg, rgba(212,109,19,1) 0%, rgb(252, 212, 101) 100%);
 }
-
-
 
 mat-sidenav{
   width: 400px;
@@ -152,8 +150,12 @@ table{
 
 .window-header{
   width: 100%;
-  background-color: #c37a0e;
-  border-bottom: 3px solid #8e5a0c;
+  display: flex ;
+  align-content: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background: rgb(212,109,19);
+  background: linear-gradient(0deg, rgba(212,109,19,1) 0%, rgba(249,198,57,1) 100%);
 }
 
 .window-content{
@@ -161,8 +163,6 @@ table{
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  background: rgb(212,109,19);
-  background: linear-gradient(0deg, rgba(212,109,19,1) 0%, rgba(249,198,57,1) 100%);
 }
 
 .window-footer{
@@ -170,6 +170,52 @@ table{
   flex-direction: column;
   align-items: center;
   gap: 3px;
-  background-color: #e38a05;
+  background-color: #ccc;
   width: 100%;
+}
+
+.btn-close{
+  position:relative;
+  top: 12px;
+  right: 32px;
+  width: 32px;
+  height: 32px;
+  color: #fff;
+  font-size: 24px;
+  border:0;
+  background-color: #00000000;
+  transition:.3s ease;
+}
+
+.btn-close:hover{
+  color: #ff2222;
+  transition:.3s ease;
+}
+
+select {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 16px;
+  width: 200px; 
+}
+
+@media (max-width:1400px) {
+  mat-sidenav{
+    width: 300px;
+  }
+  
+  th{
+    font-size: 12px;
+    width: 100%;
+    height: 30px;
+  }
+  
+  td{
+    font-size: 12px;
+    width: 100%;
+    height: 60px;
+    text-align: center;
+    margin-top: 30px;
+  }
 }
