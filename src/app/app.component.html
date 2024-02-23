@@ -1,5 +1,5 @@
 <mat-sidenav-container class="Hamburguesa">
-    <mat-sidenav #sidenav mode="side">
+    <mat-sidenav #sidenav mode="push">
         <mat-list role="list" class="lista menu-container">
           <a class="menu-btn" routerLink="inicio" ><i class="bi bi-house-fill icon"></i><strong>Inicio</strong><i class="underline"></i></a>
           <a class="menu-btn" routerLink="almacenes" ><i class="bi bi-box-seam-fill icon"></i><strong>Almacenes</strong><i class="underline"></i></a>
@@ -23,7 +23,7 @@
         </mat-list>
     </mat-sidenav>
     <mat-sidenav-content class="bg">
-      <mat-toolbar color="primary">
+      <mat-toolbar  style="background-color: black; color: #fff;">
         <button mat-icon-button (click)="sidenav.toggle()">
           <mat-icon>menu</mat-icon>
         </button>

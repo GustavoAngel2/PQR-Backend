@@ -72,12 +72,12 @@ td{
   height: 64px;
   font-size: 18px;
   position:relative;
-  background:rgb(246, 255, 0);
-  background: linear-gradient(0deg, rgba(212,109,19,1) 0%, rgb(246, 255, 0)); 
-  color: #000;
+  background:rgb(16, 195, 10);
+  background: linear-gradient(0deg, rgb(19, 122, 16) 0%, rgb(16, 195, 10)); 
+  color: #fff;
   border-radius: 6px;
   padding: 4px;
-  border: 3px solid #8e5a0c;
+  border: 3px solid #165912;
   overflow: hidden;
   transition: .5s;
 }
@@ -131,6 +131,7 @@ td{
 
 .module-logo{
   margin-top: 12px;
+  margin-bottom:32px;
   width: 128px;
   height: 128px;
 }
