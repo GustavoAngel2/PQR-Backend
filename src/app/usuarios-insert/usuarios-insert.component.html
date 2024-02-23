@@ -6,27 +6,36 @@
     <div class="mat-dialog-cell">
       <mat-form-field>
         <mat-label>Nombre</mat-label>
-        <input matInput placeholder="Ingresa el nombre" [(ngModel)]="nombre">
+        <input matInput placeholder="Ingresa el nombre" [(ngModel)]="nombre" />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Contraseña</mat-label>
-        <input matInput placeholder="Contrasena" [(ngModel)]="contrasena">
+        <input matInput placeholder="Contrasena" [(ngModel)]="contrasena" />
       </mat-form-field>
-      <mat-form-field>
-        <mat-label>Rol</mat-label>
-        <input matInput placeholder="Rol" [(ngModel)]="rol">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Usuario</mat-label>
-        <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuario">
-      </mat-form-field>
-      
+      <!-- <mat-form-field>
+        <mat-label>Nombre</mat-label> -->
+      <div class="container">
+        <!-- <input matInput placeholder="Ingresa el nombre" [(ngModel)]="nombreCatModulo"> -->
+        <select [(ngModel)]="ComboUsuario" class="form-control">
+          <option>Selecccione...</option>
+          <option *ngFor="let usuario of ComboUsuario" [value]="usuario">
+            {{ usuario.Rol }}
+          </option>
+        </select>
+        <mat-form-field>
+          <mat-label>Usuario</mat-label>
+          <input
+            matInput
+            placeholder="Usuario Actualiza"
+            [(ngModel)]="usuario"
+          />
+        </mat-form-field>
+      </div>
     </div>
+    <!-- Puedes agregar más filas con más campos aquí -->
   </div>
-  <!-- Puedes agregar más filas con más campos aquí -->
-</div>
-<div mat-dialog-actions>
+  <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Cancelar</button>
     <button mat-button cdkFocusInitial (click)="insertar()">Insertar</button>
+  </div>
 </div>
-

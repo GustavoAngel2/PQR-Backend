@@ -1,22 +1,28 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { UsuarioSevice } from '../data.service';
+import { Component, OnInit } from "@angular/core";
+import { MatDialogRef } from "@angular/material/dialog";
+import { UsuarioSevice } from "../data.service";
 
 @Component({
-  selector: 'app-usuarios-insert',
-  templateUrl: './usuarios-insert.component.html',
-  styleUrls: ['./usuarios-insert.component.css']
+  selector: "app-usuarios-insert",
+  templateUrl: "./usuarios-insert.component.html",
+  styleUrls: ["./usuarios-insert.component.css"],
 })
 export class UsuariosInsertComponent {
-  nombre: string = '';
-  contrasena: string = '';
+  nombre: string = "";
+  contrasena: string = "";
   rol: number = 0;
   usuario: number = 0;
+  ComboUsuario: any;
 
   constructor(
     public dialogRef: MatDialogRef<UsuariosInsertComponent>,
     private usuarioService: UsuarioSevice
   ) {}
+  ngOnInit(): void {
+    this.usuarioService.getUsuarios().subscribe((data: any) => {
+      this.ComboUsuario = data;
+    });
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -26,8 +32,8 @@ export class UsuariosInsertComponent {
     const nuevoUsuario = {
       nombre: this.nombre,
       contrasena: this.contrasena,
-      rol: this.rol,  
-      usuario: this.usuario  
+      rol: this.rol,
+      usuario: this.usuario,
     };
 
     // Aquí asumo que tienes un método en tu servicio para insertar el departamento
@@ -39,9 +45,8 @@ export class UsuariosInsertComponent {
       },
       error: (error) => {
         // Manejar el error aquí
-        console.error('Hubo un error al insertar el almacen', error);
-      }
+        console.error("Hubo un error al insertar el almacen", error);
+      },
     });
   }
 }
-
