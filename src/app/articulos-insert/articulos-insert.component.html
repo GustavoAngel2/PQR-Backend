@@ -5,52 +5,34 @@
     <!-- Columna para el campo de nombre -->
     <div class="mat-dialog-cell">
       <mat-form-field>
-        <mat-label>descripcion</mat-label>
-        <input
-          matInput
-          placeholder="Ingresa el nombre"
-          [(ngModel)]="descripcion"
-        />
+        <mat-label>Descripción</mat-label>
+        <input matInput placeholder="Ingresa la descripción" [(ngModel)]="descripcion">
       </mat-form-field>
       <mat-form-field>
-        <mat-label>codigo</mat-label>
-        <input
-          matInput
-          placeholder="Ingresa la direccion"
-          [(ngModel)]="codigo"
-        />
+        <mat-label>Código</mat-label>
+        <input matInput placeholder="Ingresa el código" [(ngModel)]="codigo">
       </mat-form-field>
       <mat-form-field>
-        <mat-label>Unidad Medida</mat-label>
-        <input matInput placeholder="Usuario Actualiza" [(ngModel)]="um" />
+        <mat-label>Unidad de Medida</mat-label>
+        <select matNativeControl [(ngModel)]="um">
+          <option value="0">--Seleccione una unidad de medida--</option>
+          <option *ngFor="let um of ComboUm" [value]="um.Id">{{ um.Nombre }}</option>
+        </select>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Costo</mat-label>
-        <input
-          matInput
-          placeholder="Ingresa la direccion"
-          [(ngModel)]="costo"
-        />
+        <input matInput placeholder="Ingresa el costo" [(ngModel)]="costo">
       </mat-form-field>
       <mat-form-field>
         <mat-label>Precio</mat-label>
-        <input
-          matInput
-          placeholder="Ingresa la direccion"
-          [(ngModel)]="precio"
-        />
+        <input matInput placeholder="Ingresa el precio" [(ngModel)]="precio">
       </mat-form-field>
       <mat-form-field>
         <mat-label>Usuario</mat-label>
-        <input
-          matInput
-          placeholder="Ingresa la direccion"
-          [(ngModel)]="usuario"
-        />
+        <input matInput placeholder="Ingresa el usuario" [(ngModel)]="usuario">
       </mat-form-field>
     </div>
   </div>
-  <!-- Puedes agregar más filas con más campos aquí -->
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancelar</button>

@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA,MatDialogRef } from '@angular/material/dialog';
 import { UpdateAlmacen } from '../models/almacen.model';
 import { AlmacenesService, ArticulosService } from '../data.service';
 import { updateArticulos } from '../models/articulo.model';
+import { UMService } from '../data.service';
 
 @Component({
   selector: 'app-articulos-update',
@@ -11,9 +12,13 @@ import { updateArticulos } from '../models/articulo.model';
 })
 export class ArticulosUpdateComponent {
   articulo: updateArticulos;
+  ComboUm: any;
+  um!:number;
+
   constructor(
     public dialogRef: MatDialogRef<ArticulosUpdateComponent>,
     private articulosService: ArticulosService,
+    private umService:UMService,
     @Inject(MAT_DIALOG_DATA) public data: updateArticulos
 
   ) {
@@ -22,10 +27,20 @@ export class ArticulosUpdateComponent {
   }
 
   ngOnInit(): void {
+        this.umService.getUM().subscribe((data: any) => {
+      this.ComboUm = data;
+      console.log(this.ComboUm);
+    });
+
+    // Asignar el valor actual de la unidad de medida del artículo al campo 'um'
+    this.um = this.articulo.UM;
   }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+   dev(event: any): void {
+    this.um = event.target.value;
   }
 
   guardar(): void {

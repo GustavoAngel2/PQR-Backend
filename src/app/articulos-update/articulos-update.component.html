@@ -12,9 +12,16 @@
         <mat-label>Codigo</mat-label>
         <input matInput placeholder=" " [(ngModel)]="articulo.Codigo">
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field [style.display]="'none'" >
         <mat-label>Unidad Medida</mat-label>
         <input matInput placeholder=" " [(ngModel)]="articulo.UM">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Unidad Medida</mat-label>
+        <select  matNativeControl [(ngModel)]="articulo.UM" >
+          <option value="0">--Seleccione una unidad de medida--</option>
+          <option *ngFor="let um of ComboUm" [value]="um.Id">{{ um.Nombre }}</option>
+        </select>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Usuario actualiza</mat-label>

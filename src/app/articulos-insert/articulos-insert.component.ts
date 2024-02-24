@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ArticulosService } from '../data.service';
+import { UMService } from '../data.service';
 
 @Component({
   selector: 'app-articulos-insert',
@@ -10,18 +11,32 @@ import { ArticulosService } from '../data.service';
 export class ArticulosInsertComponent {
   descripcion: string = '';
   codigo: string = '';
-  um: string = '';
+  um: number = 0;
   costo: number = 0;
   precio: number = 0;
   usuario: number = 0;
+  ComboUm: any;
+  
 
   constructor(
     public dialogRef: MatDialogRef<ArticulosInsertComponent>,
-    private articulosService: ArticulosService
+    private articulosService: ArticulosService,
+    private umService : UMService
   ) {}
 
-  onNoClick(): void {
+   ngOnInit(): void {
+    this.umService.getUM().subscribe((data: any) => {
+      this.ComboUm = data;
+      console.log(this.ComboUm)
+    });
+  }
+
+    onNoClick(): void {
     this.dialogRef.close();
+  }
+
+   dev(e:any):void{
+    this.um=e.target.value
   }
 
   insertar(): void {
