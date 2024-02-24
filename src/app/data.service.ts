@@ -113,7 +113,7 @@ export class ArticulosService {
   insertarArticulos(ArticulosData: {
     descripcion: string;
     codigo: string;
-    UM: string;
+    UM: number;
     costo: number;
     precio: number;
     Usuario: number;
@@ -757,5 +757,16 @@ export class RolesService {
 
   getRoles(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(`${this.apiUrl}/Roles/Get`);
+  }
+}
+@Injectable({
+  providedIn: 'root'
+})
+export class UMService {
+  private apiUrl = "http://localhost:5020/api";
+  constructor(private http: HttpClient) {}
+
+  getUM(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/UM/Get`);
   }
 }

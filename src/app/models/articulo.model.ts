@@ -5,6 +5,7 @@ export interface articulos {
     Codigo: string;
     Descripcion: string;
     UM: string;
+    UMId:number;
     Costo: number;
     Precio: number;
     Usuario: String;
@@ -25,7 +26,7 @@ export interface articulos {
     Id: number;
     Codigo: string;
     Descripcion: string;
-    UM: string;
+    UM: number;
     Costo: number;
     Precio: number;
     Usuario: String;
