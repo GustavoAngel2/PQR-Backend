@@ -6,14 +6,14 @@
     <div class="mat-dialog-cell">
            <mat-form-field>
         <mat-label>Producto</mat-label>
-        <select matNativeControl [(ngModel)]="codigo" (change)="dev1($event)">
+        <select matNativeControl [(ngModel)]="Codigo" (change)="dev1($event)">
           <option value="0">--Seleccione un producto--</option>
-          <option *ngFor="let cc of ComboCodigo" [value]="cc.id">{{ cc.Descripcion }}</option>
+          <option *ngFor="let cc of ComboCodigo" [value]="cc.Codigo">{{ cc.Descripcion }}</option>
         </select>
       </mat-form-field>
         <mat-form-field>
         <mat-label>Almacen</mat-label>
-        <select matNativeControl [(ngModel)]="almacen" (change)="dev2($event)" >
+        <select matNativeControl [(ngModel)]="Almacen" (change)="dev2($event)" >
           <option value="0">--Seleccione un almacen--</option>
           <option *ngFor="let almacen of ComboAlmacen" [value]="almacen.Id">{{ almacen.Nombre}}</option>
         </select>

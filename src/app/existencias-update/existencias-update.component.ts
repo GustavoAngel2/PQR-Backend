@@ -14,8 +14,8 @@ export class ExistenciasUpdateComponent {
   existencia: UpdateExistencia;
   ComboCodigo: any;
   ComboAlmacen: any;
-  codigo!: number;
-  almacen!: number;
+  Codigo!: number;
+  Almacen!: number;
 
   constructor(
     public dialogRef: MatDialogRef<ExistenciasUpdateComponent>,
@@ -30,10 +30,12 @@ export class ExistenciasUpdateComponent {
   ngOnInit(): void {
     this.ArticuloService.getArticulos().subscribe((data: any) => {
       this.ComboCodigo = data;
+      console.log("Combo Codigo")
       console.log(this.ComboCodigo)
     });
     this.AlmacenesService.getAlmacenes().subscribe((data2: any) => {
       this.ComboAlmacen = data2;
+      console.log("Combo Almacen")
       console.log(this.ComboAlmacen)
     });
   }
@@ -43,22 +45,23 @@ export class ExistenciasUpdateComponent {
   }
 
   dev1(e:any):void{
-    this.codigo=e.target.value
+    this.existencia.Codigo=e.target.value
   }
+  
   dev2(e:any):void{
-    this.almacen=e.target.value
+    this.existencia.Almacen=e.target.value
   }
 
   guardar(): void {
-    this.existenciasService.updateExistencias(this.existencia).subscribe({
-      next: (response) => {
-        this.dialogRef.close(response);
-/*         location.reload();*/
-        console.log(this.existencia)
-      },
-      error: (error) => {
-        console.error(error);
-      }
+     this.existenciasService.updateExistencias(this.existencia).subscribe({
+       next: (response) => {
+         this.dialogRef.close(response);
+         location.reload();
+         console.log(this.existencia)
+       },
+       error: (error) => {
+         console.error(error);
+       }
     });
   }
 }
