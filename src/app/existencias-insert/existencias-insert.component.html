@@ -4,13 +4,19 @@
   <div class="mat-dialog-row">
     <!-- Columna para el campo de nombre -->
     <div class="mat-dialog-cell">
-      <mat-form-field>
-        <mat-label>Nombre</mat-label>
-        <input matInput placeholder="Ingresa el código" [(ngModel)]="codigo">
+        <mat-form-field>
+        <mat-label>Producto</mat-label>
+        <select matNativeControl [(ngModel)]="codigo">
+          <option value="0">--Seleccione un producto--</option>
+          <option *ngFor="let cc of ComboCodigo" [value]="cc.Codigo">{{ cc.Descripcion }}</option>
+        </select>
       </mat-form-field>
-      <mat-form-field>
+        <mat-form-field>
         <mat-label>Almacen</mat-label>
-        <input matInput placeholder="Ingresa la almacen" [(ngModel)]="almacen">
+        <select matNativeControl [(ngModel)]="almacen">
+          <option value="0">--Seleccione un almacen--</option>
+          <option *ngFor="let almacen of ComboAlmacen" [value]="almacen.Id">{{ almacen.Nombre }}</option>
+        </select>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Cantidad</mat-label>

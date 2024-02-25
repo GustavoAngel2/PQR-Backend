@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DetallePerfilService } from '../data.service'; 
+import { RolesService } from '../data.service';
+import { ModulosService } from '../data.service';
+import { Modulo } from '../models/modulo.model';
 
 @Component({
   selector: 'app-detalle-perfil-insert-component',
@@ -12,11 +15,28 @@ export class DetallePerfilInsertComponent {
   idModulo: number = 0;
   acceso: number = 0;
   usuarioActualiza: number = 0;
+  ComboRol : any;
+  ComboModulo:any;
 
   constructor(
     public dialogRef: MatDialogRef<DetallePerfilInsertComponent>,
-    private DetallePerfilService: DetallePerfilService
+    private DetallePerfilService: DetallePerfilService,
+    private modulosService: ModulosService,
+    private rolesService :RolesService
   ) {}
+
+     ngOnInit(): void {
+    this.rolesService.getRoles().subscribe((data: any) => {
+      this.ComboRol = data;
+      console.log(this.ComboRol)
+    });
+     this.modulosService.getModulos().subscribe((data2: any) => {
+      this.ComboModulo = data2;
+      console.log(this.ComboModulo)
+    });
+  }
+
+  
 
   onNoClick(): void {
     this.dialogRef.close();
