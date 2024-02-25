@@ -4,13 +4,19 @@
   <div class="mat-dialog-row">
     <!-- Columna para el campo de nombre -->
     <div class="mat-dialog-cell">
-      <mat-form-field>
-        <mat-label>Id de ticket</mat-label>
-        <input matInput placeholder="Ingresa el id del ticket" [(ngModel)]="idTicket">
+         <mat-form-field>
+      <mat-label>Tipo Movimiento</mat-label>
+        <select matNativeControl [(ngModel)]="idTicket">
+          <option value="0">--Seleccione un Tipo Movimiento--</option>
+          <option *ngFor="let ticket of ComboTicket" [value]="ticket.Id">{{ ticket.Sucursal }} - {{ ticket.Cliente }}</option>
+        </select>
       </mat-form-field>
-      <mat-form-field>
-        <mat-label>Codigo</mat-label>
-        <input matInput placeholder="Ingresa el código" [(ngModel)]="codigo">
+     <mat-form-field>
+        <mat-label>Articulo</mat-label>
+        <select matNativeControl [(ngModel)]="codigo">
+          <option value="0">--Seleccione un Articulo--</option>
+          <option *ngFor="let cod of ComboCodigo" [value]="cod.Id">{{ cod.Descripcion}}</option>
+        </select>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Cantidad</mat-label>

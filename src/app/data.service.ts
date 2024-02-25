@@ -500,7 +500,7 @@ export class DetalleTicketService {
 
   insertDetalleTicket(DTData: {
     idTicket: number;
-    codigo: string;
+    codigo: number;
     cantidad: number;
     precioVenta: number;
     usuario: number;

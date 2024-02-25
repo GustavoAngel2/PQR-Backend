@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DetalleTicketService } from '../data.service';
+import { TicketsSevice } from '../data.service';
+import { ArticulosService } from '../data.service';
 
 @Component({
   selector: 'app-detalle-ticket-insert',
@@ -9,16 +11,33 @@ import { DetalleTicketService } from '../data.service';
 })
 export class DetalleTicketInsertComponent {
   idTicket: number = 0;
-  codigo: string = '' ;
+  codigo: number=0 ;
   cantidad: number = 0;
   precioVenta: number = 0;
   usuario: number = 0;
+  ComboCodigo:any;
+  ComboTicket:any
 
   constructor(
     public dialogRef: MatDialogRef<DetalleTicketInsertComponent>,
+    private TicketService :TicketsSevice,
+    private articulosService:ArticulosService,
     private detalleticketService: DetalleTicketService
   ) {}
 
+
+
+    ngOnInit(): void {
+    this.TicketService.getTickets(0).subscribe((data: any) => {
+      this.ComboTicket = data;
+      console.log(this.ComboTicket)
+    });
+    this.articulosService.getArticulos().subscribe((data2: any) => {
+      this.ComboCodigo = data2;
+      console.log(this.ComboCodigo)
+    });
+  }    
+  
   onNoClick(): void {
     this.dialogRef.close();
   }

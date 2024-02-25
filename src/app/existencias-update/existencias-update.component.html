@@ -8,7 +8,7 @@
         <mat-label>Producto</mat-label>
         <select matNativeControl [(ngModel)]="Codigo" (change)="dev1($event)">
           <option value="0">--Seleccione un producto--</option>
-          <option *ngFor="let cc of ComboCodigo" [value]="cc.Id">{{ cc.Descripcion }}</option>
+          <option *ngFor="let cc of ComboCodigo" [value]="cc.Codigo">{{ cc.Descripcion }}</option>
         </select>
       </mat-form-field>
         <mat-form-field>
