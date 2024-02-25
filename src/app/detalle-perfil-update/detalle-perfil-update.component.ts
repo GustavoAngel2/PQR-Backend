@@ -34,11 +34,13 @@ export class DetallePerfilUpdateComponent implements OnInit{
     this.rolesService.getRoles().subscribe((data: any) => {
     this.ComboRol = data;
       console.log(this.ComboRol);
+      this.idPerfil = this.DetallePerfil.idPerfil;
     });
     
     this.modulosService.getModulos().subscribe((data2: any) => {
     this.ComboModulo = data2;
       console.log(this.ComboModulo);
+      this.idModulo = this.DetallePerfil.idModulo;
     });
 
     this.idModulo = this.DetallePerfil.idModulo;
