@@ -8,17 +8,31 @@
         <mat-label>Id del perfil</mat-label>
         <input matInput placeholder="Ingresa el id del perfil" [(ngModel)]="DetallePerfil.Id">
       </mat-form-field>
-      <mat-form-field>
-        <mat-label>Id del perfil</mat-label>
-        <input matInput placeholder="Ingresa el id del perfil" [(ngModel)]="DetallePerfil.idPerfil">
+       <mat-form-field [style.display]="'none'">
+        <mat-label>Rol</mat-label>
+        <input matInput placeholder=" " [(ngModel)]="DetallePerfil.idPerfil">
       </mat-form-field>
       <mat-form-field>
-        <mat-label>Id del modulo</mat-label>
-        <input matInput placeholder="Ingresa el id del modulo" [(ngModel)]="DetallePerfil.idModulo">
+        <mat-label>Rol</mat-label>
+        <select  matNativeControl [(ngModel)]="DetallePerfil.idPerfil" >
+          <option value="0">--Seleccione un Rol--</option>
+          <option *ngFor="let rol of ComboRol" [value]="rol.Id">{{ rol.Rol }}</option>
+        </select>
       </mat-form-field>
-      <mat-form-field>
+        <mat-form-field>
+        <mat-label>Modulo</mat-label>
+        <select  matNativeControl [(ngModel)]="DetallePerfil.idModulo" >
+          <option value="0">--Seleccione un modulo-</option>
+          <option *ngFor="let mod of ComboModulo" [value]="mod.Id">{{ mod.NombreModulo }}</option>
+        </select>
+      </mat-form-field>
+          <mat-form-field>
         <mat-label>Acceso</mat-label>
-        <input matInput placeholder="1 con acceso, 0 sin acceso" [(ngModel)]="DetallePerfil.acceso">
+        <select  matNativeControl [(ngModel)]="DetallePerfil.acceso" >
+          <option value="1">Con acceso</option>
+          <option value="0">sin acceso</option>
+
+        </select>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Usuario actualiza</mat-label>
