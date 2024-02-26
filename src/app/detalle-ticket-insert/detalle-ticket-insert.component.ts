@@ -10,7 +10,7 @@ import { ArticulosService } from '../data.service';
   styleUrls: ['./detalle-ticket-insert.component.css']
 })
 export class DetalleTicketInsertComponent {
-  idTicket: number = 0;
+   idTicket: number = 0;
   codigo: number=0 ;
   cantidad: number = 0;
   precioVenta: number = 0;

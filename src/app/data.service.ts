@@ -695,16 +695,16 @@ deleteCategoriaModulo(id : number): Observable<any> {
     return this.http.put(`${this.apiUrl}/CatModulo/Delete`, { id });
   }
 
-  updateCategoriaModulo(catModuloData: UpdateCategoriaModulo): Observable<ApiResponse> {
-    const body ={
-      Id: catModuloData.Id,
-      nombre: catModuloData.Nombre,
-      descripcion: catModuloData.Descripcion,  
-      usuario: catModuloData.Usuario
-    }
-    console.log('Enviando solicitud con el siguiente cuerpo:', body);
-    return this.http.put<ApiResponse>(`${this.apiUrl}/CatModulo/Update`, body);
-  }
+ updateCategoriaModulo(catModuloData: UpdateCategoriaModulo): Observable<ApiResponse> {
+  const body ={
+    Id: catModuloData.Id,
+    nombre: catModuloData.Nombre,
+    descripcion: catModuloData.Descripcion,  
+    usuario: catModuloData.Usuario
+  };
+  console.log('Enviando solicitud con el siguiente cuerpo:', body);
+  return this.http.put<ApiResponse>(`${this.apiUrl}/CatModulo/Update`, body);
+}
 }
 
 @Injectable({
@@ -768,5 +768,17 @@ export class UMService {
 
   getUM(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(`${this.apiUrl}/UM/Get`);
+  }
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class SucursalesService {
+  private apiUrl = "http://localhost:5020/api";
+  constructor(private http: HttpClient) {}
+
+  getSucursales(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/Sucursales/Get`);
   }
 }

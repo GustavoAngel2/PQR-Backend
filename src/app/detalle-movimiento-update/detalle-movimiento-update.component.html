@@ -15,7 +15,7 @@
         <mat-label>Tipo Movimiento</mat-label>
         <select matNativeControl [(ngModel)]="idMovimiento" (change)="dev2($event)" >
           <option value="0">--Seleccione un Tipo Movimiento--</option>
-          <option *ngFor="let movinv of ComboMov" [value]="movinv.Id">{{ movinv.IdTipoMov}}</option>
+          <option *ngFor="let movInv of ComboMov" [value]="movInv.Id">{{ movInv.IdTipoMov}}---{{movInv.IdAlmacen}}</option>
         </select>
       </mat-form-field>
       <mat-form-field>
