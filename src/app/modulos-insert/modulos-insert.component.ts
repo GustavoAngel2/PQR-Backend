@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ModulosService } from '../data.service';
+import { CategoriaModuloService } from '../data.service';
 
 @Component({
   selector: 'app-almacenes-insert',
@@ -11,12 +12,20 @@ export class ModulosInsertComponent {
   nombreModulo: string='';
   categoriaModulo: number=0;
   usuario: number=0;
+  comboCatMod:any;
 
   constructor(
     public dialogRef: MatDialogRef<ModulosInsertComponent>,
+    private catModService: CategoriaModuloService,
     private moduloService: ModulosService
   ) {}
 
+   ngOnInit(): void {
+    this.catModService.getCategoriaModulo().subscribe((data: any) => {
+      this.comboCatMod = data;
+      console.log(this.comboCatMod)
+    });
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }
