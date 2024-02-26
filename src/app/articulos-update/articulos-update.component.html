@@ -1,81 +1,42 @@
-<h1 mat-dialog-title>Editar articulo</h1>
-<div mat-dialog-content class="mat-dialog-grid">
-  <!-- Fila para el formulario -->
-  <div class="mat-dialog-row">
-    <!-- Columna para el campo de nombre -->
-    <div class="mat-dialog-cell">
-      <mat-form-field>
-        <mat-label>Descripcion</mat-label>
-        <input matInput placeholder="" [(ngModel)]="articulo.Descripcion">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Codigo</mat-label>
-        <input matInput placeholder=" " [(ngModel)]="articulo.Codigo">
-      </mat-form-field>
-      <mat-form-field [style.display]="'none'" >
-        <mat-label>Unidad Medida</mat-label>
-        <input matInput placeholder=" " [(ngModel)]="articulo.UM">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Unidad Medida</mat-label>
-        <select  matNativeControl [(ngModel)]="articulo.UM" >
-          <option value="0">--Seleccione una unidad de medida--</option>
-          <option *ngFor="let um of ComboUm" [value]="um.Id">{{ um.Nombre }}</option>
-        </select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Usuario actualiza</mat-label>
-        <input matInput placeholder=" " [(ngModel)]="articulo.Usuario">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Costo</mat-label>
-        <input matInput placeholder=" " [(ngModel)]="articulo.Costo">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Precio</mat-label>
-        <input matInput placeholder=" " [(ngModel)]="articulo.Precio">
-      </mat-form-field>
-    </div>
-  </div>
-  <!-- Puedes agregar más filas con más campos aquí -->
+<div class="window-header">
+  <h1 mat-dialog-title>Editar articulo</h1>
+  <button class="btn-close" (click)="onNoClick()"><i class="bi bi-x-square-fill"></i></button>
 </div>
 
 <div class="window-content">
-        <br>
-        <mat-form-field>
-          <mat-label>Descripcion</mat-label>
-          <input matInput placeholder="" [(ngModel)]="articulo.Descripcion">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Codigo</mat-label>
-          <input matInput placeholder=" " [(ngModel)]="articulo.Codigo">
-        </mat-form-field>
-        <mat-form-field [style.display]="'none'" >
-          <mat-label>Unidad Medida</mat-label>
-          <input matInput placeholder=" " [(ngModel)]="articulo.UM">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Unidad Medida</mat-label>
-          <select  matNativeControl [(ngModel)]="articulo.UM" >
-            <option value="0">--Seleccione una unidad de medida--</option>
-            <option *ngFor="let um of ComboUm" [value]="um.id">{{ um.Nombre }}</option>
-          </select>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Usuario actualiza</mat-label>
-          <input matInput placeholder=" " [(ngModel)]="articulo.Usuario">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Costo</mat-label>
-          <input matInput placeholder=" " [(ngModel)]="articulo.Costo">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Precio</mat-label>
-          <input matInput placeholder=" " [(ngModel)]="articulo.Precio">
-        </mat-form-field>
-    <!-- Puedes agregar más filas con más campos aquí -->
+  <mat-form-field>
+    <mat-label>Descripcion</mat-label>
+    <input matInput placeholder="" [(ngModel)]="articulo.Descripcion">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Codigo</mat-label>
+    <input matInput placeholder=" " [(ngModel)]="articulo.Codigo">
+  </mat-form-field>
+  <mat-form-field style="display: none;" >
+    <mat-label>Unidad Medida</mat-label>
+    <input matInput placeholder=" " [(ngModel)]="articulo.UM">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Unidad Medida</mat-label>
+    <select  matNativeControl [(ngModel)]="articulo.UM" >
+      <option value="0">--Seleccione una unidad de medida--</option>
+      <option *ngFor="let um of ComboUm" [value]="um.Id">{{ um.Nombre }}</option>
+    </select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Usuario actualiza</mat-label>
+    <input matInput placeholder=" " [(ngModel)]="articulo.Usuario">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Costo</mat-label>
+    <input matInput placeholder=" " [(ngModel)]="articulo.Costo">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Precio</mat-label>
+    <input matInput placeholder=" " [(ngModel)]="articulo.Precio">
+  </mat-form-field>
 </div>
 
-<div class="window-footer" mat-dialog-actions>
+<div mat-dialog-actions class="window-footer" >
     <button class="btn" (click)="guardar()"><i class="bi bi-floppy2-fill icon"></i> Guardar Cambios<i class="underline"></i></button>
 </div>
