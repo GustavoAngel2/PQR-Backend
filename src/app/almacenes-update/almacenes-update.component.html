@@ -1,9 +1,11 @@
+
+  <!-- Puedes agregar más filas con más campos aquí -->
 <div class="window-header">
   <h1 mat-dialog-title>Editar almacen</h1>
+  <button class="btn-close" (click)="onNoClick()"><i class="bi bi-x-square-fill btn-close"></i></button>
 </div>
 
 <div class="window-content">
-  <br>
   <mat-form-field>
     <mat-label>Nombre</mat-label>
     <input matInput placeholder="Ingresa el nombre" [(ngModel)]="almacen.Nombre">
@@ -17,7 +19,7 @@
     <input matInput placeholder="Ingresa el Usuario" [(ngModel)]="almacen.Usuario">
   </mat-form-field>
 </div>
+
 <div mat-dialog-actions class="window-footer" >
-    <button mat-button (click)="onNoClick()">Cancelar</button>
-    <button mat-button (click)="guardar()">Guardar Cambios</button>
+    <button class="btn" (click)="guardar()"><i class="bi bi-floppy2-fill icon"></i> Guardar Cambios<i class="underline"></i></button>
 </div>

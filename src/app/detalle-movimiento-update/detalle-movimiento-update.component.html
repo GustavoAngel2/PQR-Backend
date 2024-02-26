@@ -4,13 +4,19 @@
   <div class="mat-dialog-row">
     <!-- Columna para el campo de nombre -->
     <div class="mat-dialog-cell">
-      <mat-form-field>
-        <mat-label>IdMovimiento</mat-label>
-        <input matInput placeholder="Ingresa el IdMovieminto" [(ngModel)]="DetalleMov.idMovimiento">
+          <mat-form-field>
+        <mat-label>Producto</mat-label>
+        <select matNativeControl [(ngModel)]="codigo" (change)="dev1($event)">
+          <option value="0">--Seleccione un producto--</option>
+          <option *ngFor="let cc of ComboCodigo" [value]="cc.Codigo">{{ cc.Descripcion }}</option>
+        </select>
       </mat-form-field>
-      <mat-form-field>
-        <mat-label>Codigo</mat-label>
-        <input matInput placeholder="Ingresa el Codigo" [(ngModel)]="DetalleMov.codigo">
+        <mat-form-field>
+        <mat-label>Tipo Movimiento</mat-label>
+        <select matNativeControl [(ngModel)]="idMovimiento" (change)="dev2($event)" >
+          <option value="0">--Seleccione un Tipo Movimiento--</option>
+          <option *ngFor="let movInv of ComboMov" [value]="movInv.Id">{{ movInv.IdTipoMov}}---{{movInv.IdAlmacen}}</option>
+        </select>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Cantidad</mat-label>

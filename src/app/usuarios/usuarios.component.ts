@@ -75,7 +75,7 @@ export class UsuariosComponent implements OnInit{
   }
   abrirEditarModal(usuario: usuarios) {
     const dialogRef = this.dialog.open(UsuarioUpdateComponent, {
-      width: '250px',
+      width: '550px',
       data: usuario // Pasa el objeto de departamento a la modal
     });
   

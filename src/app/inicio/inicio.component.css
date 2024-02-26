@@ -1,0 +1,70 @@
+.home-btn {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    color: #000;
+    font-size: 17px;
+    background-color: #f9722a00;
+    width: 100%;
+    padding-top: 128px;
+    padding-bottom: 128px;
+    border: 0;
+    transition: 0.5s;
+}
+  
+.home-btn:hover {
+    background-color: #8a370b34;
+    transition:.5s;
+}
+  
+.home-btn .underline
+{
+    position: absolute;
+    display: block;
+    inset:0;
+}
+    
+.home-btn .underline::after
+{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: #000;
+    transform: scale(0,1);
+    transition: 0.3s ease;
+}
+  
+.home-btn:hover .underline::after
+{
+    border-radius: 5px;
+    transform: scale(1,1);
+    transition: .3s ease;
+}
+  
+.app-icon{
+    margin-bottom: 12px;
+    font-size: 64px;
+}
+
+.apps-container{
+    background: #efb120;
+    background: linear-gradient(0deg, rgb(179, 83, 5) 10%, #ef8e20 90%);
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(6,1fr);
+    width: 100%;
+    margin: 0,auto;
+    grid-row: 4;
+}
+
+@media (max-width:1400px) {
+    .home-btn {
+        padding-top: 32px;
+        padding-bottom: 32px;
+    }
+
+}

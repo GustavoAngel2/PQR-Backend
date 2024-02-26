@@ -113,7 +113,7 @@ export class ArticulosService {
   insertarArticulos(ArticulosData: {
     descripcion: string;
     codigo: string;
-    UM: string;
+    UM: number;
     costo: number;
     precio: number;
     Usuario: number;
@@ -500,7 +500,7 @@ export class DetalleTicketService {
 
   insertDetalleTicket(DTData: {
     idTicket: number;
-    codigo: string;
+    codigo: number;
     cantidad: number;
     precioVenta: number;
     usuario: number;
@@ -695,16 +695,16 @@ deleteCategoriaModulo(id : number): Observable<any> {
     return this.http.put(`${this.apiUrl}/CatModulo/Delete`, { id });
   }
 
-  updateCategoriaModulo(catModuloData: UpdateCategoriaModulo): Observable<ApiResponse> {
-    const body ={
-      Id: catModuloData.Id,
-      nombre: catModuloData.Nombre,
-      descripcion: catModuloData.Descripcion,  
-      usuario: catModuloData.Usuario
-    }
-    console.log('Enviando solicitud con el siguiente cuerpo:', body);
-    return this.http.put<ApiResponse>(`${this.apiUrl}/CatModulo/Update`, body);
-  }
+ updateCategoriaModulo(catModuloData: UpdateCategoriaModulo): Observable<ApiResponse> {
+  const body ={
+    Id: catModuloData.Id,
+    nombre: catModuloData.Nombre,
+    descripcion: catModuloData.Descripcion,  
+    usuario: catModuloData.Usuario
+  };
+  console.log('Enviando solicitud con el siguiente cuerpo:', body);
+  return this.http.put<ApiResponse>(`${this.apiUrl}/CatModulo/Update`, body);
+}
 }
 
 @Injectable({
@@ -757,5 +757,28 @@ export class RolesService {
 
   getRoles(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(`${this.apiUrl}/Roles/Get`);
+  }
+}
+@Injectable({
+  providedIn: 'root'
+})
+export class UMService {
+  private apiUrl = "http://localhost:5020/api";
+  constructor(private http: HttpClient) {}
+
+  getUM(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/UM/Get`);
+  }
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class SucursalesService {
+  private apiUrl = "http://localhost:5020/api";
+  constructor(private http: HttpClient) {}
+
+  getSucursales(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/Sucursales/Get`);
   }
 }

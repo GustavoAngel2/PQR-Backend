@@ -68,6 +68,7 @@ import { CategoriaModuloUpdateComponent } from "./categoria-modulo-update/catego
 import { DetallePerfilComponent } from './detalle-perfil/detalle-perfil.component';
 import { DetallePerfilInsertComponent } from './detalle-perfil-insert-component/detalle-perfil-insert-component.component';
 import { DetallePerfilUpdateComponent } from './detalle-perfil-update/detalle-perfil-update.component';
+import {MatSelectModule} from '@angular/material/select';
 
 const appRoutes: Routes = [
 
@@ -166,6 +167,7 @@ const appRoutes: Routes = [
     MatSidenavModule,
     MatToolbarModule,
     MatListModule,
+    MatSelectModule
   ],
   providers: [
     // Agrega el servicio en los providers

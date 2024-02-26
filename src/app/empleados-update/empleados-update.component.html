@@ -4,18 +4,27 @@
   <div class="mat-dialog-row">
     <!-- Columna para el campo de nombre -->
     <div class="mat-dialog-cell">
-      <mat-form-field>
-        <mat-label>Persona</mat-label>
-        <input matInput placeholder=" " [(ngModel)]="empleado.IdPersona" />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Sucursal</mat-label>
-        <input matInput placeholder=" " [(ngModel)]="empleado.IdSucursal" />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Puesto</mat-label>
-        <input matInput placeholder=" " [(ngModel)]="empleado.IdPuesto" />
-      </mat-form-field>
+         <mat-form-field>
+    <mat-label>Persona</mat-label>
+    <select matNativeControl [(ngModel)]="empleado.IdPersona" (change)="dev($event)">
+      <option value="0">--Seleccione una Persona--</option>
+      <option *ngFor="let per of ComboPersona" [value]="per.Id">{{ per.Nombre }}</option>
+    </select>
+  </mat-form-field>
+     <mat-form-field>
+    <mat-label>Sucursal</mat-label>
+    <select matNativeControl [(ngModel)]="empleado.IdSucursal" (change)="dev2($event)">
+      <option value="0">--Seleccione una Sucursal--</option>
+      <option *ngFor="let scr of ComboSucursal" [value]="scr.Id">{{ scr.Nombre }}</option>
+    </select>
+  </mat-form-field>
+        <mat-form-field>
+    <mat-label>Puesto</mat-label>
+    <select matNativeControl [(ngModel)]="empleado.IdPuesto" (change)="dev3($event)">
+      <option value="0">--Seleccione un Puesto--</option>
+      <option *ngFor="let pt of ComboPuesto" [value]="pt.Id">{{ pt.nombre }}</option>
+    </select>
+  </mat-form-field>
       <mat-form-field>
         <mat-label>Usuario</mat-label>
         <input
