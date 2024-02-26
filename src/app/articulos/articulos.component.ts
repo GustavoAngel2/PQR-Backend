@@ -13,7 +13,7 @@ import { ArticulosUpdateComponent } from '../articulos-update/articulos-update.c
   styleUrls: ['./articulos.component.css']
 })
 export class ArticulosComponent {
-  displayedColumns: string[] = ['Id', 'Codigo', 'Descripcion', 'UM', 'Usuario','Costo','Precio','FechaReg','FechaAct','Acciones'];
+  displayedColumns: string[] = ['Id', 'Codigo', 'Descripcion', 'UM', 'Usuario','Costo','Precio','Fecha Registro','Fecha Actualiza','Acciones'];
   dataSource: MatTableDataSource<articulos>;
 
   constructor(private articulosService: ArticulosService, public dialog:MatDialog) {
@@ -75,7 +75,7 @@ export class ArticulosComponent {
   }
   abrirEditarModal(articulos: articulos) {
     const dialogRef = this.dialog.open(ArticulosUpdateComponent, {
-      width: '250px',
+      width: '550px',
       data: articulos // Pasa el objeto de departamento a la modal
     });
   

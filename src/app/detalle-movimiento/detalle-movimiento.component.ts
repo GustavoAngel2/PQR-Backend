@@ -75,7 +75,7 @@ export class DetalleMovimientoComponent implements OnInit {
   }
   abrirEditarModal(detalleMov: DetalleMov) {
     const dialogRef = this.dialog.open(DetalleMovimientoUpdateComponent, {
-      width: '250px',
+      width: '550px',
       data: detalleMov // Pasa el objeto de departamento a la modal
     });
   
