@@ -782,3 +782,14 @@ export class SucursalesService {
     return this.http.get<ApiResponse>(`${this.apiUrl}/Sucursales/Get`);
   }
 }
+@Injectable({
+  providedIn: 'root'
+})
+export class TiposMovService {
+  private apiUrl = "http://localhost:5020/api";
+  constructor(private http: HttpClient) {}
+
+  getTiposMov(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/TiposMov/Get`);
+  }
+}
