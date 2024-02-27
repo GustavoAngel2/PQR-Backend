@@ -9,7 +9,7 @@
     <mat-label>Id del perfil</mat-label>
     <input matInput placeholder="Ingresa el id del perfil" [(ngModel)]="DetallePerfil.Id">
   </mat-form-field>
-   <mat-form-field [style.display]="'none'">
+   <mat-form-field style="display:none;">
     <mat-label>Rol</mat-label>
     <input matInput placeholder=" " [(ngModel)]="DetallePerfil.idPerfil">
   </mat-form-field>
@@ -27,7 +27,7 @@
       <option *ngFor="let mod of ComboModulo" [value]="mod.Id">{{ mod.NombreModulo }}</option>
     </select>
   </mat-form-field>
-      <mat-form-field>
+  <mat-form-field>
     <mat-label>Acceso</mat-label>
     <select  matNativeControl [(ngModel)]="DetallePerfil.acceso" >
       <option value="1">Con acceso</option>
