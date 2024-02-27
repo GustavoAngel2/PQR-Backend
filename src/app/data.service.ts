@@ -492,9 +492,8 @@ export class DetalleTicketService {
   constructor(private http: HttpClient) {}
 
   getDetalleTicket(IdTicket: 0): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(
-      `${this.apiUrl}/DetalleTicket/Get?idTicket=0`,
-      { IdTicket }
+    return this.http.get<ApiResponse>(
+      `${this.apiUrl}/DetalleTicket/Get?idTicket=0`
     );
   }
 
@@ -506,7 +505,7 @@ export class DetalleTicketService {
     usuario: number;
   }): Observable<ApiResponse> {
     const body = {
-      idTicket: DTData.codigo,
+      idTicket: DTData.idTicket,
       codigo: DTData.codigo,
       cantidad: DTData.cantidad,
       precioVenta: DTData.precioVenta,
@@ -520,7 +519,7 @@ export class DetalleTicketService {
 
   deleteDetalleTicket(id: number): Observable<any> {
     // Asegúrate de que el endpoint y la forma en que pasas el ID son correctos según tu API
-    return this.http.post(`${this.apiUrl}/DetalleTicket/Delete`, { id });
+    return this.http.put(`${this.apiUrl}/DetalleTicket/Delete`, { id });
   }
 
   updateDetalleTicket(DTData: UpdateDetalleTicket): Observable<ApiResponse> {
