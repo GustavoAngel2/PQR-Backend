@@ -4,7 +4,6 @@
 </div>
 
 <div class="window-content">
-    <div mat-dialog-content class="mat-dialog-grid">
         <mat-form-field>
             <mat-label>Nombre</mat-label>
             <input matInput placeholder="Ingresa el nombre" [(ngModel)]="catmodulo.Nombre">
@@ -18,7 +17,6 @@
             <input matInput placeholder="Ingresa el Usuario" [(ngModel)]="catmodulo.Usuario">
         </mat-form-field>
     </div>
-</div>
     
 <div class="window-footer" mat-dialog-actions>
     <button class="btn" (click)="guardar()"><i class="bi bi-floppy2-fill icon"></i> Guardar Cambios<i class="underline"></i></button>

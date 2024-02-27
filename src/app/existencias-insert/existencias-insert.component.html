@@ -1,9 +1,9 @@
-<h1 mat-dialog-title>Nueva existencia</h1>
-<div mat-dialog-content class="mat-dialog-grid">
-  <!-- Fila para el formulario -->
-  <div class="mat-dialog-row">
-    <!-- Columna para el campo de nombre -->
-    <div class="mat-dialog-cell">
+<div class="window-header">
+  <h1 mat-dialog-title>Nueva existencia</h1>
+  <button class="btn-close" (click)="onNoClick()"><i class="bi bi-x-square-fill "></i></button>
+</div>
+<div class="window-content">
+  <br>
         <mat-form-field>
         <mat-label>Producto</mat-label>
         <select matNativeControl [(ngModel)]="codigo">
@@ -26,11 +26,9 @@
       <mat-label>Usuario</mat-label>
         <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuario">
       </mat-form-field>
-    </div>
-  </div>
-  <!-- Puedes agregar más filas con más campos aquí -->
 </div>
-<div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Cancelar</button>
-    <button mat-button cdkFocusInitial (click)="insertar()">Insertar</button>
-</div>
+        
+
+      <div mat-dialog-actions class="window-footer">
+        <button class="btn" cdkFocusInitial (click)="insertar()"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
+      </div>

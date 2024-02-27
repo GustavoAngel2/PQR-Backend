@@ -1,6 +1,7 @@
 <mat-sidenav-container class="Hamburguesa">
     <mat-sidenav #sidenav mode="push">
         <mat-list role="list" class="lista menu-container">
+          <a class="menu-btn mobile" (click)="sidenav.toggle()"><i class="bi bi-eye-slash-fill"></i><strong> Ocultar</strong><i class="underline"></i></a>
           <a class="menu-btn" routerLink="inicio" (click)="sidenav.toggle()"><i class="bi bi-house-fill icon"></i><strong>Inicio</strong><i class="underline"></i></a>
           <a class="menu-btn" routerLink="almacenes" (click)="sidenav.toggle()"><i class="bi bi-box-seam-fill icon"></i><strong>Almacenes</strong><i class="underline"></i></a>
           <a class="menu-btn" routerLink="articulos" (click)="sidenav.toggle()"><i class="bi bi-cart-fill icon"></i><strong>Articulos</strong><i class="underline"></i></a>
@@ -18,12 +19,12 @@
           <a class="menu-btn" routerLink="rutas" (click)="sidenav.toggle()"><i class="bi bi-truck icon"></i><strong>Rutas</strong><i class="underline"></i></a>
           <a class="menu-btn" routerLink="tickets" (click)="sidenav.toggle()"><i class="bi bi-file-ruled-fill icon"></i><strong>Tickets</strong><i class="underline"></i></a>
           <a class="menu-btn" routerLink="usuarios" (click)="sidenav.toggle()"><i class="bi bi-person-fill-check icon"></i><strong>Usuarios permitidos</strong><i class="underline"></i></a>
-          <a class="menu-btn" routerLink="usuarios" (click)="sidenav.toggle()"><i class="bi bi-info-circle-fill icon"></i><strong>Acerca de nosotros</strong><i class="underline"></i></a>
-          <a style="color:red;" class="menu-btn" (click)="sidenav.toggle()" routerLink="login" ><strong>Cerrar sesion</strong><i class="underline"></i></a>
+          <a class="menu-btn mobile" routerLink="usuarios" (click)="sidenav.toggle()"><i class="bi bi-info-circle-fill icon"></i><strong>Acerca de nosotros</strong><i class="underline"></i></a>
+          <a class="menu-btn" (click)="sidenav.toggle()" routerLink="login" ><strong>Cerrar sesion</strong><i class="underline"></i></a>
         </mat-list>
     </mat-sidenav>
     <mat-sidenav-content class="bg">
-      <mat-toolbar  style="background-color: black; color: #fff;">
+      <mat-toolbar>
         <button mat-icon-button (click)="sidenav.toggle()">
           <mat-icon>menu</mat-icon>
         </button>
