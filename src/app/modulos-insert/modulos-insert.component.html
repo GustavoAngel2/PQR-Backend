@@ -3,23 +3,23 @@
   <button class="btn-close" (click)="onNoClick()"><i class="bi bi-x-square-fill "></i></button>
 </div>
 <div class="window-content">
-<br>
-      <mat-form-field>
-        <mat-label>Nombre Modulo</mat-label>
-        <input matInput placeholder="Ingresa el nombre" [(ngModel)]="nombreModulo">
-      </mat-form-field>
-       <mat-form-field>
-    <mat-label>Unidad de Medida</mat-label>
+  <br>
+  <mat-form-field>
+    <mat-label>Nombre Modulo</mat-label>
+    <input matInput placeholder="Ingresa el nombre" [(ngModel)]="nombreModulo">
+  </mat-form-field>
+   <mat-form-field>
+  <mat-label>Unidad de Medida</mat-label>
     <select matNativeControl [(ngModel)]="categoriaModulo">
       <option value="0">--Seleccione una unidad de medida--</option>
       <option *ngFor="let cm of comboCatMod" [value]="cm.Id">{{ cm.Nombre }}</option>
     </select>
   </mat-form-field>
-      <mat-form-field>
-        <mat-label>Usuario</mat-label>
-        <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuario">
-      </mat-form-field>
-      </div>
+  <mat-form-field>
+    <mat-label>Usuario</mat-label>
+    <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuario">
+  </mat-form-field>
+</div>
 
 <div mat-dialog-actions class="window-footer">
   <button class="btn" cdkFocusInitial (click)="insertar()"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
