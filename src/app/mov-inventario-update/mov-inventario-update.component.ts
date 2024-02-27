@@ -2,6 +2,8 @@ import { Component,Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA,MatDialogRef } from '@angular/material/dialog';
 import { UpdateMovInventario } from '../models/movInventario.model';
 import { movInventarioService } from '../data.service';
+import { AlmacenesService } from '../data.service';
+import { TiposMovService } from '../data.service';
 
 @Component({
   selector: 'app-mov-inventario-update',
@@ -10,9 +12,17 @@ import { movInventarioService } from '../data.service';
 })
 export class MovInventarioUpdateComponent {
   movinventario: UpdateMovInventario;
+  ComboTipoMov:any;
+  ComboAlmacen:any;
+  idTipoMov!: number;
+  idAlmacen!: number;
+
+
   constructor(
     public dialogRef: MatDialogRef<MovInventarioUpdateComponent>,
     private movinventarioService: movInventarioService,
+    private almacenesService:AlmacenesService,
+    private tiposMovService:TiposMovService,
     @Inject(MAT_DIALOG_DATA) public data: UpdateMovInventario
 
   ) {
@@ -20,7 +30,15 @@ export class MovInventarioUpdateComponent {
     this.movinventario = {...data};
   }
 
-  ngOnInit(): void {
+   ngOnInit(): void {
+    this.tiposMovService.getTiposMov().subscribe((data: any) => {
+      this.ComboTipoMov = data;
+      console.log(this.ComboTipoMov)
+    });
+     this.almacenesService.getAlmacenes().subscribe((data2: any) => {
+      this.ComboAlmacen = data2;
+      console.log(this.ComboAlmacen)
+    });
   }
 
   onNoClick(): void {

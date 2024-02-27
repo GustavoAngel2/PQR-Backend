@@ -75,7 +75,7 @@ export class DetallePerfilComponent implements OnInit {
   }
   abrirEditarModal(DetallePerfil: DetallePerfil) {
     const dialogRef = this.dialog.open(DetallePerfilUpdateComponent, {
-      width: '250px',
+      width: '550px',
       data: DetallePerfil // Pasa el objeto de departamento a la modal
     });
   

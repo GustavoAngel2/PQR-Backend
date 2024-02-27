@@ -1,16 +1,19 @@
-<h1 mat-dialog-title>Nuevo detalle de ticket</h1>
-<div mat-dialog-content class="mat-dialog-grid">
-  <!-- Fila para el formulario -->
-  <div class="mat-dialog-row">
-    <!-- Columna para el campo de nombre -->
-    <div class="mat-dialog-cell">
-         <mat-form-field>
+<div class="window-header">
+  <h1 mat-dialog-title>Nuevo detalle de ticket</h1>
+  <button class="btn-close" (click)="onNoClick()"><i class="bi bi-x-square-fill "></i></button>
+</div>
+<div class="window-content">
+  <mat-form-field>
+        <mat-label>Ticket</mat-label>
+        <input matInput placeholder="Ingresa el ticket" [(ngModel)]="idTicket">
+      </mat-form-field>
+   <!--       <mat-form-field>
       <mat-label>Tipo Movimiento</mat-label>
         <select matNativeControl [(ngModel)]="idTicket">
           <option value="0">--Seleccione un Tipo Movimiento--</option>
           <option *ngFor="let ticket of ComboTicket" [value]="ticket.Id">{{ ticket.Sucursal }} - {{ ticket.Cliente }}</option>
         </select>
-      </mat-form-field>
+      </mat-form-field> -->
      <mat-form-field>
         <mat-label>Articulo</mat-label>
         <select matNativeControl [(ngModel)]="codigo">
@@ -30,11 +33,10 @@
         <mat-label>Usuario</mat-label>
           <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuario">
         </mat-form-field>
-    </div>
-  </div>
-  <!-- Puedes agregar más filas con más campos aquí -->
 </div>
-<div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Cancelar</button>
-    <button mat-button cdkFocusInitial (click)="insertar()">Insertar</button>
+       
+
+<div mat-dialog-actions class="window-footer">
+  <button class="btn" cdkFocusInitial (click)="insertar()"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
 </div>
+        
