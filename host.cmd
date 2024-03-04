@@ -4,6 +4,7 @@ set /p ip=Inserte su ip o localhost, dejar en blanco para cancelar: || goto erro
 if %ip% == localhost goto :local
 ng serve --host %ip%
 exit
+
 :error
 echo Host cancelado!
 

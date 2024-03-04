@@ -2,17 +2,18 @@
     <br>
     <label class="title">Categoría</label>
     <br>
-    <img src="./assets/Articulos.png" class="module-logo">
+    <img src="./assets/Categoria.png" class="module-logo">
+    <br>
 </div>
 
 <div class="actionbar">
-    <mat-form-field style="width: 512px;">
+    <mat-form-field class="search-bar">
         <mat-label>Filtrar</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
     </mat-form-field>   
-    <button (click)="abrirInsertarModal()" class="btn right">Insertar<i class="underline"></i></button>
+    <button (click)="abrirInsertarModal()" class="btn">Insertar<i class="underline"></i></button>
 </div>
-
+<br>
 <div class="table-container">
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Id">

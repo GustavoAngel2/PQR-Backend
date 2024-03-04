@@ -65,10 +65,10 @@ td{
 
 .actionbar{
   display: flex;
-  margin: 32px;
-  align-content: center;
   flex-wrap: wrap;
   justify-content: space-between;
+  margin-left: 32px;
+  margin-right: 32px;
 }
 
 .btn{
@@ -120,6 +120,7 @@ td{
   transition: .3s ease;
 }
 
+
 .title-container{
   display: flex;
   flex-direction: column;
@@ -138,6 +139,11 @@ td{
   margin-bottom:32px;
   width: 128px;
   height: 128px;
+}
+
+.start-menu-logo{
+  margin-top: 12px;
+  margin-bottom:32px;
 }
 
 .table-container{
@@ -204,7 +210,10 @@ option{
   width: 200px; 
 }
 
-  
+.search-bar{
+  width: 512px;
+}  
+
 .mobile{
   display: none;
 }
@@ -242,7 +251,18 @@ option{
   mat-sidenav{
     width: 100%;
   }
+
+  .search-bar{
+    width: 256px;
+  }
   
+  .actionbar{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    margin:0;
+  }
+
   th{
     font-size: 6px;
     width: 100%;
@@ -268,5 +288,18 @@ option{
   
   .mobile{
     display:block;
+  }
+
+  .title{
+    margin-top: 14px;
+    font-size: 32px;
+    font-weight: bold;
+  }
+
+  .module-logo{
+    margin-top: 6px;
+    margin-bottom:16px;
+    width: 64px;
+    height: 64px;
   }
 }
