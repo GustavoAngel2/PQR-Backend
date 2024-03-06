@@ -86,10 +86,10 @@ const appRoutes: Routes = [
   { path: "detalleticket", component: DetalleTicketComponent },
   { path: "categoriamodulo", component: CategoriaModuloComponent },
   { path: "login", component: LoginComponent },
-  {path: "modulos",component: ModulosComponent},
-  {path:"empleados", component:EmpleadosComponent},
-  {path:"puestos",component:PuestosComponent},
-  {path: "categoriamodulo", component:PuestosComponent},
+  { path: "modulos",component: ModulosComponent},
+  { path:"empleados", component:EmpleadosComponent},
+  { path:"puestos",component:PuestosComponent},
+  { path: "categoriamodulo", component:PuestosComponent},
   { path: "detallePerfil", component: DetallePerfilComponent}
 ];
 

@@ -20,6 +20,7 @@ export class AlmacenesComponent implements OnInit {
     this.dataSource = new MatTableDataSource<Almacen>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
 
+  //lo que esta adentro de ngOnInit() se ejecutarà arrancando la pagina
   ngOnInit() {
     this.dataSource.filterPredicate = (data: Almacen, filter: string) => {
       return data.Nombre.toLowerCase().includes(filter) || 
@@ -29,25 +30,27 @@ export class AlmacenesComponent implements OnInit {
       next: (response) => {
         console.log('Respuesta del servidor:', response); 
         if (response && Array.isArray(response)&&response.length>0) {
-          this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
+          this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource si hay datos y si la respuesta es un array
         } else {
-          console.log('no contiene datos');
+          console.log('no contiene datos');//De lo contrario no harà nada
         }
       },
       error: (error) => {
-        console.error(error);
+        console.error(error); 
       }
     });
   }
   // Método para realizar el filtrado
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    const filterValue = (event.target as HTMLInputElement).value;//Obtiene los datos del buscador
+    this.dataSource.filter = filterValue.trim().toLowerCase(); //el valor que se guarda en filterValue lo transforma en minusculas
 
     if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+      this.dataSource.paginator.firstPage(); 
     }
   }
+
+  //esta funcion abre la modal de insertar 
   abrirInsertarModal() {
     const dialogRef = this.dialog.open(AlmacenesInsertComponent, {
       width: '550px',

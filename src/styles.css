@@ -16,7 +16,15 @@ Y8,    "88,,8P  88       88  88  88          8PP"""""""   `8b   d8'             
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
 
 html, body { height: 100%; }
-body { margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+body {  
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;  
+  margin: 0; 
+  padding: 0; 
+  font-family: 'Poppins', sans-serif; 
+}
 
 mat-toolbar{
     background-color: rgb(200, 100, 12)!important; 
@@ -33,7 +41,7 @@ mat-sidenav{
 }
 
 th{
-  
+  padding-top: 6px;
   width: 100%;
   height: 40px;
 }
@@ -48,8 +56,7 @@ td{
 }
 
 .action-btn{
-  position: relative;
-  padding-left: 30px;
+  margin: 6px;
 }
 
 .lista{
@@ -58,10 +65,10 @@ td{
 
 .actionbar{
   display: flex;
-  margin: 32px;
-  align-content: center;
   flex-wrap: wrap;
   justify-content: space-between;
+  margin-left: 32px;
+  margin-right: 32px;
 }
 
 .btn{
@@ -113,6 +120,7 @@ td{
   transition: .3s ease;
 }
 
+
 .title-container{
   display: flex;
   flex-direction: column;
@@ -131,6 +139,11 @@ td{
   margin-bottom:32px;
   width: 128px;
   height: 128px;
+}
+
+.start-menu-logo{
+  margin-top: 12px;
+  margin-bottom:32px;
 }
 
 .table-container{
@@ -158,7 +171,6 @@ table{
 }
 
 .window-content{
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -171,7 +183,6 @@ table{
   align-items: center;
   gap: 3px;
   background-color: #bbb;
-  width: 100%;
 }
 
 .btn-close{
@@ -192,15 +203,19 @@ table{
   transition:.3s ease;
 }
 
-select {
-  width: 100% !important;
-  height: 100% !important;
-}
-
 option{
+  width: 100%;
   padding: 6px;
   font-size: 16px;
   width: 200px; 
+}
+
+.search-bar{
+  width: 512px;
+}  
+
+.mobile{
+  display: none;
 }
 
 @media (max-width:1400px) {
@@ -211,7 +226,7 @@ option{
   th{
     font-size: 12px;
     width: 100%;
-    height: 30px;
+    height: 45px;
   }
   
   td{
@@ -220,5 +235,71 @@ option{
     height: 60px;
     text-align: center;
     margin-top: 30px;
+  }
+
+  .window-content{
+    margin-top: 20px;
+    position: relative;
+    margin-left: 10%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+}
+
+@media (max-width:800px) {
+  mat-sidenav{
+    width: 100%;
+  }
+
+  .search-bar{
+    width: 256px;
+  }
+  
+  .actionbar{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    margin:0;
+  }
+
+  th{
+    font-size: 6px;
+    width: 100%;
+    height: 32px;
+  }
+  
+  td{
+    font-size: 6px;
+    width: 100%;
+    height: 30px;
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  .window-content{
+    margin-top: 4px;
+    position: relative;
+    margin-left: 10%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  
+  .mobile{
+    display:block;
+  }
+
+  .title{
+    margin-top: 14px;
+    font-size: 32px;
+    font-weight: bold;
+  }
+
+  .module-logo{
+    margin-top: 6px;
+    margin-bottom:16px;
+    width: 64px;
+    height: 64px;
   }
 }

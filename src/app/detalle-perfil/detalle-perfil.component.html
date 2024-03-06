@@ -1,12 +1,19 @@
-<mat-form-field>
-    <mat-label>Filtrar</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
-</mat-form-field>
-<div class="toolbar" style="text-align: center;">
+<div class="title-container">
+    <br>
+    <label class="title">Detalle de Perfil</label>
+    <br>
+    <img src="./assets/Almacenes.png" class="module-logo">
+</div>
 
-    <button mat-button (click)="abrirInsertarModal()" style="background-color: green;color: white;">Insertar detalle de perfil</button>
+<div class="actionbar">
+    <mat-form-field class="search-bar">
+        <mat-label>Filtrar</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
+    </mat-form-field>
+    <button (click)="abrirInsertarModal()" class="btn right">Insertar<i class="underline"></i></button>
 </div>
 <br>
+<div class="table-container">
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
@@ -46,5 +53,5 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </table>
-
+</div>
 

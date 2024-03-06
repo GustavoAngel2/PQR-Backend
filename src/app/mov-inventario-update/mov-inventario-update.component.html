@@ -1,26 +1,28 @@
-<h1 mat-dialog-title>Editar movimientos en el inventario</h1>
-<div mat-dialog-content class="mat-dialog-grid">
-  <!-- Fila para el formulario -->
-  <div class="mat-dialog-row">
-    <!-- Columna para el campo de nombre -->
-    <div class="mat-dialog-cell">
-        <mat-form-field>
-            <mat-label>Tipo de movimiento</mat-label>
-            <input matInput placeholder="Ingresa el tipo de movimiento" [(ngModel)]="movinventario.idTipoMov">
-          </mat-form-field>
+<div class="window-header">
+  <h1 mat-dialog-title>Editar movimiento de inventario</h1>
+  <button class="btn-close" (click)="onNoClick()"><i class="bi bi-x-square-fill"></i></button>
+</div>
+<div class="window-content">
+           <mat-form-field>
+    <mat-label>Tipo de Movimiento</mat-label>
+    <select matNativeControl [(ngModel)]="movinventario.idTipoMov">
+      <option value="0">--Seleccione untipo de Movimiento--</option>
+      <option *ngFor="let tm of ComboTipoMov" [value]="tm.Id">{{ tm.Nombre }}</option>
+    </select>
+  </mat-form-field>
           <mat-form-field>
-            <mat-label>Almacen</mat-label>
-            <input matInput placeholder="Ingresa el almacen" [(ngModel)]="movinventario.idAlmacen">
-          </mat-form-field>
+    <mat-label>Almacen</mat-label>
+    <select matNativeControl [(ngModel)]="movinventario.idAlmacen">
+      <option value="0">--Seleccione un Almacen--</option>
+      <option *ngFor="let alm of ComboAlmacen" [value]="alm.Id">{{ alm.Nombre }}</option>
+    </select>
+  </mat-form-field>
           <mat-form-field>
           <mat-label>Usuario</mat-label>
             <input matInput placeholder="Ingresa el usuario" [(ngModel)]="movinventario.usuarioActualiza">
           </mat-form-field>
     </div>
-  </div>
-  <!-- Puedes agregar más filas con más campos aquí -->
-</div>
-<div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Cancelar</button>
-    <button mat-button (click)="guardar()">Guardar Cambios</button>
-</div>
+
+    <div class="window-footer" mat-dialog-actions>
+      <button class="btn" (click)="guardar()"><i class="bi bi-floppy2-fill icon"></i> Guardar Cambios<i class="underline"></i></button>
+    </div>

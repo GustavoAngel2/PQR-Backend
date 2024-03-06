@@ -1,3 +1,5 @@
+//se importan las dependencias necesarias, al igual que los componentes
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -22,13 +24,16 @@ import { UpdateCategoriaModulo } from './models/categoriaModulo.model';
   providedIn: "root",
 })
 export class AlmacenesService {
+  //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
   getAlmacenes(): Observable<ApiResponse> {
+    // regresa una lista de los almacenes de la base de datos
     return this.http.get<ApiResponse>(`${this.apiUrl}/Almacenes/Get`);
   }
 
+  //esta funcion se utiliza para insertar un almacen, contiene un cuerpo de nombre, direccion y el usuario (su id) que lo crea
   insertarAlmacenes(AlmacenesData: {
     nombre: string;
     direccion: string;
@@ -42,11 +47,13 @@ export class AlmacenesService {
     return this.http.post<ApiResponse>(`${this.apiUrl}/Almacenes/Insert`, body);
   }
 
+  //esta funcion borra un almacen pidiendo el id del almacen a borrar
   deleteAlmacenes(Id: number): Observable<any> {
-    // Asegúrate de que el endpoint y la forma en que pasas el ID son correctos según tu API
+    
     return this.http.put(`${this.apiUrl}/Almacenes/Delete`, { Id });
   }
 
+  //esta funcion sirve para modificar la informacion de un almacen
   updateAlmacenes(AlmacenesData: UpdateAlmacen): Observable<ApiResponse> {
     const body = {
       id: AlmacenesData.Id,
@@ -63,13 +70,16 @@ export class AlmacenesService {
   providedIn: "root",
 })
 export class ClientesService {
+  //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
+  //Esta funcion enlista los Clientes de la base de datos
   getClientes(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(`${this.apiUrl}/Clientes/Get`);
   }
 
+  //Esta funcion inserta clientes
   insertarClientes(ClientesData: {
     nombre: string;
     direccion: string;
@@ -103,6 +113,7 @@ export class ClientesService {
   providedIn: "root",
 })
 export class ArticulosService {
+  //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
@@ -153,6 +164,7 @@ export class ArticulosService {
   providedIn: "root",
 })
 export class PersonasService {
+  //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
@@ -202,6 +214,7 @@ export class PersonasService {
   providedIn: "root",
 })
 export class RutasService {
+  //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
@@ -221,7 +234,7 @@ export class RutasService {
   }
 
   deleteRutas(Id: number): Observable<any> {
-    // Asegúrate de que el endpoint y la forma en que pasas el ID son correctos según tu API
+    
     return this.http.put(`${this.apiUrl}/Rutas/Delete`, { Id });
   }
 
@@ -240,6 +253,7 @@ export class RutasService {
   providedIn: "root",
 })
 export class DetalleMovService {
+  //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
@@ -271,7 +285,7 @@ export class DetalleMovService {
   }
 
   deleteDetalleMov(Id: number): Observable<any> {
-    // Asegúrate de que el endpoint y la forma en que pasas el ID son correctos según tu API
+    
     return this.http.put(`${this.apiUrl}/DetalleMovimiento/Delete`, { Id });
   }
 
@@ -296,6 +310,7 @@ export class DetalleMovService {
   providedIn: "root",
 })
 export class TicketsSevice {
+  //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
@@ -322,7 +337,7 @@ export class TicketsSevice {
   }
 
   deleteTickets(Id: number): Observable<any> {
-    // Asegúrate de que el endpoint y la forma en que pasas el ID son correctos según tu API
+    
     return this.http.put(`${this.apiUrl}/Tickets/Delete`, { Id });
   }
 
@@ -340,6 +355,7 @@ export class TicketsSevice {
   providedIn: "root",
 })
 export class UsuarioSevice {
+  //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
@@ -363,7 +379,7 @@ export class UsuarioSevice {
   }
 
   deleteUsuarios(Id: number): Observable<any> {
-    // Asegúrate de que el endpoint y la forma en que pasas el ID son correctos según tu API
+    
     return this.http.put(`${this.apiUrl}/Usuarios/Delete`, { Id });
   }
 
@@ -384,6 +400,7 @@ export class UsuarioSevice {
   providedIn: "root",
 })
 export class ExistenciasService {
+  //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
@@ -413,7 +430,7 @@ export class ExistenciasService {
   }
 
   deleteExistencias(id: number): Observable<any> {
-    // Asegúrate de que el endpoint y la forma en que pasas el ID son correctos según tu API
+    
     return this.http.post(`${this.apiUrl}/Existencias/Delete`, { id });
   }
 
@@ -439,6 +456,7 @@ export class ExistenciasService {
   providedIn: "root",
 })
 export class movInventarioService {
+  //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
@@ -463,7 +481,7 @@ export class movInventarioService {
   }
 
   deleteMovInventario(id: number): Observable<any> {
-    // Asegúrate de que el endpoint y la forma en que pasas el ID son correctos según tu API
+    
     return this.http.post(`${this.apiUrl}/MovInventario/Delete`, { id });
   }
 
@@ -488,25 +506,25 @@ export class movInventarioService {
   providedIn: "root",
 })
 export class DetalleTicketService {
+  //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
   getDetalleTicket(IdTicket: 0): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(
-      `${this.apiUrl}/DetalleTicket/Get?idTicket=0`,
-      { IdTicket }
+    return this.http.get<ApiResponse>(
+      `${this.apiUrl}/DetalleTicket/Get?idTicket=0`
     );
   }
 
   insertDetalleTicket(DTData: {
     idTicket: number;
-    codigo: string;
+    codigo: number;
     cantidad: number;
     precioVenta: number;
     usuario: number;
   }): Observable<ApiResponse> {
     const body = {
-      idTicket: DTData.codigo,
+      idTicket: DTData.idTicket,
       codigo: DTData.codigo,
       cantidad: DTData.cantidad,
       precioVenta: DTData.precioVenta,
@@ -519,8 +537,8 @@ export class DetalleTicketService {
   }
 
   deleteDetalleTicket(id: number): Observable<any> {
-    // Asegúrate de que el endpoint y la forma en que pasas el ID son correctos según tu API
-    return this.http.post(`${this.apiUrl}/DetalleTicket/Delete`, { id });
+    
+    return this.http.put(`${this.apiUrl}/DetalleTicket/Delete`, { id });
   }
 
   updateDetalleTicket(DTData: UpdateDetalleTicket): Observable<ApiResponse> {
@@ -545,9 +563,11 @@ export class DetalleTicketService {
   providedIn: 'root'
 })
 export class ModulosService {
+  //se especifica la url base
   private  apiUrl= 'http://localhost:5020/api'; 
   constructor(private http:HttpClient) { }
 
+  //Enlista los modulos registrados en la base de datos
   getModulos(): Observable<ApiResponse>{
   return  this.http.get<ApiResponse>(`${this.apiUrl}/Modulos/Get`)
   }
@@ -584,6 +604,7 @@ deleteModulos(Id : number): Observable<any> {
   providedIn: "root",
 })
 export class EmpleadosService {
+  //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
@@ -607,7 +628,7 @@ export class EmpleadosService {
   }
 
   deleteEmpleado(Id: number): Observable<any> {
-    // Asegúrate de que el endpoint y la forma en que pasas el ID son correctos según tu API
+    
     return this.http.put(`${this.apiUrl}/Empleados/Delete`, { Id });
   }
 
@@ -628,6 +649,7 @@ export class EmpleadosService {
   providedIn: "root",
 })
 export class PuestosService {
+  //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
@@ -651,7 +673,7 @@ export class PuestosService {
   }
 
   deletePuestos(Id: number): Observable<any> {
-    // Asegúrate de que el endpoint y la forma en que pasas el ID son correctos según tu API
+    
     return this.http.put(`${this.apiUrl}/Puestos/Delete`, { Id });
   }
 
@@ -668,10 +690,12 @@ export class PuestosService {
   }
 }
 
+//------------------------------------------------------------------------------------------------------------------------
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriaModuloService {
+  //se especifica la url base de la api
   private  apiUrl= 'http://localhost:5020/api'; 
   constructor(private http:HttpClient) { }
 
@@ -679,7 +703,7 @@ export class CategoriaModuloService {
     return this.http.get<ApiResponse>(`${this.apiUrl}/CatModulo/Get`);
   }
 
-
+//
 insertCategoriaModulo(CatModuloData: { nombre: string; descripcion: string; usuario: number }): Observable<ApiResponse> {
   
   const body = {
@@ -691,26 +715,28 @@ insertCategoriaModulo(CatModuloData: { nombre: string; descripcion: string; usua
 }
 
 deleteCategoriaModulo(id : number): Observable<any> {
-    // Asegúrate de que el endpoint y la forma en que pasas el ID son correctos según tu API
+    
     return this.http.put(`${this.apiUrl}/CatModulo/Delete`, { id });
   }
 
-  updateCategoriaModulo(catModuloData: UpdateCategoriaModulo): Observable<ApiResponse> {
-    const body ={
-      Id: catModuloData.Id,
-      nombre: catModuloData.Nombre,
-      descripcion: catModuloData.Descripcion,  
-      usuario: catModuloData.Usuario
-    }
-    console.log('Enviando solicitud con el siguiente cuerpo:', body);
-    return this.http.put<ApiResponse>(`${this.apiUrl}/CatModulo/Update`, body);
-  }
+ updateCategoriaModulo(catModuloData: UpdateCategoriaModulo): Observable<ApiResponse> {
+  const body ={
+    Id: catModuloData.Id,
+    nombre: catModuloData.Nombre,
+    descripcion: catModuloData.Descripcion,  
+    usuario: catModuloData.Usuario
+  };
+  console.log('Enviando solicitud con el siguiente cuerpo:', body);
+  return this.http.put<ApiResponse>(`${this.apiUrl}/CatModulo/Update`, body);
+}
 }
 
+//------------------------------------------------------------------------------------------------------------------------
 @Injectable({
   providedIn: 'root'
 })
 export class DetallePerfilService {
+  //se especifica la url base de la api
   private  apiUrl= 'http://localhost:5020/api'; 
   constructor(private http:HttpClient) { }
 
@@ -731,7 +757,6 @@ insertarDetallePerfil(DetallePerfilData: { idPerfil: number; idModulo: number; a
 }
 
 deleteDetallePerfil(id : number): Observable<any> {
-    // Asegúrate de que el endpoint y la forma en que pasas el ID son correctos según tu API
     return this.http.put(`${this.apiUrl}/DetallePerfil/Delete`, { id });
   }
 
@@ -748,10 +773,12 @@ deleteDetallePerfil(id : number): Observable<any> {
     return this.http.put<ApiResponse>(`${this.apiUrl}/DetallePerfil/Update`, body);
   }
 }
+//------------------------------------------------------------------------------------------------------------------------
 @Injectable({
   providedIn: 'root'
 })
 export class RolesService {
+  //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
@@ -759,14 +786,43 @@ export class RolesService {
     return this.http.get<ApiResponse>(`${this.apiUrl}/Roles/Get`);
   }
 }
+//------------------------------------------------------------------------------------------------------------------------
 @Injectable({
   providedIn: 'root'
 })
 export class UMService {
+  //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
   getUM(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(`${this.apiUrl}/UM/Get`);
+  }
+}
+
+//------------------------------------------------------------------------------------------------------------------------
+@Injectable({
+  providedIn: 'root'
+})
+export class SucursalesService {
+  //Se especifica la url base de la API
+  private apiUrl = "http://localhost:5020/api";
+  constructor(private http: HttpClient) {}
+
+  getSucursales(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/Sucursales/Get`);
+  }
+}
+//------------------------------------------------------------------------------------------------------------------------
+@Injectable({
+  providedIn: 'root'
+})
+export class TiposMovService {
+  //Se especifica la url base de la API
+  private apiUrl = "http://localhost:5020/api";
+  constructor(private http: HttpClient) {}
+
+  getTiposMov(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/TiposMov/Get`);
   }
 }

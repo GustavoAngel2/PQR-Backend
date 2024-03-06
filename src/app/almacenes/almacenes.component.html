@@ -3,16 +3,17 @@
     <label class="title">Almacenes</label>
     <br>
     <img src="./assets/Almacenes.png" class="module-logo">
+    <br>
 </div>
 
 <div class="actionbar">
-    <mat-form-field style="width: 512px;">
+    <mat-form-field class="search-bar">
         <mat-label>Filtrar</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
     </mat-form-field>
     <button (click)="abrirInsertarModal()" class="btn right">Insertar<i class="underline"></i></button>
 </div>
-
+<br>
 <div class="table-container">
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Id">
@@ -42,7 +43,6 @@
         <ng-container matColumnDef="Acciones">
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
         <td mat-cell *matCellDef="let elemento">
-
             <mat-icon class="action-btn"(click)="abrirEditarModal(elemento)">edit</mat-icon>
             <mat-icon class="action-btn red" (click)="eliminarAlmacen(elemento.Id)">delete</mat-icon>
         </td>

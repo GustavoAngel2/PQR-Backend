@@ -30,10 +30,11 @@ export class ArticulosUpdateComponent {
         this.umService.getUM().subscribe((data: any) => {
       this.ComboUm = data;
       console.log(this.ComboUm);
+     
+      
     });
 
-    // Asignar el valor actual de la unidad de medida del artículo al campo 'um'
-    this.um = this.articulo.UM;
+
   }
 
   onNoClick(): void {

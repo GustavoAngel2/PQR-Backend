@@ -74,7 +74,7 @@ export class CategoriaModuloComponent  implements OnInit{
   }
   abrirEditarModal(catmodulo: CategoriaModulo) {
     const dialogRef = this.dialog.open(CategoriaModuloUpdateComponent, {
-      width: '250px',
+      width: '550px',
       data: catmodulo // Pasa el objeto de departamento a la modal
     });
   

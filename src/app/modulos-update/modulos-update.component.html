@@ -1,26 +1,25 @@
-<h1 mat-dialog-title>Editar Modulo</h1>
-<div mat-dialog-content class="mat-dialog-grid">
-  <!-- Fila para el formulario -->
-  <div class="mat-dialog-row">
-    <!-- Columna para el campo de nombre -->
-    <div class="mat-dialog-cell">
+<div class="window-header">
+  <h1 mat-dialog-title>Editar modulo</h1>
+  <button class="btn-close" (click)="onNoClick()"><i class="bi bi-x-square-fill"></i></button>
+</div>
+<div class="window-content">
       <mat-form-field>
         <mat-label>Nombre</mat-label>
         <input matInput placeholder="Ingresa el nombre" [(ngModel)]="modulo.NombreModulo">
       </mat-form-field>
-      <mat-form-field>
-        <mat-label>Categoria</mat-label>
-        <input matInput placeholder="Ingresa la Categoria" [(ngModel)]="modulo.CategoriaModulo">
+       <mat-form-field>
+        <mat-label>Unidad Medida</mat-label>
+        <select  matNativeControl [(ngModel)]="modulo.CategoriaModulo" (change)="dev($event)">
+          <option value="0">--Seleccione una unidad de medida--</option>
+          <option *ngFor="let cm of comboCatMod" [value]="cm.Id">{{ cm.Nombre }}</option>
+        </select>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Usuario</mat-label>
         <input matInput placeholder="Ingresa el Usuario" [(ngModel)]="modulo.Usuario">
       </mat-form-field>
     </div>
-  </div>
-  <!-- Puedes agregar más filas con más campos aquí -->
-</div>
-<div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Cancelar</button>
-    <button mat-button (click)="guardar()">Guardar Cambios</button>
+
+<div class="window-footer" mat-dialog-actions>
+  <button class="btn" (click)="guardar()"><i class="bi bi-floppy2-fill icon"></i> Guardar Cambios<i class="underline"></i></button>
 </div>

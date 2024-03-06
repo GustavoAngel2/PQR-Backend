@@ -1,40 +1,41 @@
-<h1 mat-dialog-title>Nuevo Articulo</h1>
-<div mat-dialog-content class="mat-dialog-grid">
-  <!-- Fila para el formulario -->
-  <div class="mat-dialog-row">
-    <!-- Columna para el campo de nombre -->
-    <div class="mat-dialog-cell">
-      <mat-form-field>
-        <mat-label>Descripción</mat-label>
-        <input matInput placeholder="Ingresa la descripción" [(ngModel)]="descripcion">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Código</mat-label>
-        <input matInput placeholder="Ingresa el código" [(ngModel)]="codigo">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Unidad de Medida</mat-label>
-        <select matNativeControl [(ngModel)]="um">
-          <option value="0">--Seleccione una unidad de medida--</option>
-          <option *ngFor="let um of ComboUm" [value]="um.Id">{{ um.Nombre }}</option>
-        </select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Costo</mat-label>
-        <input matInput placeholder="Ingresa el costo" [(ngModel)]="costo">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Precio</mat-label>
-        <input matInput placeholder="Ingresa el precio" [(ngModel)]="precio">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Usuario</mat-label>
-        <input matInput placeholder="Ingresa el usuario" [(ngModel)]="usuario">
-      </mat-form-field>
-    </div>
-  </div>
+<div class="window-header">
+  <h1 mat-dialog-title>Nuevo articulo</h1>
+  <button class="btn-close" (click)="onNoClick()"><i class="bi bi-x-square-fill "></i></button>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-button cdkFocusInitial (click)="insertar()">Insertar</button>
+  <!-- Fila para el formulario -->
+
+    <!-- Columna para el campo de nombre -->
+<div class="window-content">
+  <br>
+  <mat-form-field>
+    <mat-label>Descripción</mat-label>
+    <input matInput placeholder="Ingresa la descripción" [(ngModel)]="descripcion">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Código</mat-label>
+    <input matInput placeholder="Ingresa el código" [(ngModel)]="codigo">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Unidad de Medida</mat-label>
+    <select matNativeControl [(ngModel)]="um">
+      <option value="0">--Seleccione una unidad de medida--</option>
+      <option *ngFor="let um of ComboUm" [value]="um.Id">{{ um.Nombre }}</option>
+    </select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Costo</mat-label>
+    <input matInput placeholder="Ingresa el costo" [(ngModel)]="costo">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Precio</mat-label>
+    <input matInput placeholder="Ingresa el precio" [(ngModel)]="precio">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Usuario</mat-label>
+    <input matInput placeholder="Ingresa el usuario" [(ngModel)]="usuario">
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions class="window-footer" >
+  <button class="btn" cdkFocusInitial (click)="insertar()"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
 </div>

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DetalleMovService } from '../data.service';
+import { ArticulosService } from '../data.service';
+import { movInventarioService } from '../data.service';
 
 
 @Component({
@@ -14,11 +16,26 @@ export class DetalleMoviemientoInsertComponent {
   cantidad: number = 0;
   costo: number = 0;
   usuarioActualiza: number = 0;
+  ComboMov:any;
+  ComboCodigo:any;
 
   constructor(
     public dialogRef: MatDialogRef<DetalleMoviemientoInsertComponent>,
-    private detalleMovService: DetalleMovService
+    private detalleMovService: DetalleMovService,
+    private movInventarioService:movInventarioService,  
+    private articulosService: ArticulosService
   ) {}
+
+     ngOnInit(): void {
+    this.movInventarioService.getMovInventario().subscribe((data: any) => {
+      this.ComboMov = data;
+      console.log(this.ComboMov)
+    });
+     this.articulosService.getArticulos().subscribe((data2: any) => {
+      this.ComboCodigo = data2;
+      console.log(this.ComboCodigo)
+    });
+  }    
 
   onNoClick(): void {
     this.dialogRef.close();

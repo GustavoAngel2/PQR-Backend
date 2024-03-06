@@ -74,7 +74,7 @@ export class ExistenciasComponent  implements OnInit{
   }
   abrirEditarModal(existencia: Existencia) {
     const dialogRef = this.dialog.open(ExistenciasUpdateComponent, {
-      width: '250px',
+      width: '550px',
       data: existencia // Pasa el objeto de departamento a la modal
     });
   
