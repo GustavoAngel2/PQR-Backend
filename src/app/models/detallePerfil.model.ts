@@ -1,3 +1,4 @@
+<<
 export interface DetallePerfil {
   id: number;
   idPerfil: number;
@@ -7,6 +8,7 @@ export interface DetallePerfil {
   estatus: number;
   }
 
+>>>>>>> 86348c0faecca547fbaae6985da9908272119d78
   export interface ApiResponse {
     StatusCode: number;
     success: boolean;
@@ -14,6 +16,13 @@ export interface DetallePerfil {
     message: string;
     response: {
       data: DetallePerfil[]; };
+  }
+
+  export interface InsertDetallePerfil {
+    id: number;
+    idPerfil: number;
+    idModelo: number;
+    acceso: number;
   }
 
   export interface UpdateDetallePerfil{
@@ -31,9 +40,19 @@ export interface DetallePerfil {
     acceso: number;
     usuarioActualiza: number;
   }
-  
-  export interface DeleteDetallePerfil{
-    id: number;
+
+  export interface deleteDetalleTicket{
+    Id: number;
   }
 
+  export interface DetallePerfil{
+    id: number;
+    nombreModulo: string:
+    rol: string;
+    acceso: int;
+    fechaRegistro: date;
+    fechaActualiza: date;
+    estatus: int;
+    usuarioActualiza: string;
+  }
   	
