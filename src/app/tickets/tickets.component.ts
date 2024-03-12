@@ -73,7 +73,7 @@ export class TicketsComponent implements OnInit{
   }
   abrirEditarModal(ticket: tickets) {
     const dialogRef = this.dialog.open(TicketsUpdateComponent, {
-      width: '250px',
+      width: '550px',
       data: ticket // Pasa el objeto de departamento a la modal
     });
   

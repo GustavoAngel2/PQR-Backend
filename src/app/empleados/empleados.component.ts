@@ -90,7 +90,7 @@ export class EmpleadosComponent implements OnInit {
   }
   abrirEditarModal(empleado: empleado) {
     const dialogRef = this.dialog.open(EmpleadosUpdateComponent, {
-      width: "250px",
+      width: "550px",
       data: empleado, // Pasa el objeto de departamento a la modal
     });
 
