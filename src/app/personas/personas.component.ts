@@ -75,7 +75,7 @@ export class PersonasComponent implements OnInit{
   }
   abrirEditarModal(personas: Personas) {
     const dialogRef = this.dialog.open(PersonasUpdateComponent, {
-      width: '250px',
+      width: '550px',
       data: personas // Pasa el objeto de departamento a la modal
     });
   

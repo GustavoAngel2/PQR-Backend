@@ -75,7 +75,7 @@ export class DetalleTicketComponent implements OnInit{
   }
   abrirEditarModal(detalleticket: DetalleTicket) {
     const dialogRef = this.dialog.open(DetalleTicketUpdateComponent, {
-      width: '250px',
+      width: '550px',
       data: detalleticket // Pasa el objeto de departamento a la modal
     });
   

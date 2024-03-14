@@ -76,7 +76,7 @@ export class RutasComponent implements OnInit {
   }
   abrirEditarModal(rutas: Rutas) {
     const dialogRef = this.dialog.open(RutasUpdateComponent, {
-      width: '250px',
+      width: '550px',
       data: rutas // Pasa el objeto de departamento a la modal
     });
   
