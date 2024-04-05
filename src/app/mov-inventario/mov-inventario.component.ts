@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MovInventario } from '../models/movInventario.model';
-
 import { movInventarioService } from '../data.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MovInventarioInsertComponent } from '../mov-inventario-insert/mov-inventario-insert.component';
 import { MovInventarioUpdateComponent } from '../mov-inventario-update/mov-inventario-update.component';
 
@@ -12,9 +13,13 @@ import { MovInventarioUpdateComponent } from '../mov-inventario-update/mov-inven
   templateUrl: './mov-inventario.component.html',
   styleUrls: ['./mov-inventario.component.css']
 })
-export class MovInventarioComponent {
+export class MovInventarioComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['Id', 'IdTipoMov', 'IdAlmacen', 'fechaMovimiento', 'Usuario', 'FechaActualiza', 'Acciones'];
   dataSource: MatTableDataSource<MovInventario>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
 
   constructor(private movinventarioService: movInventarioService, public dialog:MatDialog) {
     this.dataSource = new MatTableDataSource<MovInventario>(); // Inicializa dataSource como una instancia de MatTableDataSource
@@ -37,6 +42,10 @@ export class MovInventarioComponent {
         console.error(error);
       }
     });
+  }
+    ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
   // Método para realizar el filtrado
   applyFilter(event: Event) {

@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ClientesService } from '../data.service';
 import { Clientes, deleteClientes } from '../models/cliente.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { ClientesInsertComponent } from '../clientes-insert/clientes-insert.component';
 import { ClientesUpdateComponent } from '../clientes-update/clientes-update.component';
 
@@ -12,9 +14,12 @@ import { ClientesUpdateComponent } from '../clientes-update/clientes-update.comp
   templateUrl: './clientes.component.html',
   styleUrls: ['./clientes.component.css']
 })
-export class ClientesComponent implements OnInit {
+export class ClientesComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['Id', 'Nombre', 'Direccion', 'Usuario', 'FechaAct','FechaReg','Acciones'];
   dataSource: MatTableDataSource<Clientes>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private ClientesService: ClientesService, public dialog:MatDialog) {
     this.dataSource = new MatTableDataSource<Clientes>(); // Inicializa dataSource como una instancia de MatTableDataSource
@@ -38,6 +43,10 @@ export class ClientesComponent implements OnInit {
         console.error(error);
       }
     });
+  }
+    ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
   // Método para realizar el filtrado
   applyFilter(event: Event) {

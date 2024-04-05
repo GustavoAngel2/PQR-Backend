@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ArticulosService } from '../data.service';
 import { articulos, deleteCArticulos } from '../models/articulo.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { ArticulosInsertComponent } from '../articulos-insert/articulos-insert.component';
 import { ArticulosUpdateComponent } from '../articulos-update/articulos-update.component';
 
@@ -12,9 +13,12 @@ import { ArticulosUpdateComponent } from '../articulos-update/articulos-update.c
   templateUrl: './articulos.component.html',
   styleUrls: ['./articulos.component.css']
 })
-export class ArticulosComponent {
+export class ArticulosComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['Id', 'Codigo', 'Descripcion', 'UM', 'Usuario','Costo','Precio','Fecha Registro','Fecha Actualiza','Acciones'];
   dataSource: MatTableDataSource<articulos>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private articulosService: ArticulosService, public dialog:MatDialog) {
     this.dataSource = new MatTableDataSource<articulos>(); // Inicializa dataSource como una instancia de MatTableDataSource
@@ -38,6 +42,10 @@ export class ArticulosComponent {
         console.error(error);
       }
     });
+  }
+   ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
   // Método para realizar el filtrado
   applyFilter(event: Event) {
