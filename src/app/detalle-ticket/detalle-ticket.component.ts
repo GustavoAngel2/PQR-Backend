@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Existencia } from '../models/existencia.model';
-
 import { DetalleTicketService } from '../data.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { DetalleTicketInsertComponent } from '../detalle-ticket-insert/detalle-ticket-insert.component';
 import { DetalleTicketUpdateComponent } from '../detalle-ticket-update/detalle-ticket-update.component';
 import { DetalleTicket } from '../models/detalleTicket.model';
@@ -13,9 +14,12 @@ import { DetalleTicket } from '../models/detalleTicket.model';
   templateUrl: './detalle-ticket.component.html',
   styleUrls: ['./detalle-ticket.component.css']
 })
-export class DetalleTicketComponent implements OnInit{
+export class DetalleTicketComponent implements OnInit, AfterViewInit{
   displayedColumns: string[] = ['Id', 'IdTicket', 'Codigo', 'Articulo', 'Cantidad', 'PrecioVenta', 'Total', 'Usuario', 'Estatus', 'Acciones'];
   dataSource: MatTableDataSource<DetalleTicket>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private detalleticketService: DetalleTicketService, public dialog:MatDialog) {
     this.dataSource = new MatTableDataSource<DetalleTicket>(); // Inicializa dataSource como una instancia de MatTableDataSource
@@ -38,6 +42,10 @@ export class DetalleTicketComponent implements OnInit{
         console.error(error);
       }
     });
+  }
+    ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
   // Método para realizar el filtrado
   applyFilter(event: Event) {

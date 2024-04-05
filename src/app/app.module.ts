@@ -69,6 +69,8 @@ import { DetallePerfilComponent } from './detalle-perfil/detalle-perfil.componen
 import { DetallePerfilInsertComponent } from './detalle-perfil-insert-component/detalle-perfil-insert-component.component';
 import { DetallePerfilUpdateComponent } from './detalle-perfil-update/detalle-perfil-update.component';
 import {MatSelectModule} from '@angular/material/select';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
 
 const appRoutes: Routes = [
 
@@ -167,7 +169,8 @@ const appRoutes: Routes = [
     MatSidenavModule,
     MatToolbarModule,
     MatListModule,
-    MatSelectModule
+    MatSelectModule,
+    MatPaginatorModule 
   ],
   providers: [
     // Agrega el servicio en los providers
