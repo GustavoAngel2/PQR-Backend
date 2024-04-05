@@ -27,7 +27,8 @@ body {
   user-select: none;  
   margin: 0; 
   padding: 0; 
-
+  background-color: #a0a0a0!important;
+  background:#a0a0a0 !important ;
 }
 
 ::-webkit-scrollbar{
@@ -44,32 +45,38 @@ body {
 
 
 mat-toolbar{
-    background-color: rgb(200, 100, 12)!important; 
-    box-shadow: 1px 25px 15px 10px rgba(161, 76, 5, 0.599);
+  background-color: rgb(242, 142, 55)!important; 
+  box-shadow: 1px 25px 15px 10px rgba(41, 41, 41, 0.599);
 }
 
 mat-sidenav-content.mat-drawer-content.mat-sidenav-content.bg {
-  background: rgb(212,109,19);
-  background: linear-gradient(0deg, rgba(212,109,19,1) 0%, rgb(252, 212, 101) 100%);
+  background: rgb(68, 68, 68);
+  background: linear-gradient(0deg, rgb(161, 161, 161) 0%, rgb(53, 53, 53) 100%);
 }
 
 mat-sidenav{
   width: 400px;
 }
 
+table{
+  background-color: #555!important;
+  border: 3px solid #2e2e2e!important;
+  border-radius: 3px;
+  
+}
+
 th{
   padding-top: 6px;
   width: 100%;
   height: 40px;
+  color:white!important;
 }
 
 td{
     width: 100%;
     height: 40px;
-}
-
-.red{
-    color:red
+    color:rgb(255, 255, 255)!important;
+    font-weight: bold;
 }
 
 .action-btn{
@@ -148,7 +155,9 @@ td{
 .title{
   margin-top: 14px;
   font-size: 64px;
-  font-weight: bold;
+  font-weight: bolder;
+  color:rgb(239, 204, 76);
+  -webkit-text-stroke: 2px rgb(234, 79, 25); /* Ancho y color del borde */
 }
 
 .module-logo{
@@ -185,10 +194,11 @@ table{
   flex-wrap: wrap;
   justify-content: space-between;
   background: rgb(212,109,19);
-  background: linear-gradient(0deg, rgba(212,109,19,1) 0%, rgba(249,198,57,1) 100%);
+  background: linear-gradient(0deg, rgba(212,109,19,1) 0%, rgb(191, 154, 54) 100%);
 }
 
 .window-content{
+  background-color: #a0a0a0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -200,7 +210,7 @@ table{
   flex-direction: column;
   align-items: center;
   gap: 3px;
-  background-color: #bbb;
+  background-color: #999;
 }
 
 .btn-close{
@@ -242,13 +252,13 @@ option{
   }
   
   th{
-    font-size: 12px;
+    font-size: 14px;
     width: 100%;
     height: 45px;
   }
   
   td{
-    font-size: 12px;
+    font-size: 14px;
     width: 100%;
     height: 60px;
     text-align: center;
@@ -282,13 +292,13 @@ option{
   }
 
   th{
-    font-size: 6px;
+    font-size: 10px;
     width: 100%;
     height: 32px;
   }
   
   td{
-    font-size: 6px;
+    font-size: 10px;
     width: 100%;
     height: 30px;
     text-align: center;
