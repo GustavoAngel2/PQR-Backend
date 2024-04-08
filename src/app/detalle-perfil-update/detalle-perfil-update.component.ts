@@ -17,6 +17,8 @@ export class DetallePerfilUpdateComponent implements OnInit{
   ComboModulo:any;
   idPerfil!: number ;
   idModulo!:number;
+  // usuarioActualiza: number;
+  // estatus: number;
 
   constructor(
     public dialogRef: MatDialogRef<DetallePerfilUpdateComponent>,
