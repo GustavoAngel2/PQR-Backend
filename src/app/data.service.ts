@@ -87,11 +87,21 @@ export class ClientesService {
     nombre: string;
     direccion: string;
     usuario: number;
+    telefono:number;
+    rfc: string;
+    curp: string;
+    email:string;
+    coordenadas: string;
   }): Observable<ApiResponse> {
     const body = {
       nombre: ClientesData.nombre,
       direccion: ClientesData.direccion,
       usuario: ClientesData.usuario,
+      telefono: ClientesData.telefono,
+      rfc: ClientesData.rfc,
+      curp:ClientesData.curp,
+      email: ClientesData.email,
+      coordenadas: ClientesData.coordenadas,
     };
     return this.http.post<ApiResponse>(`${this.apiUrl}/Clientes/Insert`, body);
   }
@@ -106,6 +116,11 @@ export class ClientesService {
       nombre: ClientesData.Nombre,
       direccion: ClientesData.Direccion,
       usuario: ClientesData.Usuario,
+      telefono: ClientesData.telefono,
+      rfc: ClientesData.rfc,
+      curp:ClientesData.curp,
+      email: ClientesData.email,
+      coordenadas: ClientesData.coordenadas,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
     return this.http.put<ApiResponse>(`${this.apiUrl}/Clientes/Update`, body);

@@ -11,6 +11,11 @@ export class ClientesInsertComponent {
   nombreCliente: string = "";
   direccion: string = "";
   usuario: number = 0;
+  telefono: number = 0;
+  curp: string= "";
+  email: string ="";
+  rfc : string ="";
+  coordenadas :string ="";
 
   constructor(
     public dialogRef: MatDialogRef<ClientesInsertComponent>,
@@ -26,6 +31,11 @@ export class ClientesInsertComponent {
       nombre: this.nombreCliente,
       direccion: this.direccion,
       usuario: this.usuario,
+      telefono:this.telefono,
+      curp : this.curp,
+      rfc : this.rfc,
+      email : this.email,
+      coordenadas :this.coordenadas,
     };
 
     // Aquí asumo que tienes un método en tu servicio para insertar el departamento
