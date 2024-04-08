@@ -1,9 +1,11 @@
+import { ModUsuarioService } from "../data.service";
+
 export interface ModuloUsuario {
-  Id: number;
+  ID: number;
   Modulo: string;
   Usuario: string;
-  FechaRegistro: string;
-  FechaActualiza: string;
+  FechaRegistro: Date;
+  FechaActualiza: Date;
 }
 
 export interface ApiResponse {
@@ -12,7 +14,7 @@ export interface ApiResponse {
   fecha: string;
   message: string;
   response: {
-    data: ModuloUsuario[];
+    data: ModuloUsuario;
   };
 }
 
@@ -22,7 +24,6 @@ export interface UpdateModuloUsuario {
   Usuario: number;
 }
 
-   export interface deleteModuloUsuario{
-     Id: number;
-   }
-  
+export interface deleteModuloUsuario {
+  Id: number;
+}
