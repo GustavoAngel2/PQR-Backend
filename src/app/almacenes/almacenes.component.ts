@@ -14,7 +14,7 @@ import { AlmacenesUpdateComponent } from '../almacenes-update/almacenes-update.c
   styleUrls: ['./almacenes.component.css']
 })
 export class AlmacenesComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Id', 'Nombre', 'Direccion', 'Usuario', 'FechaAct','FechaReg','Acciones'];
+  displayedColumns: string[] = ['Id', 'Nombre', 'Direccion','Encargado', 'Usuario', 'FechaAct','FechaReg','Acciones'];
   dataSource: MatTableDataSource<Almacen>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -26,6 +26,10 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
 
   //lo que esta adentro de ngOnInit() se ejecutarà arrancando la pagina
   ngOnInit() {
+    this.getData()
+  }
+
+  getData(){
     this.dataSource.filterPredicate = (data: Almacen, filter: string) => {
       return data.Nombre.toLowerCase().includes(filter) || 
              data.Id.toString().includes(filter);
@@ -66,7 +70,9 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // Manejar los resultados cuando la modal se cierre
+      if (result == "reload"){
+        this.getData()
+      }
     });
   }
 
@@ -90,8 +96,8 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
     });
   
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        // Realizar acciones si es necesario
+      if (result == "reload") {
+        this.getData()
       }
     });
   }

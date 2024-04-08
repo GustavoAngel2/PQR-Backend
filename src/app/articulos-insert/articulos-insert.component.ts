@@ -53,8 +53,7 @@ export class ArticulosInsertComponent {
     this.articulosService.insertarArticulos(nuevoArticulo).subscribe({
       next: (response) => {
         // Puedes cerrar la modal y/o actualizar la tabla aquí si es necesario
-        this.dialogRef.close(response);
-        location.reload();
+        this.dialogRef.close('reload');
       },
       error: (error) => {
         // Manejar el error aquí

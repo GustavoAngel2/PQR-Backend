@@ -47,8 +47,7 @@ export class ArticulosUpdateComponent {
   guardar(): void {
     this.articulosService.updateArticulos(this.articulo).subscribe({
       next: (response) => {
-        this.dialogRef.close(response);
-        location.reload();
+        this.dialogRef.close('reload');
       },
       error: (error) => {
         console.error(error);

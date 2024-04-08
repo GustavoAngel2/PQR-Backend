@@ -38,11 +38,13 @@ export class AlmacenesService {
     nombre: string;
     direccion: string;
     usuario: number;
+    encargado: number;
   }): Observable<ApiResponse> {
     const body = {
       nombre: AlmacenesData.nombre,
       direccion: AlmacenesData.direccion,
       usuario: AlmacenesData.usuario,
+      encargado: AlmacenesData.encargado
     };
     return this.http.post<ApiResponse>(`${this.apiUrl}/Almacenes/Insert`, body);
   }
@@ -60,6 +62,7 @@ export class AlmacenesService {
       nombre: AlmacenesData.Nombre,
       direccion: AlmacenesData.Direccion,
       usuario: AlmacenesData.Usuario,
+      encargado: AlmacenesData.Encargado
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
     return this.http.put<ApiResponse>(`${this.apiUrl}/Almacenes/Update`, body);

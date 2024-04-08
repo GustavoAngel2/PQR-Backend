@@ -30,8 +30,7 @@ export class AlmacenesUpdateComponent implements OnInit {
   guardar(): void {
     this.almacenesService.updateAlmacenes(this.almacen).subscribe({
       next: (response) => {
-        this.dialogRef.close(response);
-        location.reload();
+        this.dialogRef.close("reload");
       },
       error: (error) => {
         console.error(error);

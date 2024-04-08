@@ -25,6 +25,10 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.getData();
+  }
+
+  getData(){
     this.dataSource.filterPredicate = (data: articulos, filter: string) => {
       return data.Descripcion.toLowerCase().includes(filter) || 
              data.Id.toString().includes(filter); // Puedes añadir más campos si es necesario
@@ -43,7 +47,8 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
       }
     });
   }
-   ngAfterViewInit() {
+
+  ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -63,7 +68,9 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // Manejar los resultados cuando la modal se cierre
+      if ( result == 'reload'){
+        this.getData()
+      }
     });
   }
   eliminarArticulo(Id: number) {
@@ -88,8 +95,8 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
     });
   
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        
+      if (result == 'reload') {
+        this.getData();
       }
     });
   }
