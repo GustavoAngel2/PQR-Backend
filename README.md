@@ -26,7 +26,7 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
-## v0.1
+## v0.1 Diciembre 2023
 ![Almacen](docs/image.png)
 ![AlmacenInsert](docs/image-1.png)
 ![Articulos](docs/image-2.png)
@@ -50,7 +50,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ![Usuarios](docs/image-21.png)
 ![UsuariosInsert](docs/image-22.png)
 
-## v0.2
+## v0.2 Abril 2024
 ![login](image.png)
 ![Menu/Inicio](image-20.png)
 ![Almacen](image-2.png)
@@ -67,10 +67,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ![Personas](image-15.png)
 ![Puestos](image-16.png)
 ![Rutas](image-17.png)
-![Tickets](image-19.png)
-![Usuarios](image-21.png)
-![UsuariosInsert](image-22.png)
 ![Tickets](image-18.png)
 ![Usuarios](image-19.png)
-![Detalle Perfil](image-27.png)
-
+![Detalle Perfil](image-22.png)
