@@ -1,8 +1,10 @@
-import { Component } from "@angular/core";
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { PuestosService } from "../data.service";
 import { Puesto } from "../models/puestos.model";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatDialog } from "@angular/material/dialog";
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { PuestosInsertComponent } from "../puestos-insert/puestos-insert.component";
 import { PuestosUpdateComponent } from "../puestos-update/puestos-update.component";
 
@@ -11,7 +13,7 @@ import { PuestosUpdateComponent } from "../puestos-update/puestos-update.compone
   templateUrl: "./puestos.component.html",
   styleUrls: ["./puestos.component.css"],
 })
-export class PuestosComponent {
+export class PuestosComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = [
     "Id",
     "nombre",
@@ -23,6 +25,9 @@ export class PuestosComponent {
     "Acciones",
   ];
   dataSource: MatTableDataSource<Puesto>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private puestosService: PuestosService,
@@ -52,6 +57,10 @@ export class PuestosComponent {
         console.error(error);
       },
     });
+  }
+    ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
   // Método para realizar el filtrado
   applyFilter(event: Event) {
@@ -91,7 +100,7 @@ export class PuestosComponent {
   }
   abrirEditarModal(articulos: Puesto) {
     const dialogRef = this.dialog.open(PuestosUpdateComponent, {
-      width: "250px",
+      width: "550px",
       data: articulos, // Pasa el objeto de departamento a la modal
     });
 

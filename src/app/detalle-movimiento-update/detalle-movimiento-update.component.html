@@ -1,34 +1,36 @@
-<h1 mat-dialog-title>Editar DetalleMovimiento</h1>
-<div mat-dialog-content class="mat-dialog-grid">
-  <!-- Fila para el formulario -->
-  <div class="mat-dialog-row">
-    <!-- Columna para el campo de nombre -->
-    <div class="mat-dialog-cell">
-      <mat-form-field>
-        <mat-label>IdMovimiento</mat-label>
-        <input matInput placeholder="Ingresa el IdMovieminto" [(ngModel)]="DetalleMov.idMovimiento">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Codigo</mat-label>
-        <input matInput placeholder="Ingresa el Codigo" [(ngModel)]="DetalleMov.codigo">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Cantidad</mat-label>
-        <input matInput placeholder="Ingresa el Cantidad" [(ngModel)]="DetalleMov.cantidad">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Costo</mat-label>
-        <input matInput placeholder="Ingresa el Costo" [(ngModel)]="DetalleMov.costo">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Usuario</mat-label>
-        <input matInput placeholder="Ingresa el Usuario" [(ngModel)]="DetalleMov.usuarioActualiza">
-      </mat-form-field>
-    </div>
-  </div>
-  <!-- Puedes agregar más filas con más campos aquí -->
+<div class="window-header">
+  <h1 mat-dialog-title>Editar detalle de movimiento</h1>
+  <button class="btn-close" (click)="onNoClick()"><i class="bi bi-x-square-fill"></i></button>
 </div>
-<div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Cancelar</button>
-    <button mat-button (click)="guardar()">Guardar Cambios</button>
+<div class="window-content">
+  <mat-form-field>
+    <mat-label>Producto</mat-label>
+    <select matNativeControl [(ngModel)]="codigo" (change)="dev1($event)">
+      <option value="0">--Seleccione un producto--</option>
+      <option *ngFor="let cc of ComboCodigo" [value]="cc.Codigo">{{ cc.Descripcion }}</option>
+    </select>
+  </mat-form-field>
+    <mat-form-field>
+    <mat-label>Tipo Movimiento</mat-label>
+    <select matNativeControl [(ngModel)]="idMovimiento" (change)="dev2($event)" >
+      <option value="0">--Seleccione un Tipo Movimiento--</option>
+      <option *ngFor="let movInv of ComboMov" [value]="movInv.Id">{{ movInv.IdTipoMov}}---{{movInv.IdAlmacen}}</option>
+    </select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Cantidad</mat-label>
+    <input matInput placeholder="Ingresa el Cantidad" [(ngModel)]="DetalleMov.cantidad">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Costo</mat-label>
+    <input matInput placeholder="Ingresa el Costo" [(ngModel)]="DetalleMov.costo">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Usuario</mat-label>
+    <input matInput placeholder="Ingresa el Usuario" [(ngModel)]="DetalleMov.usuarioActualiza">
+  </mat-form-field>
+</div>
+
+<div class="window-footer" mat-dialog-actions>
+  <button class="btn" (click)="guardar()"><i class="bi bi-floppy2-fill icon"></i> Guardar Cambios<i class="underline"></i></button>
 </div>

@@ -2,6 +2,9 @@ import { UpdateDetallePerfil } from '../models/detallePerfil.model';
 import { DetallePerfilService } from '../data.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA,MatDialogRef } from '@angular/material/dialog';
+import { RolesService } from '../data.service';
+import { ModulosService } from '../data.service';
+
 
 @Component({
   selector: 'app-detalle-perfil-update',
@@ -10,9 +13,18 @@ import { MAT_DIALOG_DATA,MatDialogRef } from '@angular/material/dialog';
 })
 export class DetallePerfilUpdateComponent implements OnInit{
   DetallePerfil: UpdateDetallePerfil;
+  ComboRol:any;
+  ComboModulo:any;
+  idPerfil!: number ;
+  idModulo!:number;
+  // usuarioActualiza: number;
+  // estatus: number;
+
   constructor(
     public dialogRef: MatDialogRef<DetallePerfilUpdateComponent>,
     private DetallePerfilService: DetallePerfilService,
+    private rolesService: RolesService,
+    private modulosService: ModulosService,
     @Inject(MAT_DIALOG_DATA) public data: UpdateDetallePerfil
 
   ) {
@@ -21,6 +33,25 @@ export class DetallePerfilUpdateComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.rolesService.getRoles().subscribe((data: any) => {
+    this.ComboRol = data;
+      console.log(this.ComboRol);
+      this.idPerfil = this.DetallePerfil.idPerfil;
+    });
+    
+    this.modulosService.getModulos().subscribe((data2: any) => {
+    this.ComboModulo = data2;
+      console.log(this.ComboModulo);
+      this.idModulo = this.DetallePerfil.idModulo;
+    });
+
+    this.idModulo = this.DetallePerfil.idModulo;
+    this.idPerfil = this.DetallePerfil.idPerfil;
+  }
+
+     dev(event: any): void {
+    this.idModulo = event.target.value;
+    this.idPerfil = event.target.value;
   }
 
   onNoClick(): void {

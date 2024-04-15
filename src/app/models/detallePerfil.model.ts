@@ -1,3 +1,4 @@
+
 export interface DetallePerfil {
   id: number;
   idPerfil: number;
@@ -16,6 +17,13 @@ export interface DetallePerfil {
       data: DetallePerfil[]; };
   }
 
+  export interface InsertDetallePerfil {
+    id: number;
+    idPerfil: number;
+    idModelo: number;
+    acceso: number;
+  }
+
   export interface UpdateDetallePerfil{
     Id: number;
     idPerfil: number;
@@ -31,9 +39,7 @@ export interface DetallePerfil {
     acceso: number;
     usuarioActualiza: number;
   }
-  
-  export interface DeleteDetallePerfil{
-    id: number;
-  }
+
+
 
   	

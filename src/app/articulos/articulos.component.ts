@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ArticulosService } from '../data.service';
 import { articulos, deleteCArticulos } from '../models/articulo.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { ArticulosInsertComponent } from '../articulos-insert/articulos-insert.component';
 import { ArticulosUpdateComponent } from '../articulos-update/articulos-update.component';
 
@@ -12,15 +13,22 @@ import { ArticulosUpdateComponent } from '../articulos-update/articulos-update.c
   templateUrl: './articulos.component.html',
   styleUrls: ['./articulos.component.css']
 })
-export class ArticulosComponent {
-  displayedColumns: string[] = ['Id', 'Codigo', 'Descripcion', 'UM', 'Usuario','Costo','Precio','FechaReg','FechaAct','Acciones'];
+export class ArticulosComponent implements OnInit, AfterViewInit {
+  displayedColumns: string[] = ['Id', 'Codigo', 'Descripcion', 'UM', 'Usuario','Costo','Precio','Fecha Registro','Fecha Actualiza','Acciones'];
   dataSource: MatTableDataSource<articulos>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private articulosService: ArticulosService, public dialog:MatDialog) {
     this.dataSource = new MatTableDataSource<articulos>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
 
   ngOnInit() {
+    this.getData();
+  }
+
+  getData(){
     this.dataSource.filterPredicate = (data: articulos, filter: string) => {
       return data.Descripcion.toLowerCase().includes(filter) || 
              data.Id.toString().includes(filter); // Puedes añadir más campos si es necesario
@@ -39,6 +47,11 @@ export class ArticulosComponent {
       }
     });
   }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
   // Método para realizar el filtrado
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -55,7 +68,9 @@ export class ArticulosComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // Manejar los resultados cuando la modal se cierre
+      if ( result == 'reload'){
+        this.getData()
+      }
     });
   }
   eliminarArticulo(Id: number) {
@@ -75,13 +90,13 @@ export class ArticulosComponent {
   }
   abrirEditarModal(articulos: articulos) {
     const dialogRef = this.dialog.open(ArticulosUpdateComponent, {
-      width: '250px',
+      width: '550px',
       data: articulos // Pasa el objeto de departamento a la modal
     });
   
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        
+      if (result == 'reload') {
+        this.getData();
       }
     });
   }

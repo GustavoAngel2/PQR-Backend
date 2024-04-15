@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { DetalleMovService } from '../data.service';
 import { DetalleMov, deleteDetalleMov} from '../models/detalleMov.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { DetalleMoviemientoInsertComponent } from '../detalle-moviemiento-insert/detalle-moviemiento-insert.component';
 import { DetalleMovimientoUpdateComponent } from '../detalle-movimiento-update/detalle-movimiento-update.component';
 // import { InsertarComponent } from '../insertar/insertar.component';
@@ -13,9 +15,12 @@ import { DetalleMovimientoUpdateComponent } from '../detalle-movimiento-update/d
   templateUrl: './detalle-movimiento.component.html',
   styleUrls: ['./detalle-movimiento.component.css']
  })
-export class DetalleMovimientoComponent implements OnInit {
+export class DetalleMovimientoComponent implements OnInit, AfterViewInit{
   displayedColumns: string[] = ['Id', 'NombreMovimiento', 'Cantidad', 'Costo', 'FechaActualiza','UsuarioActualiza','Acciones'];
   dataSource: MatTableDataSource<DetalleMov>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private DetalleMovService: DetalleMovService, public dialog:MatDialog) {
     this.dataSource = new MatTableDataSource<DetalleMov>(); // Inicializa dataSource como una instancia de MatTableDataSource
@@ -38,6 +43,10 @@ export class DetalleMovimientoComponent implements OnInit {
         console.error(error);
       }
     });
+  }
+    ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
   // Método para realizar el filtrado
   applyFilter(event: Event) {
@@ -75,7 +84,7 @@ export class DetalleMovimientoComponent implements OnInit {
   }
   abrirEditarModal(detalleMov: DetalleMov) {
     const dialogRef = this.dialog.open(DetalleMovimientoUpdateComponent, {
-      width: '250px',
+      width: '550px',
       data: detalleMov // Pasa el objeto de departamento a la modal
     });
   

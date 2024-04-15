@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { AlmacenesService, ModulosService } from '../data.service';
 import { Modulo } from '../models/modulo.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { ModulosInsertComponent } from '../modulos-insert/modulos-insert.component';
 import { ModulosUpdateComponent } from '../modulos-update/modulos-update.component';
 
@@ -11,9 +13,12 @@ import { ModulosUpdateComponent } from '../modulos-update/modulos-update.compone
   templateUrl: './modulos.component.html',
   styleUrls: ['./modulos.component.css']
  })
-export class ModulosComponent implements OnInit {
+export class ModulosComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['Id', 'NombreModulo', 'CategoriaModulo', 'Usuario', 'FechaAct','FechaReg','Acciones'];
   dataSource: MatTableDataSource<Modulo>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private ModulosService: ModulosService, public dialog:MatDialog) {
     this.dataSource = new MatTableDataSource<Modulo>(); // Inicializa dataSource como una instancia de MatTableDataSource
@@ -37,6 +42,10 @@ export class ModulosComponent implements OnInit {
         console.error(error);
       }
     });
+  }
+    ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
   // Método para realizar el filtrado
   applyFilter(event: Event) {
@@ -74,7 +83,7 @@ export class ModulosComponent implements OnInit {
   }
   abrirEditarModal(modulo: Modulo) {
     const dialogRef = this.dialog.open(ModulosUpdateComponent, {
-      width: '250px',
+      width: '550px',
       data: modulo // Pasa el objeto de departamento a la modal
     });
   

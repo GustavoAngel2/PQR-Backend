@@ -1,32 +1,37 @@
-<h1 mat-dialog-title>Nuevo Usuario</h1>
-<div mat-dialog-content class="mat-dialog-grid">
+<div class="window-header">
+  <h1 mat-dialog-title>Nuevo usuario</h1>
+  <button class="btn-close" (click)="onNoClick()"><i class="bi bi-x-square-fill btn-close"></i></button>
+</div>
+
   <!-- Fila para el formulario -->
-  <div class="mat-dialog-row">
     <!-- Columna para el campo de nombre -->
-    <div class="mat-dialog-cell">
+    <div class="window-content">
       <mat-form-field>
         <mat-label>Nombre</mat-label>
-        <input matInput placeholder="Ingresa el nombre" [(ngModel)]="nombre">
+        <input matInput placeholder="Ingresa el nombre" [(ngModel)]="nombre" />
+      </mat-form-field>
+      <mat-form-field style="display: none;">
+        <mat-label>rol</mat-label>
+        <input matInput placeholder="Ingresa el nombre" [(ngModel)]="rol" />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Contraseña</mat-label>
-        <input matInput placeholder="Contrasena" [(ngModel)]="contrasena">
+        <input matInput placeholder="Contraseña" [(ngModel)]="contrasena" />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Rol</mat-label>
-        <input matInput placeholder="Rol" [(ngModel)]="rol">
+        <select matNativeControl [(ngModel)]="ComboRoles" placeholder="--Seleccione un usuario--" (change)="dev($event)" class="form-control">
+          <option *ngFor="let rol of ComboRoles" value={{rol.Id}}>• {{ rol.Rol }}</option>
+        </select>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Usuario</mat-label>
-        <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuario">
+        <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuario"/>
       </mat-form-field>
-      
     </div>
-  </div>
-  <!-- Puedes agregar más filas con más campos aquí -->
-</div>
-<div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Cancelar</button>
-    <button mat-button cdkFocusInitial (click)="insertar()">Insertar</button>
-</div>
+    <!-- Puedes agregar más filas con más campos aquí -->
 
+
+<div mat-dialog-actions class="window-footer" >
+  <button class="btn" (click)="insertar()"><i class="bi bi-floppy2-fill icon"></i> Guardar Cambios<i class="underline"></i></button>
+</div>

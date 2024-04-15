@@ -1,6 +1,9 @@
 import { Component } from "@angular/core";
 import { MatDialogRef } from "@angular/material/dialog";
 import { EmpleadosService } from "../data.service";
+import { PersonasService } from "../data.service";
+import { SucursalesService } from "../data.service";
+import { PuestosService } from "../data.service";
 
 @Component({
   selector: "app-empleados-insert",
@@ -12,12 +15,34 @@ export class EmpleadosInsertComponent {
   IdSucursal: number = 0;
   IdPuesto: number = 0;
   usuarioActualiza: number = 0;
+  ComboPersona:any;
+  ComboSucursal:any;
+  ComboPuesto:any;
 
   constructor(
     public dialogRef: MatDialogRef<EmpleadosInsertComponent>,
-    private empleadosService: EmpleadosService
+    private empleadosService: EmpleadosService,
+    private sucursalesService: SucursalesService,
+    private puestoService:PuestosService,
+    private personasService:PersonasService
+
   ) {}
 
+
+   ngOnInit(): void {
+    this.personasService.getPersonas().subscribe((data: any) => {
+      this.ComboPersona = data;
+      console.log(this.ComboPersona)
+    });
+     this.sucursalesService.getSucursales().subscribe((data: any) => {
+      this.ComboSucursal = data;
+      console.log(this.ComboSucursal)
+    });
+       this.puestoService.getPuestos().subscribe((data: any) => {
+      this.ComboPuesto = data;
+      console.log(this.ComboPuesto)
+    });
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }

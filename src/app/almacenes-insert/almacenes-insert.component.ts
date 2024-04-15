@@ -11,6 +11,7 @@ export class AlmacenesInsertComponent {
   nombreAlmacen: string = '';
   direccion: string = '';
   usuario: number = 0;
+  encargado:number = 0;
 
   constructor(
     public dialogRef: MatDialogRef<AlmacenesInsertComponent>,
@@ -25,15 +26,15 @@ export class AlmacenesInsertComponent {
     const nuevoAlmacen = {
       nombre: this.nombreAlmacen,
       direccion: this.direccion,  
-      usuario: this.usuario  
+      usuario: this.usuario,
+      encargado: this.encargado
     };
 
     // Aquí asumo que tienes un método en tu servicio para insertar el departamento
     this.almacenesService.insertarAlmacenes(nuevoAlmacen).subscribe({
       next: (response) => {
         // Puedes cerrar la modal y/o actualizar la tabla aquí si es necesario
-        this.dialogRef.close(response);
-        location.reload();
+        this.dialogRef.close("reload");
       },
       error: (error) => {
         // Manejar el error aquí

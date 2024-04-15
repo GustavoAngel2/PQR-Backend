@@ -1,38 +1,34 @@
-<h1 mat-dialog-title>Nuevo Empleado</h1>
-<div mat-dialog-content class="mat-dialog-grid">
-  <!-- Fila para el formulario -->
-  <div class="mat-dialog-row">
-    <!-- Columna para el campo de nombre -->
-    <div class="mat-dialog-cell">
-      <mat-form-field>
-        <mat-label>IdPersona</mat-label>
-        <input
-          matInput
-          placeholder="Ingresa el nombre"
-          [(ngModel)]="IdPersona"
-        />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>IdSucursal</mat-label>
-        <input
-          matInput
-          placeholder="Selecciona sucursal"
-          [(ngModel)]="IdSucursal"
-        />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Puesto</mat-label>
-        <input matInput placeholder="Puesto" [(ngModel)]="IdPuesto" />
-      </mat-form-field>
+<div class="window-header">
+  <h1 mat-dialog-title>Nuevo empleado</h1>
+  <button class="btn-close" (click)="onNoClick()"><i class="bi bi-x-square-fill "></i></button>
+</div>
+<div class="window-content">
+  <mat-form-field>
+    <mat-label>Persona</mat-label>
+    <select matNativeControl [(ngModel)]="IdPersona">
+      <option value="0">--Seleccione una Persona--</option>
+      <option *ngFor="let per of ComboPersona" [value]="per.Id">{{ per.Nombre }}</option>
+    </select>
+  </mat-form-field>
+     <mat-form-field>
+    <mat-label>Sucursal</mat-label>
+    <select matNativeControl [(ngModel)]="IdSucursal">
+      <option value="0">--Seleccione una Sucursal--</option>
+      <option *ngFor="let scr of ComboSucursal" [value]="scr.Id">{{ scr.Nombre }}</option>
+    </select>
+  </mat-form-field>
+        <mat-form-field>
+    <mat-label>Puesto</mat-label>
+    <select matNativeControl [(ngModel)]="IdPuesto">
+      <option value="0">--Seleccione un Puesto--</option>
+      <option *ngFor="let pt of ComboPuesto" [value]="pt.Id">{{ pt.nombre }}</option>
+    </select>
+  </mat-form-field>
       <mat-form-field>
         <mat-label>Usuario Actualiza</mat-label>
         <input matInput placeholder="Usuario" [(ngModel)]="usuarioActualiza" />
       </mat-form-field>
-    </div>
-  </div>
-  <!-- Puedes agregar más filas con más campos aquí -->
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-button cdkFocusInitial (click)="insertar()">Insertar</button>
+<div mat-dialog-actions class="window-footer">
+  <button class="btn" cdkFocusInitial (click)="insertar()"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
 </div>

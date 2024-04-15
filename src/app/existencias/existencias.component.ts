@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Existencia } from '../models/existencia.model';
-
 import { ExistenciasService } from '../data.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { ExistenciasInsertComponent } from '../existencias-insert/existencias-insert.component';
 import { ExistenciasUpdateComponent } from '../existencias-update/existencias-update.component';
 
@@ -12,9 +13,12 @@ import { ExistenciasUpdateComponent } from '../existencias-update/existencias-up
   templateUrl: './existencias.component.html',
   styleUrls: ['./existencias.component.css']
 })
-export class ExistenciasComponent  implements OnInit{
+export class ExistenciasComponent  implements OnInit, AfterViewInit{
   displayedColumns: string[] = ['Id', 'Codigo', 'Almacen', 'Cantidad', 'Usuario', 'FechaRegistro', 'FechaActualiza', 'Acciones'];
   dataSource: MatTableDataSource<Existencia>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private existenciasService: ExistenciasService, public dialog:MatDialog) {
     this.dataSource = new MatTableDataSource<Existencia>(); // Inicializa dataSource como una instancia de MatTableDataSource
@@ -37,6 +41,10 @@ export class ExistenciasComponent  implements OnInit{
         console.error(error);
       }
     });
+  }
+    ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
   // Método para realizar el filtrado
   applyFilter(event: Event) {
@@ -74,7 +82,7 @@ export class ExistenciasComponent  implements OnInit{
   }
   abrirEditarModal(existencia: Existencia) {
     const dialogRef = this.dialog.open(ExistenciasUpdateComponent, {
-      width: '250px',
+      width: '550px',
       data: existencia // Pasa el objeto de departamento a la modal
     });
   

@@ -1,32 +1,40 @@
-
-<mat-form-field>
-    <mat-label>Filtrar</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
-</mat-form-field>
-  <div class="mat-elevation-z8">
-    <div class="toolbar" style="text-align: center;">
-        <button mat-button (click)="abrirInsertarModal()" style="background-color: green;color: white;">Insertar articulo</button>
-    </div>
+<div class="title-container">
     <br>
+    <label class="title">Articulos</label>
+    <br>
+    <img src="./assets/Articulos.png" class="module-logo">
+    <br>
+</div>
+
+<div class="actionbar">
+    <mat-form-field class="search-bar">
+        <mat-label>Filtrar</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
+    </mat-form-field>
+    <button (click)="abrirInsertarModal()" class="btn right"><i class="bi bi-cart-plus-fill"></i> Insertar<i class="underline"></i></button>
+</div>
+<br>
+<div class="table-container">
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
             <td mat-cell *matCellDef="let articulo"> {{articulo.Id}} </td>
         </ng-container>
         <ng-container matColumnDef="Codigo">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Codigo </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Codigo  </th>
             <td mat-cell *matCellDef="let articulo"> {{articulo.Codigo}} </td>
         </ng-container>
         <ng-container matColumnDef="Descripcion">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripcion </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Producto </th>
             <td mat-cell *matCellDef="let articulo"> {{articulo.Descripcion}} </td>
         </ng-container>
         <ng-container matColumnDef="UM">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> UM </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Unidad Medida </th>
             <td mat-cell *matCellDef="let articulo"> {{articulo.UM}} </td>
         </ng-container>
         <ng-container matColumnDef="Usuario">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario Actualiza</th>
             <td mat-cell *matCellDef="let articulo"> {{articulo.Usuario}} </td>
         </ng-container>
         <ng-container matColumnDef="Costo">
@@ -37,11 +45,11 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio </th>
             <td mat-cell *matCellDef="let articulo"> {{articulo.Precio}} </td>
         </ng-container>
-        <ng-container matColumnDef="FechaReg">
+        <ng-container matColumnDef="Fecha Registro">
             <th mat-header-cell *matHeaderCellDef mat-sort-header > FechaReg </th>
             <td mat-cell *matCellDef="let articulo"> {{articulo.FechaReg}} </td>
         </ng-container>
-        <ng-container matColumnDef="FechaAct" >
+        <ng-container matColumnDef="Fecha Actualiza" >
             <th mat-header-cell *matHeaderCellDef mat-sort-header> FechaAct </th>
             <td mat-cell *matCellDef="let articulo"> {{articulo.FechaAct}} </td>
         </ng-container>
@@ -55,4 +63,4 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </table>
-  </div>
+</div>

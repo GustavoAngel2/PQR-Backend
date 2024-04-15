@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { CategoriaModuloService } from '../data.service';
 import { CategoriaModulo } from '../models/categoriaModulo.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { CategoriaModuloInsertComponent } from '../categoria-modulo-insert/categoria-modulo-insert.component';
 import { CategoriaModuloUpdateComponent } from '../categoria-modulo-update/categoria-modulo-update.component';
 
@@ -11,9 +13,13 @@ import { CategoriaModuloUpdateComponent } from '../categoria-modulo-update/categ
   templateUrl: './categoria-modulo.component.html',
   styleUrls: ['./categoria-modulo.component.css']
 })
-export class CategoriaModuloComponent  implements OnInit{
+export class CategoriaModuloComponent  implements OnInit, AfterViewInit                                              {
   displayedColumns: string[] = ['Id', 'Nombre', 'Descripcion', 'FechaRegistro', 'FechaActualiza','Usuario','Acciones'];
   dataSource: MatTableDataSource<CategoriaModulo>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
 
   constructor(private CategoriaModuloService: CategoriaModuloService, public dialog:MatDialog) {
     this.dataSource = new MatTableDataSource<CategoriaModulo>(); // Inicializa dataSource como una instancia de MatTableDataSource
@@ -37,6 +43,10 @@ export class CategoriaModuloComponent  implements OnInit{
         console.error(error);
       }
     });
+  }
+    ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
   // Método para realizar el filtrado
   applyFilter(event: Event) {
@@ -74,7 +84,7 @@ export class CategoriaModuloComponent  implements OnInit{
   }
   abrirEditarModal(catmodulo: CategoriaModulo) {
     const dialogRef = this.dialog.open(CategoriaModuloUpdateComponent, {
-      width: '250px',
+      width: '550px',
       data: catmodulo // Pasa el objeto de departamento a la modal
     });
   

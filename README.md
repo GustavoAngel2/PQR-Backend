@@ -1,4 +1,4 @@
-# 27sxkl
+# Quirey angular frontend
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.4.
 
@@ -26,57 +26,51 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
-V01
-![Almacen](image.png)
-![AlmacenInsert](image-1.png)
-![Articulos](image-2.png)
-![ArticulosInsert](image-3.png)
-![Clientes](image-4.png)
-![ClientesInsert](image-5.png)
-![DetalleMov](image-6.png)
-![DetalleMovInsert](image-7.png)
-![DetalleTicket](image-9.png)
-![DetalleTicketInsert](image-12.png)
-![Existencias](image-10.png)
-![ExistenciaInsert](image-11.png)
-![MovInventario](image-13.png)
-![MovInventarioInsert](image-14.png)
+V0.1
+![Almacen](docs/image.png)
+![AlmacenInsert](docs/image-1.png)
+![Articulos](docs/image-2.png)
+![ArticulosInsert](docs/image-3.png)
+![Clientes](docs/image-4.png)
+![ClientesInsert](docs/image-5.png)
+![DetalleMov](docs/image-6.png)
+![DetalleMovInsert](docs/image-7.png)
+![DetalleTicket](docs/image-9.png)
+![DetalleTicketInsert](docs/image-12.png)
+![Existencias](docs/image-10.png)
+![ExistenciaInsert](docs/image-11.png)
+![MovInventario](docs/image-13.png)
+![MovInventarioInsert](docs/image-14.png)
+![Personas](docs/image-15.png)
+![PersonasInsert](docs/image-16.png)
+![Rutas](docs/image-17.png)
+![RutasInsert](docs/image-18.png)
+![Tickets](docs/image-19.png)
+![TicketsInsert](docs/image-20.png)
+![Usuarios](docs/image-21.png)
+![UsuariosInsert](docs/image-22.png)
+
+v0.2
+![login](image.png)
+![Menu/Inicio](image-20.png)
+![Almacen](image-2.png)
+![Articulos](image-3.png)
+![Categoria](image-4.png)
+![Clientes](image-5.png)
+![Detalle Perfil](image-6.png)
+![Detalle Movimiento](image-8.png)
+![Detalle Ticket](image-10.png)
+![Empleados](image-11.png)
+![Existencias](image-12.png)
+![Modulos](image-13.png)
+![Movimientos Inventario](image-14.png)
 ![Personas](image-15.png)
-![PersonasInsert](image-16.png)
+![Puestos](image-16.png)
 ![Rutas](image-17.png)
-![RutasInsert](image-18.png)
 ![Tickets](image-19.png)
-![TicketsInsert](image-20.png)
 ![Usuarios](image-21.png)
 ![UsuariosInsert](image-22.png)
-//==================================================================================================================
-Proyecto Primer Parcial TICSM05
-
-![Empleadosn](image-23.png)
-Este modulo muestra los empleados registrados en la tabla
-
-![Puestos](image-24.png)
-Esto modulo muestra los puestos registrados en la tabla
-
-![CategoriaModulo](image-25.png)
-Este modulo muestra las categorias registrados en la tabla y darle la categoria al modulo
-
-![Modulo](image-26.png)
-Este modulo nos sirve para relacionar el perfil y la categoria del modulo
-
+![Tickets](image-18.png)
+![Usuarios](image-19.png)
 ![Detalle Perfil](image-27.png)
-Este modulo nos sirve para mostrar, insertar y actualizar datos relacionados a detalle perfil
 
-
-Integrantes del Equipo
-//=============================================================================
-
--Jose Reynaldo Silla Guerrero
-
--Jonathan Cortes Perez
-
--Brandon Arturo Saravia Gonzalez
-
--Gustavo Angel Borrego Ramirez
-
--Carlos Alvarez Montes

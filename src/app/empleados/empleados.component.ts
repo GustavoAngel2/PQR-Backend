@@ -1,7 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { EmpleadosService } from "../data.service";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatDialog } from "@angular/material/dialog";
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { EmpleadosInsertComponent } from "../empleados-insert/empleados-insert.component";
 import { EmpleadosUpdateComponent } from "../empleados-update/empleados-update.component";
 import { empleado } from "../models/empleados.model";
@@ -11,7 +13,7 @@ import { empleado } from "../models/empleados.model";
   templateUrl: "./empleados.component.html",
   styleUrls: ["./empleados.component.css"],
 })
-export class EmpleadosComponent implements OnInit {
+export class EmpleadosComponent implements OnInit, AfterViewInit{
   displayedColumns: string[] = [
     "Id",
     "Persona",
@@ -23,6 +25,9 @@ export class EmpleadosComponent implements OnInit {
     "Acciones",
   ];
   dataSource: MatTableDataSource<empleado>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private EmpleadosService: EmpleadosService,
@@ -51,6 +56,10 @@ export class EmpleadosComponent implements OnInit {
         console.error(error);
       },
     });
+  }
+    ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
   // Método para realizar el filtrado
   applyFilter(event: Event) {
@@ -90,7 +99,7 @@ export class EmpleadosComponent implements OnInit {
   }
   abrirEditarModal(empleado: empleado) {
     const dialogRef = this.dialog.open(EmpleadosUpdateComponent, {
-      width: "250px",
+      width: "550px",
       data: empleado, // Pasa el objeto de departamento a la modal
     });
 

@@ -1,33 +1,38 @@
-<div>
-  <h1 mat-dialog-title>Nuevo Detalle Movimiento</h1>
-  <div mat-dialog-content class="mat-dialog-grid">
-    <!-- Fila para el formulario -->
-    <div class="mat-dialog-row">
-      <!-- Columna para el campo de nombre -->
-      <div class="mat-dialog-cell">
-        <mat-form-field>
-          <mat-label>Id de perfil</mat-label>
-          <input type="number" matInput placeholder="Ingresa el id del perfil" [(ngModel)]="idPerfil">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Id de modulo</mat-label>
-          <input  type="number" matInput placeholder="Codigo" [(ngModel)]="idModulo">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Acceso</mat-label>
-          <input type="number" matInput placeholder="1 con acceso, 0 sin acceso" [(ngModel)]="acceso">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Usuario Actualiza</mat-label>
-          <input  type="number" matInput placeholder="Id del usuario que actualiza" [(ngModel)]="usuarioActualiza">
-        </mat-form-field>
-        
-      </div>
-    </div>
-    <!-- Puedes agregar más filas con más campos aquí -->
-  </div>
-  <div mat-dialog-actions>
-      <button mat-button (click)="onNoClick()">Cancelar</button>
-      <button mat-button cdkFocusInitial (click)="insertar()">Insertar</button>
-  </div>
+<div class="window-header">
+  <h1 mat-dialog-title>Nuevo detalle de perfil</h1>
+  <button class="btn-close" (click)="onNoClick()"><i class="bi bi-x-square-fill "></i></button>
+</div>
+
+<div class="window-content">
+  <br>
+  <mat-form-field>
+    <mat-label>Rol</mat-label>
+    <select matNativeControl [(ngModel)]="idPerfil">
+      <option value="0">--Seleccione un rol--</option>
+      <option *ngFor="let rol of ComboRol" [value]="rol.Id">{{ rol.Rol }}</option>
+    </select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Modulo</mat-label>
+    <select matNativeControl [(ngModel)]="idModulo">
+      <option value="0">--Seleccione un modulo--</option>
+      <option *ngFor="let mod of ComboModulo" [value]="mod.Id">{{ mod.NombreModulo }}</option>
+    </select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Acceso</mat-label>
+    <select  matNativeControl [(ngModel)]="acceso" >
+      <option value="1">Con acceso</option>
+      <option value="0">sin acceso</option>
+    </select>
+  </mat-form-field>
+    <mat-form-field>
+      <mat-label>Usuario Actualiza</mat-label>
+      <input  type="number" matInput placeholder="Id del usuario que actualiza" [(ngModel)]="usuarioActualiza">
+  </mat-form-field>
+</div>
+  
+  
+<div mat-dialog-actions class="window-footer">
+  <button class="btn" cdkFocusInitial (click)="insertar()"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
 </div>

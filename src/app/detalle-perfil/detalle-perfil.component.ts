@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { DetallePerfilService } from '../data.service';
 import { DetallePerfil } from '../models/detallePerfil.model';
-import { OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { DetallePerfilInsertComponent } from '../detalle-perfil-insert-component/detalle-perfil-insert-component.component';
 import { DetallePerfilUpdateComponent } from '../detalle-perfil-update/detalle-perfil-update.component';
 
@@ -12,9 +13,12 @@ import { DetallePerfilUpdateComponent } from '../detalle-perfil-update/detalle-p
   templateUrl: './detalle-perfil.component.html',
   styleUrls: ['./detalle-perfil.component.css']
 })
-export class DetallePerfilComponent implements OnInit {
+export class DetallePerfilComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['id', 'nombreModulo', 'rol', 'acceso', "fechaRegistro", 'fechaActualiza', "UsuarioActualiza",'Acciones'];
   dataSource: MatTableDataSource<DetallePerfil>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private DetallePerfilService: DetallePerfilService, public dialog:MatDialog) {
     this.dataSource = new MatTableDataSource<DetallePerfil>(); // Inicializa dataSource como una instancia de MatTableDataSource
@@ -37,6 +41,10 @@ export class DetallePerfilComponent implements OnInit {
         console.error(error);
       }
     });
+  }
+    ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
   // Método para realizar el filtrado
   applyFilter(event: Event) {
@@ -75,7 +83,7 @@ export class DetallePerfilComponent implements OnInit {
   }
   abrirEditarModal(DetallePerfil: DetallePerfil) {
     const dialogRef = this.dialog.open(DetallePerfilUpdateComponent, {
-      width: '250px',
+      width: '550px',
       data: DetallePerfil // Pasa el objeto de departamento a la modal
     });
   

@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { TicketsSevice } from '../data.service';
 import { tickets } from '../models/tickets.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { TicketsInsertComponent } from '../tickets-insert/tickets-insert.component';
 import { TicketsUpdateComponent } from '../tickets-update/tickets-update.component';
 
@@ -11,9 +13,13 @@ import { TicketsUpdateComponent } from '../tickets-update/tickets-update.compone
   templateUrl: './tickets.component.html',
   styleUrls: ['./tickets.component.css']
 })
-export class TicketsComponent implements OnInit{
+export class TicketsComponent implements OnInit, AfterViewInit{
   displayedColumns: string[] = ['Id', 'Sucursal', 'Cliente', 'Vendedor','Usuario', 'Fecha','Estatus','Acciones'];
   dataSource: MatTableDataSource<tickets>;
+
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private TicketsService: TicketsSevice, public dialog:MatDialog) {
     this.dataSource = new MatTableDataSource<tickets>(); // Inicializa dataSource como una instancia de MatTableDataSource
@@ -36,6 +42,10 @@ export class TicketsComponent implements OnInit{
         console.error(error);
       }
     });
+  }
+    ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
   // Método para realizar el filtrado
   applyFilter(event: Event) {
@@ -73,7 +83,7 @@ export class TicketsComponent implements OnInit{
   }
   abrirEditarModal(ticket: tickets) {
     const dialogRef = this.dialog.open(TicketsUpdateComponent, {
-      width: '250px',
+      width: '550px',
       data: ticket // Pasa el objeto de departamento a la modal
     });
   

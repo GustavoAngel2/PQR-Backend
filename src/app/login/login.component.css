@@ -1,8 +1,15 @@
 .background {
-  position: relative;
+  position: fixed;
   z-index: 6;
-  background-color: rgb(255, 222, 131);
-  top: -64px;
+  background: rgb(212,109,19);
+  background: linear-gradient(0deg, rgba(212,109,19,1) 0%, rgb(252, 212, 101) 100%);
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .btn-login{
@@ -28,8 +35,8 @@
 }
 
 .login-bg {
+  top: 7%;
   position: relative;
-  left: calc(50% - 128px);
   width: 512px;
   display: flex;
   flex-direction: column;

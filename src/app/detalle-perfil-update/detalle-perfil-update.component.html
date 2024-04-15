@@ -1,38 +1,49 @@
-<h1 mat-dialog-title>Editar informacion de perfil</h1>
-<div mat-dialog-content class="mat-dialog-grid">
-  <!-- Fila para el formulario -->
-  <div class="mat-dialog-row">
-    <!-- Columna para el campo de nombre -->
-    <div class="mat-dialog-cell">
-      <mat-form-field style="display: none;">
-        <mat-label>Id del perfil</mat-label>
-        <input matInput placeholder="Ingresa el id del perfil" [(ngModel)]="DetallePerfil.Id">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Id del perfil</mat-label>
-        <input matInput placeholder="Ingresa el id del perfil" [(ngModel)]="DetallePerfil.idPerfil">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Id del modulo</mat-label>
-        <input matInput placeholder="Ingresa el id del modulo" [(ngModel)]="DetallePerfil.idModulo">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Acceso</mat-label>
-        <input matInput placeholder="1 con acceso, 0 sin acceso" [(ngModel)]="DetallePerfil.acceso">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Usuario actualiza</mat-label>
-        <input matInput placeholder="Ingresa el id de usuario" [(ngModel)]="DetallePerfil.usuarioActualiza">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Estado</mat-label>
-        <input matInput placeholder="1 disponible, 0 no disponible" [(ngModel)]="DetallePerfil.estatus">
-      </mat-form-field>
-    </div>
-  </div>
-  <!-- Puedes agregar más filas con más campos aquí -->
+<div class="window-header">
+  <h1 mat-dialog-title>Editar información de perfil</h1>
+  <button class="btn-close" (click)="onNoClick()"><i class="bi bi-x-square-fill"></i></button>
 </div>
-<div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Cancelar</button>
-    <button mat-button (click)="guardar()">Guardar Cambios</button>
+
+<div class="window-content">
+  <br>
+  <mat-form-field style="display: none;">
+    <mat-label>Id del perfil</mat-label>
+    <input matInput placeholder="Ingresa el id del perfil" [(ngModel)]="DetallePerfil.Id">
+  </mat-form-field>
+   <mat-form-field style="display:none;">
+    <mat-label>Rol</mat-label>
+    <input matInput placeholder=" " [(ngModel)]="DetallePerfil.idPerfil">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Rol</mat-label>
+    <select  matNativeControl [(ngModel)]="DetallePerfil.idPerfil" >
+      <option value="0">--Seleccione un Rol--</option>
+      <option *ngFor="let rol of ComboRol" [value]="rol.Id">{{ rol.Rol }}</option>
+    </select>
+  </mat-form-field>
+    <mat-form-field>
+    <mat-label>Modulo</mat-label>
+    <select  matNativeControl [(ngModel)]="DetallePerfil.idModulo" >
+      <option value="0">--Seleccione un modulo-</option>
+      <option *ngFor="let mod of ComboModulo" [value]="mod.Id">{{ mod.NombreModulo }}</option>
+    </select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Acceso</mat-label>
+    <select  matNativeControl [(ngModel)]="DetallePerfil.acceso" >
+      <option value="1">Con acceso</option>
+      <option value="0">sin acceso</option>
+    </select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Usuario actualiza</mat-label>
+    <input matInput placeholder="Ingresa el id de usuario" [(ngModel)]="DetallePerfil.usuarioActualiza">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Estado</mat-label>
+    <input matInput placeholder="1 disponible, 0 no disponible" [(ngModel)]="DetallePerfil.estatus">
+  </mat-form-field>
+</div>
+
+<div class="window-footer" mat-dialog-actions>
+  <button class="btn" (click)="guardar()"><i class="bi bi-floppy2-fill icon"></i> Guardar Cambios<i class="underline"></i></button>
 </div>
