@@ -26,7 +26,7 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
-V01
+V0.1
 ![Almacen](docs/image.png)
 ![AlmacenInsert](docs/image-1.png)
 ![Articulos](docs/image-2.png)
@@ -49,3 +49,29 @@ V01
 ![TicketsInsert](docs/image-20.png)
 ![Usuarios](docs/image-21.png)
 ![UsuariosInsert](docs/image-22.png)
+
+v0.2
+![login](image.png)
+![Menu](image-1.png)
+![Almacen](image-2.png)
+![Articulos](image-3.png)
+![Categoria](image-4.png)
+![Clientes](image-5.png)
+![Detalle Perfil](image-6.png)
+![Detalle Movimiento](image-8.png)
+![Detalle Ticket](image-10.png)
+![Empleados](image-11.png)
+![Existencias](image-12.png)
+![Modulos](image-13.png)
+![Movimientos Inventario](image-14.png)
+![Personas](image-15.png)
+![Puestos](image-16.png)
+![Rutas](image-17.png)
+![Tickets](image-18.png)
+![Usuarios](image-19.png)
+
+
+
+
+
+
