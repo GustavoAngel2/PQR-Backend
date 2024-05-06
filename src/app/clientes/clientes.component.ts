@@ -15,7 +15,7 @@ import { ClientesUpdateComponent } from '../clientes-update/clientes-update.comp
   styleUrls: ['./clientes.component.css']
 })
 export class ClientesComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Id', 'Nombre', 'Direccion', 'Usuario', 'FechaAct','FechaReg','Acciones'];
+  displayedColumns: string[] = ['Id', 'Nombre', 'Direccion', 'Usuario', 'FechaAct','FechaReg','Telefono','Curp','Rfc','Email','Coordenadas','Acciones'];
   dataSource: MatTableDataSource<Clientes>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -69,7 +69,7 @@ export class ClientesComponent implements OnInit, AfterViewInit {
   }
   eliminarCliente(Id: number) {
     // Aquí puedes agregar una confirmación antes de eliminar si lo deseas
-    if (confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
+    if (confirm('¿Estás seguro de que deseas eliminar este Cliente?')) {
       this.ClientesService.deleteClientes(Id).subscribe({
         next: (response) => {
           console.log(response);
