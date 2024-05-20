@@ -13,7 +13,38 @@ import { AlmacenesUpdateComponent } from '../almacenes-update/almacenes-update.c
   templateUrl: './almacenes.component.html',
   styleUrls: ['./almacenes.component.css']
 })
+
 export class AlmacenesComponent implements OnInit, AfterViewInit {
+
+nombreAlmacen: string = '';
+  direccion: string = '';
+  usuario: number = 0;
+  encargado:number = 0;
+
+  insertar(): void {
+    const nuevoAlmacen = {
+      nombre: this.nombreAlmacen,
+      direccion: this.direccion,  
+      usuario: this.usuario,
+      encargado: this.encargado
+    };
+
+    // Aquí asumo que tienes un método en tu servicio para insertar el departamento
+    this.AlmacenesService.insertarAlmacenes(nuevoAlmacen).subscribe({
+      next: (response) => {
+        this.nombreAlmacen = "";
+        this.direccion = "";
+        this.usuario = 0;
+        this.encargado = 0;
+        this.getData();
+      },
+      error: (error) => {
+        // Manejar el error aquí
+        console.error('Hubo un error al insertar el almacen', error);
+      }
+    });
+  }
+
   displayedColumns: string[] = ['Id', 'Nombre', 'Direccion','Encargado', 'Usuario', 'FechaAct','FechaReg','Acciones'];
   dataSource: MatTableDataSource<Almacen>;
 
