@@ -4,13 +4,40 @@
     <br>
     <img src="./assets/Almacenes.png" class="module-logo">
 </div>
-
 <div class="actionbar">
     <mat-form-field class="search-bar">
         <mat-label>Filtrar</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
     </mat-form-field>
-    <button (click)="abrirInsertarModal()" class="btn right"><i class="bi bi-person-fill-add"></i> Insertar<i class="underline"></i></button>
+    <button (click)="insertar()" class="btn right"><i class="bi bi-person-fill-add"></i> Insertar<i class="underline"></i></button>
+</div>
+<br>
+<div class="window-content">
+    <mat-form-field>
+      <mat-label>Rol</mat-label>
+      <select matNativeControl [(ngModel)]="idPerfil">
+        <option value="0">--Seleccione un rol--</option>
+        <option *ngFor="let rol of ComboRol" [value]="rol.Id">{{ rol.Rol }}</option>
+      </select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Modulo</mat-label>
+      <select matNativeControl [(ngModel)]="idModulo">
+        <option value="0">--Seleccione un modulo--</option>
+        <option *ngFor="let mod of ComboModulo" [value]="mod.Id">{{ mod.NombreModulo }}</option>
+      </select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Acceso</mat-label>
+      <select  matNativeControl [(ngModel)]="acceso" >
+        <option value="1">Con acceso</option>
+        <option value="0">sin acceso</option>
+      </select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Usuario Actualiza</mat-label>
+        <input  type="number" matInput placeholder="Id del usuario que actualiza" [(ngModel)]="usuarioActualiza">
+    </mat-form-field>
 </div>
 <br>
 <div class="table-container">

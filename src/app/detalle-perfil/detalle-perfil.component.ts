@@ -7,6 +7,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { DetallePerfilInsertComponent } from '../detalle-perfil-insert-component/detalle-perfil-insert-component.component';
 import { DetallePerfilUpdateComponent } from '../detalle-perfil-update/detalle-perfil-update.component';
+import { RolesService } from '../data.service';
+import { ModulosService } from '../data.service';
 
 @Component({
   selector: 'app-detalle-perfil',
@@ -14,17 +16,38 @@ import { DetallePerfilUpdateComponent } from '../detalle-perfil-update/detalle-p
   styleUrls: ['./detalle-perfil.component.css']
 })
 export class DetallePerfilComponent implements OnInit, AfterViewInit {
+  idPerfil: number = 0;
+  idModulo: number = 0;
+  acceso: number = 0;
+  usuarioActualiza: number = 0;
+  ComboRol : any;
+  ComboModulo:any;
   displayedColumns: string[] = ['id', 'nombreModulo', 'rol', 'acceso', "fechaRegistro", 'fechaActualiza', "UsuarioActualiza",'Acciones'];
   dataSource: MatTableDataSource<DetallePerfil>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private DetallePerfilService: DetallePerfilService, public dialog:MatDialog) {
+  constructor(
+    private DetallePerfilService: DetallePerfilService, 
+    public dialog:MatDialog, 
+    private modulosService: ModulosService, 
+    private rolesService :RolesService
+  ) {
     this.dataSource = new MatTableDataSource<DetallePerfil>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
 
   ngOnInit() {
+
+    this.rolesService.getRoles().subscribe((data: any) => {
+      this.ComboRol = data;
+      console.log(this.ComboRol)
+    });
+     this.modulosService.getModulos().subscribe((data2: any) => {
+      this.ComboModulo = data2;
+      console.log(this.ComboModulo)
+    });
+
     this.dataSource.filterPredicate = (data: DetallePerfil, filter: string) => {
       return data.id.toString(0).includes(filter); // Puedes añadir más campos si es necesario
     };
@@ -55,16 +78,28 @@ export class DetallePerfilComponent implements OnInit, AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
-  abrirInsertarModal() {
-    const dialogRef = this.dialog.open(DetallePerfilInsertComponent, {
-      width: '550px',
-      // Puedes pasar datos al componente de la modal si es necesario
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      // Manejar los resultados cuando la modal se cierre
+  insertar(): void {
+    const nuevoDetallePerfil = {
+      idPerfil: this.idPerfil,
+      idModulo: this.idModulo,
+      acceso: this.acceso,
+      usuarioActualiza: this.usuarioActualiza
+    };
+
+    // Aquí asumo que tienes un método en tu servicio para insertar el departamento
+    this.DetallePerfilService.insertarDetallePerfil(nuevoDetallePerfil).subscribe({
+      next: (response) => {
+
+        location.reload();
+      },
+      error: (error) => {
+        // Manejar el error aquí
+        console.error('Hubo un error al insertar el almacen', error);
+      }
     });
   }
+
   eliminarDetallePerfil(Id: number) {
     // Aquí puedes agregar una confirmación antes de eliminar si lo deseas
     if (confirm('¿Estás seguro de que deseas eliminar esta informacion del perfil?')) {
