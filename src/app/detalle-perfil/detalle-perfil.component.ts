@@ -38,32 +38,7 @@ export class DetallePerfilComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-
-    this.rolesService.getRoles().subscribe((data: any) => {
-      this.ComboRol = data;
-      console.log(this.ComboRol)
-    });
-     this.modulosService.getModulos().subscribe((data2: any) => {
-      this.ComboModulo = data2;
-      console.log(this.ComboModulo)
-    });
-
-    this.dataSource.filterPredicate = (data: DetallePerfil, filter: string) => {
-      return data.id.toString(0).includes(filter); // Puedes añadir más campos si es necesario
-    };
-    this.DetallePerfilService.getDetallePerfil().subscribe({
-      next: (response) => {
-        console.log('Respuesta del servidor:', response); 
-        if (response && Array.isArray(response)&&response.length>0) {
-          this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
-        } else {
-          console.log('no contiene datos');
-        }
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
+    this.getData();
   }
     ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -79,6 +54,36 @@ export class DetallePerfilComponent implements OnInit, AfterViewInit {
     }
   }
 
+  getData(){
+
+    this.rolesService.getRoles().subscribe((data: any) => {
+      this.ComboRol = data;
+      console.log(this.ComboRol)
+    });
+     this.modulosService.getModulos().subscribe((data2: any) => {
+      this.ComboModulo = data2;
+      console.log(this.ComboModulo)
+    });
+
+    this.dataSource.filterPredicate = (data: DetallePerfil, filter: string) => {
+      return data.id.toString(0).includes(filter); // Puedes añadir más campos si es necesario
+    };
+    
+    this.DetallePerfilService.getDetallePerfil().subscribe({
+      next: (response) => {
+        console.log('Respuesta del servidor:', response); 
+        if (response && Array.isArray(response)&&response.length>0) {
+          this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
+        } else {
+          console.log('no contiene datos');
+        }
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
   insertar(): void {
     const nuevoDetallePerfil = {
       idPerfil: this.idPerfil,
@@ -87,31 +92,27 @@ export class DetallePerfilComponent implements OnInit, AfterViewInit {
       usuarioActualiza: this.usuarioActualiza
     };
 
-    // Aquí asumo que tienes un método en tu servicio para insertar el departamento
     this.DetallePerfilService.insertarDetallePerfil(nuevoDetallePerfil).subscribe({
       next: (response) => {
 
-        location.reload();
+        this.getData();
       },
       error: (error) => {
-        // Manejar el error aquí
-        console.error('Hubo un error al insertar el almacen', error);
+        console.error('Hubo un error al insertar el almacen: ', error);
       }
     });
   }
 
   eliminarDetallePerfil(Id: number) {
-    // Aquí puedes agregar una confirmación antes de eliminar si lo deseas
-    if (confirm('¿Estás seguro de que deseas eliminar esta informacion del perfil?')) {
+    if (confirm(`¿Estás seguro de que deseas eliminar esta informacion del perfil con id: ${Id} ?`)) {
       this.DetallePerfilService.deleteDetallePerfil(Id).subscribe({
         next: (response) => {
-          console.log(response);
           this.dataSource.data = this.dataSource.data.filter((DetallePerfil: DetallePerfil) => DetallePerfil.id !== Id);
-          location.reload()
+          this.getData();
         },
         error: (error) => {
-          // Manejar el error aquí
-          console.error('Hubo un error al eliminar la informacion de este perfil... :', error);
+          
+          console.error('Hubo un error al eliminar la informacion de este perfil :', error);
         }
       });
     }

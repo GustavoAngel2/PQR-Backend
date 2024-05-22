@@ -108,13 +108,13 @@ nombreAlmacen: string = '';
   }
 
   eliminarAlmacen(Id: number) {
-    if (confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
+    if (confirm(`¿Estás seguro de que deseas eliminar este almacen con id : ${Id}?`)) {
       this.AlmacenesService.deleteAlmacenes(Id).subscribe({
         next: (response) => {
           this.dataSource.data = this.dataSource.data.filter((almacen: Almacen) => almacen.Id !== Id);
         },
         error: (error) => {
-          console.error('Hubo un error al eliminar el departamento', error);
+          console.error('Hubo un error al eliminar el almacén', error);
         }
       });
     }

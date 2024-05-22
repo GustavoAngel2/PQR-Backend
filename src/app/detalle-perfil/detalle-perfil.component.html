@@ -9,7 +9,6 @@
         <mat-label>Filtrar</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
     </mat-form-field>
-    <button (click)="insertar()" class="btn right"><i class="bi bi-person-fill-add"></i> Insertar<i class="underline"></i></button>
 </div>
 <br>
 <div class="window-content">
@@ -38,6 +37,7 @@
         <mat-label>Usuario Actualiza</mat-label>
         <input  type="number" matInput placeholder="Id del usuario que actualiza" [(ngModel)]="usuarioActualiza">
     </mat-form-field>
+    <button (click)="insertar()" class="btn right"><i class="bi bi-person-fill-add"></i> Insertar<i class="underline"></i></button>
 </div>
 <br>
 <div class="table-container">
