@@ -264,6 +264,30 @@ option{
   display: none;
 }
 
+.form-container{
+  padding: 32px;
+}
+
+.form-title{
+  display: flex;
+  font-size: 24px;
+  justify-content: center;
+}
+
+.form-content{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.form-actions{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
 @media (max-width:1400px) {
   mat-sidenav{
     width: 300px;
