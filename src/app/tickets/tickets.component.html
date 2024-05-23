@@ -12,7 +12,10 @@
     <div class="form-content">
         <mat-form-field>
             <mat-label>Almacen</mat-label>
-            <input matInput placeholder="Ingresa el nombre" [(ngModel)]="IdSucursal">
+            <select matNativeControl [(ngModel)]="codigo">
+              <option value="0">--Seleccione un Almacen--</option>
+              <option *ngFor="let cod of ComboAlmacen" [value]="cod.Id">{{ cod.Nombre}}</option>
+            </select>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Cliente</mat-label>

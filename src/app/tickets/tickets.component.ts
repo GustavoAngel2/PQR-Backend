@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { TicketsSevice } from '../data.service';
 import { DetalleTicketService } from '../data.service';
+import { AlmacenesService } from '../data.service';
 import { tickets } from '../models/tickets.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -29,7 +30,9 @@ export class TicketsComponent implements OnInit, AfterViewInit{
   precioVenta: number = 0;
   usuario: number = 0;
   ComboCodigo:any;
-  ComboTicket:any
+  ComboTicket:any;
+  ComboAlmacen:any;
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -37,6 +40,7 @@ export class TicketsComponent implements OnInit, AfterViewInit{
   constructor(private TicketsService: TicketsSevice,
     public dialog:MatDialog,
     private TicketService :TicketsSevice,
+    private AlmacenesService: AlmacenesService,
     private articulosService:ArticulosService,
     private detalleticketService: DetalleTicketService
   ) {
@@ -70,9 +74,13 @@ export class TicketsComponent implements OnInit, AfterViewInit{
       this.ComboCodigo = data2;
       console.log(this.ComboCodigo)
     });
+    this.AlmacenesService.getAlmacenes().subscribe((data3: any) =>{
+      this.ComboAlmacen =data3;
+      console.log(this.ComboAlmacen)
+    });
     this.dataSource.filterPredicate = (data: tickets, filter: string) => {
       return data.IdSucursal.toString().includes(filter); // Puedes añadir más campos si es necesario
-    };
+    }
 
     this.TicketsService.getTickets(0).subscribe({
       next: (response) => {
