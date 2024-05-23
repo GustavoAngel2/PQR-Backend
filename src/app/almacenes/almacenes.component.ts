@@ -5,8 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { AlmacenesInsertComponent } from '../almacenes-insert/almacenes-insert.component';
 import { AlmacenesUpdateComponent } from '../almacenes-update/almacenes-update.component';
+import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 
 @Component({
   selector: 'app-almacenes',
@@ -15,8 +15,17 @@ import { AlmacenesUpdateComponent } from '../almacenes-update/almacenes-update.c
 })
 
 export class AlmacenesComponent implements OnInit, AfterViewInit {
+  displayedColumns: string[] = ['Id', 'Nombre', 'Direccion','Encargado', 'Usuario', 'FechaAct','FechaReg','Acciones'];
+  dataSource: MatTableDataSource<Almacen>;
 
-nombreAlmacen: string = '';
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  constructor(private AlmacenesService: AlmacenesService, public dialog: MatDialog) {
+    this.dataSource = new MatTableDataSource<Almacen>();
+  }
+
+  nombreAlmacen: string = '';
   direccion: string = '';
   usuario: number = 0;
   encargado:number = 0;
@@ -43,16 +52,6 @@ nombreAlmacen: string = '';
         console.error('Hubo un error al insertar el almacen', error);
       }
     });
-  }
-
-  displayedColumns: string[] = ['Id', 'Nombre', 'Direccion','Encargado', 'Usuario', 'FechaAct','FechaReg','Acciones'];
-  dataSource: MatTableDataSource<Almacen>;
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-
-  constructor(private AlmacenesService: AlmacenesService, public dialog: MatDialog) {
-    this.dataSource = new MatTableDataSource<Almacen>();
   }
 
   //lo que esta adentro de ngOnInit() se ejecutarà arrancando la pagina
@@ -95,29 +94,24 @@ nombreAlmacen: string = '';
   }
 
   //esta funcion abre la modal de insertar 
-  abrirInsertarModal() {
-    const dialogRef = this.dialog.open(AlmacenesInsertComponent, {
+  abrirDeleteDialog(Id: number , Name: string) {
+    const dialogRef = this.dialog.open(DeleteMenuComponent, {
       width: '550px',
+      data: Name
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      if (result == "reload"){
+      if (result == "yes"){
+        this.AlmacenesService.deleteAlmacenes(Id).subscribe({
+          next: (response) => {
+            this.getData()
+          },
+          error: (error) => {
+            console.error('Hubo un error al eliminar el almacén', error);
+          }
+        });
         this.getData()
       }
     });
-  }
-
-  eliminarAlmacen(Id: number) {
-    if (confirm(`¿Estás seguro de que deseas eliminar este almacen con id : ${Id}?`)) {
-      this.AlmacenesService.deleteAlmacenes(Id).subscribe({
-        next: (response) => {
-          this.dataSource.data = this.dataSource.data.filter((almacen: Almacen) => almacen.Id !== Id);
-        },
-        error: (error) => {
-          console.error('Hubo un error al eliminar el almacén', error);
-        }
-      });
-    }
   }
 
   abrirEditarModal(almacen: Almacen) {

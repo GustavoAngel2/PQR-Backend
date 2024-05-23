@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ArticulosService } from '../data.service';
-import { articulos, deleteCArticulos } from '../models/articulo.model';
+import { articulos } from '../models/articulo.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ArticulosInsertComponent } from '../articulos-insert/articulos-insert.component';
 import { ArticulosUpdateComponent } from '../articulos-update/articulos-update.component';
+import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
+
 
 @Component({
   selector: 'app-articulos',
@@ -48,6 +50,28 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
     });
   }
 
+  abrirDeleteDialog(Id: number , Name: string) {
+    const dialogRef = this.dialog.open(DeleteMenuComponent, {
+      width: '550px',
+      data: Name
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == "yes"){
+        this.articulosService.deleteArticulos(Id).subscribe({
+          next: (response) => {
+            this.getData()
+          },
+          error: (error) => {
+            // Manejar el error aquí
+            console.error('Hubo un error: ', error);
+          }
+          
+        });
+        this.getData()
+      }
+    });
+  }
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -73,21 +97,7 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
       }
     });
   }
-  eliminarArticulo(Id: number) {
-    // Aquí puedes agregar una confirmación antes de eliminar si lo deseas
-    if (confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
-      this.articulosService.deleteArticulos(Id).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.dataSource.data = this.dataSource.data.filter((articulo: articulos) => articulo.Id !== Id);
-        },
-        error: (error) => {
-          // Manejar el error aquí
-          console.error('Hubo un error al eliminar el departamento', error);
-        }
-      });
-    }
-  }
+
   abrirEditarModal(articulos: articulos) {
     const dialogRef = this.dialog.open(ArticulosUpdateComponent, {
       width: '550px',

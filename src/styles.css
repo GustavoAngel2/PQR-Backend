@@ -131,13 +131,12 @@ td{
   border-radius: 6px;
   padding: 4px;
   border: 3px solid #165912;
-  overflow: hidden;
   transition: .5s;
 }
 
 .btn:hover{
   letter-spacing: 3px;
-  
+  font-size: 24px;
   transition: .5s;
 }
 

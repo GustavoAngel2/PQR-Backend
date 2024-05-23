@@ -70,6 +70,7 @@ import { DetallePerfilInsertComponent } from './detalle-perfil-insert-component/
 import { DetallePerfilUpdateComponent } from './detalle-perfil-update/detalle-perfil-update.component';
 import {MatSelectModule} from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { DeleteMenuComponent } from './delete-menu/delete-menu.component';
 
 
 const appRoutes: Routes = [
@@ -148,6 +149,7 @@ const appRoutes: Routes = [
     DetallePerfilComponent,
     DetallePerfilInsertComponent,
     DetallePerfilUpdateComponent,
+    DeleteMenuComponent,
   ],
   imports: [
     HttpClientModule,
