@@ -23,7 +23,7 @@ export class TicketsComponent implements OnInit, AfterViewInit{
   IdVendedor: number = 0;
   Usuario: number = 0;
   //detalle-tickets
-  idTicket: number = 0;
+  idTicket: any;
   codigo: number=0 ;
   cantidad: number = 0;
   precioVenta: number = 0;
@@ -128,6 +128,7 @@ export class TicketsComponent implements OnInit, AfterViewInit{
     // Aquí asumo que tienes un método en tu servicio para insertar el departamento
     this.TicketsService.insertarTickets(nuevoAlmacen).subscribe({
       next: (response) => {
+        this.idTicket = response.response.data;
         this.getData();
       },
       error: (error) => {
