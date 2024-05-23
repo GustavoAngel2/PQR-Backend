@@ -28,9 +28,6 @@
             <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuario">
           </mat-form-field>
     </div>
-    <div class="form-actions">
-        <button (click)="insertar()" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
-    </div>
 </div>
 <br>
 <div class="actionbar">
@@ -38,6 +35,7 @@
         <mat-label>Filtrar</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
     </mat-form-field>
+    <button (click)="insertar()" style="margin-top: -20px;" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
 </div>
 <br>
 <div class="table-container">
