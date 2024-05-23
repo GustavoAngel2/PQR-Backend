@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { TicketsSevice } from '../data.service';
 import { DetalleTicketService } from '../data.service';
 import { AlmacenesService } from '../data.service';
+import { TiposMovService } from '../data.service';
 import { tickets } from '../models/tickets.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -32,6 +33,7 @@ export class TicketsComponent implements OnInit, AfterViewInit{
   ComboCodigo:any;
   ComboTicket:any;
   ComboAlmacen:any;
+  ComboTipoMov: any;
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -42,6 +44,7 @@ export class TicketsComponent implements OnInit, AfterViewInit{
     private TicketService :TicketsSevice,
     private AlmacenesService: AlmacenesService,
     private articulosService:ArticulosService,
+    private TiposMovService: TiposMovService,
     private detalleticketService: DetalleTicketService
   ) {
     this.dataSource = new MatTableDataSource<tickets>(); // Inicializa dataSource como una instancia de MatTableDataSource
@@ -77,6 +80,10 @@ export class TicketsComponent implements OnInit, AfterViewInit{
     this.AlmacenesService.getAlmacenes().subscribe((data3: any) =>{
       this.ComboAlmacen =data3;
       console.log(this.ComboAlmacen)
+    });
+    this.TiposMovService.getTiposMov().subscribe((data4: any)=>{
+      this.ComboTipoMov =data4;
+      console.log(this.ComboTipoMov)
     });
     this.dataSource.filterPredicate = (data: tickets, filter: string) => {
       return data.IdSucursal.toString().includes(filter); // Puedes añadir más campos si es necesario

@@ -46,7 +46,7 @@
             <mat-label>Tipo Movimiento</mat-label>
             <select matNativeControl [(ngModel)]="idTicket">
               <option value="0">--Seleccione un Tipo Movimiento--</option>
-              <option *ngFor="let ticket of ComboTicket" [value]="ticket.Id">{{ ticket.Sucursal }} - {{ ticket.Cliente }}</option>
+              <option *ngFor="let tipo of ComboTipoMov" [value]="tipo.Id">{{ tipo.Nombre }}</option>
             </select>
         </mat-form-field>
         <mat-form-field>
