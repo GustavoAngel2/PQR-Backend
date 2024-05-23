@@ -11,10 +11,10 @@
     </div>
     <div class="form-content">
         <mat-form-field>
-            <mat-label>Almacen</mat-label>
-            <select matNativeControl [(ngModel)]="codigo">
-              <option value="0">--Seleccione un Almacen--</option>
-              <option *ngFor="let cod of ComboAlmacen" [value]="cod.Id">{{ cod.Nombre}}</option>
+            <mat-label>Sucursal</mat-label>
+            <select matNativeControl [(ngModel)]="IdSucursal">
+              <option value="0">--Seleccione una Sucursal--</option>
+              <option *ngFor="let cod of ComboSucursales" [value]="cod.Id">{{ cod.Nombre}}</option>
             </select>
         </mat-form-field>
         <mat-form-field>
@@ -41,13 +41,6 @@
         <mat-form-field>
             <mat-label>Ticket</mat-label>
             <input matInput placeholder="Ingresa el ticket" [(ngModel)]="idTicket">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Tipo Movimiento</mat-label>
-            <select matNativeControl [(ngModel)]="idTicket">
-              <option value="0">--Seleccione un Tipo Movimiento--</option>
-              <option *ngFor="let tipo of ComboTipoMov" [value]="tipo.Id">{{ tipo.Nombre }}</option>
-            </select>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Articulo</mat-label>

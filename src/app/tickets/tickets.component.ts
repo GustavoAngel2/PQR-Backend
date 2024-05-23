@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { TicketsSevice } from '../data.service';
 import { DetalleTicketService } from '../data.service';
-import { AlmacenesService } from '../data.service';
 import { TiposMovService } from '../data.service';
 import { tickets } from '../models/tickets.model';
 import { MatTableDataSource } from '@angular/material/table';
@@ -10,6 +9,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { TicketsUpdateComponent } from '../tickets-update/tickets-update.component';
 import { ArticulosService } from '../data.service';
+import { SucursalesService } from '../data.service';
 
 @Component({
   selector: 'app-tickets',
@@ -32,7 +32,7 @@ export class TicketsComponent implements OnInit, AfterViewInit{
   usuario: number = 0;
   ComboCodigo:any;
   ComboTicket:any;
-  ComboAlmacen:any;
+  ComboSucursales:any;
   ComboTipoMov: any;
 
 
@@ -42,7 +42,7 @@ export class TicketsComponent implements OnInit, AfterViewInit{
   constructor(private TicketsService: TicketsSevice,
     public dialog:MatDialog,
     private TicketService :TicketsSevice,
-    private AlmacenesService: AlmacenesService,
+    private SucursalesService: SucursalesService,
     private articulosService:ArticulosService,
     private TiposMovService: TiposMovService,
     private detalleticketService: DetalleTicketService
@@ -77,9 +77,9 @@ export class TicketsComponent implements OnInit, AfterViewInit{
       this.ComboCodigo = data2;
       console.log(this.ComboCodigo)
     });
-    this.AlmacenesService.getAlmacenes().subscribe((data3: any) =>{
-      this.ComboAlmacen =data3;
-      console.log(this.ComboAlmacen)
+    this.SucursalesService.getSucursales().subscribe((data3: any) =>{
+      this.ComboSucursales =data3;
+      console.log(this.ComboSucursales)
     });
     this.TiposMovService.getTiposMov().subscribe((data4: any)=>{
       this.ComboTipoMov =data4;
