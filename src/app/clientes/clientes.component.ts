@@ -6,6 +6,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ClientesUpdateComponent } from '../clientes-update/clientes-update.component';
+import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
+
 
 
 @Component({
@@ -109,6 +111,27 @@ export class ClientesComponent implements OnInit, AfterViewInit {
       });
     }
   }
+
+  abrirDeleteDialog(Id: number , Name: string) {
+    const dialogRef = this.dialog.open(DeleteMenuComponent, {
+      width: '550px',
+      data: Name
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == "yes"){
+        this.ClientesService.deleteClientes(Id).subscribe({
+          next: (response) => {
+            this.getData()
+          },
+          error: (error) => {
+            console.error('Hubo un error al eliminar el Cliente', error);
+          }
+        });
+        this.getData()
+      }
+    });
+  }
+
   abrirEditarModal(Cliente: Clientes) {
     const dialogRef = this.dialog.open(ClientesUpdateComponent, {
       width: '550px',

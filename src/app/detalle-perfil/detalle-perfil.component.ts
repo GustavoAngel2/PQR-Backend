@@ -9,7 +9,7 @@ import { DetallePerfilInsertComponent } from '../detalle-perfil-insert-component
 import { DetallePerfilUpdateComponent } from '../detalle-perfil-update/detalle-perfil-update.component';
 import { RolesService } from '../data.service';
 import { ModulosService } from '../data.service';
-
+import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 @Component({
   selector: 'app-detalle-perfil',
   templateUrl: './detalle-perfil.component.html',
@@ -83,7 +83,25 @@ export class DetallePerfilComponent implements OnInit, AfterViewInit {
       }
     });
   }
-
+  abrirDeleteDialog(Id: number , Name: string) {
+    const dialogRef = this.dialog.open(DeleteMenuComponent, {
+      width: '550px',
+      data: Name
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == "yes"){
+        this.DetallePerfilService.deleteDetallePerfil(Id).subscribe({
+          next: (response) => {
+            this.getData()
+          },
+          error: (error) => {
+            console.error('Hubo un error al eliminar el Detalle', error);
+          }
+        });
+        this.getData()
+      }
+    });
+  }
   insertar(): void {
     const nuevoDetallePerfil = {
       idPerfil: this.idPerfil,

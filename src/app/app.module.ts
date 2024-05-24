@@ -86,7 +86,7 @@ const appRoutes: Routes = [
   { path: "usuarios", component: UsuariosComponent },
   { path: "existencias", component: ExistenciasComponent },
   { path: "movinventarios", component: MovInventarioComponent },
-  { path: "detalleticket", component: DetalleTicketComponent },
+  /* { path: "detalleticket", component: DetalleTicketComponent }, */
   { path: "categoriamodulo", component: CategoriaModuloComponent },
   { path: "login", component: LoginComponent },
   { path: "modulos",component: ModulosComponent},
