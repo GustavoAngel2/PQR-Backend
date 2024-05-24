@@ -7,6 +7,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ClientesInsertComponent } from '../clientes-insert/clientes-insert.component';
 import { ClientesUpdateComponent } from '../clientes-update/clientes-update.component';
+import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
+
 
 
 @Component({
@@ -26,24 +28,29 @@ export class ClientesComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.dataSource.filterPredicate = (data: Clientes, filter: string) => {
-      return data.Nombre.toLowerCase().includes(filter) || 
-             data.Id.toString().includes(filter); // Puedes añadir más campos si es necesario
-    };
-    this.ClientesService.getClientes().subscribe({
-      next: (response) => {
-        console.log('Respuesta del servidor:', response); 
-        if (response && Array.isArray(response)&&response.length>0) {
-          this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
-        } else {
-          console.log('no contiene datos');
-        }
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
+    this.getData()
   }
+
+getData(){
+  this.dataSource.filterPredicate = (data: Clientes, filter: string) => {
+    return data.Nombre.toLowerCase().includes(filter) || 
+           data.Id.toString().includes(filter); // Puedes añadir más campos si es necesario
+  };
+  this.ClientesService.getClientes().subscribe({
+    next: (response) => {
+      console.log('Respuesta del servidor:', response); 
+      if (response && Array.isArray(response)&&response.length>0) {
+        this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
+      } else {
+        console.log('no contiene datos');
+      }
+    },
+    error: (error) => {
+      console.error(error);
+    }
+  });
+}
+
     ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -82,6 +89,27 @@ export class ClientesComponent implements OnInit, AfterViewInit {
       });
     }
   }
+
+  abrirDeleteDialog(Id: number , Name: string) {
+    const dialogRef = this.dialog.open(DeleteMenuComponent, {
+      width: '550px',
+      data: Name
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == "yes"){
+        this.ClientesService.deleteClientes(Id).subscribe({
+          next: (response) => {
+            this.getData()
+          },
+          error: (error) => {
+            console.error('Hubo un error al eliminar el Cliente', error);
+          }
+        });
+        this.getData()
+      }
+    });
+  }
+
   abrirEditarModal(Cliente: Clientes) {
     const dialogRef = this.dialog.open(ClientesUpdateComponent, {
       width: '550px',
