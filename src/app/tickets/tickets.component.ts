@@ -10,6 +10,7 @@ import { MatSort } from '@angular/material/sort';
 import { TicketsUpdateComponent } from '../tickets-update/tickets-update.component';
 import { ArticulosService } from '../data.service';
 import { SucursalesService } from '../data.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-tickets',
@@ -34,7 +35,25 @@ export class TicketsComponent implements OnInit, AfterViewInit{
   ComboTicket:any;
   ComboSucursales:any;
   ComboTipoMov: any;
+  isOnStepOne = true;
+  isOnStepTwo = false;
 
+  //New ticket
+  IdSucursalControl = new FormControl('');
+  IdClienteControl = new FormControl('');
+  IdVendedorControl = new FormControl('');
+  IdUsusarioControl = new FormControl('');
+  btnInsertTicketControl = new FormControl('');
+
+  //New TicketDetail
+  IdTicketControl = new FormControl('');
+  IdArticuloControl = new FormControl('');
+  CantidadControl = new FormControl('');
+  PrecioControl = new FormControl('');
+  IdUsuarioDetalleControl = new FormControl('');
+  btnEnd = new FormControl('');
+  btnAddToTicket = new FormControl('');
+  
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -51,13 +70,16 @@ export class TicketsComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit() {
-    this.getData()
+  
+    this.getData();
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.refreshUI();
   }
+
   // Método para realizar el filtrado
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -145,6 +167,7 @@ export class TicketsComponent implements OnInit, AfterViewInit{
       next: (response) => {
         this.idTicket = response.response.data;
         this.getData();
+        this.toggleUI();
       },
       error: (error) => {
         // Manejar el error aquí
@@ -172,6 +195,39 @@ export class TicketsComponent implements OnInit, AfterViewInit{
         console.error('Hubo un error al insertar el almacen', error);
       }
     });
+  }
+
+  toggleUI() {
+    this.isOnStepTwo = !this.isOnStepTwo;
+    this.isOnStepOne = !this.isOnStepOne;
+    this.refreshUI();
+    
+  }
+  refreshUI(){
+    if (this.isOnStepTwo) {
+      this.IdClienteControl.disable();
+      this.IdSucursalControl.disable();
+      this.IdUsusarioControl.disable();
+      this.IdVendedorControl.disable();
+  
+      this.CantidadControl.enable();
+      this.IdUsuarioDetalleControl.enable();
+      this.IdTicketControl.enable();
+      this.IdArticuloControl.enable();
+      this.PrecioControl.enable();
+
+    } else {
+      this.IdClienteControl.enable();
+      this.IdSucursalControl.enable();
+      this.IdUsusarioControl.enable();
+      this.IdVendedorControl.enable();
+  
+      this.CantidadControl.disable();
+      this.IdUsuarioDetalleControl.disable();
+      this.IdTicketControl.disable();
+      this.IdArticuloControl.disable();
+      this.PrecioControl.disable();
+    }
   }
 }
 
