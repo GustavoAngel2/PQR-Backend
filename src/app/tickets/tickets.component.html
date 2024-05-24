@@ -29,7 +29,7 @@
             <mat-label>Usuario</mat-label>
             <input matInput [formControl]="IdUsusarioControl" placeholder="Usuario Actualiza" [(ngModel)]="Usuario" name="Usuario">
         </mat-form-field>
-        <button [ngClass]="{'disabled-button': isOnStepTwo}" [disabled]="isOnStepTwo" (click)="insertarTicket();" class="btn-form right">Insertar<i class="underline"></i></button>
+        <button [ngClass]="{'disabled-button': isOnStepTwo}" [disabled]="isOnStepTwo" (click)="insertarTicket();" class="btn-form right">Generar ticket<i class="underline"></i></button>
     </div>
 </div>
 
@@ -62,7 +62,7 @@
             <input matInput [formControl]="IdUsuarioDetalleControl" placeholder="Usuario Actualiza" [(ngModel)]="usuario" name="usuario">
         </mat-form-field>
         <button [ngClass]="{'disabled-button': isOnStepOne}" [disabled]="isOnStepOne" (click)="toggleUI();" class="btn-form">Terminar<i class="underline"></i></button>
-        <button [ngClass]="{'disabled-button': isOnStepOne}" [disabled]="isOnStepOne" (click)="insertarDetalleTicket();" class="btn-form">Insertar<i class="underline"></i></button>
+        <button [ngClass]="{'disabled-button': isOnStepOne}" [disabled]="isOnStepOne" (click)="insertarDetalleTicket();" class="btn-form">Insertar al ticket<i class="underline"></i></button>
     </div> 
 </div>
 <br>
