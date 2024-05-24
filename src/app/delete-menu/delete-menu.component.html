@@ -6,8 +6,13 @@
   
       <!-- Columna para el campo de nombre -->
   <div class="window-content">
-    <p>Seguro que desea borrar este elemento?: <span style="color: red;">{{elemento}}</span></p>
-  </div>
+    <p>Seguro que desea borrar este elemento?: 
+      <br> 
+      <div style="text-align: center;">
+        <span style="color: red;">"{{elemento}}"</span>
+      </div>
+      <br>
+</div>
   
   <div mat-dialog-actions class="window-footer-delete" >
     <button class="btn-white" cdkFocusInitial (click)="buttonAction('')">Cancelar<i class="underline"></i></button>

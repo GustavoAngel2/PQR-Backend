@@ -8,6 +8,7 @@ import { MatSort } from '@angular/material/sort';
 import { ArticulosInsertComponent } from '../articulos-insert/articulos-insert.component';
 import { ArticulosUpdateComponent } from '../articulos-update/articulos-update.component';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
+import { UMService } from '../data.service';
 
 
 @Component({
@@ -22,15 +23,54 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private articulosService: ArticulosService, public dialog:MatDialog) {
+  constructor(
+    private articulosService: ArticulosService, 
+    public dialog:MatDialog,
+    private umService : UMService,
+  ) {
     this.dataSource = new MatTableDataSource<articulos>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
+
+  descripcion: string = '';
+  codigo: string = '';
+  um: number = 0;
+  costo: number = 0;
+  precio: number = 0;
+  usuario: number = 0;
+  ComboUm: any;
+  
+  insertar(): void {
+    const nuevoArticulo = {
+      descripcion: this.descripcion,
+      codigo: this.codigo,
+      UM: this.um, // Cambiar `um` a `UM`
+      costo: this.costo,
+      precio: this.precio,
+      Usuario: this.usuario, // Cambiar `usuario` a `Usuario`
+    };
+    this.articulosService.insertarArticulos(nuevoArticulo).subscribe({
+      next: (response) => {
+        this.descripcion = "";
+        this.codigo = "";
+        this.um = 0;
+        this.costo = 0;
+        this.precio = 0;
+        this.usuario = 0;
+        this.getData();
+      }
+    });
+  }
+
 
   ngOnInit() {
     this.getData();
   }
 
   getData(){
+    this.umService.getUM().subscribe((data: any) => {
+      this.ComboUm = data;
+      console.log(this.ComboUm)
+    });
     this.dataSource.filterPredicate = (data: articulos, filter: string) => {
       return data.Descripcion.toLowerCase().includes(filter) || 
              data.Id.toString().includes(filter); // Puedes añadir más campos si es necesario
