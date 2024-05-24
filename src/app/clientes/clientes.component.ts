@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ClientesService } from '../data.service';
-import { Clientes, deleteClientes } from '../models/cliente.model';
+import { Clientes } from '../models/cliente.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ClientesInsertComponent } from '../clientes-insert/clientes-insert.component';
 import { ClientesUpdateComponent } from '../clientes-update/clientes-update.component';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 
@@ -19,6 +18,16 @@ import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 export class ClientesComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['Id', 'Nombre', 'Direccion', 'Usuario', 'FechaAct','FechaReg','Telefono','Curp','Rfc','Email','Coordenadas','Acciones'];
   dataSource: MatTableDataSource<Clientes>;
+  
+  //Campos para el insert
+  nombreCliente: string = "";
+  direccion: string = "";
+  usuario: number = 0;
+  telefono: number = 0;
+  curp: string= "";
+  email: string ="";
+  rfc : string ="";
+  coordenadas :string ="";
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -30,28 +39,28 @@ export class ClientesComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.getData()
   }
-
-getData(){
-  this.dataSource.filterPredicate = (data: Clientes, filter: string) => {
-    return data.Nombre.toLowerCase().includes(filter) || 
-           data.Id.toString().includes(filter); // Puedes añadir más campos si es necesario
-  };
-  this.ClientesService.getClientes().subscribe({
-    next: (response) => {
-      console.log('Respuesta del servidor:', response); 
-      if (response && Array.isArray(response)&&response.length>0) {
-        this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
-      } else {
-        console.log('no contiene datos');
+  
+  getData(){
+    this.dataSource.filterPredicate = (data: Clientes, filter: string) => {
+      return data.Nombre.toLowerCase().includes(filter) || 
+             data.Id.toString().includes(filter); // Puedes añadir más campos si es necesario
+    };
+    this.ClientesService.getClientes().subscribe({
+      next: (response) => {
+        console.log('Respuesta del servidor:', response); 
+        if (response && Array.isArray(response)&&response.length>0) {
+          this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
+        } else {
+          console.log('no contiene datos');
+        }
+      },
+      error: (error) => {
+        console.error(error);
       }
-    },
-    error: (error) => {
-      console.error(error);
-    }
-  });
-}
+    });
+  }
 
-    ngAfterViewInit() {
+  ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -64,14 +73,27 @@ getData(){
       this.dataSource.paginator.firstPage();
     }
   }
-  abrirInsertarModal() {
-    const dialogRef = this.dialog.open(ClientesInsertComponent, {
-      width: '550px',
-      // Puedes pasar datos al componente de la modal si es necesario
-    });
+  insertar(): void {
+    const nuevoCliente = {
+      nombre: this.nombreCliente,
+      direccion: this.direccion,
+      usuario: this.usuario,
+      telefono:this.telefono,
+      curp : this.curp,
+      rfc : this.rfc,
+      email : this.email,
+      coordenadas :this.coordenadas,
+    };
 
-    dialogRef.afterClosed().subscribe(result => {
-      // Manejar los resultados cuando la modal se cierre
+    // Aquí asumo que tienes un método en tu servicio para insertar el departamento
+    this.ClientesService.insertarClientes(nuevoCliente).subscribe({
+      next: (response) => {
+        this.getData();
+      },
+      error: (error) => {
+        // Manejar el error aquí
+        console.error("Hubo un error al insertar el almacen", error);
+      },
     });
   }
   eliminarCliente(Id: number) {
