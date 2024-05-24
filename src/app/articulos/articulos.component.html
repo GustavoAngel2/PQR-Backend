@@ -6,12 +6,50 @@
     <br>
 </div>
 
+
+<div class="form-container">
+    <div class="form-title">
+        <h1 mat-dialog-title>Nuevo Almacen</h1>
+    </div>
+    <div class="form-content">
+        <mat-form-field>
+            <mat-label>Descripción</mat-label>
+            <input matInput placeholder="Ingresa la descripción" [(ngModel)]="descripcion">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Código</mat-label>
+            <input matInput placeholder="Ingresa el código" [(ngModel)]="codigo">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Unidad de Medida</mat-label>
+            <select matNativeControl [(ngModel)]="um">
+              <option value="0">--Seleccione una unidad de medida--</option>
+              <option *ngFor="let um of ComboUm" [value]="um.Id">{{ um.Nombre }}</option>
+            </select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Costo</mat-label>
+            <input matInput placeholder="Ingresa el costo" [(ngModel)]="costo">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Precio</mat-label>
+            <input matInput placeholder="Ingresa el precio" [(ngModel)]="precio">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Usuario</mat-label>
+            <input matInput placeholder="Ingresa el usuario" [(ngModel)]="usuario">
+          </mat-form-field>
+    </div>
+</div>
+
+
+
 <div class="actionbar">
     <mat-form-field class="search-bar">
         <mat-label>Filtrar</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
     </mat-form-field>
-    <button (click)="abrirInsertarModal()" class="btn right"><i class="bi bi-cart-plus-fill"></i> Insertar<i class="underline"></i></button>
+    <button (click)="insertar()" class="btn right"><i class="bi bi-cart-plus-fill"></i> Insertar<i class="underline"></i></button>
 </div>
 <br>
 <div class="table-container">
