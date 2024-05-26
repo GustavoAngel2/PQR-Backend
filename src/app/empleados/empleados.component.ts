@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { EmpleadosService } from "../data.service";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from '@angular/material/paginator';
@@ -7,6 +6,8 @@ import { MatSort } from '@angular/material/sort';
 import { EmpleadosInsertComponent } from "../empleados-insert/empleados-insert.component";
 import { EmpleadosUpdateComponent } from "../empleados-update/empleados-update.component";
 import { empleado } from "../models/empleados.model";
+import { SucursalesService, PersonasService, PuestosService, EmpleadosService } from '../data.service';
+
 
 @Component({
   selector: "app-empleados",
@@ -31,31 +32,16 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
 
   constructor(
     private EmpleadosService: EmpleadosService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private sucursalesService: SucursalesService,
+    private puestoService:PuestosService,
+    private personasService:PersonasService
   ) {
     this.dataSource = new MatTableDataSource<empleado>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
 
   ngOnInit() {
-    this.dataSource.filterPredicate = (data: empleado, filter: string) => {
-      return (
-        data.Persona.toLowerCase().includes(filter) ||
-        data.Id.toString().includes(filter)
-      ); // Puedes añadir más campos si es necesario
-    };
-    this.EmpleadosService.getEmpleado().subscribe({
-      next: (response) => {
-        console.log("Respuesta del servidor:", response);
-        if (response && Array.isArray(response) && response.length > 0) {
-          this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
-        } else {
-          console.log("no contiene datos");
-        }
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    });
+    
   }
     ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -106,6 +92,28 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
       }
+    });
+  }
+
+  getData(){
+    this.dataSource.filterPredicate = (data: empleado, filter: string) => {
+      return (
+        data.Persona.toLowerCase().includes(filter) ||
+        data.Id.toString().includes(filter)
+      ); // Puedes añadir más campos si es necesario
+    };
+    this.EmpleadosService.getEmpleado().subscribe({
+      next: (response) => {
+        console.log("Respuesta del servidor:", response);
+        if (response && Array.isArray(response) && response.length > 0) {
+          this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
+        } else {
+          console.log("no contiene datos");
+        }
+      },
+      error: (error) => {
+        console.error(error);
+      },
     });
   }
 }

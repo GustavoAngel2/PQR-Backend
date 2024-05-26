@@ -49,11 +49,8 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
 
     this.AlmacenesService.insertarAlmacenes(nuevoAlmacen).subscribe({
       next: (response) => {
-        this.nombreAlmacen = "";
-        this.direccion = "";
-        this.usuario = 0;
-        this.encargado = 0;
         this.getData();
+        this.limpiar();
       },
       error: (error) => {
         console.error('Hubo un error al insertar el almacen', error);
@@ -135,10 +132,7 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
       next: (response) => {
         console.log('Respuesta del servidor:', response);
         this.getData(); // Actualizar datos después de la actualización
-        this.nombreAlmacen = "";
-        this.direccion = "";
-        this.usuario = 0;
-        this.encargado = 0;
+        this.limpiar();
       },
       error: (error) => {
         console.error('Error al actualizar el almacen', error);

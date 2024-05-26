@@ -281,7 +281,11 @@ option{
 }
 
 .form-container{
+  margin: 0.5%;
   padding: 32px;
+  width: 94%;
+  background-color: red;
+  border-radius: 5px;
 }
 
 .form-title{
