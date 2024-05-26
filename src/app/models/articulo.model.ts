@@ -29,7 +29,7 @@ export interface articulos {
     UM: number;
     Costo: number;
     Precio: number;
-    Usuario: String;
+    Usuario: number;
   }
 
    export interface deleteCArticulos{

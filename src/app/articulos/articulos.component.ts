@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ArticulosService } from '../data.service';
-import { articulos } from '../models/articulo.model';
+import { articulos, updateArticulos } from '../models/articulo.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -10,13 +10,23 @@ import { ArticulosUpdateComponent } from '../articulos-update/articulos-update.c
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 import { UMService } from '../data.service';
 
-
 @Component({
   selector: 'app-articulos',
   templateUrl: './articulos.component.html',
   styleUrls: ['./articulos.component.css']
 })
 export class ArticulosComponent implements OnInit, AfterViewInit {
+  articulo: updateArticulos = {
+    Id: 0,
+    Codigo: '', 
+    Descripcion: '',
+    UM: 0,
+    Costo: 0,
+    Precio: 0,
+    Usuario: 0
+  };
+  datosCargados: boolean = false;
+
   displayedColumns: string[] = ['Id', 'Codigo', 'Descripcion', 'UM', 'Usuario','Costo','Precio','Fecha Registro','Fecha Actualiza','Acciones'];
   dataSource: MatTableDataSource<articulos>;
 
@@ -25,12 +35,13 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
 
   constructor(
     private articulosService: ArticulosService, 
-    public dialog:MatDialog,
-    private umService : UMService,
+    public dialog: MatDialog,
+    private umService: UMService,
   ) {
     this.dataSource = new MatTableDataSource<articulos>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
 
+  Id: number = 0;
   descripcion: string = '';
   codigo: string = '';
   um: number = 0;
@@ -38,7 +49,7 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
   precio: number = 0;
   usuario: number = 0;
   ComboUm: any;
-  
+
   insertar(): void {
     const nuevoArticulo = {
       descripcion: this.descripcion,
@@ -61,7 +72,6 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
     });
   }
 
-
   ngOnInit() {
     this.getData();
   }
@@ -78,10 +88,10 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
     this.articulosService.getArticulos().subscribe({
       next: (response) => {
         console.log('Respuesta del servidor:', response); 
-        if (response && Array.isArray(response)&&response.length>0) {
+        if (response && Array.isArray(response) && response.length > 0) {
           this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
         } else {
-          console.log('no contiene datos');
+          console.log('No contiene datos');
         }
       },
       error: (error) => {
@@ -90,7 +100,7 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
     });
   }
 
-  abrirDeleteDialog(Id: number , Name: string) {
+  abrirDeleteDialog(Id: number, Name: string) {
     const dialogRef = this.dialog.open(DeleteMenuComponent, {
       width: '550px',
       data: Name
@@ -102,12 +112,9 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
             this.getData()
           },
           error: (error) => {
-            // Manejar el error aquí
             console.error('Hubo un error: ', error);
           }
-          
         });
-        this.getData()
       }
     });
   }
@@ -116,7 +123,7 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-  // Método para realizar el filtrado
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -125,14 +132,14 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
   abrirInsertarModal() {
     const dialogRef = this.dialog.open(ArticulosInsertComponent, {
       width: '550px',
-      // Puedes pasar datos al componente de la modal si es necesario
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if ( result == 'reload'){
+      if (result == 'reload'){
         this.getData()
       }
     });
@@ -141,13 +148,55 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
   abrirEditarModal(articulos: articulos) {
     const dialogRef = this.dialog.open(ArticulosUpdateComponent, {
       width: '550px',
-      data: articulos // Pasa el objeto de departamento a la modal
+      data: articulos
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       if (result == 'reload') {
         this.getData();
       }
     });
+  }
+
+  actualizar(): void {
+    const articuloActualizado: updateArticulos = {
+      Id: this.articulo.Id,
+      Descripcion: this.descripcion,
+      Codigo: this.codigo,
+      UM: this.um,
+      Costo: this.costo,
+      Precio: this.precio,
+      Usuario: this.usuario
+    };
+
+    console.log('Actualizando articulo:', articuloActualizado);
+    this.articulosService.updateArticulos(articuloActualizado).subscribe({
+      next: (response) => {
+        console.log('Respuesta del servidor:', response);
+        this.getData(); // Actualizar datos después de la actualización
+        this.limpiar();
+      },
+      error: (error) => {
+        console.error('Error al actualizar el artículo', error);
+      }
+    });
+  }
+
+  cargarDatos(articulo: updateArticulos) {
+    this.articulo = { ...articulo };
+    this.datosCargados = true;
+  }
+
+  limpiar(): void {
+    this.articulo = {
+      Id: 0,
+      Codigo: '', 
+      Descripcion: '',
+      UM: 0,
+      Costo: 0,
+      Precio: 0,
+      Usuario: 0
+    };
+    this.datosCargados = false;
   }
 }
