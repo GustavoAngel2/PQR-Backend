@@ -284,8 +284,9 @@ option{
   margin: 0.5%;
   padding: 32px;
   width: 94%;
-  background-color: red;
-  border-radius: 5px;
+  background-color: rgb(235, 113, 38);
+  border-radius: 15px;
+  border: 2px solid rgb(185, 71, 0);
 }
 
 .form-title{
