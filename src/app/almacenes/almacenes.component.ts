@@ -21,6 +21,7 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
     Usuario: 0,
     Encargado: 0
   };
+  datosCargados: boolean = false;
 
   displayedColumns: string[] = ['Id', 'Nombre', 'Direccion', 'Encargado', 'Usuario', 'FechaAct', 'FechaReg', 'Acciones'];
   dataSource: MatTableDataSource<Almacen>;
@@ -151,5 +152,15 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
     this.direccion = almacen.Direccion;
     this.usuario = almacen.Usuario;
     this.encargado = almacen.Encargado;
+    this.datosCargados = true;
+  }
+
+
+  limpiar(): void{
+    this.nombreAlmacen = "";
+    this.direccion = "";
+    this.usuario = 0;
+    this.encargado = 0;
+    this.datosCargados =false;
   }
 }

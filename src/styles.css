@@ -141,6 +141,21 @@ td{
   transition: .5s;
 }
 
+.btn-cancel{
+  text-align: center;
+  width: 256px;
+  height: 64px;
+  font-size: 18px;
+  position:relative;
+  background:rgb(232, 255, 30);
+  background: linear-gradient(0deg, rgb(211, 204, 8) 0%,rgb(232, 255, 30)); 
+  color: #fff;
+  border-radius: 6px;
+  padding: 4px;
+  border: 3px solid #868600;
+  transition: .5s;
+}
+
 .btn .underline
 {
 	position: absolute;
