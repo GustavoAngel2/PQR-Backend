@@ -25,24 +25,37 @@ export class ModulosComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.getData();
+  }
+
+
+  getData(){
     this.dataSource.filterPredicate = (data: Modulo, filter: string) => {
-      return data.NombreModulo.toLowerCase().includes(filter) || 
-             data.Id.toString().includes(filter); // Puedes añadir más campos si es necesario
-    };
+      // Convertir a minúsculas para evitar problemas de coincidencia
+      const filterLowerCase = filter.toLowerCase();
+      const nombreModulo = data.NombreModulo.toLowerCase();
+      const categoria = data.CategoriaModulo.toString().toLowerCase();
+      const Usuario = data.Usuario.toString().toLowerCase();
+  
+      // Comprobar ambas condiciones
+      return nombreModulo.includes(filterLowerCase) || categoria.includes(filterLowerCase) || Usuario.includes(filterLowerCase);
+      };
     this.ModulosService.getModulos().subscribe({
       next: (response) => {
         console.log('Respuesta del servidor:', response); 
         if (response && Array.isArray(response)&&response.length>0) {
-          this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
+          this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource si hay datos y si la respuesta es un array
         } else {
-          console.log('no contiene datos');
+          console.log('no contiene datos');//De lo contrario no harà nada
         }
       },
       error: (error) => {
-        console.error(error);
+        console.error(error); 
       }
     });
   }
+
+
     ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

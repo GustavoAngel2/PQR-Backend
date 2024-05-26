@@ -28,6 +28,31 @@ export class CategoriaModuloComponent  implements OnInit, AfterViewInit         
   }
 
 
+  nombreCatModulo: string ='';
+  descripcion:string ='';
+  usuario:number =0;
+
+
+  insertar():void{
+    const nuevoCatMod ={
+      nombre:this.nombreCatModulo,
+      descripcion:this.descripcion,
+      usuario:this.usuario,
+    };
+
+    this.CategoriaModuloService.insertCategoriaModulo(nuevoCatMod).subscribe({
+      next:(response) => {
+        this.nombreCatModulo ="";
+        this.descripcion ="";
+        this.usuario = 0 ;
+        this.getData();
+      },
+      error: (error) => {
+        console.error('Hubo un error al insertar la categoria', error);
+      }
+    });
+  }
+
 
   ngOnInit() {
     this.getData()
