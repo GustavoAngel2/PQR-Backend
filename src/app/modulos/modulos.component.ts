@@ -5,7 +5,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ModulosInsertComponent } from '../modulos-insert/modulos-insert.component';
 import { ModulosUpdateComponent } from '../modulos-update/modulos-update.component';
 
 @Component({
@@ -69,16 +68,7 @@ export class ModulosComponent implements OnInit, AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
-  abrirInsertarModal() {
-    const dialogRef = this.dialog.open(ModulosInsertComponent, {
-      width: '550px',
-      // Puedes pasar datos al componente de la modal si es necesario
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      // Manejar los resultados cuando la modal se cierre
-    });
-  }
   eliminarModulo(Id: number) {
     // Aquí puedes agregar una confirmación antes de eliminar si lo deseas
     if (confirm('¿Estás seguro de que deseas eliminar este modulo?')) {

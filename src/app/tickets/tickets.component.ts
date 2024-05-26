@@ -78,6 +78,12 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       map(value => this._filterArticulos(value))
     );
   }
+  
+  private _filterArticulos(value: string | null): any[] {
+    const filterValue = (value ?? '').toLowerCase(); // Usar '' si value es null
+    return this.ComboCodigo.filter(option => option.Descripcion.toLowerCase().includes(filterValue));
+  }
+  
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -94,10 +100,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private _filterArticulos(value: string): any[] {
-    const filterValue = value.toLowerCase();
-    return this.ComboCodigo.filter(option => option.Descripcion.toLowerCase().includes(filterValue));
-  }
+
 
   getData() {
     this.ticketService.getTickets(0).subscribe((data: any) => {
