@@ -33,40 +33,40 @@
     </div>
 </div>
 <br><br>
-<div class="form-container">
-    <div class="form-title">
-        <h1 mat-dialog-title>Nuevo elemento del ticket</h1>
+    <div class="form-container">
+        <div class="form-title">
+            <h1 mat-dialog-title>Nuevo elemento del ticket</h1>
+        </div>
+        <div class="form-content">
+            <mat-form-field>
+                <mat-label>Ticket</mat-label>
+                <input matInput [formControl]="IdTicketControl" placeholder="Ingresa el ticket" [(ngModel)]="idTicket" name="idTicket">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Articulo</mat-label>
+                <input type="text" matInput [formControl]="IdArticuloControl" [matAutocomplete]="auto" placeholder="Seleccione un articulo" [(ngModel)]="codigo" name="codigo">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let cod of filteredArticulos | async" [value]="cod.Id">
+                        {{ cod.Descripcion }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Cantidad</mat-label>
+                <input matInput [formControl]="CantidadControl" placeholder="Ingresa la cantidad" [(ngModel)]="cantidad" name="cantidad">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Precio de venta</mat-label>
+                <input matInput [formControl]="PrecioControl" placeholder="Ingresa el precio de venta" [(ngModel)]="precioVenta" name="precioVenta">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Usuario</mat-label>
+                <input matInput [formControl]="IdUsuarioDetalleControl" placeholder="Usuario Actualiza" [(ngModel)]="usuario" name="usuario">
+            </mat-form-field>
+            <button [ngClass]="{'disabled-button': isOnStepOne}" [disabled]="isOnStepOne" (click)="toggleUI();" class="btn-form">Terminar<i class="underline"></i></button>
+            <button [ngClass]="{'disabled-button': isOnStepOne}" [disabled]="isOnStepOne" (click)="insertarDetalleTicket();" class="btn-form">Insertar al ticket<i class="underline"></i></button>
+        </div> 
     </div>
-    <div class="form-content">
-        <mat-form-field>
-            <mat-label>Ticket</mat-label>
-            <input matInput [formControl]="IdTicketControl" placeholder="Ingresa el ticket" [(ngModel)]="idTicket" name="idTicket">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Articulo</mat-label>
-            <input type="text" matInput [formControl]="IdArticuloControl" [matAutocomplete]="auto" placeholder="Seleccione un articulo" [(ngModel)]="codigo" name="codigo">
-            <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let cod of filteredArticulos | async" [value]="cod.Id">
-                    {{ cod.Descripcion }}
-                </mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Cantidad</mat-label>
-            <input matInput [formControl]="CantidadControl" placeholder="Ingresa la cantidad" [(ngModel)]="cantidad" name="cantidad">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Precio de venta</mat-label>
-            <input matInput [formControl]="PrecioControl" placeholder="Ingresa el precio de venta" [(ngModel)]="precioVenta" name="precioVenta">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Usuario</mat-label>
-            <input matInput [formControl]="IdUsuarioDetalleControl" placeholder="Usuario Actualiza" [(ngModel)]="usuario" name="usuario">
-        </mat-form-field>
-        <button [ngClass]="{'disabled-button': isOnStepOne}" [disabled]="isOnStepOne" (click)="toggleUI();" class="btn-form">Terminar<i class="underline"></i></button>
-        <button [ngClass]="{'disabled-button': isOnStepOne}" [disabled]="isOnStepOne" (click)="insertarDetalleTicket();" class="btn-form">Insertar al ticket<i class="underline"></i></button>
-    </div> 
-</div>
 <br>
 <div class="actionbar">
     <mat-form-field class="search-bar">
