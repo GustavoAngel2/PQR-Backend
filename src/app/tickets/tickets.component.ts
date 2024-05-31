@@ -1,18 +1,20 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { TicketsSevice } from '../data.service';
-import { DetalleTicketService } from '../data.service';
-import { TiposMovService } from '../data.service';
-import { tickets } from '../models/tickets.model';
+import { FormControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { TicketsUpdateComponent } from '../tickets-update/tickets-update.component';
-import { ArticulosService } from '../data.service';
-import { SucursalesService } from '../data.service';
-import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { ClientesService } from '../data.service';
+import { TicketsSevice } from '../data.service';
+import { DetalleTicketService } from '../data.service';
+import { TiposMovService } from '../data.service';
+import { ArticulosService } from '../data.service';
+import { SucursalesService } from '../data.service';
+import { tickets } from '../models/tickets.model';
+import { TicketsUpdateComponent } from '../tickets-update/tickets-update.component';
+import { MatAutocomplete } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-tickets',
@@ -31,7 +33,9 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
   // Detalle tickets
   idTicket: any;
-  codigo: number = 0;
+  idArticulo:any;
+  codigo: any;
+  Descripcion :any;
   cantidad: number = 0;
   precioVenta: number = 0;
   usuario: number = 0;
@@ -39,13 +43,16 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   ComboTicket: any;
   ComboSucursales: any;
   ComboTipoMov: any;
-  filteredArticulos!: Observable<any[]>;
+    filteredArticulos!: Observable<any[]>;
+  ComboClientes: any[] = [];
+filteredClientes!: Observable<any[]>;
   isOnStepOne = true;
   isOnStepTwo = false;
 
   // New ticket
   IdSucursalControl = new FormControl('');
   IdClienteControl = new FormControl('');
+  
   IdVendedorControl = new FormControl('');
   IdUsusarioControl = new FormControl('');
 
@@ -62,28 +69,29 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   constructor(
     private ticketsService: TicketsSevice,
     public dialog: MatDialog,
-    private ticketService: TicketsSevice,
     private sucursalesService: SucursalesService,
     private articulosService: ArticulosService,
     private tiposMovService: TiposMovService,
-    private detalleticketService: DetalleTicketService
+    private detalleticketService: DetalleTicketService,
+    private clientesService: ClientesService
   ) {
     this.dataSource = new MatTableDataSource<tickets>();
   }
 
+  
+  
   ngOnInit() {
     this.getData();
     this.filteredArticulos = this.IdArticuloControl.valueChanges.pipe(
       startWith(''),
-      map(value => this._filterArticulos(value))
+      map(value => this._filterArticulos(value || ''))
+    );
+  
+    this.filteredClientes = this.IdClienteControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterClientes(value || ''))
     );
   }
-  
-  private _filterArticulos(value: string | null): any[] {
-    const filterValue = (value ?? '').toLowerCase(); // Usar '' si value es null
-    return this.ComboCodigo.filter(option => option.Descripcion.toLowerCase().includes(filterValue));
-  }
-  
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -100,10 +108,8 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     }
   }
 
-
-
   getData() {
-    this.ticketService.getTickets(0).subscribe((data: any) => {
+    this.ticketsService.getTickets(0).subscribe((data: any) => {
       this.ComboTicket = data;
       console.log(this.ComboTicket);
     });
@@ -118,6 +124,11 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     this.tiposMovService.getTiposMov().subscribe((data4: any) => {
       this.ComboTipoMov = data4;
       console.log(this.ComboTipoMov);
+    });
+
+    this.clientesService.getClientes().subscribe((data5: any) => {
+      this.ComboClientes = data5;
+      console.log(this.ComboClientes);
     });
 
     this.dataSource.filterPredicate = (data: tickets, filter: string) => {
@@ -167,24 +178,25 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   }
 
   insertarTicket(): void {
+    console.log('IdCliente antes de insertar:', this.IdCliente); // Verificar el valor de IdCliente
     const nuevoAlmacen = {
-      IdSucursal: this.IdSucursal,
-      IdCliente: this.IdCliente,
-      IdVendedor: this.IdVendedor,
-      usuario: this.Usuario
+        IdSucursal: this.IdSucursal,
+        IdCliente: this.IdCliente, // Asegúrate de pasar el IdCliente aquí
+        IdVendedor: this.IdVendedor,
+        usuario: this.Usuario
     };
 
     this.ticketsService.insertarTickets(nuevoAlmacen).subscribe({
-      next: (response) => {
-        this.idTicket = response.response.data;
-        this.getData();
-        this.toggleUI();
-      },
-      error: (error) => {
-        console.error('Hubo un error al insertar el almacen', error);
-      }
-    });
-  }
+        next: (response) => {
+            this.idTicket = response.response.data;
+            this.getData();
+            this.toggleUI();
+        },
+        error: (error) => {
+            console.error('Hubo un error al insertar el ticket', error);
+   }
+});
+}
 
   insertarDetalleTicket() {
     const nuevoDetalleTicket = {
@@ -236,4 +248,57 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       this.PrecioControl.disable();
     }
   }
+  selectedArticulo: any;
+   // Declarar la propiedad selectedArticulo
+
+  // Resto del código del componente
+
+  articuloSelected(event: any) {
+    const articulo = event.option.value;
+    this.IdArticuloControl.setValue(articulo.Id); // Asignar solo el ID del artículo al control
+    this.IdArticuloControl.updateValueAndValidity(); // Actualizar el valor del control
+    this.selectedArticulo = articulo; // Almacenar el artículo seleccionado en selectedArticulo
+    this.precioVenta = articulo.Precio; // Asignar el precio de venta
+    this.filteredArticulos = this.IdArticuloControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterArticulos(value || ''))
+    );
+}
+
+displayArticuloFn(articulo: any): string {
+  return articulo ? articulo.Descripcion : '';
+}
+
+
+
+private _filterArticulos(value: any): any[] {
+  const filterValue = (typeof value === 'string' ? value : '').toLowerCase();
+  return this.ComboCodigo.filter(option => option.Descripcion.toLowerCase().includes(filterValue));
+}
+/* 
+-----------------------------------------------------------------------------------------
+Clientes MatAutocomplete
+------------------------------------------------------------------------------------- */
+
+selectedCliente: any;
+
+
+clienteSelected(event: any) {
+  const cliente = event.option.value;
+  this.IdClienteControl.setValue(cliente.id); // Asegúrate de que la propiedad del ID sea 'id' o la correcta en tu objeto cliente
+  this.IdClienteControl.updateValueAndValidity(); // Actualiza el valor del control
+  this.selectedCliente = cliente; // Almacena el cliente seleccionado
+}
+
+
+displayClienteFn(cliente: any): string {
+  return cliente ? cliente.Nombre : '';
+}
+
+private _filterClientes(value: any): any[] {
+  const filterValue = (typeof value === 'string' ? value : '').toLowerCase();
+  return this.ComboClientes.filter(option => option.Nombre.toLowerCase().includes(filterValue));
+}
+
+
 }
