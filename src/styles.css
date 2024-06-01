@@ -284,9 +284,9 @@ option{
   margin: 0.5%;
   padding: 32px;
   width: 94%;
-  background-color: rgb(235, 113, 38);
+  background-color: rgb(201, 98, 30);
   border-radius: 50px;
-  border: 4px solid rgb(127, 49, 0);
+  border: 4px solid rgb(138, 57, 7);
 }
 
 .form-title{
@@ -349,6 +349,7 @@ option{
     display: flex;
     flex-direction: column;
     align-content: center;
+    gap:42px;
     margin:0;
   }
 
@@ -364,6 +365,28 @@ option{
     height: 30px;
     text-align: center;
     margin-top: 15px;
+  }
+
+  .form-container{
+    margin-left: calc(50% - 128px);
+    position: relative;
+    width: 512px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background-color: rgb(201, 98, 30);
+    width: max-content;
+    padding: 25px;
+    border-radius: 10px;
+    align-items: center;
+  }
+
+  .form-content{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: no;
+    justify-content: space-between;
+    justify-items: center;
   }
 
   .window-content{
@@ -391,5 +414,32 @@ option{
     margin-bottom:16px;
     width: 64px;
     height: 64px;
+  }
+  
+  .table-container{
+    display: block;
+    width:100%;
+    padding: 0;
+    overflow-x: scroll;
+  }
+
+  mat-paginator{
+    position:relative;
+    top: 3px;
+    width: 100%;
+  }
+
+  th{
+    font-size: 14px;
+    width: 100%;
+    height: 45px;
+  }
+  
+  td{
+    font-size: 10px;
+    width: 100%;
+    height: 60px;
+    text-align: center;
+    margin-top: 30px;
   }
 }
