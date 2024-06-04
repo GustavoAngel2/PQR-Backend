@@ -111,19 +111,20 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
     });
   }
 
-  cargarDatos(elemento:any) {
-    this.tipoMov.Id = elemento.Id
-    this.tipoMov.idAlmacen = elemento.IdAlmacen
-    this.tipoMov.idTipoMov = elemento.IdTipoMov
-    this.tipoMov.usuarioActualiza = elemento.Usuario
+  cargarDatos(elemento: any) {
+    this.tipoMov.Id = elemento.Id;
+    this.tipoMov.idAlmacen = elemento.IdAlmacen;
+    this.tipoMov.idTipoMov = elemento.IdTipoMov;
+    this.tipoMov.usuarioActualiza = elemento.Usuario;
 
-    this.idTipoMov = elemento.IdTipoMov
-    this.idAlmacen = elemento.IdAlmacen
-    this.usuarioActualiza = elemento.Usuario
+    this.idTipoMov = elemento.IdTipoMov;
+    this.idAlmacen = elemento.IdAlmacen;
+    this.usuarioActualiza = elemento.Usuario;
 
-    this.datosCargados = true
-    console.log(elemento)
+    this.datosCargados = true;
+    console.log(elemento);
   }
+
 
   insertar(): void {
     const nuevoMovInv = {

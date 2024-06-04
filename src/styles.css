@@ -367,10 +367,15 @@ option{
     margin-top: 15px;
   }
 
+  .form-place{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .form-container{
-    margin-left: calc(50% - 128px);
     position: relative;
-    width: 512px;
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -384,9 +389,11 @@ option{
   .form-content{
     display: flex;
     flex-direction: column;
-    flex-wrap: no;
-    justify-content: space-between;
     justify-items: center;
+  }
+
+  .form-content mat-form-field{
+    width: 100%;
   }
 
   .window-content{
