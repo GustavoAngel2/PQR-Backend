@@ -5,6 +5,7 @@
     <img src="./assets/Almacenes.png" class="module-logo">
 </div>
 
+<div class="form-place">
 <div class="form-container">
     <div class="form-title">
         <h1 mat-dialog-title>Nuevo ticket</h1>
@@ -36,7 +37,10 @@
         <button [ngClass]="{'disabled-button': isOnStepTwo}" [disabled]="isOnStepTwo" (click)="insertarTicket();" class="btn-form right">Generar ticket<i class="underline"></i></button>
     </div>
 </div>
+</div>
 <br><br>
+
+<div class="form-place">
     <div class="form-container">
         <div class="form-title">
             <h1 mat-dialog-title>Nuevo elemento del ticket</h1>
@@ -74,6 +78,7 @@
             <button [ngClass]="{'disabled-button': isOnStepOne}" [disabled]="isOnStepOne" (click)="insertarDetalleTicket();" class="btn-form">Insertar al ticket<i class="underline"></i></button>
         </div> 
     </div>
+</div>
 <br>
 <div class="actionbar">
     <mat-form-field class="search-bar">

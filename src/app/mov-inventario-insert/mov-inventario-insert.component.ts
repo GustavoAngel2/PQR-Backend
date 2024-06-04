@@ -24,38 +24,12 @@ export class MovInventarioInsertComponent {
   ) {}
 
    ngOnInit(): void {
-    this.tiposMovService.getTiposMov().subscribe((data: any) => {
-      this.ComboTipoMov = data;
-      console.log(this.ComboTipoMov)
-    });
-     this.almacenesService.getAlmacenes().subscribe((data2: any) => {
-      this.ComboAlmacen = data2;
-      console.log(this.ComboAlmacen)
-    });
+
   }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  insertar(): void {
-    const nuevoMovInv = {
-      idTipoMov: this.idTipoMov,
-      idAlmacen: this.idAlmacen,  
-      usuarioActualiza: this.usuarioActualiza
-    };
-
-    // Aquí asumo que tienes un método en tu servicio para insertar el departamento
-    this.movinventarioService.insertMovInventario(nuevoMovInv).subscribe({
-      next: (response) => {
-        // Puedes cerrar la modal y/o actualizar la tabla aquí si es necesario
-        this.dialogRef.close(response);
-        location.reload();
-      },
-      error: (error) => {
-        // Manejar el error aquí
-        console.error('Hubo un error al insertar el almacen', error);
-      }
-    });
-  }
+  
 }
