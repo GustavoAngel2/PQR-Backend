@@ -28,7 +28,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   // Detalle tickets
   idTicket: any;
   idArticulo: any;
-  codigo: any;
+  Codigo: any;
   Descripcion: any;
   cantidad: number = 0;
   precioVenta: number = 0;
@@ -193,17 +193,19 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   }
 
   insertarDetalleTicket() {
+    console.log('27')
     const nuevoDetalleTicket = {
       idTicket: this.idTicket,
-      codigo: this.codigo,
+      codigo: this.Codigo,
       cantidad: this.cantidad,
       precioVenta: this.precioVenta,
       usuario: this.usuario
     };
-
+    console.log(nuevoDetalleTicket)
     this.detalleticketService.insertDetalleTicket(nuevoDetalleTicket).subscribe({
       next: (response) => {
         this.getData();
+        
       },
       error: (error) => {
         console.error('Hubo un error al insertar el almacen', error);
@@ -245,22 +247,25 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
   articuloSelected(event: any) {
     const articulo = event.option.value;
-    console.log(articulo);
+    console.log('Artículo seleccionado:', articulo);
     this.idArticulo = articulo.Id;
-    console.log(articulo.Id);
+    this.Codigo = articulo.Codigo;  // Asegúrate de asignar el código del artículo aquí
     this.selectedArticulo = articulo;
-    console.log(articulo.Precio);
     this.precioVenta = articulo.Precio;
+    console.log('Id del artículo:', articulo.Id);
+    console.log('Código del artículo:', articulo.Codigo);
+    console.log('Precio del artículo:', articulo.Precio);
   }
-
+  
   displayArticuloFn(articulo: any): string {
     return articulo ? articulo.Descripcion : '';
   }
-
+  
   private _filterArticulos(value: any): any[] {
     const filterValue = (typeof value === 'string' ? value : '').toLowerCase();
-    return this.ComboCodigo.filter(option => option.Descripcion.toLowerCase().includes(filterValue));
+    return this.ComboCodigo.filter(option => option.Descripcion.toLowerCase().includes(filterValue) || option.Codigo.toLowerCase().includes(filterValue));
   }
+  
 
   clienteSelected(event: any) {
     const cliente = event.option.value;
