@@ -19,8 +19,8 @@
             </mat-select>
         </mat-form-field>
         <mat-form-field class="example-full-width">
-            <input matInput placeholder="Cliente" [formControl]="IdClienteControl" [matAutocomplete]="auto" [ngModel]="selectedCliente" [value]="displayClienteFn(selectedCliente)" />
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="clienteSelected($event)" [displayWith]="displayClienteFn">
+            <input matInput placeholder="Cliente" [formControl]="IdClienteControl" [matAutocomplete]="autoCliente" [ngModel]="selectedCliente" [value]="displayClienteFn(selectedCliente)" />
+            <mat-autocomplete #autoCliente="matAutocomplete" (optionSelected)="clienteSelected($event)" [displayWith]="displayClienteFn">
               <mat-option *ngFor="let option of filteredClientes | async" [value]="option">
                 {{ option.Nombre }}
               </mat-option>
@@ -51,16 +51,12 @@
                 <input matInput [formControl]="IdTicketControl" placeholder="Ingresa el ticket" [(ngModel)]="idTicket" name="idTicket">
             </mat-form-field>
             <mat-form-field class="example-full-width">
-                <input matInput placeholder="Articulo" [formControl]="IdArticuloControl" [matAutocomplete]="auto" [ngModel]="selectedArticulo" [value]="displayArticuloFn(selectedArticulo)" />
-                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="articuloSelected($event)" [displayWith]="displayArticuloFn">
+                <input matInput placeholder="Articulo" [formControl]="IdArticuloControl" [matAutocomplete]="autoArticulo" [ngModel]="selectedArticulo" [value]="displayArticuloFn(selectedArticulo)" />
+                <mat-autocomplete #autoArticulo="matAutocomplete" (optionSelected)="articuloSelected($event)" [displayWith]="displayArticuloFn">
                     <mat-option *ngFor="let option of filteredArticulos | async" [value]="option">
                         {{ option.Descripcion }}
                     </mat-option>
                 </mat-autocomplete>
-            </mat-form-field>
-              <mat-form-field>
-                <mat-label>id  articulo</mat-label>
-                <input matInput placeholder="Articulo" [formControl]="IdArticuloControl" [matAutocomplete]="auto" />
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Cantidad</mat-label>
