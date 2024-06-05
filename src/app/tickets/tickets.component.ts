@@ -9,6 +9,8 @@ import { startWith, map } from 'rxjs/operators';
 import { ClientesService, TicketsSevice, DetalleTicketService, TiposMovService, ArticulosService, SucursalesService } from '../data.service';
 import { tickets } from '../models/tickets.model';
 import { TicketsUpdateComponent } from '../tickets-update/tickets-update.component';
+import { DetalleTicket } from '../models/detalleTicket.model';
+
 
 @Component({
   selector: 'app-tickets',
@@ -16,8 +18,8 @@ import { TicketsUpdateComponent } from '../tickets-update/tickets-update.compone
   styleUrls: ['./tickets.component.css']
 })
 export class TicketsComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Id', 'Sucursal', 'Cliente', 'Vendedor', 'Usuario', 'Fecha', 'Estatus', 'Acciones'];
-  dataSource: MatTableDataSource<tickets>;
+  displayedColumns: string[] = ['Id', 'IdTicket', 'Codigo', 'Articulo', 'Cantidad', 'PrecioVenta', 'Total', 'Usuario', 'Estatus', 'Acciones'];
+  dataSource: MatTableDataSource<DetalleTicket>;
 
   // Tickets
   IdSucursal: number = 0;
@@ -40,6 +42,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   filteredArticulos!: Observable<any[]>;
   ComboClientes: any[] = [];
   filteredClientes!: Observable<any[]>;
+  filteredArticulosCod!: Observable<any[]>;
   isOnStepOne = true;
   isOnStepTwo = false;
 
@@ -52,6 +55,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   // New ticket detail
   IdTicketControl = new FormControl('');
   IdArticuloControl = new FormControl('');
+  CodigoControl = new FormControl('');
   CantidadControl = new FormControl('');
   PrecioControl = new FormControl('');
   IdUsuarioDetalleControl = new FormControl('');
@@ -61,6 +65,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
   selectedArticulo: any;  // Declarar la propiedad selectedArticulo
   selectedCliente: any;  // Declarar la propiedad selectedCliente
+  selectedCodigo:any ;
 
   constructor(
     private ticketsService: TicketsSevice,
@@ -71,7 +76,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     private detalleticketService: DetalleTicketService,
     private clientesService: ClientesService
   ) {
-    this.dataSource = new MatTableDataSource<tickets>();
+    this.dataSource = new MatTableDataSource<DetalleTicket>();
   }
 
   ngOnInit() {
@@ -80,6 +85,29 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       startWith(''),
       map(value => this._filterArticulos(value || ''))
     );
+
+    this.filteredArticulosCod = this.CodigoControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterArticulosCod(value || ''))
+    );
+
+    this.IdArticuloControl.valueChanges.subscribe(value => {
+      if (!value) {
+        this.clearArticuloFields();
+      }
+    });
+
+    this.CodigoControl.valueChanges.subscribe(value => {
+      if (!value) {
+        this.clearArticuloFields();
+      }
+    });
+
+ /*    this.IdClienteControl.valueChanges.subscribe(value => {
+      if (!value) {
+        this.clearClienteFields();
+      }
+    }); */
 
     this.filteredClientes = this.IdClienteControl.valueChanges.pipe(
       startWith(''),
@@ -103,10 +131,11 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   }
 
   getData() {
-    this.ticketsService.getTickets(0).subscribe((data: any) => {
+    this.detalleticketService.getDetalleTicket(this.idTicket).subscribe((data: any) => {
       this.ComboTicket = data;
       console.log(this.ComboTicket);
     });
+    
     this.articulosService.getArticulos().subscribe((data2: any) => {
       this.ComboCodigo = data2;
       console.log(this.ComboCodigo);
@@ -125,8 +154,8 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       console.log(this.ComboClientes);
     });
 
-    this.dataSource.filterPredicate = (data: tickets, filter: string) => {
-      return data.IdSucursal.toString().includes(filter);
+    this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
+      return data.Articulo.toString().includes(filter);
     };
 
     this.ticketsService.getTickets(0).subscribe({
@@ -149,7 +178,9 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       this.ticketsService.deleteTickets(Id).subscribe({
         next: (response) => {
           console.log(response);
-          this.dataSource.data = this.dataSource.data.filter((ticket: tickets) => ticket.Id !== Id);
+          this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
+            return data.Articulo.toString().toLowerCase().includes(filter.toLowerCase());
+          };
         },
         error: (error) => {
           console.error('Hubo un error al eliminar el departamento', error);
@@ -179,11 +210,11 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       IdVendedor: this.IdVendedor,
       usuario: this.Usuario
     };
-
+  
     this.ticketsService.insertarTickets(nuevoAlmacen).subscribe({
       next: (response) => {
         this.idTicket = response.response.data;
-        this.getData();
+        this.getData(); // Llama a getData para obtener los detalles del ticket recién insertado
         this.toggleUI();
       },
       error: (error) => {
@@ -228,9 +259,10 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
       this.CantidadControl.enable();
       this.IdUsuarioDetalleControl.enable();
-      this.IdTicketControl.enable();
+      this.IdTicketControl.disable();
       this.IdArticuloControl.enable();
-      this.PrecioControl.enable();
+      this.CodigoControl.enable();
+      this.PrecioControl.disable();
     } else {
       this.IdClienteControl.enable();
       this.IdSucursalControl.enable();
@@ -241,6 +273,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       this.IdUsuarioDetalleControl.disable();
       this.IdTicketControl.disable();
       this.IdArticuloControl.disable();
+      this.CodigoControl.disable();
       this.PrecioControl.disable();
     }
   }
@@ -250,23 +283,20 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     console.log('Artículo seleccionado:', articulo);
     this.idArticulo = articulo.Id;
     this.Codigo = articulo.Codigo;  // Asegúrate de asignar el código del artículo aquí
+    this.selectedCodigo = articulo;
     this.selectedArticulo = articulo;
     this.precioVenta = articulo.Precio;
     console.log('Id del artículo:', articulo.Id);
     console.log('Código del artículo:', articulo.Codigo);
     console.log('Precio del artículo:', articulo.Precio);
   }
-  
   displayArticuloFn(articulo: any): string {
     return articulo ? articulo.Descripcion : '';
   }
-  
   private _filterArticulos(value: any): any[] {
     const filterValue = (typeof value === 'string' ? value : '').toLowerCase();
     return this.ComboCodigo.filter(option => option.Descripcion.toLowerCase().includes(filterValue) || option.Codigo.toLowerCase().includes(filterValue));
   }
-  
-
   clienteSelected(event: any) {
     const cliente = event.option.value;
     console.log(cliente);
@@ -275,13 +305,43 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     this.IdClienteControl.updateValueAndValidity();
     this.selectedCliente = cliente;
   }
-
   displayClienteFn(cliente: any): string {
     return cliente ? cliente.Nombre : '';
   }
-
   private _filterClientes(value: any): any[] {
     const filterValue = (typeof value === 'string' ? value : '').toLowerCase();
     return this.ComboClientes.filter(option => option.Nombre.toLowerCase().includes(filterValue));
+  }
+
+  articuloCodSelected(event: any) {
+    const articuloCod = event.option.value;
+    console.log('Artículo seleccionado:', articuloCod);
+    this.selectedCodigo = articuloCod;
+    this.selectedArticulo = articuloCod;
+    this.Codigo = articuloCod.Codigo;
+    this.precioVenta = articuloCod.Precio;
+    console.log('Id del artículo:', articuloCod.Id);
+    console.log('Código del artículo:', articuloCod.Codigo);
+    console.log('Precio del artículo:', articuloCod.Precio);
+  }
+  
+  displayArticuloCodFn(articulo: any): string {
+    return articulo && articulo.Codigo ? articulo.Codigo : '';
+  }
+  
+  private _filterArticulosCod(value: any): any[] {
+    if (typeof value !== 'string') {
+      return [];
+    }
+    const filterValue = value.toLowerCase();
+    return this.ComboCodigo.filter(option => option.Codigo.toLowerCase().includes(filterValue));
+  }
+
+  private clearArticuloFields() {
+    this.idArticulo = '';
+    this.Codigo = '';
+    this.selectedCodigo = null;
+    this.selectedArticulo = null;
+    this.precioVenta = 0;
   }
 }

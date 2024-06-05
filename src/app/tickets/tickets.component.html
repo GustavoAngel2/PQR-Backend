@@ -1,3 +1,12 @@
+<div class="title-container">
+  <br>
+  <label class="title">Punto de venta</label>
+  <br>
+  <img src="./assets/Almacenes.png" class="module-logo">
+  <br>
+</div>
+
+
 <div class="form-place">
     <div class="form-container">
       <div class="form-title">
@@ -21,11 +30,11 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>Vendedor</mat-label>
-          <input matInput [formControl]="IdVendedorControl" placeholder="Ingresa la direccion" [(ngModel)]="IdVendedor" name="IdVendedor">
+          <input matInput type="number" [formControl]="IdVendedorControl" placeholder="Ingresa la direccion" [(ngModel)]="IdVendedor" name="IdVendedor">
         </mat-form-field>
         <mat-form-field>
           <mat-label>Usuario</mat-label>
-          <input matInput [formControl]="IdUsusarioControl" placeholder="Usuario Actualiza" [(ngModel)]="Usuario" name="Usuario">
+          <input matInput type="number" [formControl]="IdUsusarioControl" placeholder="Usuario Actualiza" [(ngModel)]="Usuario" name="Usuario">
         </mat-form-field>
         <button [ngClass]="{'disabled-button': isOnStepTwo}" [disabled]="isOnStepTwo" (click)="insertarTicket();" class="btn-form right">Generar ticket<i class="underline"></i></button>
       </div>
@@ -51,9 +60,17 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput type="text" placeholder="Código" [formControl]="CodigoControl" [matAutocomplete]="autoCodigo" [ngModel]="selectedCodigo" [value]="displayArticuloCodFn(selectedCodigo)" />
+          <mat-autocomplete #autoCodigo="matAutocomplete" (optionSelected)="articuloCodSelected($event)" [displayWith]="displayArticuloCodFn">
+            <mat-option *ngFor="let option of filteredArticulosCod | async" [value]="option">
+              {{ option.Codigo }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
         <mat-form-field>
           <mat-label>Cantidad</mat-label>
-          <input matInput [formControl]="CantidadControl" placeholder="Ingresa la cantidad" [(ngModel)]="cantidad" name="cantidad">
+          <input matInput type="number" [formControl]="CantidadControl" placeholder="Ingresa la cantidad" [(ngModel)]="cantidad" name="cantidad">
         </mat-form-field>
         <mat-form-field>
           <mat-label>Precio de venta</mat-label>
@@ -77,6 +94,58 @@
 
 <br>
 <div class="table-container">
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+  <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="Id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+          <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.Id}} </td>
+      </ng-container>
+      <ng-container matColumnDef="IdTicket">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ID DEL TICKET </th>
+          <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.IdTicket}} </td>
+      </ng-container>
+      <ng-container matColumnDef="Codigo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> CODIGO </th>
+          <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.Codigo}} </td>
+      </ng-container>
+      <ng-container matColumnDef="Articulo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ARTICULO </th>
+          <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.Articulo}} </td>
+      </ng-container>
+      <ng-container matColumnDef="Cantidad">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> CANTIDAD </th>
+          <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.Cantidad}} </td>
+      </ng-container>
+      <ng-container matColumnDef="PrecioVenta">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> PRECIO DE VENTA </th>
+          <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.PrecioVenta}} </td>
+      </ng-container>
+      <ng-container matColumnDef="Total">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> TOTAL </th>
+          <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.Total}} </td>
+      </ng-container>
+      <ng-container matColumnDef="Usuario">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> USUARIO </th>
+          <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.Usuario}} </td>
+      </ng-container>
+      <ng-container matColumnDef="Estatus">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ESTATUS </th>
+          <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.Estatus}} </td>
+      </ng-container>
+      <ng-container matColumnDef="Acciones">
+      <th mat-header-cell *matHeaderCellDef> ACCIONES </th>
+      <td mat-cell *matCellDef="let elemento">
+
+          <mat-icon class="action-btn" (click)="abrirEditarModal(elemento)">edit</mat-icon>
+          <mat-icon class="action-btn" (click)="eliminarAlmacen(elemento.Id)">delete</mat-icon>
+      </td>
+      </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </table>
+
+</div>
+<!-- <div class="table-container">
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Id">
@@ -117,4 +186,4 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </table>
-</div>  
+</div>   -->
