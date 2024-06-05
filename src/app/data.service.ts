@@ -528,7 +528,9 @@ export class DetalleTicketService {
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
-  getDetalleTicket(IdTicket: 0): Observable<ApiResponse> {
+
+  
+  getDetalleTicket(IdTicket: number): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
       `${this.apiUrl}/DetalleTicket/Get?idTicket=0`
     );
