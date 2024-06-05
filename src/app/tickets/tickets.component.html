@@ -1,3 +1,11 @@
+<div class="title-container">
+  <br>
+  <label class="title">Punto de venta 27</label>
+  <br>
+  <img src="./assets/Almacenes.png" class="module-logo">
+</div>
+
+
 <div class="form-place">
     <div class="form-container">
       <div class="form-title">
@@ -29,92 +37,5 @@
         </mat-form-field>
         <button [ngClass]="{'disabled-button': isOnStepTwo}" [disabled]="isOnStepTwo" (click)="insertarTicket();" class="btn-form right">Generar ticket<i class="underline"></i></button>
       </div>
-    </div>
-  </div>
-  
-  <!-- Formulario para nuevo elemento del ticket -->
-  <div class="form-place">
-    <div class="form-container">
-      <div class="form-title">
-        <h1 mat-dialog-title>Nuevo elemento del ticket</h1>
-      </div>
-      <div class="form-content">
-        <mat-form-field>
-          <mat-label>Ticket</mat-label>
-          <input matInput [formControl]="IdTicketControl" placeholder="Ingresa el ticket" [(ngModel)]="idTicket" name="idTicket">
-        </mat-form-field>
-        <mat-form-field class="example-full-width">
-          <input matInput placeholder="Articulo" [formControl]="IdArticuloControl" [matAutocomplete]="autoArticulo" [ngModel]="selectedArticulo" [value]="displayArticuloFn(selectedArticulo)" />
-          <mat-autocomplete #autoArticulo="matAutocomplete" (optionSelected)="articuloSelected($event)" [displayWith]="displayArticuloFn">
-            <mat-option *ngFor="let option of filteredArticulos | async" [value]="option">
-              {{ option.Descripcion }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Cantidad</mat-label>
-          <input matInput [formControl]="CantidadControl" placeholder="Ingresa la cantidad" [(ngModel)]="cantidad" name="cantidad">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Precio de venta</mat-label>
-          <input matInput [formControl]="PrecioControl" placeholder="Ingresa el precio de venta" [(ngModel)]="precioVenta" name="precioVenta">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Usuario</mat-label>
-          <input matInput [formControl]="IdUsuarioDetalleControl" placeholder="Usuario Actualiza" [(ngModel)]="usuario" name="usuario">
-        </mat-form-field>
-        <button [ngClass]="{'disabled-button': isOnStepOne}" [disabled]="isOnStepOne" (click)="toggleUI();" class="btn-form">Terminar<i class="underline"></i></button>
-        <button [ngClass]="{'disabled-button': isOnStepOne}" [disabled]="isOnStepOne" (click)="insertarDetalleTicket();" class="btn-form">Insertar al ticket<i class="underline"></i></button>
-      </div> 
-    </div>
-  </div>
-  <div class="actionbar">
-    <mat-form-field class="search-bar">
-        <mat-label>Filtrar</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
-    </mat-form-field>
-</div>
 
-<br>
-<div class="table-container">
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
-    <table mat-table [dataSource]="dataSource" matSort>
-        <ng-container matColumnDef="Id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-            <td mat-cell *matCellDef="let tickets"> {{tickets.Id}} </td>
-        </ng-container>
-        <ng-container matColumnDef="Sucursal">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Sucursal </th>
-            <td mat-cell *matCellDef="let tickets"> {{tickets.Sucursal}} </td>
-        </ng-container>
-        <ng-container matColumnDef="Cliente">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Cliente </th>
-            <td mat-cell *matCellDef="let tickets"> {{tickets.Cliente}} </td>
-        </ng-container>
-        <ng-container matColumnDef="Vendedor">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Vendedor </th>
-            <td mat-cell *matCellDef="let tickets"> {{tickets.Vendedor}} </td>
-        </ng-container>
-        <ng-container matColumnDef="Usuario">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
-            <td mat-cell *matCellDef="let tickets"> {{tickets.Usuario}} </td>
-        </ng-container>
-        <ng-container matColumnDef="Fecha">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
-            <td mat-cell *matCellDef="let tickets"> {{tickets.Fecha}} </td>
-        </ng-container>
-        <ng-container matColumnDef="Estatus">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
-            <td mat-cell *matCellDef="let tickets"> {{tickets.Estatus}} </td>
-        </ng-container>
-        <ng-container matColumnDef="Acciones">
-            <th mat-header-cell *matHeaderCellDef> Acciones </th>
-            <td mat-cell *matCellDef="let elemento">
-                <mat-icon class="action-btn-form" (click)="abrirEditarModal(elemento)">edit</mat-icon>
-                <mat-icon class="action-btn-form" (click)="eliminarAlmacen(elemento.Id)">delete</mat-icon>
-            </td>
-        </ng-container>
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </table>
-</div>  
+
