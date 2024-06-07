@@ -30,7 +30,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   // Detalle tickets
   idTicket: any;
   idArticulo: any;
-  Codigo: any;
+  codigo: any;
   Descripcion: any;
   cantidad: number = 0;
   precioVenta: number = 0;
@@ -226,19 +226,17 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   }
 
   insertarDetalleTicket() {
-    console.log('27')
     const nuevoDetalleTicket = {
       idTicket: this.idTicket,
-      codigo: this.Codigo,
+      codigo: this.codigo,
       cantidad: this.cantidad,
       precioVenta: this.precioVenta,
       usuario: this.usuario
     };
-    console.log(nuevoDetalleTicket)
+
     this.detalleticketService.insertDetalleTicket(nuevoDetalleTicket).subscribe({
       next: (response) => {
         this.getData();
-        
       },
       error: (error) => {
         console.error('Hubo un error al insertar el almacen', error);
@@ -289,23 +287,22 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
   articuloSelected(event: any) {
     const articulo = event.option.value;
-    console.log('Artículo seleccionado:', articulo);
+    console.log(articulo);
     this.idArticulo = articulo.Id;
-    this.Codigo = articulo.Codigo;  // Asegúrate de asignar el código del artículo aquí
+    this.codigo = articulo.Codigo;  // Asegúrate de asignar el código del artículo aquí
     this.selectedCodigo = articulo;
     this.selectedArticulo = articulo;
+    console.log(articulo.Precio);
     this.precioVenta = articulo.Precio;
-    console.log('Id del artículo:', articulo.Id);
-    console.log('Código del artículo:', articulo.Codigo);
-    console.log('Precio del artículo:', articulo.Precio);
   }
   displayArticuloFn(articulo: any): string {
     return articulo ? articulo.Descripcion : '';
   }
   private _filterArticulos(value: any): any[] {
     const filterValue = (typeof value === 'string' ? value : '').toLowerCase();
-    return this.ComboCodigo.filter(option => option.Descripcion.toLowerCase().includes(filterValue) || option.Codigo.toLowerCase().includes(filterValue));
+    return this.ComboCodigo.filter(option => option.Descripcion.toLowerCase().includes(filterValue));
   }
+
   clienteSelected(event: any) {
     const cliente = event.option.value;
     console.log(cliente);
@@ -327,7 +324,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     console.log('Artículo seleccionado:', articuloCod);
     this.selectedCodigo = articuloCod;
     this.selectedArticulo = articuloCod;
-    this.Codigo = articuloCod.Codigo;
+    this.codigo = articuloCod.Codigo;
     this.precioVenta = articuloCod.Precio;
     console.log('Id del artículo:', articuloCod.Id);
     console.log('Código del artículo:', articuloCod.Codigo);
@@ -348,7 +345,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
   private clearArticuloFields() {
     this.idArticulo = '';
-    this.Codigo = '';
+    this.codigo = '';
     this.selectedCodigo = null;
     this.selectedArticulo = null;
     this.precioVenta = 0;
