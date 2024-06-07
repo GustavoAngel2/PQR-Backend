@@ -28,9 +28,6 @@ export interface DetalleTicket {
     Estatus: number;
     Usuario: number;
   }
-  
-  export interface DetalleTicket{
-    Id: number;
-  }
+
 
   	

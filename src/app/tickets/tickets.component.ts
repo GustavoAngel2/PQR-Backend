@@ -130,48 +130,50 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getData() {
-    this.detalleticketService.getDetalleTicket(this.idTicket).subscribe((data: any) => {
-      this.ComboTicket = data;
-      console.log(this.ComboTicket);
-    });
-    
-    this.articulosService.getArticulos().subscribe((data2: any) => {
-      this.ComboCodigo = data2;
-      console.log(this.ComboCodigo);
-    });
-    this.sucursalesService.getSucursales().subscribe((data3: any) => {
-      this.ComboSucursales = data3;
-      console.log(this.ComboSucursales);
-    });
-    this.tiposMovService.getTiposMov().subscribe((data4: any) => {
-      this.ComboTipoMov = data4;
-      console.log(this.ComboTipoMov);
-    });
-
-    this.clientesService.getClientes().subscribe((data5: any) => {
-      this.ComboClientes = data5;
-      console.log(this.ComboClientes);
-    });
-
-    this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
-      return data.Articulo.toString().includes(filter);
-    };
-
-    this.ticketsService.getTickets(0).subscribe({
-      next: (response) => {
-        console.log('Respuesta del servidor:', response);
-        if (response && Array.isArray(response) && response.length > 0) {
-          this.dataSource.data = response;
-        } else {
-          console.log('no contiene datos');
+    getData() {
+      this.detalleticketService.getDetalleTicket(this.idTicket).subscribe({
+        next: (data: any) => { this.ComboTicket = data;
+          console.log(this.ComboTicket);},
+        error: (error) => {console.error('Error al obtener detalle ticket:', error);
         }
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
-  }
+      });
+      
+      this.articulosService.getArticulos().subscribe((data2: any) => {
+        this.ComboCodigo = data2;
+        console.log(this.ComboCodigo);
+      });
+      this.sucursalesService.getSucursales().subscribe((data3: any) => {
+        this.ComboSucursales = data3;
+        console.log(this.ComboSucursales);
+      });
+      this.tiposMovService.getTiposMov().subscribe((data4: any) => {
+        this.ComboTipoMov = data4;
+        console.log(this.ComboTipoMov);
+      });
+
+      this.clientesService.getClientes().subscribe((data5: any) => {
+        this.ComboClientes = data5;
+        console.log(this.ComboClientes);
+      });
+
+      this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
+        return data.Articulo.toString().includes(filter);
+      };
+
+      this.ticketsService.getTickets(0).subscribe({
+        next: (response) => {
+          console.log('Respuesta del servidor:', response);
+          if (response && Array.isArray(response) && response.length > 0) {
+            this.dataSource.data = response;
+          } else {
+            console.log('no contiene datos');
+          }
+        },
+        error: (error) => {
+          console.error(error);
+        }
+      });
+    }
 
   eliminarAlmacen(Id: number) {
     if (confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
@@ -243,6 +245,13 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       }
     });
   }
+  
+
+
+
+
+
+
 
   toggleUI() {
     this.isOnStepTwo = !this.isOnStepTwo;
