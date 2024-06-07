@@ -1,42 +1,86 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { CategoriaModuloService } from '../data.service';
 import { CategoriaModulo } from '../models/categoriaModulo.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { CategoriaModuloInsertComponent } from '../categoria-modulo-insert/categoria-modulo-insert.component';
 import { CategoriaModuloUpdateComponent } from '../categoria-modulo-update/categoria-modulo-update.component';
+import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
+
 
 @Component({
   selector: 'app-categoria-modulo',
   templateUrl: './categoria-modulo.component.html',
   styleUrls: ['./categoria-modulo.component.css']
 })
-export class CategoriaModuloComponent  implements OnInit{
+export class CategoriaModuloComponent  implements OnInit, AfterViewInit                                              {
   displayedColumns: string[] = ['Id', 'Nombre', 'Descripcion', 'FechaRegistro', 'FechaActualiza','Usuario','Acciones'];
   dataSource: MatTableDataSource<CategoriaModulo>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
 
   constructor(private CategoriaModuloService: CategoriaModuloService, public dialog:MatDialog) {
     this.dataSource = new MatTableDataSource<CategoriaModulo>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
 
-  ngOnInit() {
-    this.dataSource.filterPredicate = (data: CategoriaModulo, filter: string) => {
-      return data.Nombre.toLowerCase().includes(filter) || 
-             data.Id.toString().includes(filter); // Puedes añadir más campos si es necesario
+
+  nombreCatModulo: string ='';
+  descripcion:string ='';
+  usuario:number =0;
+
+
+  insertar():void{
+    const nuevoCatMod ={
+      nombre:this.nombreCatModulo,
+      descripcion:this.descripcion,
+      usuario:this.usuario,
     };
-    this.CategoriaModuloService.getCategoriaModulo().subscribe({
-      next: (response) => {
-        console.log('Respuesta del servidor:', response); 
-        if (response && Array.isArray(response)&&response.length>0) {
-          this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
-        } else {
-          console.log('no contiene datos');
-        }
+
+    this.CategoriaModuloService.insertCategoriaModulo(nuevoCatMod).subscribe({
+      next:(response) => {
+        this.nombreCatModulo ="";
+        this.descripcion ="";
+        this.usuario = 0 ;
+        this.getData();
       },
       error: (error) => {
-        console.error(error);
+        console.error('Hubo un error al insertar la categoria', error);
       }
     });
+  }
+
+
+  ngOnInit() {
+    this.getData()
+  }
+
+getData(){
+  this.dataSource.filterPredicate = (data: CategoriaModulo, filter: string) => {
+    return data.Nombre.toLowerCase().includes(filter) || 
+           data.Id.toString().includes(filter); // Puedes añadir más campos si es necesario
+  };
+  this.CategoriaModuloService.getCategoriaModulo().subscribe({
+    next: (response) => {
+      console.log('Respuesta del servidor:', response); 
+      if (response && Array.isArray(response)&&response.length>0) {
+        this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
+      } else {
+        console.log('no contiene datos');
+      }
+    },
+    error: (error) => {
+      console.error(error);
+    }
+  });
+}
+
+    ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
   // Método para realizar el filtrado
   applyFilter(event: Event) {
@@ -57,21 +101,27 @@ export class CategoriaModuloComponent  implements OnInit{
       // Manejar los resultados cuando la modal se cierre
     });
   }
-  eliminarCategoriaModulo(Id: number) {
-    // Aquí puedes agregar una confirmación antes de eliminar si lo deseas
-    if (confirm('¿Estás seguro de que deseas eliminar esta categoria de modulo?')) {
+ //esta funcion abre la modal de insertar 
+ abrirDeleteDialog(Id: number , Name: string) {
+  const dialogRef = this.dialog.open(DeleteMenuComponent, {
+    width: '550px',
+    data: Name
+  });
+  dialogRef.afterClosed().subscribe(result => {
+    if (result == "yes"){
       this.CategoriaModuloService.deleteCategoriaModulo(Id).subscribe({
         next: (response) => {
-          console.log(response);
-          this.dataSource.data = this.dataSource.data.filter((catmodulo: CategoriaModulo) => catmodulo.Id !== Id);
+          this.getData()
         },
         error: (error) => {
-          // Manejar el error aquí
-          console.error('Hubo un error al eliminar la categoria del modulo', error);
+          console.error('Hubo un error al eliminar la categoria', error);
         }
       });
+      this.getData()
     }
-  }
+  });
+}
+
   abrirEditarModal(catmodulo: CategoriaModulo) {
     const dialogRef = this.dialog.open(CategoriaModuloUpdateComponent, {
       width: '550px',

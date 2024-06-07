@@ -38,11 +38,13 @@ export class AlmacenesService {
     nombre: string;
     direccion: string;
     usuario: number;
+    encargado: number;
   }): Observable<ApiResponse> {
     const body = {
       nombre: AlmacenesData.nombre,
       direccion: AlmacenesData.direccion,
       usuario: AlmacenesData.usuario,
+      encargado: AlmacenesData.encargado
     };
     return this.http.post<ApiResponse>(`${this.apiUrl}/Almacenes/Insert`, body);
   }
@@ -60,6 +62,7 @@ export class AlmacenesService {
       nombre: AlmacenesData.Nombre,
       direccion: AlmacenesData.Direccion,
       usuario: AlmacenesData.Usuario,
+      encargado: AlmacenesData.Encargado
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
     return this.http.put<ApiResponse>(`${this.apiUrl}/Almacenes/Update`, body);
@@ -84,11 +87,21 @@ export class ClientesService {
     nombre: string;
     direccion: string;
     usuario: number;
+    telefono:number;
+    rfc: string;
+    curp: string;
+    email:string;
+    coordenadas: string;
   }): Observable<ApiResponse> {
     const body = {
       nombre: ClientesData.nombre,
       direccion: ClientesData.direccion,
       usuario: ClientesData.usuario,
+      telefono: ClientesData.telefono,
+      rfc: ClientesData.rfc,
+      curp:ClientesData.curp,
+      email: ClientesData.email,
+      coordenadas: ClientesData.coordenadas,
     };
     return this.http.post<ApiResponse>(`${this.apiUrl}/Clientes/Insert`, body);
   }
@@ -103,6 +116,11 @@ export class ClientesService {
       nombre: ClientesData.Nombre,
       direccion: ClientesData.Direccion,
       usuario: ClientesData.Usuario,
+      telefono: ClientesData.telefono,
+      rfc: ClientesData.rfc,
+      curp:ClientesData.curp,
+      email: ClientesData.email,
+      coordenadas: ClientesData.coordenadas,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
     return this.http.put<ApiResponse>(`${this.apiUrl}/Clientes/Update`, body);
@@ -257,11 +275,8 @@ export class DetalleMovService {
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
-  getDetalleMov(Id: 0): Observable<ApiResponse> {
-    return this.http.put<ApiResponse>(
-      `${this.apiUrl}/DetalleMovimiento/Get?Id=0`,
-      { Id }
-    );
+  getDetalleMov(Id: 0): Observable<ArrayBuffer> {
+    return this.http.get<ArrayBuffer>(`${this.apiUrl}/DetalleMovimiento/Get?Id=${Id}`);
   }
 
   insertarDetalleMov(DetalleMovData: {
@@ -510,7 +525,9 @@ export class DetalleTicketService {
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
-  getDetalleTicket(IdTicket: 0): Observable<ApiResponse> {
+
+  
+  getDetalleTicket(IdTicket: number): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(
       `${this.apiUrl}/DetalleTicket/Get?idTicket=0`
     );

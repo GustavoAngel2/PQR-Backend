@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule, Routes } from "@angular/router";
 import { AppRoutingModule } from "./app-routing.module";
@@ -6,7 +6,7 @@ import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { MatCardModule } from "@angular/material/card";
 import { MatDividerModule } from "@angular/material/divider";
@@ -17,8 +17,13 @@ import { MatListModule } from "@angular/material/list";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatNativeDateModule } from "@angular/material/core";
-import { AlmacenesComponent } from "./almacenes/almacenes.component";
 import { HttpClientModule } from "@angular/common/http";
+import { MatSelectModule } from '@angular/material/select';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
+import { AlmacenesComponent } from "./almacenes/almacenes.component";
 import { AlmacenesInsertComponent } from "./almacenes-insert/almacenes-insert.component";
 import { AlmacenesUpdateComponent } from "./almacenes-update/almacenes-update.component";
 import { DetalleMovimientoComponent } from "./detalle-movimiento/detalle-movimiento.component";
@@ -54,7 +59,6 @@ import { DetalleTicketUpdateComponent } from "./detalle-ticket-update/detalle-ti
 import { LoginComponent } from "./login/login.component";
 import { InicioComponent } from './inicio/inicio.component';
 import { ModulosComponent } from './modulos/modulos.component';
-import { ModulosInsertComponent } from './modulos-insert/modulos-insert.component';
 import { ModulosUpdateComponent } from './modulos-update/modulos-update.component';
 import { EmpleadosComponent } from "./empleados/empleados.component";
 import { EmpleadosInsertComponent } from "./empleados-insert/empleados-insert.component";
@@ -68,7 +72,10 @@ import { CategoriaModuloUpdateComponent } from "./categoria-modulo-update/catego
 import { DetallePerfilComponent } from './detalle-perfil/detalle-perfil.component';
 import { DetallePerfilInsertComponent } from './detalle-perfil-insert-component/detalle-perfil-insert-component.component';
 import { DetallePerfilUpdateComponent } from './detalle-perfil-update/detalle-perfil-update.component';
-import {MatSelectModule} from '@angular/material/select';
+import { DeleteMenuComponent } from './delete-menu/delete-menu.component';
+
+
+
 
 const appRoutes: Routes = [
 
@@ -83,7 +90,7 @@ const appRoutes: Routes = [
   { path: "usuarios", component: UsuariosComponent },
   { path: "existencias", component: ExistenciasComponent },
   { path: "movinventarios", component: MovInventarioComponent },
-  { path: "detalleticket", component: DetalleTicketComponent },
+  { path: "detalleticket", component: DetalleTicketComponent }, 
   { path: "categoriamodulo", component: CategoriaModuloComponent },
   { path: "login", component: LoginComponent },
   { path: "modulos",component: ModulosComponent},
@@ -92,6 +99,8 @@ const appRoutes: Routes = [
   { path: "categoriamodulo", component:PuestosComponent},
   { path: "detallePerfil", component: DetallePerfilComponent}
 ];
+
+
 
 @NgModule({
   declarations: [
@@ -132,7 +141,6 @@ const appRoutes: Routes = [
     LoginComponent,
     InicioComponent,
     ModulosComponent,
-    ModulosInsertComponent,
     ModulosUpdateComponent,
     EmpleadosComponent,
     EmpleadosInsertComponent,
@@ -146,6 +154,7 @@ const appRoutes: Routes = [
     DetallePerfilComponent,
     DetallePerfilInsertComponent,
     DetallePerfilUpdateComponent,
+    DeleteMenuComponent,
   ],
   imports: [
     HttpClientModule,
@@ -163,15 +172,19 @@ const appRoutes: Routes = [
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatDatepickerModule,
     MatSidenavModule,
     MatToolbarModule,
     MatListModule,
-    MatSelectModule
+    MatSelectModule,
+    MatPaginatorModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+    MatFormFieldModule
   ],
   providers: [
     // Agrega el servicio en los providers
   ],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}

@@ -1,91 +1,160 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { AlmacenesService } from '../data.service';
-import { Almacen } from '../models/almacen.model';
+import { Almacen, UpdateAlmacen } from '../models/almacen.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { AlmacenesInsertComponent } from '../almacenes-insert/almacenes-insert.component';
-import { AlmacenesUpdateComponent } from '../almacenes-update/almacenes-update.component';
-
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 
 @Component({
   selector: 'app-almacenes',
   templateUrl: './almacenes.component.html',
   styleUrls: ['./almacenes.component.css']
- })
-export class AlmacenesComponent implements OnInit {
-  displayedColumns: string[] = ['Id', 'Nombre', 'Direccion', 'Usuario', 'FechaAct','FechaReg','Acciones'];
+})
+
+export class AlmacenesComponent implements OnInit, AfterViewInit {
+  almacen: UpdateAlmacen = {
+    Id: 0,
+    Nombre: '',
+    Direccion: '',
+    Usuario: 0,
+    Encargado: 0
+  };
+  datosCargados: boolean = false;
+
+  displayedColumns: string[] = ['Id', 'Nombre', 'Direccion', 'Encargado', 'Usuario', 'FechaAct', 'FechaReg', 'Acciones'];
   dataSource: MatTableDataSource<Almacen>;
 
-  constructor(private AlmacenesService: AlmacenesService, public dialog:MatDialog) {
-    this.dataSource = new MatTableDataSource<Almacen>(); // Inicializa dataSource como una instancia de MatTableDataSource
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  
+
+  constructor(private AlmacenesService: AlmacenesService, public dialog: MatDialog,) {
+    this.dataSource = new MatTableDataSource<Almacen>();
   }
 
-  //lo que esta adentro de ngOnInit() se ejecutarà arrancando la pagina
+  nombreAlmacen: string = '';
+  direccion: string = '';
+  usuario: number = 0;
+  encargado: number = 0;
+
+  insertar(): void {
+    const nuevoAlmacen = {
+      nombre: this.nombreAlmacen,
+      direccion: this.direccion,
+      usuario: this.usuario,
+      encargado: this.encargado
+    };
+
+    this.AlmacenesService.insertarAlmacenes(nuevoAlmacen).subscribe({
+      next: (response) => {
+        this.getData();
+        this.limpiar();
+      },
+      error: (error) => {
+        console.error('Hubo un error al insertar el almacen', error);
+      }
+    });
+  }
+
   ngOnInit() {
+    this.getData();
+  }
+
+  getData() {
     this.dataSource.filterPredicate = (data: Almacen, filter: string) => {
       return data.Nombre.toLowerCase().includes(filter) || 
-             data.Id.toString().includes(filter); // Puedes añadir más campos si es necesario
+             data.Id.toString().includes(filter);
     };
+
     this.AlmacenesService.getAlmacenes().subscribe({
       next: (response) => {
         console.log('Respuesta del servidor:', response); 
-        if (response && Array.isArray(response)&&response.length>0) {
-          this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource si hay datos y si la respuesta es un array
+        if (response && Array.isArray(response) && response.length > 0) {
+          this.dataSource.data = response;
         } else {
-          console.log('no contiene datos');//De lo contrario no harà nada
+          console.log('no contiene datos');
         }
       },
       error: (error) => {
-        console.error(error); 
+        console.error(error);
       }
     });
   }
-  // Método para realizar el filtrado
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;//Obtiene los datos del buscador
-    this.dataSource.filter = filterValue.trim().toLowerCase(); //el valor que se guarda en filterValue lo transforma en minusculas
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage(); 
+      this.dataSource.paginator.firstPage();
     }
   }
 
-  //esta funcion abre la modal de insertar 
-  abrirInsertarModal() {
-    const dialogRef = this.dialog.open(AlmacenesInsertComponent, {
+  abrirDeleteDialog(Id: number, Name: string) {
+    const dialogRef = this.dialog.open(DeleteMenuComponent, {
       width: '550px',
-      // Puedes pasar datos al componente de la modal si es necesario
+      data: Name
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // Manejar los resultados cuando la modal se cierre
-    });
-  }
-  eliminarAlmacen(Id: number) {
-    // Aquí puedes agregar una confirmación antes de eliminar si lo deseas
-    if (confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
-      this.AlmacenesService.deleteAlmacenes(Id).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.dataSource.data = this.dataSource.data.filter((almacen: Almacen) => almacen.Id !== Id);
-        },
-        error: (error) => {
-          // Manejar el error aquí
-          console.error('Hubo un error al eliminar el departamento', error);
-        }
-      });
-    }
-  }
-  abrirEditarModal(almacen: Almacen) {
-    const dialogRef = this.dialog.open(AlmacenesUpdateComponent, {
-      width: '550px',
-      data: almacen // Pasa el objeto de departamento a la modal
-    });
-  
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        
+      if (result == "yes") {
+        this.AlmacenesService.deleteAlmacenes(Id).subscribe({
+          next: (response) => {
+            this.getData();
+          },
+          error: (error) => {
+            console.error('Hubo un error al eliminar el almacén', error);
+          }
+        });
       }
     });
+  }
+
+
+  actualizar(): void {
+    const almacenActualizado: UpdateAlmacen = {
+      Id: this.almacen.Id,
+      Nombre: this.nombreAlmacen,
+      Direccion: this.direccion,
+      Usuario: this.usuario,
+      Encargado: this.encargado
+    };
+  
+    console.log('Actualizando almacen:', almacenActualizado);
+    this.AlmacenesService.updateAlmacenes(almacenActualizado).subscribe({
+      next: (response) => {
+        console.log('Respuesta del servidor:', response);
+        this.getData(); // Actualizar datos después de la actualización
+        this.limpiar();
+      },
+      error: (error) => {
+        console.error('Error al actualizar el almacen', error);
+      }
+    });
+  }
+
+  cargarDatos(almacen: UpdateAlmacen) {
+    this.almacen.Id = almacen.Id; // Asignar el ID al objeto almacen
+    this.nombreAlmacen = almacen.Nombre;
+    this.direccion = almacen.Direccion;
+    this.usuario = almacen.Usuario;
+    this.encargado = almacen.Encargado;
+    this.datosCargados = true;
+  }
+
+
+  limpiar(): void{
+    this.nombreAlmacen = "";
+    this.direccion = "";
+    this.usuario = 0;
+    this.encargado = 0;
+    this.datosCargados =false;
   }
 }

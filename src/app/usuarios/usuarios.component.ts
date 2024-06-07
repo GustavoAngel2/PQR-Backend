@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { UsuarioSevice } from '../data.service';
 import { usuarios } from '../models/usuarios.models';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { UsuariosInsertComponent } from '../usuarios-insert/usuarios-insert.component';
 import { UsuarioUpdateComponent } from '../usuario-update/usuario-update.component';
 
@@ -15,6 +17,9 @@ import { UsuarioUpdateComponent } from '../usuario-update/usuario-update.compone
 export class UsuariosComponent implements OnInit{
   displayedColumns: string[] = ['Id', 'Nombre', 'Contrasena', 'Rol', 'Usuario', 'FechaAct','FechaReg','Acciones'];
   dataSource: MatTableDataSource<usuarios>;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private UsuarioService: UsuarioSevice, public dialog:MatDialog) {
     this.dataSource = new MatTableDataSource<usuarios>(); // Inicializa dataSource como una instancia de MatTableDataSource
@@ -38,6 +43,10 @@ export class UsuariosComponent implements OnInit{
         console.error(error);
       }
     });
+  }
+    ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
   // Método para realizar el filtrado
   applyFilter(event: Event) {

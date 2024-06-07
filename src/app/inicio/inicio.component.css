@@ -3,7 +3,7 @@
     display: inline-block;
     text-decoration: none;
     text-align: center;
-    color: #000;
+    color: #fff;
     font-size: 16px;
     background-color: #f9722a00;
     width: 100%;
@@ -14,7 +14,7 @@
 }
 
 .home-btn:hover {
-    background-color: #8a370b34;
+    background-color: #ff590034;
     transition:.5s;
 }
   
@@ -33,7 +33,7 @@
     left: 0;
     width: 100%;
     height: 5px;
-    background: #000;
+    background: #fff;
     transform: scale(0,1);
     transition: 0.3s ease;
 }
@@ -51,8 +51,8 @@
 }
 
 .apps-container{
-    background: #efb120;
-    background: linear-gradient(0deg, rgb(179, 83, 5) 10%, #ef8e20 90%);
+    background: #949494;
+    background: linear-gradient(0deg, rgb(24, 24, 24) 10%, #464646 90%);
     display: grid;
     align-items: center;
     grid-template-columns: repeat(6,1fr);

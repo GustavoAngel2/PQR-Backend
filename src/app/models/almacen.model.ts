@@ -5,6 +5,7 @@ export interface Almacen {
     UsuarioActualiza: String;
     FechaAct:Date;
     FechaReg:Date;
+    Encargado:number;
   }
 
   export interface ApiResponse {
@@ -21,6 +22,7 @@ export interface Almacen {
     Nombre: string;
     Direccion: string;
     Usuario: number;
+    Encargado:number;
   }
 
    export interface deleteAlmacenes{

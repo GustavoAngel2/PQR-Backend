@@ -7,6 +7,11 @@ export interface Clientes {
     Usuario: String;
     FechaActualiza:Date;
     FechaRegistro:Date;
+    telefono:number;
+    rfc: string;
+    curp: string;
+    email:string;
+    coordenadas: string;
   }
 
   export interface ApiResponse {
@@ -23,6 +28,11 @@ export interface Clientes {
     Nombre: string;
     Direccion: string;
     Usuario: number;
+    telefono:number;
+    rfc: string;
+    curp: string;
+    email:string;
+    coordenadas: string;
   }
 
    export interface deleteClientes{

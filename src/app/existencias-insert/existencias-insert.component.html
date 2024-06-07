@@ -3,32 +3,29 @@
   <button class="btn-close" (click)="onNoClick()"><i class="bi bi-x-square-fill "></i></button>
 </div>
 <div class="window-content">
-  <br>
-        <mat-form-field>
-        <mat-label>Producto</mat-label>
-        <select matNativeControl [(ngModel)]="codigo">
-          <option value="0">--Seleccione un producto--</option>
-          <option *ngFor="let cc of ComboCodigo" [value]="cc.Codigo">{{ cc.Descripcion }}</option>
-        </select>
-      </mat-form-field>
-        <mat-form-field>
-        <mat-label>Almacen</mat-label>
-        <select matNativeControl [(ngModel)]="almacen">
-          <option value="0">--Seleccione un almacen--</option>
-          <option *ngFor="let almacen of ComboAlmacen" [value]="almacen.Id">{{ almacen.Nombre }}</option>
-        </select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Cantidad</mat-label>
-        <input matInput placeholder="Ingresa la cantidad" [(ngModel)]="cantidad">
-      </mat-form-field>
-      <mat-form-field>
-      <mat-label>Usuario</mat-label>
-        <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuario">
-      </mat-form-field>
+  <mat-form-field>
+    <mat-label>Producto</mat-label>
+    <select matNativeControl [(ngModel)]="codigo">
+      <option value="0">--Seleccione un producto--</option>
+      <option *ngFor="let cc of ComboCodigo" [value]="cc.Codigo">{{ cc.Descripcion }}</option>
+    </select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Almacen</mat-label>
+    <select matNativeControl [(ngModel)]="almacen">
+      <option value="0">--Seleccione un almacen--</option>
+      <option *ngFor="let almacen of ComboAlmacen" [value]="almacen.Id">{{ almacen.Nombre }}</option>
+    </select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Cantidad</mat-label>
+    <input matInput placeholder="Ingresa la cantidad" [(ngModel)]="cantidad">
+  </mat-form-field>
+  <mat-form-field>
+  <mat-label>Usuario</mat-label>
+    <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuario">
+  </mat-form-field>
 </div>
-        
-
-      <div mat-dialog-actions class="window-footer">
-        <button class="btn" cdkFocusInitial (click)="insertar()"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
-      </div>
+<div mat-dialog-actions class="window-footer">
+  <button class="btn" cdkFocusInitial (click)="insertar()"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
+</div>

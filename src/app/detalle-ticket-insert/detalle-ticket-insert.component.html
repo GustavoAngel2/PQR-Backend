@@ -7,13 +7,13 @@
         <mat-label>Ticket</mat-label>
         <input matInput placeholder="Ingresa el ticket" [(ngModel)]="idTicket">
       </mat-form-field>
-   <!--       <mat-form-field>
+         <mat-form-field>
       <mat-label>Tipo Movimiento</mat-label>
         <select matNativeControl [(ngModel)]="idTicket">
           <option value="0">--Seleccione un Tipo Movimiento--</option>
           <option *ngFor="let ticket of ComboTicket" [value]="ticket.Id">{{ ticket.Sucursal }} - {{ ticket.Cliente }}</option>
         </select>
-      </mat-form-field> -->
+      </mat-form-field>
      <mat-form-field>
         <mat-label>Articulo</mat-label>
         <select matNativeControl [(ngModel)]="codigo">

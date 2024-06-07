@@ -25,9 +25,7 @@ export class DetalleTicketInsertComponent {
     private detalleticketService: DetalleTicketService
   ) {}
 
-
-
-    ngOnInit(): void {
+  ngOnInit(): void {
     this.TicketService.getTickets(0).subscribe((data: any) => {
       this.ComboTicket = data;
       console.log(this.ComboTicket)

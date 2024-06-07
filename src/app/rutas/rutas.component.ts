@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { RutasService } from '../data.service';
 import{Rutas, deleteRutas} from '../models/rutas.model'
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { RutasInsertComponent } from '../rutas-insert/rutas-insert.component';
 import { RutasUpdateComponent } from '../rutas-update/rutas-update.component';
 
@@ -13,9 +14,13 @@ import { RutasUpdateComponent } from '../rutas-update/rutas-update.component';
   templateUrl: './rutas.component.html',
   styleUrls: ['./rutas.component.css']
 })
-export class RutasComponent implements OnInit {
+export class RutasComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['Id', 'Nombre', 'Usuario', 'FechaAct','FechaReg','Acciones'];
   dataSource: MatTableDataSource<Rutas>;
+
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private RutasService: RutasService, public dialog:MatDialog) {
     this.dataSource = new MatTableDataSource<Rutas>(); // Inicializa dataSource como una instancia de MatTableDataSource
@@ -39,6 +44,10 @@ export class RutasComponent implements OnInit {
         console.error(error);
       }
     });
+  }
+    ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
   // Método para realizar el filtrado
   applyFilter(event: Event) {
