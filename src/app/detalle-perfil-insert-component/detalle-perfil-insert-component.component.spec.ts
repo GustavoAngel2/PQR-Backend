@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DetallePerfilInsertComponentComponent } from './detalle-perfil-insert-component.component';
+import { DetallePerfilInsertComponent } from './detalle-perfil-insert-component.component';
 
 describe('DetallePerfilInsertComponentComponent', () => {
-  let component: DetallePerfilInsertComponentComponent;
-  let fixture: ComponentFixture<DetallePerfilInsertComponentComponent>;
+  let component: DetallePerfilInsertComponent;
+  let fixture: ComponentFixture<DetallePerfilInsertComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [DetallePerfilInsertComponentComponent]
+      declarations: [DetallePerfilInsertComponent]
     });
-    fixture = TestBed.createComponent(DetallePerfilInsertComponentComponent);
+    fixture = TestBed.createComponent(DetallePerfilInsertComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

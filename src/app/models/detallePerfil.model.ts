@@ -1,4 +1,4 @@
-<<
+// <<
 export interface DetallePerfil {
   id: number;
   idPerfil: number;
@@ -8,7 +8,7 @@ export interface DetallePerfil {
   estatus: number;
   }
 
->>>>>>> 86348c0faecca547fbaae6985da9908272119d78
+// >>>>>>> 86348c0faecca547fbaae6985da9908272119d78
   export interface ApiResponse {
     StatusCode: number;
     success: boolean;
@@ -47,12 +47,12 @@ export interface DetallePerfil {
 
   export interface DetallePerfil{
     id: number;
-    nombreModulo: string:
+    nombreModulo: string;
     rol: string;
-    acceso: int;
-    fechaRegistro: date;
-    fechaActualiza: date;
-    estatus: int;
-    usuarioActualiza: string;
+    acceso: number;
+    fechaRegistro: Date;
+    fechaActualiza: Date;
+    estatus: number;
+    usuarioActualiza: number;
   }
   	
