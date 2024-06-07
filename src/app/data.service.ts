@@ -530,9 +530,10 @@ export class DetalleTicketService {
 
 
   getDetalleTicket(ticketId: number): Observable<DetalleTicket[]> {
-    return this.http.get<DetalleTicket[]>(`${this.apiUrl}/byticket/${ticketId}`);
+    return this.http.get<DetalleTicket[]>(`${this.apiUrl}/DetalleTicket/Get?idTicket=${ticketId}`);
   }
 
+  
   insertDetalleTicket(DTData: {
     idTicket: number;
     codigo: number;

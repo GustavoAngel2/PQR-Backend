@@ -37,6 +37,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   usuario: number = 0;
   ComboCodigo: any[] = [];
   ComboTicket: any;
+  detalleticket: any[] = [];
   ComboSucursales: any;
   ComboTipoMov: any;
   filteredArticulos!: Observable<any[]>;
@@ -130,14 +131,21 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     }
   }
 
-    getData() {
-      this.detalleticketService.getDetalleTicket(this.idTicket).subscribe({
-        next: (data: any) => { this.ComboTicket = data;
-          console.log(this.ComboTicket);},
-        error: (error) => {console.error('Error al obtener detalle ticket:', error);
+  getData(){
+    this.detalleticketService.getDetalleTicket(this.idTicket).subscribe({
+      next: (response) => {
+        console.log('Respuesta del servidor:', response); 
+        if (response && Array.isArray(response) && response.length > 0) {
+          this.dataSource.data = response;
+        } else {
+          console.log('no contiene datos');
         }
-      });
-      
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+
       this.articulosService.getArticulos().subscribe((data2: any) => {
         this.ComboCodigo = data2;
         console.log(this.ComboCodigo);
@@ -160,7 +168,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         return data.Articulo.toString().includes(filter);
       };
 
-      this.ticketsService.getTickets(0).subscribe({
+/*       this.ticketsService.getTickets(0).subscribe({
         next: (response) => {
           console.log('Respuesta del servidor:', response);
           if (response && Array.isArray(response) && response.length > 0) {
@@ -172,8 +180,12 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         error: (error) => {
           console.error(error);
         }
-      });
+      }); */
     }
+
+    
+
+
 
   eliminarAlmacen(Id: number) {
     if (confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
@@ -218,12 +230,26 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         this.idTicket = response.response.data;
         this.getData(); // Llama a getData para obtener los detalles del ticket recién insertado
         this.toggleUI();
+  
+        // Mueve la lógica de obtención de detalles del ticket aquí
+        if (this.idTicket) {
+          this.detalleticketService.getDetalleTicket(this.idTicket).subscribe({
+            next: (data: any) => {
+              this.detalleticket = data;
+              console.log('Detalles del ticket:', this.detalleticket);
+            },
+            error: (error) => {
+              console.error('Hubo un error al obtener los detalles del ticket', error);
+            }
+          });
+        }
       },
       error: (error) => {
         console.error('Hubo un error al insertar el ticket', error);
       }
     });
   }
+  
 
   insertarDetalleTicket() {
     const nuevoDetalleTicket = {
@@ -233,24 +259,36 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       precioVenta: this.precioVenta,
       usuario: this.usuario
     };
-
-    this.detalleticketService.insertDetalleTicket(nuevoDetalleTicket).subscribe({
-      next: (response) => {
-        this.getData();
-      },
-      error: (error) => {
-        console.error('Hubo un error al insertar el almacen', error);
-      }
-    });
+  
+    if (this.idTicket) {
+      // Si this.idTicket tiene un valor, continuar con la solicitud GET
+      this.detalleticketService.getDetalleTicket(this.idTicket).subscribe({
+        next: (data: DetalleTicket[]) => {
+          this.detalleticket = data;
+          console.log('Detalles del ticket:', this.detalleticket);
+  
+          // Luego, continuar con la inserción del detalle del ticket
+          this.detalleticketService.insertDetalleTicket(nuevoDetalleTicket).subscribe({
+            next: (response) => {
+              this.getData();
+            },
+            error: (error) => {
+              console.error('Hubo un error al insertar el detalle del ticket', error);
+            }
+          });
+  
+        },
+        error: (error) => {
+          console.error('Error al obtener detalle del ticket:', error);
+        }
+      });
+    } else {
+      console.error('idTicket no está definido');
+    }
   }
   
-
-
-
-
-
-
-
+  
+  
   toggleUI() {
     this.isOnStepTwo = !this.isOnStepTwo;
     this.isOnStepOne = !this.isOnStepOne;
@@ -276,11 +314,11 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       this.IdUsusarioControl.enable();
       this.IdVendedorControl.enable();
 
-      this.CantidadControl.disable();
-      this.IdUsuarioDetalleControl.disable();
+      this.CantidadControl.enable();
+      this.IdUsuarioDetalleControl.enable();
       this.IdTicketControl.disable();
-      this.IdArticuloControl.disable();
-      this.CodigoControl.disable();
+      this.IdArticuloControl.enable();
+      this.CodigoControl.enable();
       this.PrecioControl.disable();
     }
   }
