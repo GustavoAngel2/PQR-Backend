@@ -14,7 +14,7 @@ import { UpdateTickets } from './models/tickets.model';
 import { UpdateUsuario } from './models/usuarios.models';
 import { UpdateExistencia } from './models/existencia.model';
 import { UpdateMovInventario } from './models/movInventario.model';
-import { UpdateDetalleTicket } from './models/detalleTicket.model';
+import { DetalleTicket, UpdateDetalleTicket } from './models/detalleTicket.model';
 import { UpdateModulo } from './models/modulo.model';
 import { updateEmpleado } from "./models/empleados.model";
 import { UpdatePuesto } from "./models/puestos.model";
@@ -526,13 +526,11 @@ export class DetalleTicketService {
   constructor(private http: HttpClient) {}
 
 
-  
-  getDetalleTicket(IdTicket: number): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(
-      `${this.apiUrl}/DetalleTicket/Get?idTicket=0`
-    );
+  getDetalleTicket(ticketId: number): Observable<DetalleTicket[]> {
+    return this.http.get<DetalleTicket[]>(`${this.apiUrl}/DetalleTicket/Get?idTicket=${ticketId}`);
   }
 
+  
   insertDetalleTicket(DTData: {
     idTicket: number;
     codigo: number;
