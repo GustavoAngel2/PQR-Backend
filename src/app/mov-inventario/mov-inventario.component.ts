@@ -17,7 +17,7 @@ import { ArticulosService } from '../data.service';
   styleUrls: ['./mov-inventario.component.css']
 })
 export class MovInventarioComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Id', 'IdTicket', 'Codigo', 'Articulo', 'Cantidad', 'Total','Usuario' , 'Estatus' ,'Acciones'];
+  displayedColumns: string[] = ['Id', 'idTicket', 'Codigo', 'Articulo', 'Cantidad', 'Total','Usuario' , 'Estatus' ,'Acciones'];
   dataSource: MatTableDataSource<MovInventario>;
   idTipoMov: number = 0;
   idAlmacen: number = 0;
