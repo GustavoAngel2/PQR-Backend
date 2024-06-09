@@ -5,11 +5,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MovInventarioInsertComponent } from '../mov-inventario-insert/mov-inventario-insert.component';
-import { MovInventarioUpdateComponent } from '../mov-inventario-update/mov-inventario-update.component';
+import { DetalleMovService } from '../data.service';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 import { AlmacenesService } from '../data.service';
 import { TiposMovService } from '../data.service';
+import { ArticulosService } from '../data.service';
 
 @Component({
   selector: 'app-mov-inventario',
@@ -27,32 +27,42 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
   tipoMov: UpdateMovInventario = {
     Id: 0,
     idAlmacen: 0,
-    idTipoMov:0,
+    idTipoMov: 0,
     usuarioActualiza: 0,
   };
   datosCargados: boolean = false;
 
+  idMovimiento: any;
+  codigo: string = '';
+  cantidad: number = 0;
+  costo: number = 0;
+  ComboMov:any;
+  ComboCodigo:any;
+  filteredArticulos: any[] = [];
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-
   constructor(
-    private movinventarioService: movInventarioService,
-    public dialog:MatDialog,
-    private almacenesService:AlmacenesService,
-    private tiposMovService:TiposMovService
+    private movInventarioService: movInventarioService,
+    public dialog: MatDialog,
+    private almacenesService: AlmacenesService,
+    private tiposMovService: TiposMovService,
+    private detalleMovService: DetalleMovService,
+    private articulosService: ArticulosService
   ) {
-    this.dataSource = new MatTableDataSource<MovInventario>(); // Inicializa dataSource como una instancia de MatTableDataSource
+    this.dataSource = new MatTableDataSource<MovInventario>();
   }
 
   ngOnInit() {
     this.getData();
   }
-    ngAfterViewInit() {
+
+  ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-  // Método para realizar el filtrado
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -62,24 +72,33 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getData(){
+  getData() {
+    this.movInventarioService.getMovInventario().subscribe((data: any) => {
+      this.ComboMov = data;
+      console.log(this.ComboMov);
+    });
+    this.articulosService.getArticulos().subscribe((data2: any) => {
+      this.ComboCodigo = data2;
+      console.log(this.ComboCodigo);
+    });
     this.tiposMovService.getTiposMov().subscribe((data: any) => {
       this.ComboTipoMov = data;
-      console.log(this.ComboTipoMov)
+      console.log(this.ComboTipoMov);
     });
-     this.almacenesService.getAlmacenes().subscribe((data2: any) => {
+    this.almacenesService.getAlmacenes().subscribe((data2: any) => {
       this.ComboAlmacen = data2;
-      console.log(this.ComboAlmacen)
+      console.log(this.ComboAlmacen);
     });
 
     this.dataSource.filterPredicate = (data: MovInventario, filter: string) => {
-      return data.IdTipoMov.toLowerCase().includes(filter)// Puedes añadir más campos si es necesario
+      return data.IdTipoMov.toString().toLowerCase().includes(filter);
     };
-    this.movinventarioService.getMovInventario().subscribe({
+
+    this.movInventarioService.getMovInventario().subscribe({
       next: (response) => {
         console.log('Respuesta del servidor:', response); 
-        if (response && Array.isArray(response)&&response.length>0) {
-          this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
+        if (response && Array.isArray(response) && response.length > 0) {
+          this.dataSource.data = response;
         } else {
           console.log('no contiene datos');
         }
@@ -99,7 +118,7 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == "yes") {
-        this.movinventarioService.deleteMovInventario(Id).subscribe({
+        this.movInventarioService.deleteMovInventario(Id).subscribe({
           next: (response) => {
             this.getData();
           },
@@ -125,42 +144,65 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
     console.log(elemento);
   }
 
-
-  insertar(): void {
+  insertarMov(): void {
     const nuevoMovInv = {
       idTipoMov: this.idTipoMov,
-      idAlmacen: this.idAlmacen,  
+      idAlmacen: this.idAlmacen,
       usuarioActualiza: this.usuarioActualiza
     };
 
-    // Aquí asumo que tienes un método en tu servicio para insertar el departamento
-    this.movinventarioService.insertMovInventario(nuevoMovInv).subscribe({
+    this.movInventarioService.insertMovInventario(nuevoMovInv).subscribe({
       next: (response) => {
+        this.idMovimiento = response.response.data;
         this.getData();
       },
       error: (error) => {
-        // Manejar el error aquí
         console.error('Hubo un error al insertar el almacen', error);
       }
     });
   }
 
-  limpiar(){
-    this.idTipoMov = 0
-    this.idAlmacen = 0
-    this.usuarioActualiza = 0
-    
-    this.datosCargados = false
+  insertarDetalleMov() {
+    const nuevoDetalleMov = {
+      idMovimiento: this.idMovimiento,
+      codigo: this.codigo,
+      cantidad: this.cantidad,
+      costo: this.costo,
+      usuarioActualiza: this.usuarioActualiza
+    };
+
+    this.detalleMovService.insertarDetalleMov(nuevoDetalleMov).subscribe({
+      next: (response) => {
+        location.reload();
+      },
+      error: (error) => {
+        console.error('Hubo un error al insertar el detalle del movimiento', error);
+      }
+    });
   }
- 
-  actualizar(){
-    this.tipoMov.idAlmacen = this.idAlmacen
-    this.tipoMov.idTipoMov = this.idTipoMov
-    this.tipoMov.usuarioActualiza = this.usuarioActualiza
-    this.movinventarioService.updateMovInventario(this.tipoMov).subscribe({
+
+  filterArticulos() {
+    const filterValue = this.codigo.toLowerCase();
+    this.filteredArticulos = this.ComboCodigo.filter((articulo: any) =>
+      articulo.Descripcion.toLowerCase().includes(filterValue)
+    );
+  }
+
+  limpiar() {
+    this.idTipoMov = 0;
+    this.idAlmacen = 0;
+    this.usuarioActualiza = 0;
+    this.datosCargados = false;
+  }
+
+  actualizar() {
+    this.tipoMov.idAlmacen = this.idAlmacen;
+    this.tipoMov.idTipoMov = this.idTipoMov;
+    this.tipoMov.usuarioActualiza = this.usuarioActualiza;
+    this.movInventarioService.updateMovInventario(this.tipoMov).subscribe({
       next: (response) => {
         console.log('Respuesta del servidor:', response);
-        this.getData(); // Actualizar datos después de la actualización
+        this.getData();
         this.limpiar();
       },
       error: (error) => {
