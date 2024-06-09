@@ -17,10 +17,11 @@ import { ArticulosService } from '../data.service';
   styleUrls: ['./mov-inventario.component.css']
 })
 export class MovInventarioComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Id', 'IdTipoMov', 'IdAlmacen', 'fechaMovimiento', 'Usuario', 'FechaActualiza', 'Acciones'];
+  displayedColumns: string[] = ['Id', 'IdTicket', 'Codigo', 'Articulo', 'Cantidad', 'Total','Usuario' , 'Estatus' ,'Acciones'];
   dataSource: MatTableDataSource<MovInventario>;
   idTipoMov: number = 0;
-  idAlmacen: number = 0 ;
+  idAlmacen: number = 0;
+  idDestino: number = 0;
   usuarioActualiza: number = 0;
   ComboTipoMov:any;
   ComboAlmacen:any;
@@ -31,6 +32,7 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
     usuarioActualiza: 0,
   };
   datosCargados: boolean = false;
+  isOnStepTwo: boolean = false;
 
   idMovimiento: any;
   codigo: string = '';
@@ -93,20 +95,6 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
     this.dataSource.filterPredicate = (data: MovInventario, filter: string) => {
       return data.IdTipoMov.toString().toLowerCase().includes(filter);
     };
-
-    this.movInventarioService.getMovInventario().subscribe({
-      next: (response) => {
-        console.log('Respuesta del servidor:', response); 
-        if (response && Array.isArray(response) && response.length > 0) {
-          this.dataSource.data = response;
-        } else {
-          console.log('no contiene datos');
-        }
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
   }
 
   abrirDeleteDialog(Id: number, Name: string) {
@@ -118,9 +106,9 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == "yes") {
-        this.movInventarioService.deleteMovInventario(Id).subscribe({
+        this.detalleMovService.deleteDetalleMov(Id).subscribe({
           next: (response) => {
-            this.getData();
+            this.updateTable();
           },
           error: (error) => {
             console.error('Hubo un error al eliminar el almacén', error);
@@ -148,12 +136,15 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
     const nuevoMovInv = {
       idTipoMov: this.idTipoMov,
       idAlmacen: this.idAlmacen,
+      idDestino: this.idDestino,
       usuarioActualiza: this.usuarioActualiza
     };
 
     this.movInventarioService.insertMovInventario(nuevoMovInv).subscribe({
       next: (response) => {
         this.idMovimiento = response.response.data;
+        console.log(nuevoMovInv)
+        this.isOnStepTwo = true
         this.getData();
       },
       error: (error) => {
@@ -173,7 +164,7 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
 
     this.detalleMovService.insertarDetalleMov(nuevoDetalleMov).subscribe({
       next: (response) => {
-        location.reload();
+        this.updateTable();
       },
       error: (error) => {
         console.error('Hubo un error al insertar el detalle del movimiento', error);
@@ -210,4 +201,21 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
+  updateTable(){
+    this.detalleMovService.getDetalleMov(this.idMovimiento).subscribe({
+      next: (response) => {
+        console.log('Respuesta del servidor:', response); 
+        if (response && Array.isArray(response)&&response.length>0) {
+          this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
+        } else {
+          console.log('no contiene datos');
+        }
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
 }

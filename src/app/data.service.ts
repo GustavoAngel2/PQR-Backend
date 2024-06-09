@@ -482,11 +482,13 @@ export class movInventarioService {
   insertMovInventario(MovInvData: {
     idTipoMov: number;
     idAlmacen: number;
+    idDestino: number;
     usuarioActualiza: number;
   }): Observable<ApiResponse> {
     const body = {
       idTipoMov: MovInvData.idTipoMov,
       idAlmacen: MovInvData.idAlmacen,
+      idDestino: MovInvData.idDestino,
       usuarioActualiza: MovInvData.usuarioActualiza,
     };
     return this.http.post<ApiResponse>(
