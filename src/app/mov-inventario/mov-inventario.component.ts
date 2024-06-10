@@ -11,6 +11,9 @@ import { AlmacenesService } from '../data.service';
 import { TiposMovService } from '../data.service';
 import { ArticulosService } from '../data.service';
 import { DetalleMov } from '../models/detalleMov.model';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-mov-inventario',
@@ -18,7 +21,7 @@ import { DetalleMov } from '../models/detalleMov.model';
   styleUrls: ['./mov-inventario.component.css']
 })
 export class MovInventarioComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Id', 'Codigo', 'Cantidad','Costo' , 'FechaActualiza', 'UsuarioActualiza', 'Estatus', 'Acciones'];
+  displayedColumns: string[] = ['Id', 'idMovimiento', 'Codigo', 'Cantidad','Costo' , 'FechaActualiza', 'UsuarioActualiza', 'Estatus', 'Acciones'];
   dataSource: MatTableDataSource<DetalleMov>;
   idTipoMov: number = 0;
   idAlmacen: number = 0;
@@ -30,6 +33,7 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
     Id: 0,
     idAlmacen: 0,
     idTipoMov: 0,
+    idDestino: 0,
     usuarioActualiza: 0,
   };
   datosCargados: boolean = false;
@@ -41,7 +45,13 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
   costo: number = 0;
   ComboMov:any;
   ComboCodigo:any;
-  filteredArticulos: any[] = [];
+  CodigoControl = new FormControl('');
+  IdArticuloControl = new FormControl('');
+
+  selectedArticulo: any;  // Declarar la propiedad selectedArticulo
+  selectedCodigo:any ;
+  filteredArticulosCod!: Observable<any[]>;
+  filteredArticulos!: Observable<any[]>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -58,7 +68,31 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    
+    this.filteredArticulos = this.IdArticuloControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterArticulos(value || ''))
+    );
+
+    this.filteredArticulosCod = this.CodigoControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterArticulosCod(value || ''))
+    );
+
+    this.IdArticuloControl.valueChanges.subscribe(value => {
+      if (!value) {
+        this.clearArticuloFields();
+      }
+    });
+
+    this.CodigoControl.valueChanges.subscribe(value => {
+      if (!value) {
+        this.clearArticuloFields();
+      }
+    });
+
     this.getData();
+   
   }
 
   ngAfterViewInit() {
@@ -76,26 +110,30 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
   }
 
   getData() {
+
     this.movInventarioService.getMovInventario().subscribe((data: any) => {
       this.ComboMov = data;
       console.log(this.ComboMov);
     });
+
     this.articulosService.getArticulos().subscribe((data2: any) => {
       this.ComboCodigo = data2;
       console.log(this.ComboCodigo);
     });
+
     this.tiposMovService.getTiposMov().subscribe((data: any) => {
       this.ComboTipoMov = data;
       console.log(this.ComboTipoMov);
     });
+
     this.almacenesService.getAlmacenes().subscribe((data2: any) => {
       this.ComboAlmacen = data2;
       console.log(this.ComboAlmacen);
     });
+
   }
 
   abrirDeleteDialog(Id: number, Name: string) {
-    this.limpiar();
     const dialogRef = this.dialog.open(DeleteMenuComponent, {
       width: '550px',
       data: Name
@@ -158,29 +196,19 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
       costo: this.costo,
       usuarioActualiza: this.usuarioActualiza
     };
-
+  
+    console.log('Attempting to insert new detalle mov:', nuevoDetalleMov);
+  
     this.detalleMovService.insertarDetalleMov(nuevoDetalleMov).subscribe({
       next: (response) => {
+        console.log('Insert detalle mov response:', response);
         this.updateTable();
       },
       error: (error) => {
-        console.error('Hubo un error al insertar el detalle del movimiento', error);
+        console.error('Error inserting detalle mov:', error);
+        // Additional error handling logic, if needed
       }
     });
-  }
-
-  filterArticulos() {
-    const filterValue = this.codigo.toLowerCase();
-    this.filteredArticulos = this.ComboCodigo.filter((articulo: any) =>
-      articulo.Descripcion.toLowerCase().includes(filterValue)
-    );
-  }
-
-  limpiar() {
-    this.idTipoMov = 0;
-    this.idAlmacen = 0;
-    this.usuarioActualiza = 0;
-    this.datosCargados = false;
   }
 
   actualizar() {
@@ -191,7 +219,6 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
       next: (response) => {
         console.log('Respuesta del servidor:', response);
         this.getData();
-        this.limpiar();
       },
       error: (error) => {
         console.error('Error al actualizar el almacen', error);
@@ -215,4 +242,42 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
     });
   }
 
+  articuloCodSelected(event: any) {
+    const articuloCod = event.option.value;
+    console.log('Artículo seleccionado:', articuloCod);
+    this.selectedCodigo = articuloCod;
+    this.selectedArticulo = articuloCod;
+    this.codigo = articuloCod.Codigo;
+  }
+  
+  displayArticuloCodFn(articulo: any): string {
+    return articulo && articulo.Codigo ? articulo.Codigo : '';
+  }
+  
+  private _filterArticulosCod(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    return this.ComboCodigo.filter((option: any) => option.Codigo.toLowerCase().includes(filterValue));
+  }
+
+  private clearArticuloFields() {
+    this.codigo = '';
+    this.selectedCodigo = null;
+    this.selectedArticulo = null;
+  }
+
+  articuloSelected(event: any) {
+    const articulo = event.option.value;
+    console.log(articulo);
+    this.codigo = articulo.Codigo;  // Asegúrate de asignar el código del artículo aquí
+    this.selectedCodigo = articulo;
+    this.selectedArticulo = articulo;
+    console.log(articulo.Precio);
+  }
+  displayArticuloFn(articulo: any): string {
+    return articulo ? articulo.Descripcion : '';
+  }
+  private _filterArticulos(value: any): any[] {
+    const filterValue = (typeof value === 'string' ? value : '').toLowerCase();
+    return this.ComboCodigo.filter((option:any) => option.Descripcion.toLowerCase().includes(filterValue));
+  }
 }

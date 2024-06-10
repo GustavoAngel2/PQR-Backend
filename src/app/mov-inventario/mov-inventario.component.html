@@ -5,7 +5,7 @@
     <img src="./assets/Almacenes.png" class="module-logo">
 </div>
 
-<div class="form-place" [hidden]="isOnStepTwo">
+<div class="form-place" *ngIf="!isOnStepTwo">
     <div class="form-container">
         <div class="form-title">
             <p [hidden]="!datosCargados"> Editando movimiento con Id: {{this.tipoMov.Id}} </p>
@@ -42,28 +42,32 @@
     </div>
 </div>
 
-<div class="form-place" [hidden]="!isOnStepTwo">
+<div class="form-place" *ngIf="isOnStepTwo">
     <div class="form-container">
         <div class="form-title">
             <h1 mat-dialog-title>Nuevo Detalle Movimiento</h1>
         </div>
         <div class="form-content">
             <mat-form-field appearance="fill">
-                <mat-label>Tipo Movimiento</mat-label>
-                <mat-select [(ngModel)]="idMovimiento">
-                    <mat-option value="0">--Seleccione un Tipo Movimiento--</mat-option>
-                    <mat-option *ngFor="let movInv of ComboMov" [value]="movInv.Id">{{movInv.IdTipoMov}} - {{movInv.IdAlmacen}}</mat-option>
-                </mat-select>
+                <mat-label>idMovimiento</mat-label>
+                <input matInput placeholder="Cantidad" [(ngModel)]="idMovimiento">
             </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Articulo</mat-label>
-                <input type="text" matInput [matAutocomplete]="auto" [(ngModel)]="codigo" (input)="filterArticulos()">
-                <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let cod of filteredArticulos" [value]="cod.Descripcion">
-                        {{ cod.Descripcion }}
-                    </mat-option>
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Articulo" [formControl]="IdArticuloControl" [matAutocomplete]="autoArticulo" [ngModel]="selectedArticulo" [value]="displayArticuloFn(selectedArticulo)" />
+                <mat-autocomplete #autoArticulo="matAutocomplete" (optionSelected)="articuloSelected($event)" [displayWith]="displayArticuloFn">
+                  <mat-option *ngFor="let option of filteredArticulos | async" [value]="option">
+                    {{ option.Descripcion }}
+                  </mat-option>
                 </mat-autocomplete>
-            </mat-form-field>
+              </mat-form-field>
+              <mat-form-field *ngIf="false" class="example-full-width">
+                <input matInput type="text" placeholder="Código" [formControl]="CodigoControl" [matAutocomplete]="autoCodigo" [ngModel]="selectedCodigo" [value]="displayArticuloCodFn(selectedCodigo)" />
+                <mat-autocomplete #autoCodigo="matAutocomplete" (optionSelected)="articuloCodSelected($event)" [displayWith]="displayArticuloCodFn">
+                  <mat-option *ngFor="let option of filteredArticulosCod | async" [value]="option">
+                    {{ option.Codigo }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>    
             <mat-form-field appearance="fill">
                 <mat-label>Cantidad</mat-label>
                 <input matInput placeholder="Cantidad" [(ngModel)]="cantidad">
@@ -88,7 +92,7 @@
         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
     </mat-form-field> -->
     <button [hidden]="!datosCargados" (click)="actualizar()" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Actualizar<i class="underline"></i></button>
-    <button [hidden]="!datosCargados" (click)="limpiar()" class="btn-cancel "><i class="bi bi-cloud-upload-fill icon"></i>Cancelar</button>
+    <button [hidden]="!datosCargados" class="btn-cancel "><i class="bi bi-cloud-upload-fill icon"></i>Cancelar</button>
 </div>
 <br>
 
@@ -97,31 +101,35 @@
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-            <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.Id}} </td>
+            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.Id}} </td>
+        </ng-container>
+        <ng-container matColumnDef="idMovimiento">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id Movimiento </th>
+            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.idMovimiento}} </td>
         </ng-container>
         <ng-container matColumnDef="Codigo">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Codigo </th>
-            <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.Codigo}} </td>
+            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.Codigo}} </td>
         </ng-container>
         <ng-container matColumnDef="Cantidad">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad </th>
-            <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.Cantidad}} </td>
+            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.Cantidad}} </td>
         </ng-container>
         <ng-container matColumnDef="Costo">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Costo </th>
-            <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.Costo}} </td>
+            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.Costo}} </td>
         </ng-container>
         <ng-container matColumnDef="FechaActualiza">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> USUARIO </th>
-            <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.FechaActualiza}} </td>
+            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.FechaActualiza}} </td>
         </ng-container>
         <ng-container matColumnDef="UsuarioActualiza">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> USUARIO </th>
-            <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.UsuarioActualiza}} </td>
+            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.UsuarioActualiza}} </td>
         </ng-container>
         <ng-container matColumnDef="Estatus">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> ESTATUS </th>
-            <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.Estatus}} </td>
+            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.Estatus}} </td>
         </ng-container>
         <ng-container matColumnDef="Acciones">
         <th mat-header-cell *matHeaderCellDef> ACCIONES </th>
