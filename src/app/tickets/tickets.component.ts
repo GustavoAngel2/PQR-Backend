@@ -168,19 +168,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         return data.Articulo.toString().includes(filter);
       };
 
-/*       this.ticketsService.getTickets(0).subscribe({
-        next: (response) => {
-          console.log('Respuesta del servidor:', response);
-          if (response && Array.isArray(response) && response.length > 0) {
-            this.dataSource.data = response;
-          } else {
-            console.log('no contiene datos');
-          }
-        },
-        error: (error) => {
-          console.error(error);
-        }
-      }); */
+/*   */
     }
 
     
