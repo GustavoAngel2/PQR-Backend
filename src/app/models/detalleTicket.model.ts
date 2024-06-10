@@ -6,6 +6,7 @@ export interface DetalleTicket {
     cantidad: number;
     precioVenta: number;
     Total: number;
+    TotalTicket:number;
     usuario: string;
     Estatus: string;
   }

@@ -29,6 +29,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
   // Detalle tickets
   idTicket: any;
+  totalTicket: number = 0;
   idArticulo: any;
   codigo: any;
   Descripcion: any;
@@ -139,12 +140,15 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         console.log('Respuesta del servidor:', response); 
         if (response && Array.isArray(response) && response.length > 0) {
           this.dataSource.data = response;
+          this.totalTicket = response[0].TotalTicket; 
         } else {
           console.log('no contiene datos');
+          this.totalTicket = 0; 
         }
       },
       error: (error) => {
         console.error(error);
+        this.totalTicket = 0; 
       }
     });
 
@@ -179,7 +183,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
   eliminarAlmacen(Id: number) {
     if (confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
-      this.ticketsService.deleteTickets(Id).subscribe({
+      this.detalleticketService.deleteDetalleTicket(Id).subscribe({
         next: (response) => {
           console.log(response);
           this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
