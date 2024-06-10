@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MovInventario, UpdateMovInventario } from '../models/movInventario.model';
+import { UpdateMovInventario } from '../models/movInventario.model';
 import { movInventarioService } from '../data.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,6 +10,7 @@ import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 import { AlmacenesService } from '../data.service';
 import { TiposMovService } from '../data.service';
 import { ArticulosService } from '../data.service';
+import { DetalleMov } from '../models/detalleMov.model';
 
 @Component({
   selector: 'app-mov-inventario',
@@ -17,8 +18,8 @@ import { ArticulosService } from '../data.service';
   styleUrls: ['./mov-inventario.component.css']
 })
 export class MovInventarioComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Id', 'idTicket', 'Codigo', 'Articulo', 'Cantidad', 'Total','Usuario' , 'Estatus' ,'Acciones'];
-  dataSource: MatTableDataSource<MovInventario>;
+  displayedColumns: string[] = ['Id', 'Codigo', 'Cantidad','Costo' , 'FechaActualiza', 'UsuarioActualiza', 'Estatus', 'Acciones'];
+  dataSource: MatTableDataSource<DetalleMov>;
   idTipoMov: number = 0;
   idAlmacen: number = 0;
   idDestino: number = 0;
@@ -53,7 +54,7 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
     private detalleMovService: DetalleMovService,
     private articulosService: ArticulosService
   ) {
-    this.dataSource = new MatTableDataSource<MovInventario>();
+    this.dataSource = new MatTableDataSource<DetalleMov>();
   }
 
   ngOnInit() {
@@ -91,10 +92,6 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
       this.ComboAlmacen = data2;
       console.log(this.ComboAlmacen);
     });
-
-    this.dataSource.filterPredicate = (data: MovInventario, filter: string) => {
-      return data.IdTipoMov.toString().toLowerCase().includes(filter);
-    };
   }
 
   abrirDeleteDialog(Id: number, Name: string) {
