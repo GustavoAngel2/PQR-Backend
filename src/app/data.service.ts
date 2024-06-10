@@ -275,11 +275,8 @@ export class DetalleMovService {
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
-  getDetalleMov(Id: 0): Observable<ApiResponse> {
-    return this.http.put<ApiResponse>(
-      `${this.apiUrl}/DetalleMovimiento/Get?Id=0`,
-      { Id }
-    );
+  getDetalleMov(Id: any): Observable<ArrayBuffer> {
+    return this.http.get<ArrayBuffer>(`${this.apiUrl}/DetalleMovimiento/Get?Id=${Id}`);
   }
 
   insertarDetalleMov(DetalleMovData: {
@@ -485,11 +482,13 @@ export class movInventarioService {
   insertMovInventario(MovInvData: {
     idTipoMov: number;
     idAlmacen: number;
+    idDestino: number;
     usuarioActualiza: number;
   }): Observable<ApiResponse> {
     const body = {
       idTipoMov: MovInvData.idTipoMov,
       idAlmacen: MovInvData.idAlmacen,
+      idDestino: MovInvData.idDestino,
       usuarioActualiza: MovInvData.usuarioActualiza,
     };
     return this.http.post<ApiResponse>(
@@ -510,6 +509,7 @@ export class movInventarioService {
       Id: MovInvData.Id,
       idTipoMov: MovInvData.idTipoMov,
       idAlmacen: MovInvData.idAlmacen,
+      idDestino: MovInvData.idDestino,
       usuario: MovInvData.usuarioActualiza,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);

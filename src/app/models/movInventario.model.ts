@@ -22,6 +22,7 @@ export interface MovInventario {
     Id: number;
     idTipoMov: number;
     idAlmacen: number;
+    idDestino: number;
     usuarioActualiza: number;
   }
   
