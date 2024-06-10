@@ -48,6 +48,8 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   isOnStepOne = true;
   isOnStepTwo = false;
 
+  isTicketFormVisible= true;
+
   // New ticket
   IdSucursalControl = new FormControl('');
   IdClienteControl = new FormControl('');
@@ -169,19 +171,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         return data.Articulo.toString().includes(filter);
       };
 
-/*       this.ticketsService.getTickets(0).subscribe({
-        next: (response) => {
-          console.log('Respuesta del servidor:', response);
-          if (response && Array.isArray(response) && response.length > 0) {
-            this.dataSource.data = response;
-          } else {
-            console.log('no contiene datos');
-          }
-        },
-        error: (error) => {
-          console.error(error);
-        }
-      }); */
+/*   */
     }
 
     
@@ -239,7 +229,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         this.idTicket = response.response.data;
         this.getData(); // Llama a getData para obtener los detalles del ticket recién insertado
         this.toggleUI();
-  
+        this.isTicketFormVisible = false;
         // Mueve la lógica de obtención de detalles del ticket aquí
         if (this.idTicket) {
           this.detalleticketService.getDetalleTicket(this.idTicket).subscribe({
@@ -285,7 +275,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
               console.error('Hubo un error al insertar el detalle del ticket', error);
             }
           });
-  
+          this.clearArticuloFields();
         },
         error: (error) => {
           console.error('Error al obtener detalle del ticket:', error);
@@ -296,12 +286,16 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     }
   }
   
-  
+  terminar(){
+    this.toggleUI();
+    this.clearDetalleTicket();
+  }
   
   toggleUI() {
     this.isOnStepTwo = !this.isOnStepTwo;
     this.isOnStepOne = !this.isOnStepOne;
     this.refreshUI();
+    this.isTicketFormVisible=true;
   }
 
   refreshUI() {
@@ -396,5 +390,16 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     this.selectedCodigo = null;
     this.selectedArticulo = null;
     this.precioVenta = 0;
+    this.cantidad =0;
   }
-}
+  private clearDetalleTicket(){
+    this.idTicket=0;
+      this.idArticulo = '';
+      this.codigo = '';
+      this.selectedCodigo = null;
+      this.selectedArticulo = null;
+      this.precioVenta = 0;
+      this.cantidad =0;
+    }
+  }
+

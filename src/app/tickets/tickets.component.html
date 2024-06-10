@@ -3,11 +3,10 @@
   <label class="title">Punto de venta</label>
   <br>
   <img src="./assets/Almacenes.png" class="module-logo">
-  <br>
 </div>
 
 
-<div class="form-place">
+<div class="form-place" *ngIf="isTicketFormVisible">
 <div class="form-container">
     <div class="form-title">
         <h1 mat-dialog-title>Nuevo ticket</h1>
@@ -92,6 +91,9 @@
         <mat-label>Filtrar</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
     </mat-form-field>
+    <div class="form-title">
+      <h1 mat-dialog-title>Nuevo elemento del ticket</h1>
+    </div>
 </div>
 
 <br>
