@@ -50,7 +50,7 @@
         <div class="form-content">
             <mat-form-field appearance="fill">
                 <mat-label>idMovimiento</mat-label>
-                <input matInput placeholder="Cantidad" [(ngModel)]="idMovimiento">
+                <input [disabled]="true" matInput placeholder="Cantidad" [(ngModel)]="idMovimiento">
             </mat-form-field>
             <mat-form-field class="example-full-width">
                 <input matInput placeholder="Articulo" [formControl]="IdArticuloControl" [matAutocomplete]="autoArticulo" [ngModel]="selectedArticulo" [value]="displayArticuloFn(selectedArticulo)" />
@@ -74,13 +74,13 @@
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Costo</mat-label>
-                <input matInput placeholder="Costo" [(ngModel)]="costo">
+                <input [disabled]="true" matInput placeholder="Costo" [(ngModel)]="costo">
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Usuario</mat-label>
                 <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuarioActualiza">
             </mat-form-field>
-            <button (click)="this.isOnStepTwo = false" class="btn">Terminar<i class="underline"></i></button>
+            <button (click)="reload()" class="btn">Terminar<i class="underline"></i></button>
             <button [hidden]="datosCargados" (click)="insertarDetalleMov()" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
         </div>
     </div>

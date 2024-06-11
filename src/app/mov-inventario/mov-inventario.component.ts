@@ -248,6 +248,7 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
     this.selectedCodigo = articuloCod;
     this.selectedArticulo = articuloCod;
     this.codigo = articuloCod.Codigo;
+    
   }
   
   displayArticuloCodFn(articulo: any): string {
@@ -265,12 +266,17 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
     this.selectedArticulo = null;
   }
 
+  reload(){
+    location.reload();
+  }
+
   articuloSelected(event: any) {
     const articulo = event.option.value;
     console.log(articulo);
     this.codigo = articulo.Codigo;  // Asegúrate de asignar el código del artículo aquí
     this.selectedCodigo = articulo;
     this.selectedArticulo = articulo;
+    this.costo = articulo.Precio;
     console.log(articulo.Precio);
   }
   displayArticuloFn(articulo: any): string {
