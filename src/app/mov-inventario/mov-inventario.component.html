@@ -97,7 +97,7 @@
 <br>
 
 <div class="table-container">
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]" showFirstLastButtons></mat-paginator>
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
@@ -126,16 +126,6 @@
         <ng-container matColumnDef="UsuarioActualiza">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> USUARIO </th>
             <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.UsuarioActualiza}} </td>
-        </ng-container>
-        <ng-container matColumnDef="Estatus">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ESTATUS </th>
-            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.Estatus}} </td>
-        </ng-container>
-        <ng-container matColumnDef="Acciones">
-        <th mat-header-cell *matHeaderCellDef> ACCIONES </th>
-        <td mat-cell *matCellDef="let elemento">
-            <mat-icon class="action-btn" (click)="abrirDeleteDialog(elemento.Id, elemento.Articulo)">delete</mat-icon>
-        </td>
         </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

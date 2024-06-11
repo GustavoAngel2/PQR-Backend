@@ -21,7 +21,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./mov-inventario.component.css']
 })
 export class MovInventarioComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Id', 'idMovimiento', 'Codigo', 'Cantidad','Costo' , 'FechaActualiza', 'UsuarioActualiza', 'Estatus', 'Acciones'];
+  displayedColumns: string[] = ['Id', 'Codigo', 'Cantidad','Costo' , 'FechaActualiza', 'UsuarioActualiza'];
   dataSource: MatTableDataSource<DetalleMov>;
   idTipoMov: number = 0;
   idAlmacen: number = 0;
