@@ -5,94 +5,44 @@
     <img src="./assets/Almacenes.png" class="module-logo">
 </div>
 
-<div class="form-place" *ngIf="!isOnStepTwo">
-    <div class="form-container">
-        <div class="form-title">
-            <p [hidden]="!datosCargados"> Editando movimiento con Id: {{this.tipoMov.Id}} </p>
-            <p [hidden]="datosCargados">Nuevo movimiento</p>
-        </div>
-        <div class="form-content">
-            <mat-form-field appearance="fill">
-                <mat-label>Tipo de Movimiento</mat-label>
-                <mat-select [(ngModel)]="idTipoMov">
-                    <mat-option [value]="0">--Seleccione un tipo de Movimiento--</mat-option>
-                    <mat-option *ngFor="let tm of ComboTipoMov" [value]="tm.Id">{{ tm.Nombre }}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Almacen de origen</mat-label>
-                <mat-select [(ngModel)]="idAlmacen">
-                    <mat-option [value]="0">--Seleccione un Almacen--</mat-option>
-                    <mat-option *ngFor="let alm of ComboAlmacen" [value]="alm.Id">{{ alm.Nombre }}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Almacen de destino</mat-label>
-                <mat-select [(ngModel)]="idDestino">
-                    <mat-option [value]="0">--Almacen de destino (en caso de aplicar)--</mat-option>
-                    <mat-option *ngFor="let alm of ComboAlmacen" [value]="alm.Id">{{ alm.Nombre }}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Usuario</mat-label>
-                <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuarioActualiza">
-            </mat-form-field>
-            <button [hidden]="datosCargados" (click)="insertarMov()" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
-        </div>
+
+<div class="form-place">
+<div class="form-container">
+    <div class="form-title">
+        <p [hidden]="!datosCargados"> Editando movimiento con Id: {{this.tipoMov.Id}} </p>
+        <p [hidden]="datosCargados">Nuevo movimiento</p>
+    </div>
+    <div class="form-content">
+        <mat-form-field appearance="fill">
+            <mat-label>Tipo de Movimiento</mat-label>
+            <mat-select [(ngModel)]="idTipoMov">
+                <mat-option [value]="0">--Seleccione un tipo de Movimiento--</mat-option>
+                <mat-option *ngFor="let tm of ComboTipoMov" [value]="tm.Id">{{ tm.Nombre }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Almacen</mat-label>
+            <mat-select [(ngModel)]="idAlmacen">
+                <mat-option [value]="0">--Seleccione un Almacen--</mat-option>
+                <mat-option *ngFor="let alm of ComboAlmacen" [value]="alm.Id">{{ alm.Nombre }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Usuario</mat-label>
+            <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuarioActualiza">
+        </mat-form-field>
     </div>
 </div>
-
-<div class="form-place" *ngIf="isOnStepTwo">
-    <div class="form-container">
-        <div class="form-title">
-            <h1 mat-dialog-title>Nuevo Detalle Movimiento</h1>
-        </div>
-        <div class="form-content">
-            <mat-form-field appearance="fill">
-                <mat-label>idMovimiento</mat-label>
-                <input matInput placeholder="Cantidad" [(ngModel)]="idMovimiento">
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-                <input matInput placeholder="Articulo" [formControl]="IdArticuloControl" [matAutocomplete]="autoArticulo" [ngModel]="selectedArticulo" [value]="displayArticuloFn(selectedArticulo)" />
-                <mat-autocomplete #autoArticulo="matAutocomplete" (optionSelected)="articuloSelected($event)" [displayWith]="displayArticuloFn">
-                  <mat-option *ngFor="let option of filteredArticulos | async" [value]="option">
-                    {{ option.Descripcion }}
-                  </mat-option>
-                </mat-autocomplete>
-              </mat-form-field>
-              <mat-form-field *ngIf="false" class="example-full-width">
-                <input matInput type="text" placeholder="Código" [formControl]="CodigoControl" [matAutocomplete]="autoCodigo" [ngModel]="selectedCodigo" [value]="displayArticuloCodFn(selectedCodigo)" />
-                <mat-autocomplete #autoCodigo="matAutocomplete" (optionSelected)="articuloCodSelected($event)" [displayWith]="displayArticuloCodFn">
-                  <mat-option *ngFor="let option of filteredArticulosCod | async" [value]="option">
-                    {{ option.Codigo }}
-                  </mat-option>
-                </mat-autocomplete>
-              </mat-form-field>    
-            <mat-form-field appearance="fill">
-                <mat-label>Cantidad</mat-label>
-                <input matInput placeholder="Cantidad" [(ngModel)]="cantidad">
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Costo</mat-label>
-                <input matInput placeholder="Costo" [(ngModel)]="costo">
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Usuario</mat-label>
-                <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuarioActualiza">
-            </mat-form-field>
-            <button (click)="this.isOnStepTwo = false" class="btn">Terminar<i class="underline"></i></button>
-            <button [hidden]="datosCargados" (click)="insertarDetalleMov()" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
-        </div>
-    </div>
 </div>
 
 <div class="actionbar">
-    <!-- <mat-form-field [hidden] class="search-bar">
+    <mat-form-field class="search-bar">
         <mat-label>Filtrar</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
-    </mat-form-field> -->
+    </mat-form-field>
     <button [hidden]="!datosCargados" (click)="actualizar()" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Actualizar<i class="underline"></i></button>
-    <button [hidden]="!datosCargados" class="btn-cancel "><i class="bi bi-cloud-upload-fill icon"></i>Cancelar</button>
+    <button [hidden]="!datosCargados" (click)="limpiar()" class="btn-cancel "><i class="bi bi-cloud-upload-fill icon"></i>Cancelar</button>
+    <button [hidden]="datosCargados" (click)="insertar()" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
 </div>
 <br>
 
@@ -101,44 +51,36 @@
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.Id}} </td>
+            <td mat-cell *matCellDef="let movInventario"> {{movInventario.Id}} </td>
         </ng-container>
-        <ng-container matColumnDef="idMovimiento">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id Movimiento </th>
-            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.idMovimiento}} </td>
+        <ng-container matColumnDef="IdTipoMov">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> TIPO DE MOVIMIENTO </th>
+            <td mat-cell *matCellDef="let movInventario"> {{movInventario.IdTipoMov}} </td>
         </ng-container>
-        <ng-container matColumnDef="Codigo">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Codigo </th>
-            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.Codigo}} </td>
+        <ng-container matColumnDef="IdAlmacen">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ALMACEN </th>
+            <td mat-cell *matCellDef="let movInventario"> {{movInventario.IdAlmacen}} </td>
         </ng-container>
-        <ng-container matColumnDef="Cantidad">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad </th>
-            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.Cantidad}} </td>
+        <ng-container matColumnDef="fechaMovimiento">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> FECHA DEL MOVIMIENTO </th>
+            <td mat-cell *matCellDef="let movInventario"> {{movInventario.fechaMovimiento}} </td>
         </ng-container>
-        <ng-container matColumnDef="Costo">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Costo </th>
-            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.Costo}} </td>
+        <ng-container matColumnDef="Usuario">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> USUARIO </th>
+            <td mat-cell *matCellDef="let movInventario"> {{movInventario.Usuario}} </td>
         </ng-container>
         <ng-container matColumnDef="FechaActualiza">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> USUARIO </th>
-            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.FechaActualiza}} </td>
-        </ng-container>
-        <ng-container matColumnDef="UsuarioActualiza">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> USUARIO </th>
-            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.UsuarioActualiza}} </td>
-        </ng-container>
-        <ng-container matColumnDef="Estatus">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ESTATUS </th>
-            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.Estatus}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> FECHA DE ACTUALIZACION </th>
+            <td mat-cell *matCellDef="let movInventario"> {{movInventario.FechaActualiza}} </td>
         </ng-container>
         <ng-container matColumnDef="Acciones">
         <th mat-header-cell *matHeaderCellDef> ACCIONES </th>
         <td mat-cell *matCellDef="let elemento">
-            <mat-icon class="action-btn" (click)="abrirDeleteDialog(elemento.Id, elemento.Articulo)">delete</mat-icon>
+            <mat-icon class="action-btn green" (click)="cargarDatos(elemento)">edit</mat-icon>
+            <mat-icon class="action-btn red" (click)="abrirDeleteDialog(elemento.Id, elemento.IdTipoMov)">delete</mat-icon>
         </td>
         </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </table>
 </div>
-    

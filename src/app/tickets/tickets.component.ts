@@ -10,7 +10,6 @@ import { ClientesService, TicketsSevice, DetalleTicketService, TiposMovService, 
 import { tickets } from '../models/tickets.model';
 import { TicketsUpdateComponent } from '../tickets-update/tickets-update.component';
 import { DetalleTicket } from '../models/detalleTicket.model';
-import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 
 
 @Component({
@@ -180,28 +179,20 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
 
 
-  abrirDeleteDialog(Id: number, Name:string) {
-    const dialogRef = this.dialog.open(DeleteMenuComponent, {
-      width: '550px',
-      data: Name
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result == "yes") {
-        this.ticketsService.deleteTickets(Id).subscribe({
-          next: (response) => {
-            console.log(response);
-            this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
-              return data.Articulo.toString().toLowerCase().includes(filter.toLowerCase());
-            };
-            this.getData();
-          },
-          error: (error) => {
-            console.error('Hubo un error al eliminar el departamento', error);
-          }
-        });
-      }
-    });
+  eliminarAlmacen(Id: number) {
+    if (confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
+      this.detalleticketService.deleteDetalleTicket(Id).subscribe({
+        next: (response) => {
+          console.log(response);
+          this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
+            return data.Articulo.toString().toLowerCase().includes(filter.toLowerCase());
+          };
+        },
+        error: (error) => {
+          console.error('Hubo un error al eliminar el departamento', error);
+        }
+      });
+    }
   }
 
   abrirEditarModal(ticket: tickets) {
