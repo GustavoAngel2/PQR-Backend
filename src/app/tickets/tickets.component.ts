@@ -289,18 +289,23 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       console.error('idTicket no está definido');
     }
   }
-  
   terminar(){
     this.toggleUI();
     this.clearDetalleTicket();
-  }
+    this.totalTicket = 0;
+    this.clearTablaDetalles();
+}
+
+clearTablaDetalles() {
+    this.dataSource.data = [];
+}
   
   toggleUI() {
     this.isOnStepTwo = !this.isOnStepTwo;
     this.isOnStepOne = !this.isOnStepOne;
     this.refreshUI();
     this.isTicketFormVisible=true;
-  }
+}
 
   refreshUI() {
     if (this.isOnStepTwo) {
@@ -397,13 +402,14 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     this.cantidad =0;
   }
   private clearDetalleTicket(){
-    this.idTicket=0;
-      this.idArticulo = '';
-      this.codigo = '';
-      this.selectedCodigo = null;
-      this.selectedArticulo = null;
-      this.precioVenta = 0;
-      this.cantidad =0;
-    }
+    this.idTicket = 0;
+    this.idArticulo = '';
+    this.codigo = '';
+    this.selectedCodigo = null;
+    this.selectedArticulo = null;
+    this.precioVenta = 0;
+    this.cantidad = 0;
+    this.detalleticket = [];
+}
   }
 
