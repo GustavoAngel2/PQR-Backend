@@ -80,7 +80,7 @@
           <mat-label>Usuario</mat-label>
           <input matInput [formControl]="IdUsuarioDetalleControl" placeholder="Usuario Actualiza" [(ngModel)]="usuario" name="usuario">
         </mat-form-field>
-        <button [ngClass]="{'disabled-button': isOnStepOne}" [disabled]="isOnStepOne" (click)="toggleUI();" class="btn-form">Terminar<i class="underline"></i></button>
+        <button [ngClass]="{'disabled-button': isOnStepOne}" [disabled]="isOnStepOne" (click)="toggleUI();  refrescarPagina()" class="btn-form">Terminar<i class="underline"></i></button>
         <button [ngClass]="{'disabled-button': isOnStepOne}" [disabled]="isOnStepOne" (click)="insertarDetalleTicket();" class="btn-form">Insertar al ticket<i class="underline"></i></button>
       </div> 
 </div>
@@ -98,7 +98,7 @@
 
 <br>
 <div class="table-container">
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[ 10, 25, 100]" showFirstLastButtons></mat-paginator>
   <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="Id">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>

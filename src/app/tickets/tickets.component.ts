@@ -253,7 +253,10 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     });
   }
   
-
+  refrescarPagina(): void {
+    window.location.reload();
+  }
+  
   insertarDetalleTicket() {
     const nuevoDetalleTicket = {
       idTicket: this.idTicket,
