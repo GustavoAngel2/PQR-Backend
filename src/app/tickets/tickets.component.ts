@@ -181,7 +181,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
 
 
-  eliminarAlmacen(Id: number) {
+  eliminarDetalle(Id: number) {
     if (confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
       this.detalleticketService.deleteDetalleTicket(Id).subscribe({
         next: (response) => {
@@ -189,6 +189,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
           this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
             return data.Articulo.toString().toLowerCase().includes(filter.toLowerCase());
           };
+          this.getData()
         },
         error: (error) => {
           console.error('Hubo un error al eliminar el departamento', error);
@@ -247,7 +248,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   refrescarPagina(): void {
     window.location.reload();
   }
-  
+
   insertarDetalleTicket() {
     const nuevoDetalleTicket = {
       idTicket: this.idTicket,
