@@ -276,7 +276,7 @@ export class DetalleMovService {
   constructor(private http: HttpClient) {}
 
   getDetalleMov(Id: number): Observable<ArrayBuffer> {
-    return this.http.get<ArrayBuffer>(`${this.apiUrl}/DetalleMovimiento/Get?Id=${Id}`);
+    return this.http.get<ArrayBuffer>(`${this.apiUrl}/DetalleMovimiento/Get?id_Movimientos=${Id}`);
   }
 
   insertarDetalleMov(DetalleMovData: {
