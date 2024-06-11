@@ -35,14 +35,14 @@
           <mat-label>Usuario</mat-label>
           <input matInput type="number" [formControl]="IdUsusarioControl" placeholder="Usuario Actualiza" [(ngModel)]="Usuario" name="Usuario">
         </mat-form-field>
-        <button [ngClass]="{'disabled-button': isOnStepTwo}" [disabled]="isOnStepTwo" (click)="insertarTicket();" class="btn-form right">Generar ticket<i class="underline"></i></button>
+        <button (click)="insertarTicket();" class="btn-form right">Generar ticket<i class="underline"></i></button>
       </div>
     </div>
 
 </div>
 <br>
 
-<div class="form-place">
+<div class="form-place" *ngIf="!isTicketFormVisible">
     <div class="form-container">
       <div class="form-title">
         <h1 mat-dialog-title>Nuevo elemento del ticket</h1>
@@ -80,8 +80,8 @@
           <mat-label>Usuario</mat-label>
           <input matInput [formControl]="IdUsuarioDetalleControl" placeholder="Usuario Actualiza" [(ngModel)]="usuario" name="usuario">
         </mat-form-field>
-        <button [ngClass]="{'disabled-button': isOnStepOne}" [disabled]="isOnStepOne" (click)="toggleUI();" class="btn-form">Terminar<i class="underline"></i></button>
-        <button [ngClass]="{'disabled-button': isOnStepOne}" [disabled]="isOnStepOne" (click)="insertarDetalleTicket();" class="btn-form">Insertar al ticket<i class="underline"></i></button>
+        <button (click)="toggleUI2();" class="btn-form">Terminar<i class="underline"></i></button>
+        <button (click)="insertarDetalleTicket();" class="btn-form">Insertar al ticket<i class="underline"></i></button>
       </div> 
 </div>
 
