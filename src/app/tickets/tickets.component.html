@@ -37,6 +37,8 @@
         </mat-form-field>
         <button [ngClass]="{'disabled-button': isOnStepTwo}" [disabled]="isOnStepTwo" (click)="insertarTicket();" class="btn-form right">Generar ticket<i class="underline"></i></button>
       </div>
+
+
     </div>
 
 </div>
@@ -139,7 +141,8 @@
       <ng-container matColumnDef="Acciones">
       <th mat-header-cell *matHeaderCellDef> ACCIONES </th>
       <td mat-cell *matCellDef="let elemento">
-          <mat-icon class="action-btn" (click)="abrirDeleteDialog(elemento.Id, elemento.Articulo)">delete</mat-icon>
+
+          <mat-icon class="action-btn" (click)="eliminarDetalle(elemento.Id)">delete</mat-icon>
       </td>
       </ng-container>
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -188,4 +191,6 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </table>
+<<<<<<< HEAD
 </div>   -->
+
