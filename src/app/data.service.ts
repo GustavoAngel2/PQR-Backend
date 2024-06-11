@@ -275,7 +275,7 @@ export class DetalleMovService {
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
-  getDetalleMov(Id: any): Observable<ArrayBuffer> {
+  getDetalleMov(Id: number): Observable<ArrayBuffer> {
     return this.http.get<ArrayBuffer>(`${this.apiUrl}/DetalleMovimiento/Get?Id=${Id}`);
   }
 
