@@ -14,7 +14,7 @@ import { SearchMovModel } from '../models/detalleMov.model';
 @Component({
   selector: 'app-detalle-movimiento',
   templateUrl: './detalle-movimiento.component.html',
-  styleUrls: ['./detalle-movimiento.component.css']
+  styleUrls: ['./detalle-movimiento.component.css'],
 })
 export class DetalleMovimientoComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['Id', 'idMovimiento', 'idAlmacen', 'FechaMovimiento', 'UsuarioActualiza', 'Acciones'];
@@ -109,6 +109,37 @@ export class DetalleMovimientoComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  // Método para realizar el filtrado
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  abrirDeleteDialog(Id: number, Name: string) {
+    const dialogRef = this.dialog.open(DeleteMenuComponent, {
+      width: '550px',
+      data: Name
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == "yes") {
+        this.DetalleMovService.deleteDetalleMov(Id).subscribe({
+          next: (response) => {
+            this.getMov();
+          },
+          error: (error) => {
+            console.error('Hubo un error al eliminar el Detalle', error);
+          }
+        });
+        this.getMov();
+      }
+    });
   }
 }
