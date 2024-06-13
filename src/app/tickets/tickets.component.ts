@@ -359,9 +359,12 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     this.IdClienteControl.updateValueAndValidity();
     this.selectedCliente = cliente;
   }
+
+
   displayClienteFn(cliente: any): string {
     return cliente ? cliente.Nombre : '';
   }
+  
   private _filterClientes(value: any): any[] {
     const filterValue = (typeof value === 'string' ? value : '').toLowerCase();
     return this.ComboClientes.filter(option => option.Nombre.toLowerCase().includes(filterValue));
