@@ -6,48 +6,33 @@
 </div>
 
 
-<!-- <div class="form-container">
-    <div class="form-title">
-        <h1 mat-dialog-title>Nuevo Detalle Movimiento</h1>
-    </div>
-    <div class="form-content">
-        <mat-form-field>
-            <mat-label>Tipo Movimiento</mat-label>
-              <select matNativeControl [(ngModel)]="idMovimiento">
-                <option value="0">--Seleccione un Tipo Movimiento--</option>
-                <option *ngFor="let movInv of ComboMov" [value]="movInv.Id">{{ movInv.IdTipoMov}}---{{movInv.IdAlmacen}}</option>
-              </select>
-            </mat-form-field>
-           <mat-form-field>
-              <mat-label>Articulo</mat-label>
-              <select matNativeControl [(ngModel)]="codigo">
-                <option value="0">--Seleccione un Articulo--</option>
-                <option *ngFor="let cod of ComboCodigo" [value]="cod.Id">{{ cod.Descripcion}}</option>
-              </select>
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>Cantidad</mat-label>
-              <input matInput placeholder="Cantidad" [(ngModel)]="cantidad">
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>Costo</mat-label>
-              <input matInput placeholder="Costo" [(ngModel)]="costo">
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>Usuario</mat-label>
-              <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuarioActualiza">
-            </mat-form-field>
-    </div>
-</div> -->
 
-<div class="actionbar">
-    <mat-form-field class="search-bar">
-        <mat-label>Filtrar</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
-    </mat-form-field>
-    <!-- <button (click)="insertar()" class="btn right">Insertar<i class="underline"></i></button> -->
+<div class="form-place">
+    <div class="form-container">
+        <div class="form-title">
+            <p> Buscar </p>
+        </div>
+        <div class="form-content">
+            <mat-form-field appearance="fill">
+                <mat-label>Almacen</mat-label>
+                <mat-select [(ngModel)]="idAlmacen">
+                    <mat-option [value]="0">--Seleccione un Almacen--</mat-option>
+                    <mat-option *ngFor="let alm of ComboAlmacen" [value]="alm.Id">{{ alm.Nombre }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput (dateInput)="addEvent($event)" [matDatepicker]="picker" placeholder="Choose a date">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>  
+        </div>
+    </div>
 </div>
-<br>
 
 <div class="table-container">
     <mat-paginator [pageSizeOptions]="[10, 25, 100]" showFirstLastButtons></mat-paginator>
