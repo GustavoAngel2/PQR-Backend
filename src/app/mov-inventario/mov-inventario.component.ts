@@ -14,6 +14,8 @@ import { DetalleMov } from '../models/detalleMov.model';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
+import { SearchMovModel } from '../models/detalleMov.model';
+
 
 @Component({
   selector: 'app-mov-inventario',
@@ -52,6 +54,14 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
   selectedCodigo:any ;
   filteredArticulosCod!: Observable<any[]>;
   filteredArticulos!: Observable<any[]>;
+
+
+  search: SearchMovModel = {
+    IdAlmacen : 0,
+    FechaFin : '2024-01-01',
+    FechaInicio : '2024-12-30'
+  };
+  
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -111,7 +121,7 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
 
   getData() {
 
-    this.movInventarioService.getMovInventario().subscribe((data: any) => {
+    this.movInventarioService.getMovInventario(this.search).subscribe((data: any) => {
       this.ComboMov = data;
       console.log(this.ComboMov);
     });
