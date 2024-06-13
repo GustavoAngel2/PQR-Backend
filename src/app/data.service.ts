@@ -334,7 +334,7 @@ export class TicketsSevice {
     FechaInicio:string,
     FechaFin:string
   }): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/Tickets/Get?IdAlmacen=${TicketData.IdSucursal}&FechaInicio=${TicketData.FechaInicio}&FechaFin=${TicketData.FechaFin}`);
+    return this.http.get<ApiResponse>(`${this.apiUrl}/Tickets/Get?IdSucursal=${TicketData.IdSucursal}&FechaInicio=${TicketData.FechaInicio}&FechaFin=${TicketData.FechaFin}`);
   }
 
   insertarTickets(TicketsData: {

@@ -17,7 +17,7 @@ import { SucursalesService } from '../data.service';
   styleUrls: ['./detalle-ticket.component.css']
 })
 export class DetalleTicketComponent implements OnInit, AfterViewInit{
-  displayedColumns: string[] = ['Id', 'idTicket', 'Codigo', 'Articulo', 'Cantidad', 'PrecioVenta', 'Total', 'Usuario', 'Estatus', 'Acciones'];
+  displayedColumns: string[] = ['Id', 'Sucursal', 'Cliente', 'Vendedor', 'Fecha', 'Estatus', 'UsuarioActualiza','Acciones'];
   dataSource: MatTableDataSource<tickets>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -56,9 +56,11 @@ export class DetalleTicketComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit() {
+    this.format
     this.sucursaleService.getSucursales().subscribe((data2: any) => {
       this.comboSucursal = data2;
       console.log(this.comboSucursal);
+      console.log(this.idSucursal);
     });
     this.getTicket();
   }
@@ -68,8 +70,20 @@ export class DetalleTicketComponent implements OnInit, AfterViewInit{
   }
   // Método para realizar el filtrado
 
-
+  format() {
+    this.fechaInicio = this.formatDate(this.dateHandler);
+    this.fechaFin = this.formatDate(this.dateHandler2);
+    console.log(this.fechaInicio + " - " + this.fechaFin);
+  }
   
+  
+  formatDate(date: Date): string {
+    const day = this.padZero(date.getDate());
+    const month = this.padZero(date.getMonth() + 1); // Sumamos 1 porque los meses empiezan en 0
+    const year = date.getFullYear();
+    return `${year}-${month}-${day}`;
+  }
+
   getTicket() {
     this.dataSource.filterPredicate = (data: tickets, filter: string) => {
       return data.Id.toString().includes(filter); // Puedes añadir más campos si es necesario
@@ -92,18 +106,8 @@ export class DetalleTicketComponent implements OnInit, AfterViewInit{
     });
   }
 
-  format() {
-    this.fechaInicio = this.formatDate(this.dateHandler);
-    this.fechaFin = this.formatDate(this.dateHandler2);
-    console.log(this.fechaInicio + " - " + this.fechaFin);
-  }
 
-  formatDate(date: Date): string {
-    const day = this.padZero(date.getDate());
-    const month = this.padZero(date.getMonth() + 1); // Sumamos 1 porque los meses empiezan en 0
-    const year = date.getFullYear();
-    return `${year}-${month}-${day}`;
-  }
+
 
   padZero(num: number): string {
     return num < 10 ? `0${num}` : `${num}`;
