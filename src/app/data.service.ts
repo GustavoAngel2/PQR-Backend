@@ -480,7 +480,7 @@ export class movInventarioService {
     FechaInicio:string,
     FechaFin:string
   }): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}'api/MovInventario/Get?IdAlmacen=${MovInvData.IdAlmacen}&FechaInicio=${MovInvData.FechaInicio}&FechaFin=${MovInvData.FechaFin}'`);
+    return this.http.get<ApiResponse>(`${this.apiUrl}/MovInventario/Get?IdAlmacen=${MovInvData.IdAlmacen}&FechaInicio=${MovInvData.FechaInicio}&FechaFin=${MovInvData.FechaFin}`);
   }
 
   insertMovInventario(MovInvData: {
