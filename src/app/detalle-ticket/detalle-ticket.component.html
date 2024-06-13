@@ -14,8 +14,8 @@
             <mat-form-field appearance="fill">
                 <mat-label>Sucursal</mat-label>
                 <mat-select [(ngModel)]="idSucursal">
-                    <mat-option [value]="0">--Seleccione un Almacen--</mat-option>
-                    <mat-option *ngFor="let alm of ComboAlmacen" [value]="alm.Id">{{ alm.Nombre }}</mat-option>
+                    <mat-option [value]="0">--Seleccione una sucursal--</mat-option>
+                    <mat-option *ngFor="let alm of comboSucursal" [value]="alm.Id">{{ alm.Nombre }}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field>
@@ -41,34 +41,43 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
             <td mat-cell *matCellDef="let ticket"> {{ticket.Id}} </td>
         </ng-container>
-        <ng-container matColumnDef="Sucursal">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID DEL TICKET </th>
+        <ng-container matColumnDef="idTicket">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id del ticket </th>
             <td mat-cell *matCellDef="let ticket"> {{ticket.Sucursal}} </td>
         </ng-container>
-        <ng-container matColumnDef="Cliente">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> CODIGO </th>
-            <td mat-cell *matCellDef="let ticket"> {{ticket.Cliente}} </td>
+        <ng-container matColumnDef="Codigo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Codigo </th>
+            <td mat-cell *matCellDef="let ticket"> {{ticket.Codigo}} </td>
         </ng-container>
-        <ng-container matColumnDef="Vendedor">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ARTICULO </th>
-            <td mat-cell *matCellDef="let ticket"> {{ticket.Vendedor}} </td>
+        <ng-container matColumnDef="Articulo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Articulo </th>
+            <td mat-cell *matCellDef="let ticket"> {{ticket.Articulo}} </td>
         </ng-container>
-        <ng-container matColumnDef="Fecha">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> PRECIO DE VENTA </th>
-            <td mat-cell *matCellDef="let ticket"> {{ticket.Fecha}} </td>
+        <ng-container matColumnDef="Cantidad">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad </th>
+            <td mat-cell *matCellDef="let ticket"> {{ticket.Articulo}} </td>
+        </ng-container>
+        <ng-container matColumnDef="PrecioVenta">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio de venta </th>
+            <td mat-cell *matCellDef="let ticket"> {{ticket.PrecioVenta}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Total">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Total </th>
+            <td mat-cell *matCellDef="let ticket"> {{ticket.PrecioVenta}} </td>
         </ng-container>
         <ng-container matColumnDef="Usuario">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> USUARIO </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
             <td mat-cell *matCellDef="let ticket"> {{ticket.Usuario}} </td>
         </ng-container>
         <ng-container matColumnDef="Estatus">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ESTATUS </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
             <td mat-cell *matCellDef="let ticket"> {{ticket.Estatus}} </td>
         </ng-container>
         <ng-container matColumnDef="Acciones">
-        <th mat-header-cell *matHeaderCellDef> ACCIONES </th>
-        <td mat-cell *matCellDef="let elemento">
-      </td>
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let elemento">
+                <mat-icon (click)="verContTicket(elemento.Id)">pageview</mat-icon>
+            </td>
         </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

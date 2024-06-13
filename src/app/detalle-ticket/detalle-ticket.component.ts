@@ -17,7 +17,7 @@ import { SucursalesService } from '../data.service';
   styleUrls: ['./detalle-ticket.component.css']
 })
 export class DetalleTicketComponent implements OnInit, AfterViewInit{
-  displayedColumns: string[] = ['Id', 'Sucursal', 'Codigo', 'Articulo', 'Cantidad', 'PrecioVenta', 'Total', 'Usuario', 'Estatus', 'Acciones'];
+  displayedColumns: string[] = ['Id', 'idTicket', 'Codigo', 'Articulo', 'Cantidad', 'PrecioVenta', 'Total', 'Usuario', 'Estatus', 'Acciones'];
   dataSource: MatTableDataSource<tickets>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -29,7 +29,6 @@ export class DetalleTicketComponent implements OnInit, AfterViewInit{
   dateHandler2: Date = new Date();
   fechaInicio: string = '';
   fechaFin: string = '';
-  ComboAlmacen: any;
   events: string[] = [];
   day: number;
   month: number;
@@ -43,12 +42,11 @@ export class DetalleTicketComponent implements OnInit, AfterViewInit{
 
 
   constructor(
-    private tiketsService: TicketsSevice, 
+    private ticketsService: TicketsSevice, 
     public dialog:MatDialog,
     public sucursaleService:SucursalesService,
   ) 
     {
-    this.dataSource = new MatTableDataSource<tickets>(); // Inicializa dataSource como una instancia de MatTableDataSource
     this.dataSource = new MatTableDataSource<tickets>(); // Inicializa dataSource como una instancia de MatTableDataSource
     this.dateHandler = new Date();
     this.day = this.dateHandler.getDate();
@@ -69,48 +67,27 @@ export class DetalleTicketComponent implements OnInit, AfterViewInit{
     this.dataSource.sort = this.sort;
   }
   // Método para realizar el filtrado
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-  abrirInsertarModal() {
-    const dialogRef = this.dialog.open(DetalleTicketInsertComponent, {
-      width: '550px',
-      // Puedes pasar datos al componente de la modal si es necesario
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      // Manejar los resultados cuando la modal se cierre
-    });
-  }
-/*   eliminarExistencia(Id: number) {
-    // Aquí puedes agregar una confirmación antes de eliminar si lo deseas
-    if (confirm('¿Estás seguro de que deseas eliminar esta existencia?')) {
-      this.detalleticketService.deleteDetalleTicket(Id).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.dataSource.data = this.dataSource.data.filter((detalleticket: DetalleTicket) => detalleticket.Id !== Id);
-        },
-        error: (error) => {
-          // Manejar el error aquí
-          console.error('Hubo un error al eliminar el departamento', error);
-        }
-      });
-    }
-  } */
-  abrirEditarModal(detalleticket: DetalleTicket) {
-    const dialogRef = this.dialog.open(DetalleTicketUpdateComponent, {
-      width: '550px',
-      data: detalleticket // Pasa el objeto de departamento a la modal
-    });
   
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        
+  getTicket() {
+    this.dataSource.filterPredicate = (data: tickets, filter: string) => {
+      return data.Id.toString().includes(filter); // Puedes añadir más campos si es necesario
+    };
+    this.search.IdSucursal = this.idSucursal
+    this.search.FechaInicio = this.fechaInicio
+    this.search.FechaFin = this.fechaFin
+    this.ticketsService.getTickets(this.search).subscribe({
+      next: (response) => {
+        console.log('Respuesta del servidor:', response);
+        if (response && Array.isArray(response) && response.length > 0) {
+          this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
+        } else {
+          console.log('no contiene datos');
+        }
+      },
+      error: (error) => {
+        console.error(error);
       }
     });
   }
@@ -131,26 +108,11 @@ export class DetalleTicketComponent implements OnInit, AfterViewInit{
   padZero(num: number): string {
     return num < 10 ? `0${num}` : `${num}`;
   }
-  
-  getTicket() {
-    this.dataSource.filterPredicate = (data: tickets, filter: string) => {
-      return data.Id.toString().includes(filter); // Puedes añadir más campos si es necesario
-    };
-    this.search.IdSucursal = this.idSucursal
-    this.search.FechaInicio = this.fechaInicio
-    this.search.FechaFin = this.fechaFin
-    this.tiketsService.getTickets(this.search).subscribe({
-      next: (response) => {
-        console.log('Respuesta del servidor:', response);
-        if (response && Array.isArray(response) && response.length > 0) {
-          this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
-        } else {
-          console.log('no contiene datos');
-        }
-      },
-      error: (error) => {
-        console.error(error);
-      }
+
+  verContTicket(Id: number) {
+    this.dialog.open(DetalleTicketInsertComponent, {
+      width: '900px',
+      data: Id
     });
   }
 }

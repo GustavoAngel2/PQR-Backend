@@ -1,21 +1,12 @@
 import { Component, OnInit, ViewChild, AfterViewInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
-import { UpdateMovInventario } from '../models/movInventario.model';
-import { movInventarioService } from '../data.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { DetalleMovService } from '../data.service';
-import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
-import { AlmacenesService } from '../data.service';
-import { TiposMovService } from '../data.service';
-import { ArticulosService } from '../data.service';
 import { DetalleMov } from '../models/detalleMov.model';
-import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
 
 
 @Component({

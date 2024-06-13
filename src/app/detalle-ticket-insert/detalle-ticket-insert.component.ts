@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
-import { DetalleTicketService } from '../data.service';
-import { TicketsSevice } from '../data.service';
-import { ArticulosService } from '../data.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
 import { SearchTicketsModel } from '../models/tickets.model';
+import { DetalleTicketService, TicketsSevice } from '../data.service';
+import { DetalleTicket } from '../models/detalleTicket.model';
 
 @Component({
   selector: 'app-detalle-ticket-insert',
@@ -11,62 +13,37 @@ import { SearchTicketsModel } from '../models/tickets.model';
   styleUrls: ['./detalle-ticket-insert.component.css']
 })
 export class DetalleTicketInsertComponent {
-   idTicket: number = 0;
-  codigo: number=0 ;
-  cantidad: number = 0;
-  precioVenta: number = 0;
-  usuario: number = 0;
-  ComboCodigo:any;
-  ComboTicket:any
-
-  search: SearchTicketsModel = {
-    IdSucursal : 0,
-    FechaFin : '',
-    FechaInicio : ''
-  };
+  dataSource: MatTableDataSource<DetalleTicket>;
+  id: number = 0;
+  displayedColumns: string[] = ['Id', 'idTicket', 'codigo','Articulo' , 'cantidad', 'precioVenta', 'Total', 'TotalTicket', 'usuario', 'Estatus'];
 
   constructor(
     public dialogRef: MatDialogRef<DetalleTicketInsertComponent>,
-    private TicketService :TicketsSevice,
-    private articulosService:ArticulosService,
-    private detalleticketService: DetalleTicketService
-  ) {}
+    public dialog: MatDialog,
+    public detalleTicketService: DetalleTicketService,
+    @Inject(MAT_DIALOG_DATA) public data: number
+  ) {
+    this.id = data
+    this.dataSource = new MatTableDataSource<DetalleTicket>();
+  }
 
   ngOnInit(): void {
-    this.TicketService.getTickets(this.search).subscribe((data: any) => {
-      this.ComboTicket = data;
-      console.log(this.ComboTicket)
-    });
-    this.articulosService.getArticulos().subscribe((data2: any) => {
-      this.ComboCodigo = data2;
-      console.log(this.ComboCodigo)
+    this.detalleTicketService.getDetalleTicket(this.id).subscribe({
+      next: (response) => {
+        console.log('Respuesta del servidor:', response); 
+        if (response && Array.isArray(response)&&response.length>0) {
+          this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
+        } else {
+          console.log('no contiene datos');
+        }
+      },
+      error: (error) => {
+        console.error(error);
+      }
     });
   }    
   
   onNoClick(): void {
     this.dialogRef.close();
-  }
-
-  insertar(): void {
-    const nuevoDetalleTicket = {
-      idTicket: this.idTicket,
-      codigo: this.codigo,
-      cantidad: this.cantidad,
-      precioVenta: this.precioVenta,
-      usuario: this.usuario
-    };
-
-    // Aquí asumo que tienes un método en tu servicio para insertar el departamento
-    this.detalleticketService.insertDetalleTicket(nuevoDetalleTicket).subscribe({
-      next: (response) => {
-        // Puedes cerrar la modal y/o actualizar la tabla aquí si es necesario
-        this.dialogRef.close(response);
-        location.reload();
-      },
-      error: (error) => {
-        // Manejar el error aquí
-        console.error('Hubo un error al insertar el almacen', error);
-      }
-    });
   }
 }
