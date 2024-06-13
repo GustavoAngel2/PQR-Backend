@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { DetalleMovService } from '../data.service';
+import { AlmacenesService, DetalleMovService } from '../data.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -7,7 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 import { movInventarioService } from '../data.service';
 import { MovInventario } from '../models/movInventario.model';
-import { MovInventarioInsertComponent } from '../mov-inventario-insert/mov-inventario-insert.component';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { DetalleMoviemientoInsertComponent } from '../detalle-moviemiento-insert/detalle-moviemiento-insert.component';
 @Component({
   selector: 'app-detalle-movimiento',
@@ -17,6 +17,11 @@ import { DetalleMoviemientoInsertComponent } from '../detalle-moviemiento-insert
 export class DetalleMovimientoComponent implements OnInit, AfterViewInit{
   displayedColumns: string[] = ['Id', 'idMovimiento', 'idAlmacen', 'FechaMovimiento','UsuarioActualiza','Acciones'];
   dataSource: MatTableDataSource<MovInventario>;
+  idAlmacen: number = 0;
+  fechaInicio: string = '';
+  fechaFin:string = '';
+  ComboAlmacen:any;
+  events: string[] = [];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -24,13 +29,23 @@ export class DetalleMovimientoComponent implements OnInit, AfterViewInit{
   constructor(
     private DetalleMovService: DetalleMovService, 
     public dialog:MatDialog,
-    private movInventarioService:movInventarioService
+    private movInventarioService:movInventarioService,
+    private almacenesService: AlmacenesService
   ) {
     this.dataSource = new MatTableDataSource<MovInventario>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
 
   ngOnInit() {
+    this.almacenesService.getAlmacenes().subscribe((data2: any) => {
+      this.ComboAlmacen = data2;
+      console.log(this.ComboAlmacen);
+    });
     this.getMov()
+  }
+
+  addEvent( event:any ) {
+    this.fechaInicio = event.value
+    console.log(this.fechaInicio)
   }
 
   getMov(){
