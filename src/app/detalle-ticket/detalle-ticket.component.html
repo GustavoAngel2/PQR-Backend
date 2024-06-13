@@ -5,60 +5,70 @@
     <img src="./assets/Almacenes.png" class="module-logo">
 </div>
 
-<div class="actionbar">
-    <mat-form-field class="search-bar">
-        <mat-label>Filtrar</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
-    </mat-form-field>
-    <button (click)="abrirInsertarModal()" class="btn right">Insertar<i class="underline"></i></button>
+<div class="form-place">
+    <div class="form-container">
+        <div class="form-title">
+            <p> Buscar </p>
+        </div>
+        <div class="form-content">
+            <mat-form-field appearance="fill">
+                <mat-label>Sucursal</mat-label>
+                <mat-select [(ngModel)]="idSucursal">
+                    <mat-option [value]="0">--Seleccione un Almacen--</mat-option>
+                    <mat-option *ngFor="let alm of ComboAlmacen" [value]="alm.Id">{{ alm.Nombre }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [(ngModel)]="dateHandler" (dateInput)="format()" [matDatepicker]="picker" placeholder="Choose a date">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [(ngModel)]="dateHandler2" (dateInput)="format()" [matDatepicker]="picker2" placeholder="Choose a date">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>  
+            <button class="btn" (click)="getTicket()">Buscar</button>
+        </div>
+    </div>
 </div>
+
 <br>
 <div class="table-container">
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-            <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.Id}} </td>
+            <td mat-cell *matCellDef="let ticket"> {{ticket.Id}} </td>
         </ng-container>
-        <ng-container matColumnDef="IdTicket">
+        <ng-container matColumnDef="Sucursal">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> ID DEL TICKET </th>
-            <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.IdTicket}} </td>
+            <td mat-cell *matCellDef="let ticket"> {{ticket.Sucursal}} </td>
         </ng-container>
-        <ng-container matColumnDef="Codigo">
+        <ng-container matColumnDef="Cliente">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> CODIGO </th>
-            <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.Codigo}} </td>
+            <td mat-cell *matCellDef="let ticket"> {{ticket.Cliente}} </td>
         </ng-container>
-        <ng-container matColumnDef="Articulo">
+        <ng-container matColumnDef="Vendedor">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> ARTICULO </th>
-            <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.Articulo}} </td>
+            <td mat-cell *matCellDef="let ticket"> {{ticket.Vendedor}} </td>
         </ng-container>
-        <ng-container matColumnDef="Cantidad">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> CANTIDAD </th>
-            <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.Cantidad}} </td>
-        </ng-container>
-        <ng-container matColumnDef="PrecioVenta">
+        <ng-container matColumnDef="Fecha">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> PRECIO DE VENTA </th>
-            <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.PrecioVenta}} </td>
-        </ng-container>
-        <ng-container matColumnDef="Total">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> TOTAL </th>
-            <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.Total}} </td>
+            <td mat-cell *matCellDef="let ticket"> {{ticket.Fecha}} </td>
         </ng-container>
         <ng-container matColumnDef="Usuario">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> USUARIO </th>
-            <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.Usuario}} </td>
+            <td mat-cell *matCellDef="let ticket"> {{ticket.Usuario}} </td>
         </ng-container>
         <ng-container matColumnDef="Estatus">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> ESTATUS </th>
-            <td mat-cell *matCellDef="let detalleticket"> {{detalleticket.Estatus}} </td>
+            <td mat-cell *matCellDef="let ticket"> {{ticket.Estatus}} </td>
         </ng-container>
         <ng-container matColumnDef="Acciones">
         <th mat-header-cell *matHeaderCellDef> ACCIONES </th>
         <td mat-cell *matCellDef="let elemento">
-
-            <mat-icon class="action-btn" (click)="abrirEditarModal(elemento)">edit</mat-icon>
-            <mat-icon class="action-btn" (click)="eliminarExistencia(elemento.Id)">delete</mat-icon>
-        </td>
+      </td>
         </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

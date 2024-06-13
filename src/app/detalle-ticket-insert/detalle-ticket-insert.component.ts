@@ -3,6 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { DetalleTicketService } from '../data.service';
 import { TicketsSevice } from '../data.service';
 import { ArticulosService } from '../data.service';
+import { SearchTicketsModel } from '../models/tickets.model';
 
 @Component({
   selector: 'app-detalle-ticket-insert',
@@ -18,6 +19,12 @@ export class DetalleTicketInsertComponent {
   ComboCodigo:any;
   ComboTicket:any
 
+  search: SearchTicketsModel = {
+    IdSucursal : 0,
+    FechaFin : '',
+    FechaInicio : ''
+  };
+
   constructor(
     public dialogRef: MatDialogRef<DetalleTicketInsertComponent>,
     private TicketService :TicketsSevice,
@@ -26,7 +33,7 @@ export class DetalleTicketInsertComponent {
   ) {}
 
   ngOnInit(): void {
-    this.TicketService.getTickets(0).subscribe((data: any) => {
+    this.TicketService.getTickets(this.search).subscribe((data: any) => {
       this.ComboTicket = data;
       console.log(this.ComboTicket)
     });

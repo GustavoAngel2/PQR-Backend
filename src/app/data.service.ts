@@ -329,11 +329,12 @@ export class TicketsSevice {
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
-  getTickets(IdSucursal: 0): Observable<ApiResponse> {
-    return this.http.put<ApiResponse>(
-      `${this.apiUrl}/Tickets/Get?IdSucursal=0`,
-      { IdSucursal }
-    );
+  getTickets(TicketData:{
+    IdSucursal:number,
+    FechaInicio:string,
+    FechaFin:string
+  }): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/Tickets/Get?IdAlmacen=${TicketData.IdSucursal}&FechaInicio=${TicketData.FechaInicio}&FechaFin=${TicketData.FechaFin}`);
   }
 
   insertarTickets(TicketsData: {

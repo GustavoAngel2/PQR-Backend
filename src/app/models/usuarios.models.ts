@@ -28,3 +28,4 @@ export interface usuarios {
   export interface DeleteUsuario{
     Id: number;
   }
+  
