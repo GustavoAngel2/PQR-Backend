@@ -174,7 +174,6 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
       idDestino: this.idDestino,
       usuarioActualiza: this.usuarioActualiza
     };
-
     this.movInventarioService.insertMovInventario(nuevoMovInv).subscribe({
       next: (response) => {
         this.idMovimiento = response.response.data;

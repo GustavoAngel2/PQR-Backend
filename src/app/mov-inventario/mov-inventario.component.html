@@ -20,13 +20,14 @@
                 </mat-select>
             </mat-form-field>
             <mat-form-field appearance="fill">
-                <mat-label>Almacen de origen</mat-label>
+                <mat-label *ngIf="idTipoMov == 1 || idTipoMov == 2">Almacen de Origen</mat-label>
+                <mat-label *ngIf="idTipoMov !== 1 && idTipoMov !== 2">Almacen</mat-label>
                 <mat-select [(ngModel)]="idAlmacen">
                     <mat-option [value]="0">--Seleccione un Almacen--</mat-option>
                     <mat-option *ngFor="let alm of ComboAlmacen" [value]="alm.Id">{{ alm.Nombre }}</mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="fill" *ngIf="idTipoMov == 1 || idTipoMov == 2">
                 <mat-label>Almacen de destino</mat-label>
                 <mat-select [(ngModel)]="idDestino">
                     <mat-option [value]="0">--Almacen de destino (en caso de aplicar)--</mat-option>
@@ -80,6 +81,7 @@
                 <mat-label>Usuario</mat-label>
                 <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuarioActualiza">
             </mat-form-field>
+            <br>
             <button (click)="reload()" class="btn">Terminar<i class="underline"></i></button>
             <button [hidden]="datosCargados" (click)="insertarDetalleMov()" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
         </div>

@@ -231,12 +231,14 @@ td{
 }
 
 .window-content{
-  padding-top: 8%;
+  padding: 10%;
   background-color: #18191f;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
+  height: 320px;
+  overflow-y: scroll;
 }
 
 .window-footer{
@@ -326,14 +328,6 @@ option{
     text-align: center;
     margin-top: 30px;
   }
-
-  .window-content{
-    position: relative;
-    padding: 10%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-  }
 }
 
 @media (max-width:800px) {
@@ -386,24 +380,8 @@ option{
     align-items: center;
   }
 
-  .form-content{
-    display: flex;
-    flex-direction: column;
-    justify-items: center;
-  }
-
   .form-content mat-form-field{
     width: 100%;
-  }
-
-  .window-content{
-    position: relative;
-    padding: 10%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    overflow-y: scroll;
-    gap: 3px;
   }
   
   .mobile{
@@ -424,9 +402,6 @@ option{
   }
   
   .table-container{
-    display: block;
-    width:100%;
-    padding: 0;
     overflow-x: scroll;
   }
 
