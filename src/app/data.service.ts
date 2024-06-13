@@ -475,8 +475,12 @@ export class movInventarioService {
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
-  getMovInventario(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/MovInventario/Get`);
+  getMovInventario(MovInvData:{
+    IdAlmacen:number,
+    FechaInicio:string,
+    FechaFin:string
+  }): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}'api/MovInventario/Get?IdAlmacen=${MovInvData.IdAlmacen}&FechaInicio=${MovInvData.FechaInicio}&FechaFin=${MovInvData.FechaFin}'`);
   }
 
   insertMovInventario(MovInvData: {
