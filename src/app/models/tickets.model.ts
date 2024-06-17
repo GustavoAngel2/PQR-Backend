@@ -34,3 +34,9 @@ export interface tickets {
    export interface deleteTickets{
      Id: number;
    }
+   
+  export interface SearchTicketsModel{
+    IdSucursal:number
+    FechaInicio:string
+    FechaFin:string
+  }

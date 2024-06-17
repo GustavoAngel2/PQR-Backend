@@ -14,7 +14,7 @@ import { SearchMovModel } from '../models/detalleMov.model';
 @Component({
   selector: 'app-detalle-movimiento',
   templateUrl: './detalle-movimiento.component.html',
-  styleUrls: ['./detalle-movimiento.component.css']
+  styleUrls: ['./detalle-movimiento.component.css'],
 })
 export class DetalleMovimientoComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['Id', 'idMovimiento', 'idAlmacen', 'FechaMovimiento', 'UsuarioActualiza', 'Acciones'];
@@ -58,6 +58,7 @@ export class DetalleMovimientoComponent implements OnInit, AfterViewInit {
       this.ComboAlmacen = data2;
       console.log(this.ComboAlmacen);
     });
+    this.format();
     this.getMov();
   }
 
