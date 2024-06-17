@@ -1,3 +1,5 @@
+import { tickets } from "./tickets.model";
+
 export interface DetalleTicket {
     Id: number;
     idTicket: number;
@@ -6,6 +8,7 @@ export interface DetalleTicket {
     cantidad: number;
     precioVenta: number;
     Total: number;
+    TotalTicket:number;
     usuario: string;
     Estatus: string;
   }
@@ -16,7 +19,7 @@ export interface DetalleTicket {
     fecha: string;
     message: string;
     response: {
-      data: DetalleTicket[]; };
+      data: tickets[]; };
   }
 
   export interface UpdateDetalleTicket{
@@ -28,9 +31,6 @@ export interface DetalleTicket {
     Estatus: number;
     Usuario: number;
   }
-  
-  export interface DetalleTicket{
-    Id: number;
-  }
+
 
   	

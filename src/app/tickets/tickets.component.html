@@ -3,34 +3,33 @@
   <label class="title">Punto de venta</label>
   <br>
   <img src="./assets/Almacenes.png" class="module-logo">
-  <br>
 </div>
 
 
-<div class="form-place">
-    <div class="form-container">
-      <div class="form-title">
+<div class="form-place" *ngIf="isTicketFormVisible">
+<div class="form-container">
+    <div class="form-title">
         <h1 mat-dialog-title>Nuevo ticket</h1>
-      </div>
-      <div class="form-content">
+    </div>
+    <div class="form-content">
         <mat-form-field>
-          <mat-label>Sucursal</mat-label>
-          <mat-select [formControl]="IdSucursalControl" [(ngModel)]="IdSucursal" name="IdSucursal" required>
-            <mat-option value="0">--Seleccione una Sucursal--</mat-option>
-            <mat-option *ngFor="let cod of ComboSucursales" [value]="cod.Id">{{ cod.Nombre }}</mat-option>
-          </mat-select>
+            <mat-label>Sucursal</mat-label>
+            <mat-select [formControl]="IdSucursalControl" [(ngModel)]="IdSucursal" name="IdSucursal" required>
+                <mat-option value="0">--Seleccione una Sucursal--</mat-option>
+                <mat-option *ngFor="let cod of ComboSucursales" [value]="cod.Id">{{ cod.Nombre }}</mat-option>
+            </mat-select>
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Cliente" [formControl]="IdClienteControl" [matAutocomplete]="autoCliente" [ngModel]="selectedCliente" [value]="displayClienteFn(selectedCliente)" />
-          <mat-autocomplete #autoCliente="matAutocomplete" (optionSelected)="clienteSelected($event)" [displayWith]="displayClienteFn">
-            <mat-option *ngFor="let option of filteredClientes | async" [value]="option">
-              {{ option.Nombre }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
+            <input matInput placeholder="Cliente" [formControl]="IdClienteControl" [matAutocomplete]="auto" [ngModel]="selectedCliente" [value]="displayClienteFn(selectedCliente)" />
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="clienteSelected($event)" [displayWith]="displayClienteFn">
+              <mat-option *ngFor="let option of filteredClientes | async" [value]="option">
+                {{ option.Nombre }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
         <mat-form-field>
-          <mat-label>Vendedor</mat-label>
-          <input matInput type="number" [formControl]="IdVendedorControl" placeholder="Ingresa la direccion" [(ngModel)]="IdVendedor" name="IdVendedor">
+            <mat-label>Vendedor</mat-label>
+            <input matInput [formControl]="IdVendedorControl" placeholder="Ingresa la direccion" [(ngModel)]="IdVendedor" name="IdVendedor">
         </mat-form-field>
         <mat-form-field>
           <mat-label>Usuario</mat-label>
@@ -38,11 +37,14 @@
         </mat-form-field>
         <button [ngClass]="{'disabled-button': isOnStepTwo}" [disabled]="isOnStepTwo" (click)="insertarTicket();" class="btn-form right">Generar ticket<i class="underline"></i></button>
       </div>
+
+
     </div>
-  </div>
-  
-  <!-- Formulario para nuevo elemento del ticket -->
-  <div class="form-place">
+
+</div>
+<br>
+
+<div class="form-place" *ngIf="!isTicketFormVisible">
     <div class="form-container">
       <div class="form-title">
         <h1 mat-dialog-title>Nuevo elemento del ticket</h1>
@@ -80,21 +82,25 @@
           <mat-label>Usuario</mat-label>
           <input matInput [formControl]="IdUsuarioDetalleControl" placeholder="Usuario Actualiza" [(ngModel)]="usuario" name="usuario">
         </mat-form-field>
-        <button [ngClass]="{'disabled-button': isOnStepOne}" [disabled]="isOnStepOne" (click)="toggleUI();" class="btn-form">Terminar<i class="underline"></i></button>
+        <button [ngClass]="{'disabled-button': isOnStepOne}" [disabled]="isOnStepOne" (click)="toggleUI();  refrescarPagina()" class="btn-form">Terminar<i class="underline"></i></button>
         <button [ngClass]="{'disabled-button': isOnStepOne}" [disabled]="isOnStepOne" (click)="insertarDetalleTicket();" class="btn-form">Insertar al ticket<i class="underline"></i></button>
       </div> 
-    </div>
-  </div>
-  <div class="actionbar">
+</div>
+
+<br>
+<div class="actionbar">
     <mat-form-field class="search-bar">
         <mat-label>Filtrar</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
     </mat-form-field>
+    <div class="form-title">
+      <h1 mat-dialog-title>Total Ticket: {{ totalTicket | currency }}</h1>
+    </div>
 </div>
 
 <br>
 <div class="table-container">
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[ 10, 25, 100]" showFirstLastButtons></mat-paginator>
   <table mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="Id">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
@@ -136,8 +142,7 @@
       <th mat-header-cell *matHeaderCellDef> ACCIONES </th>
       <td mat-cell *matCellDef="let elemento">
 
-          <mat-icon class="action-btn" (click)="abrirEditarModal(elemento)">edit</mat-icon>
-          <mat-icon class="action-btn" (click)="eliminarAlmacen(elemento.Id)">delete</mat-icon>
+          <mat-icon class="action-btn" (click)="eliminarDetalle(elemento.Id, elemento.Articulo)">delete</mat-icon>
       </td>
       </ng-container>
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -186,4 +191,6 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </table>
+<<<<<<< HEAD
 </div>   -->
+

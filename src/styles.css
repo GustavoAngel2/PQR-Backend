@@ -4,7 +4,7 @@
  d8"'    `"8b                ""                                          d8"     "8b  ,d                  88            
 d8'        `8b                       ___         ___                     Y8,          88                  88      ___      
 88          88  88       88  88  8b,dPPYba,   ,adPPYba,  8b       d8     `Y8aaaaa,  MM88MMM  8b       d8  88   ,adPPYba,
-88          88  88       88  88  88P'   "Y8  a8P_____88  `8b     d8'       `"""""8b,  88     `8b     d8'  88  a8P_____88
+88          88  88       88  88  88P'   "Y8  a8P__88  `8b     d8'       `"""""8b,  88     `8b     d8'  88  a8P__88
 Y8,    "88,,8P  88       88  88  88          8PP"""""""   `8b   d8'              `8b  88      `8b   d8'   88  8PP"""""""
  Y8a.    Y88P   "8a,   ,a88  88  88          "8b,   ,aa    `8b,d8'       Y8a     a8P  88,      `8b,d8'    88  "8b,   ,aa
   `"Y8888Y"Y8a   `"YbbdP'Y8  88  88           `"Ybbd8"'      Y88'         "Y88888P"   "Y888      Y88'     88   `"Ybbd8"'
@@ -16,7 +16,6 @@ Y8,    "88,,8P  88       88  88  88          8PP"""""""   `8b   d8'             
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
 
 html, body { 
-  height: 100%;
   --mat-paginator-enabled-icon-color:#fff!important;
   --mat-paginator-disabled-icon-color:#333!important;
 }
@@ -65,7 +64,7 @@ mat-sidenav{
   width: 400px;
 }
 
-table{
+.table-container table{
   background-color: #555!important;
   border: 3px solid #2e2e2e!important;
   border-radius: 3px;
@@ -86,7 +85,7 @@ mat-paginator{
   z-index: 1;
 }
 
-th{
+.table-container th{
   text-align: center!important;
   padding-top: 6px;
   width: 100%;
@@ -95,7 +94,7 @@ th{
   font-family: 'Poppins', sans-serif!important;
 }
 
-td{
+.table-container td{
   text-align: center!important;
   width: 100%;
   height: 40px;
@@ -231,12 +230,14 @@ td{
 }
 
 .window-content{
-  padding-top: 8%;
+  padding: 10%;
   background-color: #18191f;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
+  height: 320px;
+  overflow-y: scroll;
 }
 
 .window-footer{
@@ -313,26 +314,18 @@ option{
     width: 300px;
   }
   
-  th{
+  .table-container th{
     font-size: 14px;
     width: 100%;
     height: 45px;
   }
   
-  td{
+  .table-container td{
     font-size: 10px;
     width: 100%;
     height: 60px;
     text-align: center;
     margin-top: 30px;
-  }
-
-  .window-content{
-    position: relative;
-    padding: 10%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
   }
 }
 
@@ -353,13 +346,13 @@ option{
     margin:0;
   }
 
-  th{
+  .table-container th{
     font-size: 10px;
     width: 100%;
     height: 32px;
   }
   
-  td{
+  .table-container td{
     font-size: 10px;
     width: 100%;
     height: 30px;
@@ -386,24 +379,8 @@ option{
     align-items: center;
   }
 
-  .form-content{
-    display: flex;
-    flex-direction: column;
-    justify-items: center;
-  }
-
   .form-content mat-form-field{
     width: 100%;
-  }
-
-  .window-content{
-    position: relative;
-    padding: 10%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    overflow-y: scroll;
-    gap: 3px;
   }
   
   .mobile{
@@ -424,9 +401,6 @@ option{
   }
   
   .table-container{
-    display: block;
-    width:100%;
-    padding: 0;
     overflow-x: scroll;
   }
 

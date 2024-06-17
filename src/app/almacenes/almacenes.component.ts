@@ -117,7 +117,6 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
     });
   }
 
-
   actualizar(): void {
     const almacenActualizado: UpdateAlmacen = {
       Id: this.almacen.Id,
@@ -148,7 +147,6 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
     this.encargado = almacen.Encargado;
     this.datosCargados = true;
   }
-
 
   limpiar(): void{
     this.nombreAlmacen = "";

@@ -14,7 +14,7 @@ import { UpdateTickets } from './models/tickets.model';
 import { UpdateUsuario } from './models/usuarios.models';
 import { UpdateExistencia } from './models/existencia.model';
 import { UpdateMovInventario } from './models/movInventario.model';
-import { UpdateDetalleTicket } from './models/detalleTicket.model';
+import { DetalleTicket, UpdateDetalleTicket } from './models/detalleTicket.model';
 import { UpdateModulo } from './models/modulo.model';
 import { updateEmpleado } from "./models/empleados.model";
 import { UpdatePuesto } from "./models/puestos.model";
@@ -275,8 +275,8 @@ export class DetalleMovService {
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
-  getDetalleMov(Id: 0): Observable<ArrayBuffer> {
-    return this.http.get<ArrayBuffer>(`${this.apiUrl}/DetalleMovimiento/Get?Id=${Id}`);
+  getDetalleMov(Id: number): Observable<ArrayBuffer> {
+    return this.http.get<ArrayBuffer>(`${this.apiUrl}/DetalleMovimiento/Get?id_Movimientos=${Id}`);
   }
 
   insertarDetalleMov(DetalleMovData: {
@@ -329,11 +329,12 @@ export class TicketsSevice {
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
-  getTickets(IdSucursal: 0): Observable<ApiResponse> {
-    return this.http.put<ApiResponse>(
-      `${this.apiUrl}/Tickets/Get?IdSucursal=0`,
-      { IdSucursal }
-    );
+  getTickets(TicketData:{
+    IdSucursal:number,
+    FechaInicio:string,
+    FechaFin:string
+  }): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/Tickets/Get?IdSucursal=${TicketData.IdSucursal}&FechaInicio=${TicketData.FechaInicio}&FechaFin=${TicketData.FechaFin}`);
   }
 
   insertarTickets(TicketsData: {
@@ -475,18 +476,24 @@ export class movInventarioService {
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
 
-  getMovInventario(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/MovInventario/Get`);
+  getMovInventario(MovInvData:{
+    IdAlmacen:number,
+    FechaInicio:string,
+    FechaFin:string
+  }): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/MovInventario/Get?IdAlmacen=${MovInvData.IdAlmacen}&FechaInicio=${MovInvData.FechaInicio}&FechaFin=${MovInvData.FechaFin}`);
   }
 
   insertMovInventario(MovInvData: {
     idTipoMov: number;
     idAlmacen: number;
+    idDestino: number;
     usuarioActualiza: number;
   }): Observable<ApiResponse> {
     const body = {
       idTipoMov: MovInvData.idTipoMov,
       idAlmacen: MovInvData.idAlmacen,
+      idDestino: MovInvData.idDestino,
       usuarioActualiza: MovInvData.usuarioActualiza,
     };
     return this.http.post<ApiResponse>(
@@ -507,6 +514,7 @@ export class movInventarioService {
       Id: MovInvData.Id,
       idTipoMov: MovInvData.idTipoMov,
       idAlmacen: MovInvData.idAlmacen,
+      idDestino: MovInvData.idDestino,
       usuario: MovInvData.usuarioActualiza,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
@@ -526,13 +534,11 @@ export class DetalleTicketService {
   constructor(private http: HttpClient) {}
 
 
-  
-  getDetalleTicket(IdTicket: number): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(
-      `${this.apiUrl}/DetalleTicket/Get?idTicket=0`
-    );
+  getDetalleTicket(ticketId: number): Observable<DetalleTicket[]> {
+    return this.http.get<DetalleTicket[]>(`${this.apiUrl}/DetalleTicket/Get?idTicket=${ticketId}`);
   }
 
+  
   insertDetalleTicket(DTData: {
     idTicket: number;
     codigo: number;

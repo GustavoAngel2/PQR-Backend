@@ -4,6 +4,8 @@ import { UpdateDetalleMov } from '../models/detalleMov.model';
 import { DetalleMovService } from '../data.service';
 import { ArticulosService } from '../data.service';
 import { movInventarioService } from '../data.service';
+import { SearchMovModel } from '../models/detalleMov.model';
+
 
 
 @Component({
@@ -17,7 +19,11 @@ export class DetalleMovimientoUpdateComponent implements OnInit{
   ComboCodigo:any;
   idMovimiento!:number;
   codigo!:number;
-
+  search: SearchMovModel = {
+    IdAlmacen : 0,
+    FechaFin : '2024-01-01',
+    FechaInicio : '2024-12-30'
+  };
   
   constructor(
     public dialogRef: MatDialogRef<DetalleMovimientoUpdateComponent>,
@@ -37,7 +43,7 @@ export class DetalleMovimientoUpdateComponent implements OnInit{
       console.log("Combo Codigo")
       console.log(this.ComboCodigo)
     });
-    this.movInvService.getMovInventario().subscribe((data2: any) => {
+    this.movInvService.getMovInventario(this.search).subscribe((data2: any) => {
       this.ComboMov = data2;
       console.log("Combo MovInv")
       console.log(this.ComboMov)

@@ -2,12 +2,12 @@ import { DetalleMovService } from "../data.service";
 
 export interface DetalleMov {
     Id: number;
-    NombreMov: string;
-    Cantidad: number;
-    Costo: number;
-    FechaAct:Date;
-    Usuario: string;
-    Estatus: string
+    Codigo:string;
+    Cantidad:number;
+    Costo:number;
+    FechaActualiza:Date;
+    UsuarioActualiza: string;
+    Estatus: string;
   }
 
   export interface ApiResponse {
@@ -25,6 +25,12 @@ export interface DetalleMov {
     cantidad: number;
     costo: number;
     usuarioActualiza: number;
+  }
+
+  export interface SearchMovModel{
+    IdAlmacen:number
+    FechaInicio:string
+    FechaFin:string
   }
 
   export interface UpdateDetalleMov{

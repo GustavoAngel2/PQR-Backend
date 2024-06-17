@@ -10,6 +10,7 @@ import { ClientesService, TicketsSevice, DetalleTicketService, TiposMovService, 
 import { tickets } from '../models/tickets.model';
 import { TicketsUpdateComponent } from '../tickets-update/tickets-update.component';
 import { DetalleTicket } from '../models/detalleTicket.model';
+import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 
 
 @Component({
@@ -29,14 +30,16 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
   // Detalle tickets
   idTicket: any;
+  totalTicket: number = 0;
   idArticulo: any;
-  Codigo: any;
+  codigo: any;
   Descripcion: any;
   cantidad: number = 0;
   precioVenta: number = 0;
   usuario: number = 0;
   ComboCodigo: any[] = [];
   ComboTicket: any;
+  detalleticket: any[] = [];
   ComboSucursales: any;
   ComboTipoMov: any;
   filteredArticulos!: Observable<any[]>;
@@ -45,6 +48,8 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   filteredArticulosCod!: Observable<any[]>;
   isOnStepOne = true;
   isOnStepTwo = false;
+
+  isTicketFormVisible= true;
 
   // New ticket
   IdSucursalControl = new FormControl('');
@@ -130,64 +135,76 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getData() {
-    this.detalleticketService.getDetalleTicket(this.idTicket).subscribe((data: any) => {
-      this.ComboTicket = data;
-      console.log(this.ComboTicket);
-    });
-    
-    this.articulosService.getArticulos().subscribe((data2: any) => {
-      this.ComboCodigo = data2;
-      console.log(this.ComboCodigo);
-    });
-    this.sucursalesService.getSucursales().subscribe((data3: any) => {
-      this.ComboSucursales = data3;
-      console.log(this.ComboSucursales);
-    });
-    this.tiposMovService.getTiposMov().subscribe((data4: any) => {
-      this.ComboTipoMov = data4;
-      console.log(this.ComboTipoMov);
-    });
-
-    this.clientesService.getClientes().subscribe((data5: any) => {
-      this.ComboClientes = data5;
-      console.log(this.ComboClientes);
-    });
-
-    this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
-      return data.Articulo.toString().includes(filter);
-    };
-
-    this.ticketsService.getTickets(0).subscribe({
+  getData(){
+    this.detalleticketService.getDetalleTicket(this.idTicket).subscribe({
       next: (response) => {
-        console.log('Respuesta del servidor:', response);
+        console.log('Respuesta del servidor:', response); 
         if (response && Array.isArray(response) && response.length > 0) {
           this.dataSource.data = response;
+          this.totalTicket = response[0].TotalTicket; 
         } else {
           console.log('no contiene datos');
+          this.totalTicket = 0; 
         }
       },
       error: (error) => {
         console.error(error);
+        this.totalTicket = 0; 
       }
     });
-  }
 
-  eliminarAlmacen(Id: number) {
-    if (confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
-      this.ticketsService.deleteTickets(Id).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
-            return data.Articulo.toString().toLowerCase().includes(filter.toLowerCase());
-          };
-        },
-        error: (error) => {
-          console.error('Hubo un error al eliminar el departamento', error);
+      this.articulosService.getArticulos().subscribe((data2: any) => {
+        this.ComboCodigo = data2;
+        console.log(this.ComboCodigo);
+      });
+      this.sucursalesService.getSucursales().subscribe((data3: any) => {
+        this.ComboSucursales = data3;
+        console.log(this.ComboSucursales);
+      });
+      this.tiposMovService.getTiposMov().subscribe((data4: any) => {
+        this.ComboTipoMov = data4;
+        console.log(this.ComboTipoMov);
+      });
+
+      this.clientesService.getClientes().subscribe((data5: any) => {
+        this.ComboClientes = data5;
+        console.log(this.ComboClientes);
+      });
+
+      this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
+        return data.Articulo.toString().includes(filter);
+      };
+
+/*   */
+    }
+
+    
+
+
+
+    eliminarDetalle(Id: number,Name: string) {
+      const dialogRef = this.dialog.open(DeleteMenuComponent, {
+        width: '550px',
+        data: Name
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        if (result == "yes") {
+          this.detalleticketService.deleteDetalleTicket(Id).subscribe({
+            next: (response) => {
+              console.log(response);
+              this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
+                return data.Articulo.toString().toLowerCase().includes(filter.toLowerCase());
+              };
+              this.getData()
+            },
+            error: (error) => {
+              console.error('Hubo un error al eliminar el elemento del ticket', error);
+            }
+          });
         }
       });
     }
-  }
 
   abrirEditarModal(ticket: tickets) {
     const dialogRef = this.dialog.open(TicketsUpdateComponent, {
@@ -216,38 +233,76 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         this.idTicket = response.response.data;
         this.getData(); // Llama a getData para obtener los detalles del ticket recién insertado
         this.toggleUI();
+        this.isTicketFormVisible = false;
+        // Mueve la lógica de obtención de detalles del ticket aquí
+        if (this.idTicket) {
+          this.detalleticketService.getDetalleTicket(this.idTicket).subscribe({
+            next: (data: any) => {
+              this.detalleticket = data;
+              console.log('Detalles del ticket:', this.detalleticket);
+            },
+            error: (error) => {
+              console.error('Hubo un error al obtener los detalles del ticket', error);
+            }
+          });
+        }
       },
       error: (error) => {
         console.error('Hubo un error al insertar el ticket', error);
       }
     });
   }
+  
+  refrescarPagina(): void {
+    window.location.reload();
+  }
 
   insertarDetalleTicket() {
-    console.log('27')
     const nuevoDetalleTicket = {
       idTicket: this.idTicket,
-      codigo: this.Codigo,
+      codigo: this.codigo,
       cantidad: this.cantidad,
       precioVenta: this.precioVenta,
       usuario: this.usuario
     };
-    console.log(nuevoDetalleTicket)
-    this.detalleticketService.insertDetalleTicket(nuevoDetalleTicket).subscribe({
-      next: (response) => {
-        this.getData();
-        
-      },
-      error: (error) => {
-        console.error('Hubo un error al insertar el almacen', error);
-      }
-    });
+  
+    if (this.idTicket) {
+      // Si this.idTicket tiene un valor, continuar con la solicitud GET
+      this.detalleticketService.getDetalleTicket(this.idTicket).subscribe({
+        next: (data: DetalleTicket[]) => {
+          this.detalleticket = data;
+          console.log('Detalles del ticket:', this.detalleticket);
+  
+          // Luego, continuar con la inserción del detalle del ticket
+          this.detalleticketService.insertDetalleTicket(nuevoDetalleTicket).subscribe({
+            next: (response) => {
+              this.getData();
+            },
+            error: (error) => {
+              console.error('Hubo un error al insertar el detalle del ticket', error);
+            }
+          });
+          this.clearArticuloFields();
+        },
+        error: (error) => {
+          console.error('Error al obtener detalle del ticket:', error);
+        }
+      });
+    } else {
+      console.error('idTicket no está definido');
+    }
   }
-
+  
+  terminar(){
+    this.toggleUI();
+    this.clearDetalleTicket();
+  }
+  
   toggleUI() {
     this.isOnStepTwo = !this.isOnStepTwo;
     this.isOnStepOne = !this.isOnStepOne;
     this.refreshUI();
+    this.isTicketFormVisible=true;
   }
 
   refreshUI() {
@@ -269,34 +324,33 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       this.IdUsusarioControl.enable();
       this.IdVendedorControl.enable();
 
-      this.CantidadControl.disable();
-      this.IdUsuarioDetalleControl.disable();
+      this.CantidadControl.enable();
+      this.IdUsuarioDetalleControl.enable();
       this.IdTicketControl.disable();
-      this.IdArticuloControl.disable();
-      this.CodigoControl.disable();
+      this.IdArticuloControl.enable();
+      this.CodigoControl.enable();
       this.PrecioControl.disable();
     }
   }
 
   articuloSelected(event: any) {
     const articulo = event.option.value;
-    console.log('Artículo seleccionado:', articulo);
+    console.log(articulo);
     this.idArticulo = articulo.Id;
-    this.Codigo = articulo.Codigo;  // Asegúrate de asignar el código del artículo aquí
+    this.codigo = articulo.Codigo;  // Asegúrate de asignar el código del artículo aquí
     this.selectedCodigo = articulo;
     this.selectedArticulo = articulo;
+    console.log(articulo.Precio);
     this.precioVenta = articulo.Precio;
-    console.log('Id del artículo:', articulo.Id);
-    console.log('Código del artículo:', articulo.Codigo);
-    console.log('Precio del artículo:', articulo.Precio);
   }
   displayArticuloFn(articulo: any): string {
     return articulo ? articulo.Descripcion : '';
   }
   private _filterArticulos(value: any): any[] {
     const filterValue = (typeof value === 'string' ? value : '').toLowerCase();
-    return this.ComboCodigo.filter(option => option.Descripcion.toLowerCase().includes(filterValue) || option.Codigo.toLowerCase().includes(filterValue));
+    return this.ComboCodigo.filter(option => option.Descripcion.toLowerCase().includes(filterValue));
   }
+
   clienteSelected(event: any) {
     const cliente = event.option.value;
     console.log(cliente);
@@ -305,9 +359,12 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     this.IdClienteControl.updateValueAndValidity();
     this.selectedCliente = cliente;
   }
+
+
   displayClienteFn(cliente: any): string {
     return cliente ? cliente.Nombre : '';
   }
+  
   private _filterClientes(value: any): any[] {
     const filterValue = (typeof value === 'string' ? value : '').toLowerCase();
     return this.ComboClientes.filter(option => option.Nombre.toLowerCase().includes(filterValue));
@@ -318,7 +375,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     console.log('Artículo seleccionado:', articuloCod);
     this.selectedCodigo = articuloCod;
     this.selectedArticulo = articuloCod;
-    this.Codigo = articuloCod.Codigo;
+    this.codigo = articuloCod.Codigo;
     this.precioVenta = articuloCod.Precio;
     console.log('Id del artículo:', articuloCod.Id);
     console.log('Código del artículo:', articuloCod.Codigo);
@@ -339,9 +396,20 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
   private clearArticuloFields() {
     this.idArticulo = '';
-    this.Codigo = '';
+    this.codigo = '';
     this.selectedCodigo = null;
     this.selectedArticulo = null;
     this.precioVenta = 0;
+    this.cantidad =0;
   }
-}
+  private clearDetalleTicket(){
+    this.idTicket=0;
+      this.idArticulo = '';
+      this.codigo = '';
+      this.selectedCodigo = null;
+      this.selectedArticulo = null;
+      this.precioVenta = 0;
+      this.cantidad =0;
+    }
+  }
+
