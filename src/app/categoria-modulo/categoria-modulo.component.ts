@@ -5,7 +5,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { CategoriaModuloInsertComponent } from '../categoria-modulo-insert/categoria-modulo-insert.component';
 import { CategoriaModuloUpdateComponent } from '../categoria-modulo-update/categoria-modulo-update.component';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 
@@ -91,16 +90,7 @@ getData(){
       this.dataSource.paginator.firstPage();
     }
   }
-  abrirInsertarModal() {
-    const dialogRef = this.dialog.open(CategoriaModuloInsertComponent, {
-      width: '550px',
-      // Puedes pasar datos al componente de la modal si es necesario
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      // Manejar los resultados cuando la modal se cierre
-    });
-  }
+  
  //esta funcion abre la modal de insertar 
  abrirDeleteDialog(Id: number , Name: string) {
   const dialogRef = this.dialog.open(DeleteMenuComponent, {

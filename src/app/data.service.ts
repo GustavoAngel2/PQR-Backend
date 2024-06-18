@@ -1,5 +1,3 @@
-//se importan las dependencias necesarias, al igual que los componentes
-
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -27,7 +25,7 @@ export class AlmacenesService {
   //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient) {}
-
+  
   getAlmacenes(): Observable<ApiResponse> {
     // regresa una lista de los almacenes de la base de datos
     return this.http.get<ApiResponse>(`${this.apiUrl}/Almacenes/Get`);

@@ -1,3 +1,5 @@
+//Materials
+
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule, Routes } from "@angular/router";
@@ -23,15 +25,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
+//Componentes
+
 import { AlmacenesComponent } from "./almacenes/almacenes.component";
-import { AlmacenesInsertComponent } from "./almacenes-insert/almacenes-insert.component";
-import { AlmacenesUpdateComponent } from "./almacenes-update/almacenes-update.component";
 import { DetalleMovimientoComponent } from "./detalle-movimiento/detalle-movimiento.component";
-import { DetalleMoviemientoInsertComponent } from "./detalle-moviemiento-insert/detalle-moviemiento-insert.component";
-import { DetalleMovimientoUpdateComponent } from "./detalle-movimiento-update/detalle-movimiento-update.component";
+import { DetalleMoviemientoViewComponent } from "./detalle-movimiento-view/detalle-moviemiento-view.component";
 import { TicketsComponent } from "./tickets/tickets.component";
-import { TicketsInsertComponent } from "./tickets-insert/tickets-insert.component";
-import { TicketsUpdateComponent } from "./tickets-update/tickets-update.component";
 import { UsuariosComponent } from "./usuarios/usuarios.component";
 import { UsuariosInsertComponent } from "./usuarios-insert/usuarios-insert.component";
 import { UsuarioUpdateComponent } from "./usuario-update/usuario-update.component";
@@ -39,10 +38,7 @@ import { ClientesComponent } from "./clientes/clientes.component";
 import { ArticulosComponent } from "./articulos/articulos.component";
 import { PersonasComponent } from "./personas/personas.component";
 import { RutasComponent } from "./rutas/rutas.component";
-import { ClientesInsertComponent } from "./clientes-insert/clientes-insert.component";
 import { ClientesUpdateComponent } from "./clientes-update/clientes-update.component";
-import { ArticulosInsertComponent } from "./articulos-insert/articulos-insert.component";
-import { ArticulosUpdateComponent } from "./articulos-update/articulos-update.component";
 import { PersonasInsertComponent } from "./personas-insert/personas-insert.component";
 import { PersonasUpdateComponent } from "./personas-update/personas-update.component";
 import { RutasInsertComponent } from "./rutas-insert/rutas-insert.component";
@@ -51,8 +47,6 @@ import { ExistenciasComponent } from "./existencias/existencias.component";
 import { ExistenciasInsertComponent } from "./existencias-insert/existencias-insert.component";
 import { ExistenciasUpdateComponent } from "./existencias-update/existencias-update.component";
 import { MovInventarioComponent } from "./mov-inventario/mov-inventario.component";
-import { MovInventarioInsertComponent } from "./mov-inventario-insert/mov-inventario-insert.component";
-import { MovInventarioUpdateComponent } from "./mov-inventario-update/mov-inventario-update.component";
 import { DetalleTicketComponent } from "./detalle-ticket/detalle-ticket.component";
 import { DetalleTicketInsertComponent } from "./detalle-ticket-insert/detalle-ticket-insert.component";
 import { DetalleTicketUpdateComponent } from "./detalle-ticket-update/detalle-ticket-update.component";
@@ -67,15 +61,11 @@ import { PuestosComponent } from "./puestos/puestos.component";
 import { PuestosInsertComponent } from "./puestos-insert/puestos-insert.component";
 import { PuestosUpdateComponent } from "./puestos-update/puestos-update.component";
 import { CategoriaModuloComponent } from './categoria-modulo/categoria-modulo.component';
-import { CategoriaModuloInsertComponent } from "./categoria-modulo-insert/categoria-modulo-insert.component";
 import { CategoriaModuloUpdateComponent } from "./categoria-modulo-update/categoria-modulo-update.component";
 import { DetallePerfilComponent } from './detalle-perfil/detalle-perfil.component';
 import { DetallePerfilInsertComponent } from './detalle-perfil-insert-component/detalle-perfil-insert-component.component';
 import { DetallePerfilUpdateComponent } from './detalle-perfil-update/detalle-perfil-update.component';
 import { DeleteMenuComponent } from './delete-menu/delete-menu.component';
-
-
-
 
 const appRoutes: Routes = [
 
@@ -98,22 +88,16 @@ const appRoutes: Routes = [
   { path:"puestos",component:PuestosComponent},
   { path: "categoriamodulo", component:PuestosComponent},
   { path: "detallePerfil", component: DetallePerfilComponent}
+
 ];
-
-
 
 @NgModule({
   declarations: [
     AppComponent,
     AlmacenesComponent,
-    AlmacenesUpdateComponent,
-    AlmacenesInsertComponent,
     ClientesComponent,
-    ClientesInsertComponent,
     ClientesUpdateComponent,
     ArticulosComponent,
-    ArticulosInsertComponent,
-    ArticulosUpdateComponent,
     PersonasComponent,
     PersonasInsertComponent,
     PersonasUpdateComponent,
@@ -121,11 +105,8 @@ const appRoutes: Routes = [
     RutasInsertComponent,
     RutasUpdateComponent,
     DetalleMovimientoComponent,
-    DetalleMoviemientoInsertComponent,
-    DetalleMovimientoUpdateComponent,
+    DetalleMoviemientoViewComponent,
     TicketsComponent,
-    TicketsInsertComponent,
-    TicketsUpdateComponent,
     UsuariosComponent,
     UsuariosInsertComponent,
     UsuarioUpdateComponent,
@@ -133,8 +114,6 @@ const appRoutes: Routes = [
     ExistenciasInsertComponent,
     ExistenciasUpdateComponent,
     MovInventarioComponent,
-    MovInventarioInsertComponent,
-    MovInventarioUpdateComponent,
     DetalleTicketComponent,
     DetalleTicketInsertComponent,
     DetalleTicketUpdateComponent,
@@ -149,7 +128,6 @@ const appRoutes: Routes = [
     PuestosInsertComponent,
     PuestosUpdateComponent,
     CategoriaModuloComponent,
-    CategoriaModuloInsertComponent,
     CategoriaModuloUpdateComponent,
     DetallePerfilComponent,
     DetallePerfilInsertComponent,

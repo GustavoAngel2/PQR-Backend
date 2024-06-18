@@ -10,11 +10,11 @@ import { DetalleMov } from '../models/detalleMov.model';
 
 
 @Component({
-  selector: 'app-detalle-moviemiento-insert',
-  templateUrl: './detalle-moviemiento-insert.component.html',
-  styleUrls: ['./detalle-moviemiento-insert.component.css']
+  selector: 'app-detalle-moviemiento-view',
+  templateUrl: './detalle-moviemiento-view.component.html',
+  styleUrls: ['./detalle-moviemiento-view.component.css']
 })
-export class DetalleMoviemientoInsertComponent implements OnInit{
+export class DetalleMoviemientoViewComponent implements OnInit{
   displayedColumns: string[] = ['Id', 'Codigo', 'Cantidad','Costo' , 'FechaActualiza', 'UsuarioActualiza'];
   dataSource: MatTableDataSource<DetalleMov>;
   id: number = 0;
@@ -24,7 +24,7 @@ export class DetalleMoviemientoInsertComponent implements OnInit{
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
-    public dialogRef: MatDialogRef<DetalleMoviemientoInsertComponent>,
+    public dialogRef: MatDialogRef<DetalleMoviemientoViewComponent>,
     public dialog: MatDialog,
     private detalleMovService: DetalleMovService,
     @Inject(MAT_DIALOG_DATA) public data: number

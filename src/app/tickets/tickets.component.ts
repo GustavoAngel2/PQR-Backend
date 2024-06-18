@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { ClientesService, TicketsSevice, DetalleTicketService, TiposMovService, ArticulosService, SucursalesService } from '../data.service';
 import { tickets } from '../models/tickets.model';
-import { TicketsUpdateComponent } from '../tickets-update/tickets-update.component';
 import { DetalleTicket } from '../models/detalleTicket.model';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 
@@ -152,69 +151,48 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         this.totalTicket = 0; 
       }
     });
-
-      this.articulosService.getArticulos().subscribe((data2: any) => {
-        this.ComboCodigo = data2;
-        console.log(this.ComboCodigo);
-      });
-      this.sucursalesService.getSucursales().subscribe((data3: any) => {
-        this.ComboSucursales = data3;
-        console.log(this.ComboSucursales);
-      });
-      this.tiposMovService.getTiposMov().subscribe((data4: any) => {
-        this.ComboTipoMov = data4;
-        console.log(this.ComboTipoMov);
-      });
-
-      this.clientesService.getClientes().subscribe((data5: any) => {
-        this.ComboClientes = data5;
-        console.log(this.ComboClientes);
-      });
-
-      this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
-        return data.Articulo.toString().includes(filter);
-      };
-
-/*   */
-    }
-
-    
-
-
-
-    eliminarDetalle(Id: number,Name: string) {
-      const dialogRef = this.dialog.open(DeleteMenuComponent, {
-        width: '550px',
-        data: Name
-      });
+    this.articulosService.getArticulos().subscribe((data2: any) => {
+      this.ComboCodigo = data2;
+      console.log(this.ComboCodigo);
+    });
+    this.sucursalesService.getSucursales().subscribe((data3: any) => {
+      this.ComboSucursales = data3;
+      console.log(this.ComboSucursales);
+    });
+    this.tiposMovService.getTiposMov().subscribe((data4: any) => {
+      this.ComboTipoMov = data4;
+      console.log(this.ComboTipoMov);
+    });
+    this.clientesService.getClientes().subscribe((data5: any) => {
+      this.ComboClientes = data5;
+      console.log(this.ComboClientes);
+    });
+    this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
+      return data.Articulo.toString().includes(filter);
+    };
+/*  */
+  }
   
-      dialogRef.afterClosed().subscribe(result => {
-        if (result == "yes") {
-          this.detalleticketService.deleteDetalleTicket(Id).subscribe({
-            next: (response) => {
-              console.log(response);
-              this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
-                return data.Articulo.toString().toLowerCase().includes(filter.toLowerCase());
-              };
-              this.getData()
-            },
-            error: (error) => {
-              console.error('Hubo un error al eliminar el elemento del ticket', error);
-            }
-          });
-        }
-      });
-    }
-
-  abrirEditarModal(ticket: tickets) {
-    const dialogRef = this.dialog.open(TicketsUpdateComponent, {
+  eliminarDetalle(Id: number,Name: string) {
+    const dialogRef = this.dialog.open(DeleteMenuComponent, {
       width: '550px',
-      data: ticket
+      data: Name
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.getData();
+      if (result == "yes") {
+        this.detalleticketService.deleteDetalleTicket(Id).subscribe({
+          next: (response) => {
+            console.log(response);
+            this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
+              return data.Articulo.toString().toLowerCase().includes(filter.toLowerCase());
+            };
+            this.getData()
+          },
+          error: (error) => {
+            console.error('Hubo un error al eliminar el elemento del ticket', error);
+          }
+        });
       }
     });
   }
@@ -343,9 +321,11 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     console.log(articulo.Precio);
     this.precioVenta = articulo.Precio;
   }
+
   displayArticuloFn(articulo: any): string {
     return articulo ? articulo.Descripcion : '';
   }
+  
   private _filterArticulos(value: any): any[] {
     const filterValue = (typeof value === 'string' ? value : '').toLowerCase();
     return this.ComboCodigo.filter(option => option.Descripcion.toLowerCase().includes(filterValue));

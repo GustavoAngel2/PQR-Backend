@@ -8,7 +8,7 @@ import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 import { movInventarioService } from '../data.service';
 import { MovInventario } from '../models/movInventario.model';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { DetalleMoviemientoInsertComponent } from '../detalle-moviemiento-insert/detalle-moviemiento-insert.component';
+import { DetalleMoviemientoViewComponent } from '../detalle-movimiento-view/detalle-moviemiento-view.component';
 import { SearchMovModel } from '../models/detalleMov.model';
 
 @Component({
@@ -58,14 +58,13 @@ export class DetalleMovimientoComponent implements OnInit, AfterViewInit {
       this.ComboAlmacen = data2;
       console.log(this.ComboAlmacen);
     });
-    this.format();
+    this.setDate();
     this.getMov();
   }
 
-  format() {
+  setDate() {
     this.fechaInicio = this.formatDate(this.dateHandler);
     this.fechaFin = this.formatDate(this.dateHandler2);
-    console.log(this.fechaInicio + " - " + this.fechaFin);
   }
 
   formatDate(date: Date): string {
@@ -102,7 +101,7 @@ export class DetalleMovimientoComponent implements OnInit, AfterViewInit {
   }
 
   verContMov(Id: number) {
-    this.dialog.open(DetalleMoviemientoInsertComponent, {
+    this.dialog.open(DetalleMoviemientoViewComponent, {
       width: '900px',
       data: Id
     });
