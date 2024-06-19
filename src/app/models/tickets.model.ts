@@ -2,7 +2,7 @@ import { TicketsSevice } from "../data.service";
 
 export interface tickets {
     Id: number;
-    Surcursal: string;
+    Sucursal: string;
     Cliente: string;
     Vendedor: string;
     Usuario: string;

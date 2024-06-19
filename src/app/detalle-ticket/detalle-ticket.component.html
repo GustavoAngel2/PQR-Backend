@@ -35,6 +35,7 @@
 
 <br>
 <div class="table-container">
+    <button class="btn" (click)="exportToExcel()">Exportar a Excel</button>
     <mat-paginator [pageSizeOptions]="[10, 25, 100]" showFirstLastButtons></mat-paginator>
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Id">
@@ -71,9 +72,7 @@
                 <mat-icon (click)="verContTicket(elemento.Id)">pageview</mat-icon>
             </td>
         </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </table>
-
 </div>
-    
