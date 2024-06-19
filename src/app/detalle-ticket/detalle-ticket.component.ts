@@ -1,101 +1,83 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { Existencia } from '../models/existencia.model';
-import { DetalleTicketService, TicketsSevice } from '../data.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+import { DetalleTicketService, TicketsSevice, SucursalesService } from '../data.service';
 import { DetalleTicketInsertComponent } from '../detalle-ticket-insert/detalle-ticket-insert.component';
-import { DetalleTicketUpdateComponent } from '../detalle-ticket-update/detalle-ticket-update.component';
-import { DetalleTicket } from '../models/detalleTicket.model';
 import { SearchTicketsModel, tickets } from '../models/tickets.model';
-import { SucursalesService } from '../data.service';
 
 @Component({
   selector: 'app-detalle-ticket',
   templateUrl: './detalle-ticket.component.html',
   styleUrls: ['./detalle-ticket.component.css']
 })
-export class DetalleTicketComponent implements OnInit, AfterViewInit{
-  displayedColumns: string[] = ['Id', 'Sucursal', 'Cliente', 'Vendedor', 'Fecha', 'Estatus', 'UsuarioActualiza','Acciones'];
+export class DetalleTicketComponent implements OnInit, AfterViewInit {
+  displayedColumns: string[] = ['Id', 'Sucursal', 'Cliente', 'Vendedor', 'Fecha', 'Estatus', 'UsuarioActualiza', 'Acciones'];
   dataSource: MatTableDataSource<tickets>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  comboSucursal:any;
+  comboSucursal: any;
   idSucursal: number = 0;
   dateHandler: Date = new Date();
   dateHandler2: Date = new Date();
   fechaInicio: string = '';
   fechaFin: string = '';
-  events: string[] = [];
-  day: number;
-  month: number;
-  year: number;
   search: SearchTicketsModel = {
-    IdSucursal : 0,
-    FechaFin : '',
-    FechaInicio : ''
+    IdSucursal: 0,
+    FechaFin: '',
+    FechaInicio: ''
   };
 
-
-
   constructor(
-    private ticketsService: TicketsSevice, 
-    public dialog:MatDialog,
-    public sucursaleService:SucursalesService,
-  ) 
-    {
-    this.dataSource = new MatTableDataSource<tickets>(); // Inicializa dataSource como una instancia de MatTableDataSource
+    private ticketsService: TicketsSevice,
+    public dialog: MatDialog,
+    public sucursaleService: SucursalesService,
+  ) {
+    this.dataSource = new MatTableDataSource<tickets>();
     this.dateHandler = new Date();
-    this.day = this.dateHandler.getDate();
-    this.month = this.dateHandler.getMonth(); // Sumamos 1 porque los meses empiezan en 0
-    this.year = this.dateHandler.getFullYear();
-    this.dateHandler2 = new Date();
   }
 
   ngOnInit() {
-    this.format
+    this.format();
     this.sucursaleService.getSucursales().subscribe((data2: any) => {
       this.comboSucursal = data2;
-      console.log(this.comboSucursal);
-      console.log(this.idSucursal);
     });
     this.getTicket();
   }
-    ngAfterViewInit() {
+
+  ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-  // Método para realizar el filtrado
 
   format() {
     this.fechaInicio = this.formatDate(this.dateHandler);
     this.fechaFin = this.formatDate(this.dateHandler2);
-    console.log(this.fechaInicio + " - " + this.fechaFin);
   }
-  
-  
+
   formatDate(date: Date): string {
     const day = this.padZero(date.getDate());
-    const month = this.padZero(date.getMonth() + 1); // Sumamos 1 porque los meses empiezan en 0
+    const month = this.padZero(date.getMonth() + 1);
     const year = date.getFullYear();
     return `${year}-${month}-${day}`;
   }
 
   getTicket() {
     this.dataSource.filterPredicate = (data: tickets, filter: string) => {
-      return data.Id.toString().includes(filter); // Puedes añadir más campos si es necesario
+      return data.Id.toString().includes(filter);
     };
-    this.search.IdSucursal = this.idSucursal
-    this.search.FechaInicio = this.fechaInicio
-    this.search.FechaFin = this.fechaFin
+    this.search.IdSucursal = this.idSucursal;
+    this.search.FechaInicio = this.fechaInicio;
+    this.search.FechaFin = this.fechaFin;
     this.ticketsService.getTickets(this.search).subscribe({
       next: (response) => {
-        console.log('Respuesta del servidor:', response);
         if (response && Array.isArray(response) && response.length > 0) {
-          this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
+          this.dataSource.data = response;
         } else {
           console.log('no contiene datos');
         }
@@ -105,9 +87,6 @@ export class DetalleTicketComponent implements OnInit, AfterViewInit{
       }
     });
   }
-
-
-
 
   padZero(num: number): string {
     return num < 10 ? `0${num}` : `${num}`;
@@ -119,4 +98,27 @@ export class DetalleTicketComponent implements OnInit, AfterViewInit{
       data: Id
     });
   }
+
+  exportToExcel(): void {
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.data.map(ticket => ({
+      Id: ticket.Id,
+      Sucursal: ticket.Sucursal,
+      Cliente: ticket.Cliente,
+      Vendedor: ticket.Vendedor,
+      Fecha: ticket.Fecha,
+      Usuario: ticket.Usuario,
+      Estatus: ticket.Estatus,
+    })));
+    const wb: XLSX.WorkBook = { Sheets: { 'Tickets': ws }, SheetNames: ['Tickets'] };
+    const excelBuffer: any = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    this.saveAsExcelFile(excelBuffer, 'Tickets');
+  }
+
+  private saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
+    saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+  }
 }
+
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx';
