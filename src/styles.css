@@ -236,6 +236,15 @@ mat-paginator{
   flex-direction: column;
   align-items: center;
   gap: 12px;
+  overflow-y: scroll;
+}
+
+.window-table{
+  padding: 1%;
+  background-color: #18191f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   height: 320px;
   overflow-y: scroll;
 }
