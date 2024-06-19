@@ -274,8 +274,15 @@ option{
 }
 
 .search-bar{
+  display: block;
+  position: absolute;
+  margin-top: 12px;
+  height: 70px;
   width: 512px;
-}  
+  left: 0;
+  margin-left: 2%;
+  z-index: 99;
+}
 
 .mobile{
   display: none;
@@ -363,8 +370,6 @@ option{
   .form-place{
     width: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: center;
   }
 
   .form-container{
