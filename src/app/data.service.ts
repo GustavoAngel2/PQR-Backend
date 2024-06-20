@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse, UpdateAlmacen } from './models/almacen.model';
@@ -17,6 +17,10 @@ import { UpdateModulo } from './models/modulo.model';
 import { updateEmpleado } from "./models/empleados.model";
 import { UpdatePuesto } from "./models/puestos.model";
 import { UpdateCategoriaModulo } from './models/categoriaModulo.model';
+import { AuthInfo } from './models/login.model'; 
+import { ApiResponse2 } from './models/login.model';
+
+
 
 @Injectable({
   providedIn: "root",
@@ -174,7 +178,6 @@ export class ArticulosService {
     return this.http.put<ApiResponse>(`${this.apiUrl}/articulos/Update`, body);
   }
 }
-
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------
 @Injectable({
   providedIn: "root",
@@ -409,7 +412,7 @@ export class UsuarioSevice {
     return this.http.put<ApiResponse>(`${this.apiUrl}/Usuarios/Update`, body);
   }
 }
-
+//-------------------------------------------------------------------------------------------------------------------------//
 @Injectable({
   providedIn: "root",
 })
@@ -465,7 +468,7 @@ export class ExistenciasService {
     );
   }
 }
-
+//-------------------------------------------------------------------------------------------------------------------------//
 @Injectable({
   providedIn: "root",
 })
@@ -522,7 +525,7 @@ export class movInventarioService {
     );
   }
 }
-
+//-------------------------------------------------------------------------------------------------------------------------//
 @Injectable({
   providedIn: "root",
 })
@@ -619,7 +622,6 @@ deleteModulos(Id : number): Observable<any> {
     return this.http.put<ApiResponse>(`${this.apiUrl}/Modulos/Update`, body);
   }
 }
-
 //--------------------------------------------------------------------------------------------//
 @Injectable({
   providedIn: "root",
@@ -710,7 +712,6 @@ export class PuestosService {
     return this.http.put<ApiResponse>(`${this.apiUrl}/Puestos/Update`, body);
   }
 }
-
 //------------------------------------------------------------------------------------------------------------------------
 @Injectable({
   providedIn: 'root'
@@ -751,7 +752,6 @@ deleteCategoriaModulo(id : number): Observable<any> {
   return this.http.put<ApiResponse>(`${this.apiUrl}/CatModulo/Update`, body);
 }
 }
-
 //------------------------------------------------------------------------------------------------------------------------
 @Injectable({
   providedIn: 'root'
@@ -820,7 +820,6 @@ export class UMService {
     return this.http.get<ApiResponse>(`${this.apiUrl}/UM/Get`);
   }
 }
-
 //------------------------------------------------------------------------------------------------------------------------
 @Injectable({
   providedIn: 'root'
@@ -845,5 +844,20 @@ export class TiposMovService {
 
   getTiposMov(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(`${this.apiUrl}/TiposMov/Get`);
+  }
+}
+//---------------------------------------------------------------------------------------------------------------------//
+@Injectable({
+  providedIn: 'root'
+})
+export class LoginService {
+  private apiUrl = 'http://localhost:5020/api'; // Ajusta la URL según corresponda
+
+  constructor(private http: HttpClient) {}
+
+  SignIn(authInfo: AuthInfo): Observable<ApiResponse2> {
+    return this.http.post<ApiResponse2>(`${this.apiUrl}/SignIn`, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    });
   }
 }
