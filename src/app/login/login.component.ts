@@ -16,10 +16,12 @@ export class LoginComponent {
 
   login() {
     this.error = '';
-    const credentials = { username: this.username, password: this.password };
+    const credentials = { idusername: 'string' ,username: this.username, password: this.password };
+    console.log(credentials)
     this.authService.login(credentials).subscribe(
       response => {
         if (response && response.success) {
+          
           this.router.navigate(['/inicio']);
         } else {
           this.error = 'Usuario o contraseña incorrecto.';

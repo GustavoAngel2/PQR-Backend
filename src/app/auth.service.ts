@@ -12,11 +12,12 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  login(credentials: { username: string, password: string }): Observable<any> {
+  login(credentials: { idusername: string, username: string, password: string }): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/SignIn`, credentials).pipe(
       map(response => {
         console.log('API response:', response); // Log the API response
         if (response && response.data) {
+          console.log(response.data)
           return response.data;
         } else {
           throw new Error('Invalid API response');
