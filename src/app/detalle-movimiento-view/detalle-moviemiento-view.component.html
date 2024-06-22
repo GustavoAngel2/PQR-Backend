@@ -1,9 +1,9 @@
 <div class="window-header">
-  <h1 mat-dialog-title>Movimiento</h1>
+  <h1 mat-dialog-title>Movimiento con folio : {{this.id}}</h1>
   <button class="btn-close" (click)="onNoClick()"><i class="bi bi-x-square-fill "></i></button>
 </div>
 
-<div class="window-content">
+<div class="window-table">
   <div class="table-container">
         <table mat-table [dataSource]="dataSource" matSort>
             <ng-container matColumnDef="Id">
@@ -25,14 +25,6 @@
             <ng-container matColumnDef="Costo">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Costo </th>
                 <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.Costo}} </td>
-            </ng-container>
-            <ng-container matColumnDef="FechaActualiza">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> USUARIO </th>
-                <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.FechaActualiza}} </td>
-            </ng-container>
-            <ng-container matColumnDef="UsuarioActualiza">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> USUARIO </th>
-                <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.UsuarioActualiza}} </td>
             </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

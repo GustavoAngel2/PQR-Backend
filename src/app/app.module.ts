@@ -49,7 +49,6 @@ import { ExistenciasUpdateComponent } from "./existencias-update/existencias-upd
 import { MovInventarioComponent } from "./mov-inventario/mov-inventario.component";
 import { DetalleTicketComponent } from "./detalle-ticket/detalle-ticket.component";
 import { DetalleTicketInsertComponent } from "./detalle-ticket-insert/detalle-ticket-insert.component";
-import { DetalleTicketUpdateComponent } from "./detalle-ticket-update/detalle-ticket-update.component";
 import { LoginComponent } from "./login/login.component";
 import { InicioComponent } from './inicio/inicio.component';
 import { ModulosComponent } from './modulos/modulos.component';
@@ -116,7 +115,6 @@ const appRoutes: Routes = [
     MovInventarioComponent,
     DetalleTicketComponent,
     DetalleTicketInsertComponent,
-    DetalleTicketUpdateComponent,
     LoginComponent,
     InicioComponent,
     ModulosComponent,

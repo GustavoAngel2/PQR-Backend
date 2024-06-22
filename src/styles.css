@@ -47,6 +47,11 @@ mat-form-field{
   width: 256px;
 }
 
+mat-icon{
+  position: absolute!important;
+  margin-left: -26px;
+}
+
 mat-toolbar{
   background-color: rgb(209, 101, 29)!important; 
   box-shadow: 1px 25px 15px 10px rgba(41, 41, 41, 0.599);
@@ -245,7 +250,7 @@ mat-paginator{
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 320px;
+  height: 500px;
   overflow-y: scroll;
 }
 

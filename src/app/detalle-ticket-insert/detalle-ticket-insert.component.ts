@@ -15,7 +15,7 @@ import { DetalleTicket } from '../models/detalleTicket.model';
 export class DetalleTicketInsertComponent {
   dataSource: MatTableDataSource<DetalleTicket>;
   id: number = 0;
-  displayedColumns: string[] = ['Id', 'IdTicket', 'Codigo','Articulo' , 'Cantidad', 'PrecioVenta', 'Total', 'Usuario', 'Estatus'];
+  displayedColumns: string[] = ['Id', 'Codigo','Articulo' , 'Cantidad', 'PrecioVenta', 'Total'];
 
   // Detalle tickets
   idTicket: any;

@@ -15,7 +15,7 @@ import { DetalleMov } from '../models/detalleMov.model';
   styleUrls: ['./detalle-moviemiento-view.component.css']
 })
 export class DetalleMoviemientoViewComponent implements OnInit{
-  displayedColumns: string[] = ['Id', 'Codigo', 'Cantidad','Costo' , 'FechaActualiza', 'UsuarioActualiza'];
+  displayedColumns: string[] = ['Id', 'Codigo', 'Cantidad','Costo'];
   dataSource: MatTableDataSource<DetalleMov>;
   id: number = 0;
 
