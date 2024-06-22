@@ -16,7 +16,7 @@ export class LoginComponent {
 
   login() {
     this.error = '';
-    const credentials = { idusername: 'string' ,username: this.username, password: this.password };
+    const credentials = { username: this.username, password: this.password };
     console.log(credentials)
     this.authService.login(credentials).subscribe(
       response => {
