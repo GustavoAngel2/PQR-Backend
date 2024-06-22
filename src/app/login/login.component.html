@@ -10,7 +10,7 @@
         <div class="mat-dialog-cell">
           <mat-form-field>
             <mat-label>Usuario</mat-label>
-            <input matInput placeholder="Ingrese su usuario" [(ngModel)]="authInfo.username" name="username" />
+            <input id="username" matInput placeholder="Ingrese su usuario" [(ngModel)]="username" name="username" required />
           </mat-form-field>
         </div>
       </div>
@@ -18,13 +18,13 @@
         <div class="mat-dialog-cell">
           <mat-form-field>
             <mat-label>Contraseña</mat-label>
-            <input type="password" matInput placeholder="**********" [(ngModel)]="authInfo.password" name="password" />
+            <input id="password" type="password" matInput placeholder="**********" [(ngModel)]="password" name="password" required/>
           </mat-form-field>
         </div>
       </div>
     </div>
     <div mat-dialog-actions>
-      <button (click)="onSubmit()" class="btn">Iniciar sesión</button>
+      <button (click)="login()" class="btn">Iniciar sesión</button>
     </div>
   </div>
 </div>

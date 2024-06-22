@@ -1,9 +1,6 @@
-// src/app/login/login.component.ts
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginService } from '../data.service';
-import { AuthInfo } from '../models/login.model';
-import { ApiResponse2 } from '../models/login.model';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,23 +8,28 @@ import { ApiResponse2 } from '../models/login.model';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  authInfo: AuthInfo = { username: '', password: '' };
+  username: string = '';
+  password: string = '';
+  error: string = '';
 
-  constructor(private loginService: LoginService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
-  onSubmit() {
-    this.loginService.SignIn(this.authInfo).subscribe(response => {
-      if (response.success) {
-        const token = response.data.Token;
-        if (token) {
-          localStorage.setItem('token', token);
-          this.router.navigate(['../inicio']);
+  login() {
+    this.error = '';
+    const credentials = { username: this.username, password: this.password };
+    this.authService.login(credentials).subscribe(
+      response => {
+        if (response && response.success) {
+          this.router.navigate(['/inicio']);
         } else {
-          alert('Error: Token no disponible.');
+          this.error = 'Usuario o contraseña incorrecto.';
         }
-      } else {
-        alert('Usuario o contraseña incorrectos');
+      },
+      err => {
+        this.error = 'Error en el servidor. Por favor, inténtelo más tarde.';
+        console.error('Detalles del error:', err);
       }
-    });
+    );
   }
+  
 }
