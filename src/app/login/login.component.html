@@ -1,3 +1,4 @@
+<!-- src/app/login/login.component.html -->
 <div class="background">
   <span></span>
   <span></span>
@@ -10,11 +11,8 @@
   <span></span>
   <span></span>
   <div class="login-bg">
-    <img
-      src="./assets/loginlogofull.png"
-      style="width: 256px; height: 256px"
-    />
-    <br>
+    <img src="./assets/loginlogofull.png" style="width: 256px; height: 256px" />
+    <br />
     <div mat-dialog-content class="mat-dialog-grid">
       <!-- Fila para el formulario -->
       <div class="mat-dialog-row">
@@ -22,7 +20,7 @@
         <div class="mat-dialog-cell">
           <mat-form-field>
             <mat-label>Usuario</mat-label>
-            <input matInput placeholder="Ingrese su usuario" />
+            <input id="username" matInput placeholder="Ingrese su usuario" [(ngModel)]="username" name="username" required />
           </mat-form-field>
         </div>
       </div>
@@ -30,13 +28,13 @@
         <div class="mat-dialog-cell">
           <mat-form-field>
             <mat-label>Contraseña</mat-label>
-            <input type="password" matInput placeholder="**********" />
+            <input id="password" type="password" matInput placeholder="**********" [(ngModel)]="password" name="password" required/>
           </mat-form-field>
         </div>
       </div>
     </div>
     <div mat-dialog-actions>
-      <button routerLink="../inicio" class="btn">Iniciar sesión</button>
+      <button (click)="login()" class="btn">Iniciar sesión</button>
     </div>
   </div>
 </div>

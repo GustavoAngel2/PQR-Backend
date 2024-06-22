@@ -65,30 +65,8 @@ import { DetallePerfilComponent } from './detalle-perfil/detalle-perfil.componen
 import { DetallePerfilInsertComponent } from './detalle-perfil-insert-component/detalle-perfil-insert-component.component';
 import { DetallePerfilUpdateComponent } from './detalle-perfil-update/detalle-perfil-update.component';
 import { DeleteMenuComponent } from './delete-menu/delete-menu.component';
-
-const appRoutes: Routes = [
-
-  { path: "inicio", component:InicioComponent },
-  { path: "almacenes", component: AlmacenesComponent },
-  { path: "clientes", component: ClientesComponent },
-  { path: "articulos", component: ArticulosComponent },
-  { path: "personas", component: PersonasComponent },
-  { path: "rutas", component: RutasComponent },
-  { path: "detallemovimiento", component: DetalleMovimientoComponent },
-  { path: "tickets", component: TicketsComponent },
-  { path: "usuarios", component: UsuariosComponent },
-  { path: "existencias", component: ExistenciasComponent },
-  { path: "movinventarios", component: MovInventarioComponent },
-  { path: "detalleticket", component: DetalleTicketComponent }, 
-  { path: "categoriamodulo", component: CategoriaModuloComponent },
-  { path: "login", component: LoginComponent },
-  { path: "modulos",component: ModulosComponent},
-  { path:"empleados", component:EmpleadosComponent},
-  { path:"puestos",component:PuestosComponent},
-  { path: "categoriamodulo", component:PuestosComponent},
-  { path: "detallePerfil", component: DetallePerfilComponent}
-
-];
+import { AuthGuard } from './auth.guard'; // Importa AuthGuard
+import { AuthService } from './auth.service'; // Importa AuthService
 
 @NgModule({
   declarations: [
@@ -133,11 +111,10 @@ const appRoutes: Routes = [
     DeleteMenuComponent,
   ],
   imports: [
-    HttpClientModule,
-    RouterModule.forRoot(appRoutes, { enableTracing: true }),
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     MatButtonModule,
     MatIconModule,
     FormsModule,
@@ -158,9 +135,10 @@ const appRoutes: Routes = [
     MatFormFieldModule
   ],
   providers: [
-    // Agrega el servicio en los providers
+    AuthGuard, // Proveedor del AuthGuard
+    AuthService // Proveedor del AuthService
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppModule {}
+export class AppModule { }
