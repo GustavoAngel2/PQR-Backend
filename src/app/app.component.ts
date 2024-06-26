@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'PQA2';
+
+  logout() {
+    localStorage.removeItem('Token');
+  }
+
+
 }
