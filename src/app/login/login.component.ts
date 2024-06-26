@@ -9,19 +9,19 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent {
   username: string = '';
-  password: string = '';
+  idUsername: string = '';
+  userpassword: string = '';
   error: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
   login() {
     this.error = '';
-    const credentials = { username: this.username, password: this.password };
-    console.log(credentials)
+    const credentials = { username: this.username, idUsername: this.idUsername, userpassword: this.userpassword };
+    console.log(credentials);
     this.authService.login(credentials).subscribe(
       response => {
-        if (response && response.success) {
-          
+        if (response) {
           this.router.navigate(['/inicio']);
         } else {
           this.error = 'Usuario o contraseña incorrecto.';
@@ -33,5 +33,4 @@ export class LoginComponent {
       }
     );
   }
-  
 }

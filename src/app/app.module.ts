@@ -19,7 +19,7 @@ import { MatListModule } from "@angular/material/list";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatNativeDateModule } from "@angular/material/core";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS} from "@angular/common/http";
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -67,6 +67,7 @@ import { DetallePerfilUpdateComponent } from './detalle-perfil-update/detalle-pe
 import { DeleteMenuComponent } from './delete-menu/delete-menu.component';
 import { AuthGuard } from './auth.guard'; // Importa AuthGuard
 import { AuthService } from './auth.service'; // Importa AuthService
+import { AuthInterceptor } from "./auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -135,6 +136,7 @@ import { AuthService } from './auth.service'; // Importa AuthService
     MatFormFieldModule
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, // Registro del interceptor
     AuthGuard, // Proveedor del AuthGuard
     AuthService // Proveedor del AuthService
   ],

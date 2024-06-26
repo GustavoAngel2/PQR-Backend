@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -9,16 +9,15 @@ import { catchError, map } from 'rxjs/operators';
 export class AuthService {
   private apiUrl = "http://localhost:5020/api";
 
-
   constructor(private http: HttpClient) { }
 
-  login(credentials: {  username: string, password: string }): Observable<any> {
+  login(credentials: { username: string, idUsername: string, userpassword: string }): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/SignIn`, credentials).pipe(
       map(response => {
-        console.log('API response:', response); // Log the API response
-        if (response && response.data) {
-          console.log(response.data)
-          return response.data;
+        console.log('API response:', response);
+        if (response && response.Response && response.Response.data && response.Response.data.Token) {
+          localStorage.setItem('Token', response.Response.data.Token); 
+          return response.Response.data;
         } else {
           throw new Error('Invalid API response');
         }
@@ -31,11 +30,11 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('Token');
   }
 
   getToken() {
-    return localStorage.getItem('token');
+    return localStorage.getItem('Token');
   }
 
   isLoggedIn(): boolean {
