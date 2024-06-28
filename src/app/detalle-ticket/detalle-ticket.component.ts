@@ -3,11 +3,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import * as XLSX from 'xlsx';
-import { saveAs } from 'file-saver';
 import { DetalleTicketService, TicketsSevice, SucursalesService } from '../data.service';
 import { DetalleTicketInsertComponent } from '../detalle-ticket-insert/detalle-ticket-insert.component';
 import { SearchTicketsModel, tickets } from '../models/tickets.model';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-detalle-ticket',
@@ -99,26 +99,37 @@ export class DetalleTicketComponent implements OnInit, AfterViewInit {
     });
   }
 
-  exportToExcel(): void {
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.data.map(ticket => ({
-      Id: ticket.Id,
-      Sucursal: ticket.Sucursal,
-      Cliente: ticket.Cliente,
-      Vendedor: ticket.Vendedor,
-      Fecha: ticket.Fecha,
-      Usuario: ticket.Usuario,
-      Estatus: ticket.Estatus,
-    })));
-    const wb: XLSX.WorkBook = { Sheets: { 'Tickets': ws }, SheetNames: ['Tickets'] };
-    const excelBuffer: any = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-    this.saveAsExcelFile(excelBuffer, 'Tickets');
+  exportToPDF(): void {
+    const doc = new jsPDF();
+    const columns = this.displayedColumns.filter(column => column !== 'Acciones').map(col => this.getColumnName(col));
+    const rows = this.dataSource.filteredData.map(ticket => [
+      ticket.Id,
+      ticket.Sucursal,
+      ticket.Cliente,
+      ticket.Vendedor,
+      this.formatDate(new Date(ticket.Fecha)),
+      ticket.Estatus,
+      ticket.Usuario
+    ]);
+
+    autoTable(doc, {
+      head: [columns],
+      body: rows
+    });
+
+    doc.save('Tickets.pdf');
   }
 
-  private saveAsExcelFile(buffer: any, fileName: string): void {
-    const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
-    saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+  private getColumnName(column: string): string {
+    switch (column) {
+      case 'Id': return 'ID';
+      case 'Sucursal': return 'Sucursal';
+      case 'Cliente': return 'Cliente';
+      case 'Vendedor': return 'Vendedor';
+      case 'Fecha': return 'Fecha';
+      case 'Estatus': return 'Estatus';
+      case 'UsuarioActualiza': return 'Usuario';
+      default: return column;
+    }
   }
 }
-
-const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-const EXCEL_EXTENSION = '.xlsx';

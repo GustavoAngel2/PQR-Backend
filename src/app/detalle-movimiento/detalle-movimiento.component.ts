@@ -10,6 +10,8 @@ import { MovInventario } from '../models/movInventario.model';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DetalleMoviemientoViewComponent } from '../detalle-movimiento-view/detalle-moviemiento-view.component';
 import { SearchMovModel } from '../models/detalleMov.model';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-detalle-movimiento',
@@ -30,11 +32,10 @@ export class DetalleMovimientoComponent implements OnInit, AfterViewInit {
   month: number;
   year: number;
   search: SearchMovModel = {
-    IdAlmacen : 0,
-    FechaFin : '',
-    FechaInicio : ''
+    IdAlmacen: 0,
+    FechaFin: '',
+    FechaInicio: ''
   };
-
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -45,10 +46,10 @@ export class DetalleMovimientoComponent implements OnInit, AfterViewInit {
     private movInventarioService: movInventarioService,
     private almacenesService: AlmacenesService
   ) {
-    this.dataSource = new MatTableDataSource<MovInventario>(); // Inicializa dataSource como una instancia de MatTableDataSource
+    this.dataSource = new MatTableDataSource<MovInventario>();
     this.dateHandler = new Date();
     this.day = this.dateHandler.getDate();
-    this.month = this.dateHandler.getMonth(); // Sumamos 1 porque los meses empiezan en 0
+    this.month = this.dateHandler.getMonth();
     this.year = this.dateHandler.getFullYear();
     this.dateHandler2 = new Date();
   }
@@ -69,7 +70,7 @@ export class DetalleMovimientoComponent implements OnInit, AfterViewInit {
 
   formatDate(date: Date): string {
     const day = this.padZero(date.getDate());
-    const month = this.padZero(date.getMonth() + 1); // Sumamos 1 porque los meses empiezan en 0
+    const month = this.padZero(date.getMonth() + 1);
     const year = date.getFullYear();
     return `${year}-${month}-${day}`;
   }
@@ -80,16 +81,16 @@ export class DetalleMovimientoComponent implements OnInit, AfterViewInit {
 
   getMov() {
     this.dataSource.filterPredicate = (data: MovInventario, filter: string) => {
-      return data.Id.toString().includes(filter); // Puedes añadir más campos si es necesario
+      return data.Id.toString().includes(filter);
     };
-    this.search.IdAlmacen = this.idAlmacen
-    this.search.FechaInicio = this.fechaInicio
-    this.search.FechaFin = this.fechaFin
+    this.search.IdAlmacen = this.idAlmacen;
+    this.search.FechaInicio = this.fechaInicio;
+    this.search.FechaFin = this.fechaFin;
     this.movInventarioService.getMovInventario(this.search).subscribe({
       next: (response) => {
         console.log('Respuesta del servidor:', response);
         if (response && Array.isArray(response) && response.length > 0) {
-          this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
+          this.dataSource.data = response;
         } else {
           console.log('no contiene datos');
         }
@@ -112,7 +113,6 @@ export class DetalleMovimientoComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  // Método para realizar el filtrado
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -140,5 +140,35 @@ export class DetalleMovimientoComponent implements OnInit, AfterViewInit {
         this.getMov();
       }
     });
+  }
+
+  exportToPDF(): void {
+    const doc = new jsPDF();
+    const columns = this.displayedColumns.filter(column => column !== 'Acciones').map(col => this.getColumnName(col));
+    const rows = this.dataSource.filteredData.map(mov => [
+      mov.Id,
+      mov.IdTipoMov,
+      mov.IdAlmacen,
+      this.formatDate(new Date(mov.fechaMovimiento)),
+      mov.Usuario
+    ]);
+
+    autoTable(doc, {
+      head: [columns],
+      body: rows
+    });
+
+    doc.save('Movimientos.pdf');
+  }
+
+  private getColumnName(column: string): string {
+    switch (column) {
+      case 'Id': return 'ID';
+      case 'idMovimiento': return 'ID Movimiento';
+      case 'idAlmacen': return 'ID Almacén';
+      case 'FechaMovimiento': return 'Fecha Movimiento';
+      case 'UsuarioActualiza': return 'Usuario';
+      default: return column;
+    }
   }
 }

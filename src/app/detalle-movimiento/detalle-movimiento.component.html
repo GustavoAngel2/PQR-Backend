@@ -36,6 +36,7 @@
 </div>
 
 <div class="table-container">
+    <button class="btn" (click)="exportToPDF()"><mat-icon> table_chart</mat-icon> Exportar</button>
     <mat-paginator [pageSizeOptions]="[10, 25, 100]" showFirstLastButtons></mat-paginator>
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Id">

@@ -68,6 +68,7 @@ import { DeleteMenuComponent } from './delete-menu/delete-menu.component';
 import { AuthGuard } from './auth.guard'; // Importa AuthGuard
 import { AuthService } from './auth.service'; // Importa AuthService
 import { AuthInterceptor } from "./auth.interceptor";
+import { UserService } from "./user.service";
 
 @NgModule({
   declarations: [
@@ -138,7 +139,8 @@ import { AuthInterceptor } from "./auth.interceptor";
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, // Registro del interceptor
     AuthGuard, // Proveedor del AuthGuard
-    AuthService // Proveedor del AuthService
+    AuthService, // Proveedor del AuthService
+    UserService
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
