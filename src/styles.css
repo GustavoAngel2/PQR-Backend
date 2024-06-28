@@ -69,13 +69,6 @@ mat-sidenav{
   width: 400px;
 }
 
-.table-container table{
-  background-color: #555!important;
-  border: 3px solid #2e2e2e!important;
-  border-radius: 3px;
-  
-}
-
 mat-paginator{
   position:relative;
   top: 3px;
@@ -88,6 +81,12 @@ mat-paginator{
   border-bottom: 1px solid #2e2e2e!important;
   border-radius: 3px;
   z-index: 1;
+}
+
+.table-container table{
+  background-color: #555!important;
+  border: 3px solid #2e2e2e!important;
+  border-radius: 3px;
 }
 
 .table-container th{
