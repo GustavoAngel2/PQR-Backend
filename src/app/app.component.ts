@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
+import { currentUser } from './models/usuario.model';
+import { getMatInputUnsupportedTypeError } from '@angular/material/input';
 
 @Component({
   selector: 'app-root',
@@ -7,14 +9,23 @@ import { AuthService } from './auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  username: string = '';
-  idUsername: string = '';
+  actualUser: currentUser;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+    this.actualUser = {
+      Id: "",
+      Nombre: ""
+    };
+  }
 
   ngOnInit() {
-    this.idUsername = this.authService.getIdUsername();
-    this.username = this.authService.getUsername();
+    this.getUser()
+  }
+
+  getUser(){
+    this.actualUser.Id = this.authService.getIdUsername();
+    this.actualUser.Nombre = this.authService.getUsername();
+    console.log(this.actualUser)
   }
 
   logout() {
