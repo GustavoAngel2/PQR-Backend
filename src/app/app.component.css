@@ -20,6 +20,11 @@
   display: none;
 }
 
+.info{
+  position: absolute;
+  top:16px;
+  right: 10%;
+}
 
 .menu-btn {
   position: relative;

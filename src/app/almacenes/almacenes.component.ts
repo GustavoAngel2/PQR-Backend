@@ -58,6 +58,7 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
         console.log(response)
         this.getData();
         this.limpiar();
+        //this.showDialog();
       },
       error: (error) => {
         console.error('Hubo un error al insertar el almacen', error);
