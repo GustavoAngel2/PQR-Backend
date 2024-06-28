@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
+import { dialogParameters } from '../models/dialog.model';
 
 @Component({
   selector: 'app-almacenes',
@@ -21,6 +22,11 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
     Usuario: 0,
     Encargado: 0
   };
+  dialogBody: dialogParameters = {
+    title:'test',
+    message:'This is a test',
+    buttons:'ok'
+  }
   datosCargados: boolean = false;
 
   displayedColumns: string[] = ['Id', 'Nombre', 'Direccion', 'Encargado', 'Usuario', 'FechaAct', 'FechaReg', 'Acciones'];
