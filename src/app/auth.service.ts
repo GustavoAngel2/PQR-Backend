@@ -17,9 +17,9 @@ export class AuthService {
       map(response => {
         console.log('API response:', response);
         if (response && response.Success && response.Response && response.Response.data && response.Response.data.Token) {
-          localStorage.setItem('Token', response.Response.data.Token);
-          this.userService.setIdUsername(response.Response.data.Usuario.Id.toString()); // Setear el Id en UserService (asegúrate de convertir a string si es necesario)
-          this.userService.setUsername(response.Response.data.Usuario.NombreUsuario); // Setear el NombreUsuario en UserService
+          sessionStorage.setItem('Token', response.Response.data.Token);
+          this.setIdUsername(response.Response.data.Usuario.Id.toString());
+          this.setUsername(response.Response.data.Usuario.NombreUsuario);
           return response.Response.data;
         } else {
           throw new Error('Invalid API response');
@@ -32,16 +32,32 @@ export class AuthService {
     );
   }
   
-  
-
   logout() {
-    localStorage.removeItem('Token');
-    this.userService.setIdUsername(''); // Limpiar el Id en UserService al cerrar sesión
-    this.userService.setUsername(''); // Limpiar el NombreUsuario en UserService al cerrar sesión
+    sessionStorage.removeItem('Token');
+    sessionStorage.removeItem('Id');
+    sessionStorage.removeItem('NombreUsuario');
   }
 
   getToken() {
-    return localStorage.getItem('Token');
+    return sessionStorage.getItem('Token');
+  }
+
+  setIdUsername(id: string) {
+    sessionStorage.setItem('Id', id);
+    console.log('IdUsername set in sessionStorage:', id);
+  }
+
+  getUsername(): string {
+    return sessionStorage.getItem('NombreUsuario') ?? ''; // Usa coalescencia nula para manejar el caso donde el valor es null
+  }
+
+  setUsername(username: string) {
+    sessionStorage.setItem('NombreUsuario', username);
+    console.log('Username set in sessionStorage:', username);
+  }
+
+  getIdUsername(): string {
+    return sessionStorage.getItem('Id') ?? ''; // Usa coalescencia nula para manejar el caso donde el valor es null
   }
 
   isLoggedIn(): boolean {

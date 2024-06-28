@@ -2,6 +2,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { UserService } from './user.service';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-root',
@@ -12,17 +13,16 @@ export class AppComponent implements OnInit {
   username: string = '';
   idUsername: string = '';
 
-  constructor(private userService: UserService) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.username = this.userService.getUsername();
-    this.idUsername = this.userService.getIdUsername();
+    const idUsername = this.authService.getIdUsername();
+    const username = this.authService.getUsername();
+
   }
 
   logout() {
-    localStorage.removeItem('Token');
-    // Aquí podrías también limpiar los valores de username e idUsername en UserService si es necesario
-    this.userService.setUsername('');
-    this.userService.setIdUsername('');
+    sessionStorage.removeItem('Token');
+
   }
 }
