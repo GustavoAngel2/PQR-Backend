@@ -69,6 +69,7 @@ import { AuthGuard } from './auth.guard'; // Importa AuthGuard
 import { AuthService } from './auth.service'; // Importa AuthService
 import { AuthInterceptor } from "./auth.interceptor";
 import { UserService } from "./user.service";
+import { DialogsComponent } from './dialogs/dialogs.component';
 
 @NgModule({
   declarations: [
@@ -111,6 +112,7 @@ import { UserService } from "./user.service";
     DetallePerfilInsertComponent,
     DetallePerfilUpdateComponent,
     DeleteMenuComponent,
+    DialogsComponent,
   ],
   imports: [
     BrowserModule,
