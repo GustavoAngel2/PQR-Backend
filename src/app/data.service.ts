@@ -19,6 +19,7 @@ import { UpdatePuesto } from "./models/puestos.model";
 import { UpdateCategoriaModulo } from './models/categoriaModulo.model';
 import { AuthInfo } from './models/login.model'; 
 import { ApiResponse2 } from './models/login.model';
+import { AuthService } from './auth.service';
 
 
 
@@ -28,11 +29,14 @@ import { ApiResponse2 } from './models/login.model';
 export class AlmacenesService {
   //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private authService: AuthService) {}
   
-  getAlmacenes(): Observable<ApiResponse> {
-    // regresa una lista de los almacenes de la base de datos
-    return this.http.get<ApiResponse>(`${this.apiUrl}/Almacenes/Get`);
+  getAlmacenes(): Observable<any> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<any>(`${this.apiUrl}/Almacenes/Get`, { headers });
   }
 
   //esta funcion se utiliza para insertar un almacen, contiene un cuerpo de nombre, direccion y el usuario (su id) que lo crea
@@ -50,13 +54,11 @@ export class AlmacenesService {
     };
     return this.http.post<ApiResponse>(`${this.apiUrl}/Almacenes/Insert`, body);
   }
-
   //esta funcion borra un almacen pidiendo el id del almacen a borrar
   deleteAlmacenes(Id: number): Observable<any> {
     
     return this.http.put(`${this.apiUrl}/Almacenes/Delete`, { Id });
   }
-
   //esta funcion sirve para modificar la informacion de un almacen
   updateAlmacenes(AlmacenesData: UpdateAlmacen): Observable<ApiResponse> {
     const body = {
@@ -77,11 +79,15 @@ export class AlmacenesService {
 export class ClientesService {
   //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private authService: AuthService) {}
 
   //Esta funcion enlista los Clientes de la base de datos
   getClientes(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/Clientes/Get`);
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<ApiResponse>(`${this.apiUrl}/Clientes/Get`, {headers});
   }
 
   //Esta funcion inserta clientes
@@ -107,11 +113,9 @@ export class ClientesService {
     };
     return this.http.post<ApiResponse>(`${this.apiUrl}/Clientes/Insert`, body);
   }
-
   deleteClientes(Id: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/Clientes/Delete`, { Id });
   }
-
   updateClientes(ClientesData: UpdateClientes): Observable<ApiResponse> {
     const body = {
       id: ClientesData.Id,
@@ -135,12 +139,15 @@ export class ClientesService {
 export class ArticulosService {
   //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private authService: AuthService) {}
 
   getArticulos(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/articulos/Get`);
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<ApiResponse>(`${this.apiUrl}/articulos/Get`,{headers});
   }
-
   insertarArticulos(ArticulosData: {
     descripcion: string;
     codigo: string;
@@ -159,11 +166,9 @@ export class ArticulosService {
     };
     return this.http.post<ApiResponse>(`${this.apiUrl}/articulos/Insert`, body);
   }
-
   deleteArticulos(Id: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/articulos/Delete`, { Id });
   }
-
   updateArticulos(ArticulosData: updateArticulos): Observable<ApiResponse> {
     const body = {
       id: ArticulosData.Id,
@@ -185,12 +190,15 @@ export class ArticulosService {
 export class PersonasService {
   //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private authService: AuthService) {}
 
   getPersonas(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/Personas/Get`);
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<ApiResponse>(`${this.apiUrl}/Personas/Get`,{headers});
   }
-
   insertarClientes(PersonasData: {
     nombre: string;
     ApPaterno: string;
@@ -209,11 +217,9 @@ export class PersonasService {
     };
     return this.http.post<ApiResponse>(`${this.apiUrl}/Personas/Insert`, body);
   }
-
   deletePersonas(Id: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/Personas/Delete`, { Id });
   }
-
   updatePersonas(PersonasData: UpdatePersonas): Observable<ApiResponse> {
     const body = {
       id: PersonasData.Id,
@@ -235,12 +241,15 @@ export class PersonasService {
 export class RutasService {
   //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private authService: AuthService) {}
 
   getRutas(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/Rutas/Get`);
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<ApiResponse>(`${this.apiUrl}/Rutas/Get`,{headers});
   }
-
   insertarRutas(RutasData: {
     nombre: string;
     usuario: number;
@@ -251,12 +260,10 @@ export class RutasService {
     };
     return this.http.post<ApiResponse>(`${this.apiUrl}/Rutas/Insert`, body);
   }
-
   deleteRutas(Id: number): Observable<any> {
     
     return this.http.put(`${this.apiUrl}/Rutas/Delete`, { Id });
   }
-
   updateRutas(RutasData: UpdateRutas): Observable<ApiResponse> {
     const body = {
       Id: RutasData.Id,
@@ -274,12 +281,15 @@ export class RutasService {
 export class DetalleMovService {
   //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private authService: AuthService) {}
 
   getDetalleMov(Id: number): Observable<ArrayBuffer> {
-    return this.http.get<ArrayBuffer>(`${this.apiUrl}/DetalleMovimiento/Get?id_Movimientos=${Id}`);
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<ArrayBuffer>(`${this.apiUrl}/DetalleMovimiento/Get?id_Movimientos=${Id}`,{headers});
   }
-
   insertarDetalleMov(DetalleMovData: {
     idMovimiento: number;
     codigo: string;
@@ -299,12 +309,10 @@ export class DetalleMovService {
       body
     );
   }
-
   deleteDetalleMov(Id: number): Observable<any> {
     
     return this.http.put(`${this.apiUrl}/DetalleMovimiento/Delete`, { Id });
   }
-
   updateDetalleMov(DetalleMovData: UpdateDetalleMov): Observable<ApiResponse> {
     const body = {
       Id: DetalleMovData.Id,
@@ -328,14 +336,18 @@ export class DetalleMovService {
 export class TicketsSevice {
   //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private authService: AuthService) {}
 
   getTickets(TicketData:{
     IdSucursal:number,
     FechaInicio:string,
     FechaFin:string
   }): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/Tickets/Get?IdSucursal=${TicketData.IdSucursal}&FechaInicio=${TicketData.FechaInicio}&FechaFin=${TicketData.FechaFin}`);
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<ApiResponse>(`${this.apiUrl}/Tickets/Get?IdSucursal=${TicketData.IdSucursal}&FechaInicio=${TicketData.FechaInicio}&FechaFin=${TicketData.FechaFin}`,{headers});
   }
 
   insertarTickets(TicketsData: {
@@ -374,10 +386,14 @@ export class TicketsSevice {
 export class UsuarioSevice {
   //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private authService: AuthService) {}
 
   getUsuarios(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/Usuarios/Get`);
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<ApiResponse>(`${this.apiUrl}/Usuarios/Get`,{headers});
   }
 
   insertarUsuario(UsuarioData: {
@@ -419,13 +435,14 @@ export class UsuarioSevice {
 export class ExistenciasService {
   //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private authService: AuthService) {}
 
   getExistencias(IdAlmacen: 0): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(
-      `${this.apiUrl}/Existencias/Get?Almacen=0`,
-      { IdAlmacen }
-    );
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.post<ApiResponse>(`${this.apiUrl}/Existencias/Get?Almacen=0`,{ IdAlmacen },{headers});
   }
 
   insertExistencias(ExistenciasData: {
@@ -445,12 +462,10 @@ export class ExistenciasService {
       body
     );
   }
-
   deleteExistencias(id: number): Observable<any> {
     
     return this.http.post(`${this.apiUrl}/Existencias/Delete`, { id });
   }
-
   updateExistencias(
     ExistenciasData: UpdateExistencia
   ): Observable<ApiResponse> {
@@ -475,16 +490,19 @@ export class ExistenciasService {
 export class movInventarioService {
   //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private authService: AuthService) {}
 
   getMovInventario(MovInvData:{
     IdAlmacen:number,
     FechaInicio:string,
     FechaFin:string
   }): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/MovInventario/Get?IdAlmacen=${MovInvData.IdAlmacen}&FechaInicio=${MovInvData.FechaInicio}&FechaFin=${MovInvData.FechaFin}`);
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<ApiResponse>(`${this.apiUrl}/MovInventario/Get?IdAlmacen=${MovInvData.IdAlmacen}&FechaInicio=${MovInvData.FechaInicio}&FechaFin=${MovInvData.FechaFin}`,{headers});
   }
-
   insertMovInventario(MovInvData: {
     idTipoMov: number;
     idAlmacen: number;
@@ -502,12 +520,10 @@ export class movInventarioService {
       body
     );
   }
-
   deleteMovInventario(id: number): Observable<any> {
     
     return this.http.post(`${this.apiUrl}/MovInventario/Delete`, { id });
   }
-
   updateMovInventario(
     MovInvData: UpdateMovInventario
   ): Observable<ApiResponse> {
@@ -532,14 +548,16 @@ export class movInventarioService {
 export class DetalleTicketService {
   //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private authService: AuthService) {}
 
 
   getDetalleTicket(ticketId: number): Observable<DetalleTicket[]> {
-    return this.http.get<DetalleTicket[]>(`${this.apiUrl}/DetalleTicket/Get?idTicket=${ticketId}`);
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<DetalleTicket[]>(`${this.apiUrl}/DetalleTicket/Get?idTicket=${ticketId}`,{headers});
   }
-
-  
   insertDetalleTicket(DTData: {
     idTicket: number;
     codigo: number;
@@ -559,12 +577,10 @@ export class DetalleTicketService {
       body
     );
   }
-
   deleteDetalleTicket(id: number): Observable<any> {
     
     return this.http.put(`${this.apiUrl}/DetalleTicket/Delete`, { id });
   }
-
   updateDetalleTicket(DTData: UpdateDetalleTicket): Observable<ApiResponse> {
     const body = {
       id: DTData.Id,
@@ -589,14 +605,16 @@ export class DetalleTicketService {
 export class ModulosService {
   //se especifica la url base
   private  apiUrl= 'http://localhost:5020/api'; 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,private authService: AuthService) { }
 
   //Enlista los modulos registrados en la base de datos
   getModulos(): Observable<ApiResponse>{
-  return  this.http.get<ApiResponse>(`${this.apiUrl}/Modulos/Get`)
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  return  this.http.get<ApiResponse>(`${this.apiUrl}/Modulos/Get`,{headers})
   }
-
-
 InsertModulos(ModulosData: { nombreModulo: string; categoriaModulo: number; usuario: number }): Observable<ApiResponse> {
   
   const body = {
@@ -606,11 +624,9 @@ InsertModulos(ModulosData: { nombreModulo: string; categoriaModulo: number; usua
   };
   return this.http.post<ApiResponse>(`${this.apiUrl}/Modulos/Insert`, body)
 }
-
 deleteModulos(Id : number): Observable<any> {
     return this.http.put(`${this.apiUrl}/Modulos/Delete`, { Id });
   }
-
   updateModulos(ModulosData: UpdateModulo): Observable<ApiResponse> {
     const body ={
     id: ModulosData.Id,
@@ -629,12 +645,15 @@ deleteModulos(Id : number): Observable<any> {
 export class EmpleadosService {
   //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private authService: AuthService) {}
 
   getEmpleado(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/Empleados/Get`);
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<ApiResponse>(`${this.apiUrl}/Empleados/Get`,{headers});
   }
-
   insertarEmpleado(EmpleadoData: {
     IdPersona: number;
     IdSucursal: number;
@@ -649,12 +668,10 @@ export class EmpleadosService {
     };
     return this.http.post<ApiResponse>(`${this.apiUrl}/Empleados/Insert`, body);
   }
-
   deleteEmpleado(Id: number): Observable<any> {
     
     return this.http.put(`${this.apiUrl}/Empleados/Delete`, { Id });
   }
-
   updateEmpleado(EmpleadoData: updateEmpleado): Observable<ApiResponse> {
     const body = {
       Id: EmpleadoData.Id,
@@ -674,12 +691,15 @@ export class EmpleadosService {
 export class PuestosService {
   //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private authService: AuthService) {}
 
   getPuestos(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/Puestos/Get`);
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<ApiResponse>(`${this.apiUrl}/Puestos/Get`,{headers});
   }
-
   insertarPuestos(PuestosData: {
     nombre: string;
     descripcion: string;
@@ -694,12 +714,10 @@ export class PuestosService {
     };
     return this.http.post<ApiResponse>(`${this.apiUrl}/Puestos/Insert`, body);
   }
-
   deletePuestos(Id: number): Observable<any> {
     
     return this.http.put(`${this.apiUrl}/Puestos/Delete`, { Id });
   }
-
   updatePuestos(PuestosData: UpdatePuesto): Observable<ApiResponse> {
     const body = {
       Id: PuestosData.Id,
@@ -719,13 +737,15 @@ export class PuestosService {
 export class CategoriaModuloService {
   //se especifica la url base de la api
   private  apiUrl= 'http://localhost:5020/api'; 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,private authService: AuthService) { }
 
   getCategoriaModulo(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/CatModulo/Get`);
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<ApiResponse>(`${this.apiUrl}/CatModulo/Get`,{headers});
   }
-
-//
 insertCategoriaModulo(CatModuloData: { nombre: string; descripcion: string; usuario: number }): Observable<ApiResponse> {
   
   const body = {
@@ -735,12 +755,10 @@ insertCategoriaModulo(CatModuloData: { nombre: string; descripcion: string; usua
   };
   return this.http.post<ApiResponse>(`${this.apiUrl}/CatModulo/Insert`, body)
 }
-
 deleteCategoriaModulo(id : number): Observable<any> {
     
     return this.http.put(`${this.apiUrl}/CatModulo/Delete`, { id });
   }
-
  updateCategoriaModulo(catModuloData: UpdateCategoriaModulo): Observable<ApiResponse> {
   const body ={
     Id: catModuloData.Id,
@@ -759,13 +777,15 @@ deleteCategoriaModulo(id : number): Observable<any> {
 export class DetallePerfilService {
   //se especifica la url base de la api
   private  apiUrl= 'http://localhost:5020/api'; 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,private authService: AuthService) { }
 
   getDetallePerfil(): Observable<ApiResponse>{
-  return  this.http.get<ApiResponse>(`${this.apiUrl}/DetallePerfil/Get`)
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+  return  this.http.get<ApiResponse>(`${this.apiUrl}/DetallePerfil/Get`,{headers})
   }
-
-
 insertarDetallePerfil(DetallePerfilData: { idPerfil: number; idModulo: number; acceso: number; usuarioActualiza: number; }): Observable<ApiResponse> {
   
   const body = {
@@ -776,11 +796,9 @@ insertarDetallePerfil(DetallePerfilData: { idPerfil: number; idModulo: number; a
   };
   return this.http.post<ApiResponse>(`${this.apiUrl}/DetallePerfil/Insert`, body)
 }
-
 deleteDetallePerfil(id : number): Observable<any> {
     return this.http.put(`${this.apiUrl}/DetallePerfil/Delete`, { id });
   }
-
   updateDetallePerfil(DetallePerfilData: UpdateDetallePerfil): Observable<ApiResponse> {
     const body = {
       id: DetallePerfilData.Id,
@@ -801,10 +819,14 @@ deleteDetallePerfil(id : number): Observable<any> {
 export class RolesService {
   //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private authService: AuthService) {}
 
   getRoles(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/Roles/Get`);
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<ApiResponse>(`${this.apiUrl}/Roles/Get`,{headers});
   }
 }
 //------------------------------------------------------------------------------------------------------------------------
@@ -814,10 +836,14 @@ export class RolesService {
 export class UMService {
   //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private authService: AuthService) {}
 
   getUM(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/UM/Get`);
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<ApiResponse>(`${this.apiUrl}/UM/Get`,{headers});
   }
 }
 //------------------------------------------------------------------------------------------------------------------------
@@ -827,10 +853,14 @@ export class UMService {
 export class SucursalesService {
   //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private authService: AuthService) {}
 
   getSucursales(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/Sucursales/Get`);
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<ApiResponse>(`${this.apiUrl}/Sucursales/Get`,{headers});
   }
 }
 //------------------------------------------------------------------------------------------------------------------------
@@ -840,10 +870,14 @@ export class SucursalesService {
 export class TiposMovService {
   //Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private authService: AuthService) {}
 
   getTiposMov(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/TiposMov/Get`);
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<ApiResponse>(`${this.apiUrl}/TiposMov/Get`,{headers});
   }
 }
 //---------------------------------------------------------------------------------------------------------------------//
