@@ -55,6 +55,7 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
 
     this.AlmacenesService.insertarAlmacenes(nuevoAlmacen).subscribe({
       next: (response) => {
+        console.log(response)
         this.getData();
         this.limpiar();
       },
