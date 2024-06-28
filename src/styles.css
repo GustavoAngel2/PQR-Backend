@@ -48,7 +48,6 @@ mat-form-field{
 }
 
 mat-icon{
-  position: absolute!important;
   margin-left: -26px;
 }
 
@@ -110,7 +109,14 @@ mat-paginator{
 }
 
 .action-btn{
-  margin: 6px;
+  margin-left: 6px;
+}
+
+.iconsColumn{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
 }
 
 .lista{

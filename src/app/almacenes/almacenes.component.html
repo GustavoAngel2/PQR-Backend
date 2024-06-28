@@ -76,9 +76,9 @@
         </ng-container>
         <ng-container matColumnDef="Acciones">
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
-        <td mat-cell *matCellDef="let elemento">
-            <mat-icon class="action-btn"(click)="cargarDatos(elemento)">edit</mat-icon>
-            <mat-icon class="action-btn red" (click)="abrirDeleteDialog(elemento.Id, elemento.Nombre)">delete</mat-icon>
+        <td class="iconsColumn" mat-cell *matCellDef="let elemento">
+            <mat-icon class="action-btn" (click)="cargarDatos(elemento)">edit</mat-icon>
+            <mat-icon class="action-btn" (click)="abrirDeleteDialog(elemento.Id, elemento.Nombre)">delete</mat-icon>
         </td>
         </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

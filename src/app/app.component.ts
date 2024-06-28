@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
 import { currentUser } from './models/usuario.model';
-import { getMatInputUnsupportedTypeError } from '@angular/material/input';
 
 @Component({
   selector: 'app-root',
