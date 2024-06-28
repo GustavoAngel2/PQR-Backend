@@ -5,7 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 
 export interface currentUser {
   Id: string;
-  Nombre: string;
+  NombreUsuario: string;
 }
 
 @Injectable({
@@ -24,7 +24,7 @@ export class AuthService {
   private getStoredUser(): currentUser {
     return {
       Id: sessionStorage.getItem('Id') ?? '',
-      Nombre: sessionStorage.getItem('NombreUsuario') ?? ''
+      NombreUsuario: sessionStorage.getItem('NombreUsuario') ?? ''
     };
   }
 
@@ -53,7 +53,7 @@ export class AuthService {
     sessionStorage.removeItem('Token');
     sessionStorage.removeItem('Id');
     sessionStorage.removeItem('NombreUsuario');
-    this.updateCurrentUser({ Id: '', Nombre: '' });
+    this.updateCurrentUser({ Id: '', NombreUsuario: '' });
   }
 
   getToken() {

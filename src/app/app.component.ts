@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  actualUser: currentUser = { Id: "", Nombre: "" };
+  actualUser: currentUser = { Id: "", NombreUsuario: "" };
   userSubscription!: Subscription;
 
   constructor(private authService: AuthService) {}
