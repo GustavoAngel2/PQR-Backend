@@ -23,19 +23,17 @@
       <a class="menu-btn" (click)="logout(); sidenav.toggle()" routerLink="login" ><strong>Cerrar sesion</strong><i class="underline"></i></a>
     </mat-list>
   </mat-sidenav>
-  <mat-sidenav-content class="bg" >
+  <mat-sidenav-content class="bg">
     <mat-toolbar>
       <button mat-icon-button (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
       <span>FritoMenú</span>
-      <div [(ngModel)]="actualUser">
-        <p>Username: {{actualUser.Nombre}} </p>
-        <p>ID: {{actualUser.Id}} </p>
+      <div>
+        <p>Username: {{actualUser.Nombre}}</p>
+        <p>ID: {{actualUser.Id}}</p>
       </div>
     </mat-toolbar>
-    <div>
-      <router-outlet></router-outlet>
-    </div>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

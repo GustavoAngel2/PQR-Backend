@@ -1,31 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from './auth.service';
-import { currentUser } from './models/usuario.model';
-import { getMatInputUnsupportedTypeError } from '@angular/material/input';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AuthService, currentUser } from './auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-  actualUser: currentUser;
+export class AppComponent implements OnInit, OnDestroy {
+  actualUser: currentUser = { Id: "", Nombre: "" };
+  userSubscription!: Subscription;
 
-  constructor(private authService: AuthService) {
-    this.actualUser = {
-      Id: "",
-      Nombre: ""
-    };
-  }
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.getUser()
+    this.userSubscription = this.authService.currentUser.subscribe(user => {
+      this.actualUser = user;
+      console.log('User updated:', this.actualUser);
+    });
   }
 
-  getUser(){
-    this.actualUser.Id = this.authService.getIdUsername();
-    this.actualUser.Nombre = this.authService.getUsername();
-    console.log(this.actualUser)
+  ngOnDestroy() {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 
   logout() {
