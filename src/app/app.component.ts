@@ -1,7 +1,4 @@
-// app.component.ts
-
 import { Component, OnInit } from '@angular/core';
-import { UserService } from './user.service';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -16,13 +13,11 @@ export class AppComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    const idUsername = this.authService.getIdUsername();
-    const username = this.authService.getUsername();
-
+    this.idUsername = this.authService.getIdUsername();
+    this.username = this.authService.getUsername();
   }
 
   logout() {
-    sessionStorage.removeItem('Token');
-
+    this.authService.logout();
   }
 }
