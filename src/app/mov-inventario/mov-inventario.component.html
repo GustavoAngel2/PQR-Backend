@@ -5,7 +5,7 @@
     <img src="./assets/Almacenes.png" class="module-logo">
 </div>
 
-<div class="form-place" *ngIf="!isOnStepTwo">
+<div class="form-place">
     <div class="form-container">
         <div class="form-title">
             <p [hidden]="!datosCargados"> Editando movimiento con Id: {{this.tipoMov.Id}} </p>
@@ -43,7 +43,7 @@
     </div>
 </div>
 
-<div class="form-place" *ngIf="isOnStepTwo">
+<div class="form-place" >
     <div class="form-container">
         <div class="form-title">
             <h1 mat-dialog-title>Nuevo Detalle Movimiento</h1>

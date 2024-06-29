@@ -101,62 +101,7 @@ export class DetalleTicketComponent implements OnInit, AfterViewInit {
     });
   }
 
-  exportToPDF(): void {
-    const doc = new jsPDF();
-    const columns = this.displayedColumns.filter(column => column !== 'Acciones').map(col => this.getColumnName(col));
-    const rows = this.dataSource.filteredData.map(ticket => [
-      ticket.Id,
-      ticket.Sucursal,
-      ticket.Cliente,
-      ticket.Vendedor,
-      this.formatDate(new Date(ticket.Fecha)),
-      ticket.Estatus,
-      ticket.Usuario
-    ]);
 
-    autoTable(doc, {
-      head: [columns],
-      body: rows
-    });
 
-    doc.save('Tickets.pdf');
-  }
 
-  exportToExcel(): void {
-    const data = this.dataSource.filteredData.map(ticket => ({
-      'ID': ticket.Id,
-      'Sucursal': ticket.Sucursal,
-      'Cliente': ticket.Cliente,
-      'Vendedor': ticket.Vendedor,
-      'Fecha': this.formatDate(new Date(ticket.Fecha)),
-      'Estatus': ticket.Estatus,
-      'Usuario': ticket.Usuario
-    }));
-
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
-    const workbook: XLSX.WorkBook = { Sheets: { 'Tickets': worksheet }, SheetNames: ['Tickets'] };
-    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-    this.saveAsExcelFile(excelBuffer, 'Tickets');
-  }
-
-  private saveAsExcelFile(buffer: any, fileName: string): void {
-    const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
-    FileSaver.saveAs(data, `${fileName}_export${EXCEL_EXTENSION}`);
-  }
-
-  private getColumnName(column: string): string {
-    switch (column) {
-      case 'Id': return 'ID';
-      case 'Sucursal': return 'Sucursal';
-      case 'Cliente': return 'Cliente';
-      case 'Vendedor': return 'Vendedor';
-      case 'Fecha': return 'Fecha';
-      case 'Estatus': return 'Estatus';
-      case 'UsuarioActualiza': return 'Usuario';
-      default: return column;
-    }
-  }
 }
-
-const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-const EXCEL_EXTENSION = '.xlsx';
