@@ -52,7 +52,11 @@ export class AlmacenesService {
       usuario: AlmacenesData.usuario,
       encargado: AlmacenesData.encargado
     };
-    return this.http.post<ApiResponse>(`${this.apiUrl}/Almacenes/Insert`, body);
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.post<ApiResponse>(`${this.apiUrl}/Almacenes/Insert`, body,{headers});
   }
   //esta funcion borra un almacen pidiendo el id del almacen a borrar
   deleteAlmacenes(Id: number): Observable<any> {

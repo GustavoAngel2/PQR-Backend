@@ -4,7 +4,7 @@ import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 export interface currentUser {
-  Id: string;
+  Id: number;
   NombreUsuario: string;
 }
 
@@ -23,7 +23,7 @@ export class AuthService {
 
   private getStoredUser(): currentUser {
     return {
-      Id: sessionStorage.getItem('Id') ?? '',
+      Id: parseInt(sessionStorage.getItem('Id') ?? '0', 10),
       NombreUsuario: sessionStorage.getItem('NombreUsuario') ?? ''
     };
   }
@@ -34,7 +34,7 @@ export class AuthService {
         console.log('API response:', response);
         if (response && response.Success && response.Response && response.Response.data && response.Response.data.Token) {
           sessionStorage.setItem('Token', response.Response.data.Token);
-          this.setIdUsername(response.Response.data.Usuario.Id.toString());
+          this.setIdUsername(response.Response.data.Usuario.Id);
           this.setUsername(response.Response.data.Usuario.NombreUsuario);
           this.updateCurrentUser(response.Response.data.Usuario);
           return response.Response.data;
@@ -53,15 +53,15 @@ export class AuthService {
     sessionStorage.removeItem('Token');
     sessionStorage.removeItem('Id');
     sessionStorage.removeItem('NombreUsuario');
-    this.updateCurrentUser({ Id: '', NombreUsuario: '' });
+    this.updateCurrentUser({ Id: 0, NombreUsuario: '' });
   }
 
   getToken() {
     return sessionStorage.getItem('Token');
   }
 
-  setIdUsername(id: string) {
-    sessionStorage.setItem('Id', id);
+  setIdUsername(id: number) {
+    sessionStorage.setItem('Id', id.toString());
     console.log('IdUsername set in sessionStorage:', id);
   }
 
@@ -70,8 +70,8 @@ export class AuthService {
     console.log('Username set in sessionStorage:', username);
   }
 
-  getIdUsername(): string {
-    return sessionStorage.getItem('Id') ?? '';
+  getIdUsername(): number {
+    return parseInt(sessionStorage.getItem('Id') ?? '0', 10);
   }
 
   getUsername(): string {

@@ -12,6 +12,8 @@ import { DetalleMoviemientoViewComponent } from '../detalle-movimiento-view/deta
 import { SearchMovModel } from '../models/detalleMov.model';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-detalle-movimiento',
@@ -171,4 +173,32 @@ export class DetalleMovimientoComponent implements OnInit, AfterViewInit {
       default: return column;
     }
   }
+
+  exportToExcel(): void {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.filteredData.map(mov => {
+      return {
+        ID: mov.Id,
+        'ID Movimiento': mov.IdTipoMov,
+        'ID Almacén': mov.IdAlmacen,
+        'Fecha Movimiento': this.formatDate(new Date(mov.fechaMovimiento)),
+        Usuario: mov.Usuario
+      };
+    }));
+
+    const workbook: XLSX.WorkBook = {
+      Sheets: { 'Movimientos': worksheet },
+      SheetNames: ['Movimientos']
+    };
+
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    this.saveAsExcelFile(excelBuffer, 'Movimientos');
+  }
+
+  private saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], { type: this.EXCEL_TYPE });
+    saveAs(data, `${fileName}_export_${new Date().getTime()}${this.EXCEL_EXTENSION}`);
+  }
+
+  private readonly EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+  private readonly EXCEL_EXTENSION = '.xlsx';
 }

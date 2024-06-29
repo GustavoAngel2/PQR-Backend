@@ -8,6 +8,8 @@ import { DetalleTicketInsertComponent } from '../detalle-ticket-insert/detalle-t
 import { SearchTicketsModel, tickets } from '../models/tickets.model';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-detalle-ticket',
@@ -120,6 +122,28 @@ export class DetalleTicketComponent implements OnInit, AfterViewInit {
     doc.save('Tickets.pdf');
   }
 
+  exportToExcel(): void {
+    const data = this.dataSource.filteredData.map(ticket => ({
+      'ID': ticket.Id,
+      'Sucursal': ticket.Sucursal,
+      'Cliente': ticket.Cliente,
+      'Vendedor': ticket.Vendedor,
+      'Fecha': this.formatDate(new Date(ticket.Fecha)),
+      'Estatus': ticket.Estatus,
+      'Usuario': ticket.Usuario
+    }));
+
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    const workbook: XLSX.WorkBook = { Sheets: { 'Tickets': worksheet }, SheetNames: ['Tickets'] };
+    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    this.saveAsExcelFile(excelBuffer, 'Tickets');
+  }
+
+  private saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], { type: EXCEL_TYPE });
+    FileSaver.saveAs(data, `${fileName}_export${EXCEL_EXTENSION}`);
+  }
+
   private getColumnName(column: string): string {
     switch (column) {
       case 'Id': return 'ID';
@@ -133,3 +157,6 @@ export class DetalleTicketComponent implements OnInit, AfterViewInit {
     }
   }
 }
+
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx';
