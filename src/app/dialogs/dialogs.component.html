@@ -1,0 +1,20 @@
+<div class="window-header">
+    <h1 mat-dialog-title>Borrar Elemento</h1>
+    <button class="btn-close" (click)="buttonAction('')"><i class="bi bi-x-square-fill "></i></button>
+  </div>
+    <!-- Fila para el formulario -->
+  
+      <!-- Columna para el campo de nombre -->
+  <div class="window-content">
+    <p>Seguro que desea borrar el siguiente elemento?</p>
+    <p style="color: red;">{{elemento}}</p>
+  </div>
+  
+  <div mat-dialog-actions class="window-footer-delete">
+    <button class="btn-white" cdkFocusInitial (click)="buttonAction('')">Cancelar<i class="underline"></i></button>
+    <button class="btn-red" cdkFocusInitial (click)="buttonAction('yes')">Aceptar<i class="underline"></i></button>
+  </div>
+  <div mat-dialog-actions class="window-footer-delete">
+    <button class="btn-white" cdkFocusInitial (click)="buttonAction('')">Ok<i class="underline"></i></button>
+  </div>
+  

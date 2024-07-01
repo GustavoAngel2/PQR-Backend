@@ -1,35 +1,38 @@
 <mat-sidenav-container class="Hamburguesa">
-    <mat-sidenav #sidenav mode="push">
-        <mat-list role="list" class="lista menu-container">
-          <a class="menu-btn mobile" (click)="sidenav.toggle()"><i class="bi bi-eye-slash-fill"></i><strong> Ocultar</strong><i class="underline"></i></a>
-          <a class="menu-btn" routerLink="inicio" (click)="sidenav.toggle()"><i class="bi bi-house-fill icon"></i><strong>Inicio</strong><i class="underline"></i></a>
-          <a class="menu-btn" routerLink="almacenes" (click)="sidenav.toggle()"><i class="bi bi-box-seam-fill icon"></i><strong>Almacenes</strong><i class="underline"></i></a>
-          <a class="menu-btn" routerLink="articulos" (click)="sidenav.toggle()"><i class="bi bi-cart-fill icon"></i><strong>Articulos</strong><i class="underline"></i></a>
-          <a class="menu-btn" routerLink="categoriamodulo"(click)="sidenav.toggle()"><i class="bi bi-tags-fill icon"></i><strong>CategoriaModulo</strong><i class="underline"></i></a>
-          <a class="menu-btn" routerLink="clientes"(click)="sidenav.toggle()"><i class="bi bi-person-lines-fill icon"></i><strong>Clientes</strong><i class="underline"></i></a>
-          <a class="menu-btn" routerLink="detallePerfil"(click)="sidenav.toggle()"><i class="bi bi-person-badge icon"></i><strong>Detalle de perfil</strong><i class="underline"></i></a>
-          <a class="menu-btn" routerLink="detallemovimiento" (click)="sidenav.toggle()"><i class="bi bi-calendar-check-fill icon"></i><strong>Detalle de movimiento</strong><i class="underline"></i></a>
-          <!-- <a class="menu-btn" routerLink="detalleticket"(click)="sidenav.toggle()" ><i class="bi bi-card-list icon"></i><strong>Detalle de ticket</strong><i class="underline"></i></a> -->
-          <a class="menu-btn" routerLink="empleados"(click)="sidenav.toggle()"><i class="bi bi-person-vcard-fill icon"></i><strong>Empleados</strong><i class="underline"></i></a>
-          <a class="menu-btn" routerLink="existencias" (click)="sidenav.toggle()"><i class="bi bi-clipboard-check-fill icon"></i><strong>Existencias</strong><i class="underline"></i></a>
-          <a class="menu-btn" routerLink="modulos" (click)="sidenav.toggle()"><i class="bi bi-journal-bookmark-fill icon"></i><strong>Modulos</strong><i class="underline"></i></a>
-          <a class="menu-btn" routerLink="movinventarios"(click)="sidenav.toggle()" ><i class="bi bi-arrow-left-right icon"></i><strong>Movimientos de inventario</strong><i class="underline"></i></a>
-          <a class="menu-btn" routerLink="personas"(click)="sidenav.toggle()" ><i class="bi bi-person-arms-up icon"></i><strong>Personas</strong><i class="underline"></i></a>
-          <a class="menu-btn" routerLink="puestos"(click)="sidenav.toggle()"><i class="bi bi-person-video2 icon"></i><strong>Puestos</strong><i class="underline"></i></a>
-          <a class="menu-btn" routerLink="rutas" (click)="sidenav.toggle()"><i class="bi bi-truck icon"></i><strong>Rutas</strong><i class="underline"></i></a>
-          <a class="menu-btn" routerLink="tickets" (click)="sidenav.toggle()"><i class="bi bi-file-ruled-fill icon"></i><strong>Punto de venta</strong><i class="underline"></i></a>
-          <a class="menu-btn" routerLink="usuarios" (click)="sidenav.toggle()"><i class="bi bi-person-fill-check icon"></i><strong>Usuarios permitidos</strong><i class="underline"></i></a>
-          <!-- <a class="menu-btn" routerLink="usuarios" (click)="sidenav.toggle()"><i class="bi bi-info-circle-fill icon"></i><strong>Acerca de nosotros</strong><i class="underline"></i></a> -->
-          <a class="menu-btn" (click)="sidenav.toggle()" routerLink="login" ><strong>Cerrar sesion</strong><i class="underline"></i></a>
-        </mat-list>
-    </mat-sidenav>
-    <mat-sidenav-content class="bg">
-      <mat-toolbar>
-        <button mat-icon-button (click)="sidenav.toggle()">
-          <mat-icon>menu</mat-icon>
-        </button>
-        <span>FritoMenú</span>
-      </mat-toolbar>
-      <div>
-        <router-outlet ></router-outlet>
-      </div>
+  <mat-sidenav #sidenav mode="push">
+    <mat-list role="list" class="lista menu-container">
+      <a class="menu-btn mobile" (click)="sidenav.toggle()"><i class="bi bi-eye-slash-fill"></i><strong> Ocultar</strong><i class="underline"></i></a>
+      <a class="menu-btn" routerLink="inicio" (click)="sidenav.toggle()"><i class="bi bi-house-fill icon"></i><strong>Inicio</strong><i class="underline"></i></a>
+      <a class="menu-btn" routerLink="almacenes" (click)="sidenav.toggle()"><i class="bi bi-box-seam-fill icon"></i><strong>Almacenes</strong><i class="underline"></i></a>
+      <a class="menu-btn" routerLink="articulos" (click)="sidenav.toggle()"><i class="bi bi-cart-fill icon"></i><strong>Articulos</strong><i class="underline"></i></a>
+      <a class="menu-btn" routerLink="categoriamodulo" (click)="sidenav.toggle()"><i class="bi bi-tags-fill icon"></i><strong>CategoriaModulo</strong><i class="underline"></i></a>
+      <a class="menu-btn" routerLink="clientes" (click)="sidenav.toggle()"><i class="bi bi-person-lines-fill icon"></i><strong>Clientes</strong><i class="underline"></i></a>
+      <a class="menu-btn" routerLink="detallePerfil" (click)="sidenav.toggle()"><i class="bi bi-person-badge icon"></i><strong>Detalle de perfil</strong><i class="underline"></i></a>
+      <a class="menu-btn" routerLink="detallemovimiento" (click)="sidenav.toggle()"><i class="bi bi-calendar-check-fill icon"></i><strong>Detalle de movimiento</strong><i class="underline"></i></a>
+      <a class="menu-btn" routerLink="detalleticket" (click)="sidenav.toggle()"><i class="bi bi-card-list icon"></i><strong>Detalle de ticket</strong><i class="underline"></i></a>
+      <a class="menu-btn" routerLink="empleados" (click)="sidenav.toggle()"><i class="bi bi-person-vcard-fill icon"></i><strong>Empleados</strong><i class="underline"></i></a>
+      <a class="menu-btn" routerLink="existencias" (click)="sidenav.toggle()"><i class="bi bi-clipboard-check-fill icon"></i><strong>Existencias</strong><i class="underline"></i></a>
+      <a class="menu-btn" routerLink="modulos" (click)="sidenav.toggle()"><i class="bi bi-journal-bookmark-fill icon"></i><strong>Modulos</strong><i class="underline"></i></a>
+      <a class="menu-btn" routerLink="movinventarios" (click)="sidenav.toggle()"><i class="bi bi-arrow-left-right icon"></i><strong>Movimientos de inventario</strong><i class="underline"></i></a>
+      <a class="menu-btn" routerLink="personas" (click)="sidenav.toggle()"><i class="bi bi-person-arms-up icon"></i><strong>Personas</strong><i class="underline"></i></a>
+      <a class="menu-btn" routerLink="puestos" (click)="sidenav.toggle()"><i class="bi bi-person-video2 icon"></i><strong>Puestos</strong><i class="underline"></i></a>
+      <a class="menu-btn" routerLink="rutas" (click)="sidenav.toggle()"><i class="bi bi-truck icon"></i><strong>Rutas</strong><i class="underline"></i></a>
+      <a class="menu-btn" routerLink="tickets" (click)="sidenav.toggle()"><i class="bi bi-file-ruled-fill icon"></i><strong>Punto de venta</strong><i class="underline"></i></a>
+      <a class="menu-btn" routerLink="usuarios" (click)="sidenav.toggle()"><i class="bi bi-person-fill-check icon"></i><strong>Usuarios permitidos</strong><i class="underline"></i></a>
+      <!-- <a class="menu-btn" routerLink="usuarios" (click)="sidenav.toggle()"><i class="bi bi-info-circle-fill icon"></i><strong>Acerca de nosotros</strong><i class="underline"></i></a> -->
+      <a class="menu-btn" (click)="logout(); sidenav.toggle()" routerLink="login" ><strong>Cerrar sesion</strong><i class="underline"></i></a>
+    </mat-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="bg">
+    <mat-toolbar>
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>FritoMenú</span>
+        <p>__Username: {{actualUser.NombreUsuario}}__</p>
+        <p>__ID: {{actualUser.Id}}</p>
+
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

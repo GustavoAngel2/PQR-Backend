@@ -5,25 +5,29 @@
     <img src="./assets/Categoria.png" class="module-logo">
     <br>
 </div>
-<div class="form-container">
-    <div class="form-title">
-        <h1 mat-dialog-title>Nuevo Almacen</h1>
-    </div>
-    <div class="form-content">
-        <mat-form-field>
-            <mat-label>Nombre</mat-label>
-            <input matInput placeholder="Ingresa el nombre" [(ngModel)]="nombreCatModulo"/>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Descripcion</mat-label>
-            <input matInput placeholder="Ingresa la descripcion" [(ngModel)]="descripcion"/>
-          </mat-form-field>
-          <mat-form-field>
-            <mat-label>Usuario</mat-label>
-            <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuario" />
-          </mat-form-field>
+
+<div class="form-place">
+    <div class="form-container">
+        <div class="form-title">
+            <h1 mat-dialog-title>Nuevo Almacen</h1>
+        </div>
+        <div class="form-content">
+            <mat-form-field>
+                <mat-label>Nombre</mat-label>
+                <input matInput placeholder="Ingresa el nombre" [(ngModel)]="nombreCatModulo"/>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Descripcion</mat-label>
+                <input matInput placeholder="Ingresa la descripcion" [(ngModel)]="descripcion"/>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Usuario</mat-label>
+                <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuario" />
+              </mat-form-field>
+        </div>
     </div>
 </div>
+
 <div class="actionbar">
     <mat-form-field class="search-bar">
         <mat-label>Filtrar</mat-label>

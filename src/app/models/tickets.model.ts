@@ -2,7 +2,7 @@ import { TicketsSevice } from "../data.service";
 
 export interface tickets {
     Id: number;
-    Surcursal: string;
+    Sucursal: string;
     Cliente: string;
     Vendedor: string;
     Usuario: string;
@@ -34,3 +34,9 @@ export interface tickets {
    export interface deleteTickets{
      Id: number;
    }
+   
+  export interface SearchTicketsModel{
+    IdSucursal:number
+    FechaInicio:string
+    FechaFin:string
+  }

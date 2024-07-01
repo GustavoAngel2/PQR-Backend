@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
-import { DetalleTicketService } from '../data.service';
-import { TicketsSevice } from '../data.service';
-import { ArticulosService } from '../data.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { SearchTicketsModel } from '../models/tickets.model';
+import { DetalleTicketService, TicketsSevice } from '../data.service';
+import { DetalleTicket } from '../models/detalleTicket.model';
 
 @Component({
   selector: 'app-detalle-ticket-insert',
@@ -10,56 +13,55 @@ import { ArticulosService } from '../data.service';
   styleUrls: ['./detalle-ticket-insert.component.css']
 })
 export class DetalleTicketInsertComponent {
-   idTicket: number = 0;
-  codigo: number=0 ;
+  dataSource: MatTableDataSource<DetalleTicket>;
+  id: number = 0;
+  displayedColumns: string[] = ['Id', 'Codigo','Articulo' , 'Cantidad', 'PrecioVenta', 'Total'];
+
+  // Detalle tickets
+  idTicket: any;
+  totalTicket: number = 0;
+  idArticulo: any;
+  codigo: any;
+  Descripcion: any;
   cantidad: number = 0;
   precioVenta: number = 0;
   usuario: number = 0;
-  ComboCodigo:any;
-  ComboTicket:any
+
 
   constructor(
     public dialogRef: MatDialogRef<DetalleTicketInsertComponent>,
-    private TicketService :TicketsSevice,
-    private articulosService:ArticulosService,
-    private detalleticketService: DetalleTicketService
-  ) {}
-
-  ngOnInit(): void {
-    this.TicketService.getTickets(0).subscribe((data: any) => {
-      this.ComboTicket = data;
-      console.log(this.ComboTicket)
-    });
-    this.articulosService.getArticulos().subscribe((data2: any) => {
-      this.ComboCodigo = data2;
-      console.log(this.ComboCodigo)
-    });
-  }    
-  
-  onNoClick(): void {
-    this.dialogRef.close();
+    public dialog: MatDialog,
+    public detalleTicketService: DetalleTicketService,
+    @Inject(MAT_DIALOG_DATA) public data: number
+  ) {
+    this.id = data
+    this.dataSource = new MatTableDataSource<DetalleTicket>();
   }
 
-  insertar(): void {
-    const nuevoDetalleTicket = {
-      idTicket: this.idTicket,
-      codigo: this.codigo,
-      cantidad: this.cantidad,
-      precioVenta: this.precioVenta,
-      usuario: this.usuario
-    };
+  ngOnInit() {
+    this.getData()
+  }    
 
-    // Aquí asumo que tienes un método en tu servicio para insertar el departamento
-    this.detalleticketService.insertDetalleTicket(nuevoDetalleTicket).subscribe({
+  getData(){
+    this.detalleTicketService.getDetalleTicket(this.id).subscribe({
       next: (response) => {
-        // Puedes cerrar la modal y/o actualizar la tabla aquí si es necesario
-        this.dialogRef.close(response);
-        location.reload();
+        console.log('Respuesta del servidor:', response); 
+        if (response && Array.isArray(response) && response.length > 0) {
+          this.dataSource.data = response;
+          this.totalTicket = response[0].TotalTicket; 
+        } else {
+          console.log('no contiene datos');
+          this.totalTicket = 0; 
+        }
       },
       error: (error) => {
-        // Manejar el error aquí
-        console.error('Hubo un error al insertar el almacen', error);
+        console.error(error);
       }
     });
+  }
+
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }

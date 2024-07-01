@@ -5,8 +5,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ArticulosInsertComponent } from '../articulos-insert/articulos-insert.component';
-import { ArticulosUpdateComponent } from '../articulos-update/articulos-update.component';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 import { UMService } from '../data.service';
 
@@ -131,31 +129,6 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
-  }
-
-  abrirInsertarModal() {
-    const dialogRef = this.dialog.open(ArticulosInsertComponent, {
-      width: '550px',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result == 'reload'){
-        this.getData()
-      }
-    });
-  }
-
-  abrirEditarModal(articulos: articulos) {
-    const dialogRef = this.dialog.open(ArticulosUpdateComponent, {
-      width: '550px',
-      data: articulos
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result == 'reload') {
-        this.getData();
-      }
-    });
   }
 
   actualizar(): void {

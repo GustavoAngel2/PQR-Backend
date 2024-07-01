@@ -27,6 +27,12 @@ export interface DetalleMov {
     usuarioActualiza: number;
   }
 
+  export interface SearchMovModel{
+    IdAlmacen:number
+    FechaInicio:string
+    FechaFin:string
+  }
+
   export interface UpdateDetalleMov{
     Id: number;
     idMovimiento: number;
