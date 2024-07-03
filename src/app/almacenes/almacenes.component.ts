@@ -7,6 +7,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 import { dialogParameters } from '../models/dialog.model';
+import { DialogsComponent } from '../dialogs/dialogs.component';
 
 @Component({
   selector: 'app-almacenes',
@@ -55,8 +56,15 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
 
     this.AlmacenesService.insertarAlmacenes(nuevoAlmacen).subscribe({
       next: (response) => {
+        console.log(response)
         this.getData();
         this.limpiar();
+        this.dialogBody = {
+          title : 'Almacenes',
+          message: 'Registro insertado correctamente!',
+          buttons:'ok'
+        }
+        this.showDialog(this.dialogBody)
       },
       error: (error) => {
         console.error('Hubo un error al insertar el almacen', error);
@@ -87,6 +95,8 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
         console.error(error);
       }
     });
+
+    
   }
 
   ngAfterViewInit() {
@@ -123,6 +133,19 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
     });
   }
 
+  showDialog(data:dialogParameters) {
+    const dialogRef = this.dialog.open(DialogsComponent, {
+      width: '550px',
+      data: data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == "yes") {
+        this.getData();
+      }
+    });
+  }
+
   actualizar(): void {
     const almacenActualizado: UpdateAlmacen = {
       Id: this.almacen.Id,
@@ -136,6 +159,12 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
     this.AlmacenesService.updateAlmacenes(almacenActualizado).subscribe({
       next: (response) => {
         console.log('Respuesta del servidor:', response);
+        this.dialogBody = {
+          title : 'Almacenes',
+          message: 'Registro modificado correctamente!',
+          buttons:'ok'
+        }
+        this.showDialog(this.dialogBody)
         this.getData(); // Actualizar datos después de la actualización
         this.limpiar();
       },
