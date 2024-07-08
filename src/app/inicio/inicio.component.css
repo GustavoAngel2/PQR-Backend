@@ -1,48 +1,22 @@
 .home-btn {
-    position: relative;
-    display: inline-block;
-    text-decoration: none;
+    margin: 34px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 6px;
     text-align: center;
     color: #fff;
     font-size: 16px;
-    background-color: #f9722a00;
-    width: 100%;
-    padding-top: 128px;
-    padding-bottom: 128px;
-    border: 0;
+    background-color: #00000046;
+    width: 128px;
+    height: 128px;
+    border-radius: 6PX;
     transition: 0.5s;
 }
 
 .home-btn:hover {
-    background-color: #ff590034;
+    background-color: #0000006d;
     transition:.5s;
-}
-  
-.home-btn .underline
-{
-    position: absolute;
-    display: block;
-    inset:0;
-}
-    
-.home-btn .underline::after
-{
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: #fff;
-    transform: scale(0,1);
-    transition: 0.3s ease;
-}
-  
-.home-btn:hover .underline::after
-{
-    border-radius: 5px;
-    transform: scale(1,1);
-    transition: .3s ease;
 }
   
 .app-icon{
@@ -51,34 +25,9 @@
 }
 
 .apps-container{
-    background: #949494;
-    background: linear-gradient(0deg, rgb(24, 24, 24) 10%, #464646 90%);
-    display: grid;
-    align-items: center;
-    grid-template-columns: repeat(6,1fr);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
     width: 100%;
-    margin: 0,auto;
-    grid-row: 4;
-}
-
-@media (max-width:1400px) {
-    .home-btn {
-        padding-top: 32px;
-        padding-bottom: 32px;
-    }
-
-}
-
-@media (max-width:800px) {
-    .home-btn {
-        font-size: 12px;
-        padding-top: 32px;
-        padding-bottom: 32px;
-    }
-    .apps-container{
-        grid-template-columns: repeat(3,1fr);
-    }
-
-    
-    
 }

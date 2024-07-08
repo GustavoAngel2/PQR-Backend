@@ -21,21 +21,22 @@
                 </mat-select>
             </mat-form-field>
             <mat-form-field>
-                <input matInput [(ngModel)]="dateHandler" (dateInput)="format()" [matDatepicker]="picker" placeholder="Fecha de inicio MM/DD/AAAA">
+                <input matInput [(ngModel)]="dateHandler" (dateInput)="setDate()" [matDatepicker]="picker" placeholder="Fecha de inicio MM/DD/AAAA">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
             <mat-form-field>
-                <input matInput [(ngModel)]="dateHandler2" (dateInput)="format()" [matDatepicker]="picker2" placeholder="Fecha limite MM/DD/AAAA">
+                <input matInput [(ngModel)]="dateHandler2" (dateInput)="setDate()" [matDatepicker]="picker2" placeholder="Fecha limite MM/DD/AAAA">
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
-            </mat-form-field>  
+            </mat-form-field>
             <button class="btn" (click)="getMov()">Buscar</button>
         </div>
     </div>
 </div>
 
 <div class="table-container">
+    <button class="btn" (click)="exportToPDF()"><mat-icon> table_chart</mat-icon> Exportar</button>
     <mat-paginator [pageSizeOptions]="[10, 25, 100]" showFirstLastButtons></mat-paginator>
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Id">

@@ -1,8 +1,36 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
-  selector: "app-login",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.css"],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
-export class LoginComponent {}
+export class LoginComponent {
+  username: string = '';
+  idUsername: string = '';
+  userpassword: string = '';
+  error: string = '';
+
+  constructor(private authService: AuthService, private router: Router) {}
+
+  login() {
+    this.error = '';
+    const credentials = { username: this.username, idUsername: this.idUsername, userpassword: this.userpassword };
+    console.log(credentials);
+    this.authService.login(credentials).subscribe(
+      response => {
+        if (response) {
+          this.router.navigate(['/inicio']);
+        } else {
+          this.error = 'Usuario o contraseña incorrecto.';
+        }
+      },
+      err => {
+        this.error = 'Error en el servidor. Por favor, inténtelo más tarde.';
+        console.error('Detalles del error:', err);
+      }
+    );
+  }
+}

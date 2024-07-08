@@ -1,0 +1,18 @@
+<div class="window-header">
+    <h1 mat-dialog-title>{{elemento.title}}</h1>
+    <button class="btn-close" (click)="buttonAction('')"><i class="bi bi-x-square-fill "></i></button>
+  </div>
+
+  <div class="window-content">
+    <p>{{elemento.message}}</p>
+  </div>
+  
+  <div *ngIf="elemento.buttons == 'confirm'" mat-dialog-actions class="window-footer-delete">
+    <button class="btn" cdkFocusInitial (click)="buttonAction('')">Cancelar<i class="underline"></i></button>
+    <button class="btn" cdkFocusInitial (click)="buttonAction('yes')">Aceptar<i class="underline"></i></button>
+  </div>
+
+  <div *ngIf="elemento.buttons == 'ok'" mat-dialog-actions class="window-footer-delete">
+    <button class="btn" cdkFocusInitial (click)="buttonAction('')">Ok<i class="underline"></i></button>
+  </div>
+  
