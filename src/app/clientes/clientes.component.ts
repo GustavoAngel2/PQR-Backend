@@ -7,6 +7,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { ClientesUpdateComponent } from '../clientes-update/clientes-update.component';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
+import { AuthService, currentUser } from '../auth.service';
+
 
 
 
@@ -28,16 +30,22 @@ export class ClientesComponent implements OnInit, AfterViewInit {
   email: string ="";
   rfc : string ="";
   coordenadas :string ="";
+  loggedInUser: currentUser = { Id: '', NombreUsuario: '' };
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private ClientesService: ClientesService, public dialog:MatDialog) {
+  constructor(private ClientesService: ClientesService, 
+    private authService: AuthService,
+    public dialog:MatDialog) {
     this.dataSource = new MatTableDataSource<Clientes>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
 
   ngOnInit() {
-    this.getData()
+    this.getData();
+    this.loggedInUser = this.authService.getCurrentUser(); // Obtener el usuario logeado
+    console.log('Usuario logeado:', this.loggedInUser);
   }
   
   getData(){
@@ -77,7 +85,7 @@ export class ClientesComponent implements OnInit, AfterViewInit {
     const nuevoCliente = {
       nombre: this.nombreCliente,
       direccion: this.direccion,
-      usuario: this.usuario,
+      usuario: parseInt(this.loggedInUser.Id, 10),
       telefono:this.telefono,
       curp : this.curp,
       rfc : this.rfc,
@@ -88,11 +96,19 @@ export class ClientesComponent implements OnInit, AfterViewInit {
     // Aquí asumo que tienes un método en tu servicio para insertar el departamento
     this.ClientesService.insertarClientes(nuevoCliente).subscribe({
       next: (response) => {
+        console.log(response)
         this.getData();
+        this.nombreCliente = "",
+        this.direccion ="",
+        this.telefono = 0,
+        this.curp ="",
+        this.rfc = "",
+        this.email = "",
+        this.coordenadas = ""
       },
       error: (error) => {
         // Manejar el error aquí
-        console.error("Hubo un error al insertar el almacen", error);
+        console.error("Hubo un error al insertar el cliente", error);
       },
     });
   }

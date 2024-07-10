@@ -85,4 +85,9 @@ export class AuthService {
   private updateCurrentUser(user: currentUser) {
     this.currentUserSubject.next(user);
   }
+
+  // Nuevo método para obtener el usuario actual
+  getCurrentUser(): currentUser {
+    return this.currentUserSubject.value;
+  }
 }

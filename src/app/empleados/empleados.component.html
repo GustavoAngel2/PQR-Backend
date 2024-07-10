@@ -5,13 +5,52 @@
   <img src="./assets/Almacenes.png" class="module-logo">
 </div>
 
+<div class="form-place">
+  <div class="form-container">
+  <div class="form-title">
+      <h1 mat-dialog-title>Nuevo Almacen</h1>
+  </div>
+  <div class="form-content">
+    <mat-form-field>
+      <mat-label>Persona</mat-label>
+      <select matNativeControl [(ngModel)]="IdPersona">
+        <option value="0">--Seleccione una Persona--</option>
+        <option *ngFor="let per of ComboPersona" [value]="per.Id">{{ per.Nombre }}</option>
+      </select>
+    </mat-form-field>
+       <mat-form-field>
+      <mat-label>Sucursal</mat-label>
+      <select matNativeControl [(ngModel)]="IdSucursal">
+        <option value="0">--Seleccione una Sucursal--</option>
+        <option *ngFor="let scr of ComboSucursal" [value]="scr.Id">{{ scr.Nombre }}</option>
+      </select>
+    </mat-form-field>
+          <mat-form-field>
+      <mat-label>Puesto</mat-label>
+      <select matNativeControl [(ngModel)]="IdPuesto">
+        <option value="0">--Seleccione un Puesto--</option>
+        <option *ngFor="let pt of ComboPuesto" [value]="pt.Id">{{ pt.nombre }}</option>
+      </select>
+    </mat-form-field>
+        <mat-form-field>
+          <mat-label>Usuario Actualiza</mat-label>
+          <input matInput placeholder="Usuario" [(ngModel)]="usuarioActualiza" />
+        </mat-form-field>
+  </div>
+</div>
+
+</div>
+
+
+
+
 <div class="actionbar">
   <mat-form-field class="search-bar">
       <mat-label>Filtrar</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
   </mat-form-field>
-  <button (click)="abrirInsertarModal()" class="btn right">Insertar<i class="underline"></i></button>
-</div>
+<!--   <button (click)="abrirInsertarModal()" class="btn right">Insertar<i class="underline"></i></button>
+ --></div>
 <br>
 <div class="table-container">
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>

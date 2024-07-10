@@ -7,6 +7,10 @@ import { EmpleadosInsertComponent } from "../empleados-insert/empleados-insert.c
 import { EmpleadosUpdateComponent } from "../empleados-update/empleados-update.component";
 import { empleado } from "../models/empleados.model";
 import { SucursalesService, PersonasService, PuestosService, EmpleadosService } from '../data.service';
+import { dialogParameters } from '../models/dialog.model';
+import { DialogsComponent } from '../dialogs/dialogs.component';
+
+
 
 
 @Component({
@@ -26,6 +30,19 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
     "Acciones",
   ];
   dataSource: MatTableDataSource<empleado>;
+  IdPersona: number = 0;
+  IdSucursal: number = 0;
+  IdPuesto: number = 0;
+  usuarioActualiza: number = 0;
+  ComboPersona:any;
+  ComboSucursal:any;
+  ComboPuesto:any;
+
+  dialogBody: dialogParameters = {
+    title:'test',
+    message:'This is a test',
+    buttons:'ok'
+  }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -41,12 +58,27 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit() {
-    
+    this.getData();
+    this.personasService.getPersonas().subscribe((data: any) => {
+      this.ComboPersona = data;
+      console.log(this.ComboPersona)
+    });
+     this.sucursalesService.getSucursales().subscribe((data: any) => {
+      this.ComboSucursal = data;
+      console.log(this.ComboSucursal)
+    });
+       this.puestoService.getPuestos().subscribe((data: any) => {
+      this.ComboPuesto = data;
+      console.log(this.ComboPuesto)
+    });
   }
     ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+
+
+
   // Método para realizar el filtrado
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -56,6 +88,9 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
       this.dataSource.paginator.firstPage();
     }
   }
+
+
+
   abrirInsertarModal() {
     const dialogRef = this.dialog.open(EmpleadosInsertComponent, {
       width: "550px",
@@ -66,6 +101,31 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
       // Manejar los resultados cuando la modal se cierre
     });
   }
+
+  insertar(): void {
+    const nuevoEmpleado = {
+      IdPersona: this.IdPersona,
+      IdSucursal: this.IdSucursal,
+      IdPuesto: this.IdPuesto,
+      usuarioActualiza: this.usuarioActualiza,
+    };
+
+    this.EmpleadosService.insertarEmpleado(nuevoEmpleado).subscribe({
+      next: (response) => {
+        this.getData()
+        this.dialogBody = {
+          title : 'Empleados',
+          message: 'Registro insertado correctamente!',
+          buttons:'ok'
+      }
+      this.showDialog(this.dialogBody)
+    },
+    error: (error) => {
+      console.error('Hubo un error al insertar el empleado', error);
+    }
+  });
+}
+
   eliminarCliente(Id: number) {
     // Aquí puedes agregar una confirmación antes de eliminar si lo deseas
     if (confirm("¿Estás seguro de que deseas eliminar este departamento?")) {
@@ -83,6 +143,9 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
       });
     }
   }
+
+
+
   abrirEditarModal(empleado: empleado) {
     const dialogRef = this.dialog.open(EmpleadosUpdateComponent, {
       width: "550px",
@@ -91,6 +154,20 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+      }
+    });
+  }
+
+
+  showDialog(data:dialogParameters) {
+    const dialogRef = this.dialog.open(DialogsComponent, {
+      width: '550px',
+      data: data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == "yes") {
+        this.getData();
       }
     });
   }

@@ -7,6 +7,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 import { UMService } from '../data.service';
+import { AuthService, currentUser } from '../auth.service';
+
 
 @Component({
   selector: 'app-articulos',
@@ -35,6 +37,7 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
     private articulosService: ArticulosService, 
     public dialog: MatDialog,
     private umService: UMService,
+    private authService: AuthService  
   ) {
     this.dataSource = new MatTableDataSource<articulos>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
@@ -48,6 +51,14 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
   usuario: number = 0;
   ComboUm: any;
 
+  loggedInUser: currentUser = { Id: '', NombreUsuario: '' };
+
+  ngOnInit() {
+    this.getData();
+    this.loggedInUser = this.authService.getCurrentUser(); // Obtener el usuario logeado
+    console.log('Usuario logeado:', this.loggedInUser);
+  }
+
   insertar(): void {
     const nuevoArticulo = {
       descripcion: this.descripcion,
@@ -55,7 +66,7 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
       UM: this.um, // Cambiar `um` a `UM`
       costo: this.costo,
       precio: this.precio,
-      Usuario: this.usuario, // Cambiar `usuario` a `Usuario`
+      Usuario: parseInt(this.loggedInUser.Id,10) // Cambiar `usuario` a `Usuario`
     };
     this.articulosService.insertarArticulos(nuevoArticulo).subscribe({
       next: (response) => {
@@ -70,9 +81,7 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngOnInit() {
-    this.getData();
-  }
+
 
   getData(){
     this.umService.getUM().subscribe((data: any) => {
