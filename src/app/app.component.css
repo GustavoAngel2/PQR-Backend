@@ -30,7 +30,7 @@
   right: 2%;
 }
 
-.home-btn {
+.nav-btn {
   text-align: center;
   width: 32px;
   height: 32px;
@@ -41,7 +41,7 @@
   transition: 0.5s;
 }
 
-.home-btn:hover {
+.nav-btn:hover {
   background-color: #0000006d;
   transition:.5s;
 }
