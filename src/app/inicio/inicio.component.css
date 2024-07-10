@@ -1,13 +1,10 @@
 .home-btn {
     margin: 34px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     padding-top: 6px;
     text-align: center;
     color: #fff;
     font-size: 16px;
-    background-color: #00000046;
+    background-color: #dfdfdf46;
     width: 128px;
     height: 128px;
     border-radius: 6PX;

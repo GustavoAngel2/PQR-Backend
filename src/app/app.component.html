@@ -28,8 +28,12 @@
       <button mat-icon-button (click)="sidenav.toggle()">
         <mat-icon class="info">menu</mat-icon>
       </button>
-      <span class="title">FritoMenú</span>
-        <span class="info">Hola {{actualUser.NombreUsuario}}!</span>
+      <span>FrySoft</span>
+      <div class="info">
+        <span>Hola {{actualUser.NombreUsuario}}!</span>
+        <span class="nav-btn" routerLink="inicio"><i class="bi bi-house-fill"></i></span>
+        <span class="nav-btn" (click)="logout()" routerLink="login"><i class="bi bi-box-arrow-left"></i></span>
+      </div>
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

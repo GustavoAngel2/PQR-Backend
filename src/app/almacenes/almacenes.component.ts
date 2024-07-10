@@ -71,7 +71,7 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
         this.limpiar();
         this.dialogBody = {
           title : 'Almacenes',
-          message: 'Registro insertado correctamente!',
+          message: response.message,
           buttons:'ok'
         }
         this.showDialog(this.dialogBody)
