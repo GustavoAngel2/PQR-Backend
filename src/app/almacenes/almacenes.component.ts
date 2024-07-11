@@ -38,7 +38,11 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   
 
-  constructor(private AlmacenesService: AlmacenesService,private authService: AuthService  ,public dialog: MatDialog,) {
+  constructor(
+    private AlmacenesService: AlmacenesService, 
+    private authService: AuthService, 
+    public dialog: MatDialog,
+  ){
     this.dataSource = new MatTableDataSource<Almacen>();
   }
 

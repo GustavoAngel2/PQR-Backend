@@ -68,7 +68,7 @@ mat-sidenav-content.mat-drawer-content.mat-sidenav-content.bg {
 }
 
 mat-sidenav{
-  width: 400px;
+  width: 420px;
 }
 
 a,i,span{
@@ -126,10 +126,6 @@ mat-paginator{
   flex-direction: row;
   justify-content: space-between;
   padding: 10px;
-}
-
-.lista{
-  background-color: #00000000;
 }
 
 .actionbar{
@@ -348,7 +344,7 @@ option{
   }
 
   mat-sidenav{
-    width: 300px;
+    width: 320px;
   }
   
   .table-container th{
