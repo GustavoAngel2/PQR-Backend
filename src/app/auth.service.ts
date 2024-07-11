@@ -6,6 +6,8 @@ import { catchError, map } from 'rxjs/operators';
 export interface currentUser {
   Id: string;
   NombreUsuario: string;
+  Rol: string;
+  IdRol: string;
 }
 
 @Injectable({
@@ -24,7 +26,9 @@ export class AuthService {
   private getStoredUser(): currentUser {
     return {
       Id: sessionStorage.getItem('Id') ?? '',
-      NombreUsuario: sessionStorage.getItem('NombreUsuario') ?? ''
+      NombreUsuario: sessionStorage.getItem('NombreUsuario') ?? '',
+      Rol: sessionStorage.getItem('Rol') ?? '',
+      IdRol : sessionStorage.getItem('IdRol') ?? ''
     };
   }
 
@@ -36,6 +40,8 @@ export class AuthService {
           sessionStorage.setItem('Token', response.Response.data.Token);
           this.setIdUsername(response.Response.data.Usuario.Id.toString());
           this.setUsername(response.Response.data.Usuario.NombreUsuario);
+          this.setRol(response.Response.data.Usuario.Rol);
+          this.setIdRol(response.Response.data.Usuario.IdRol);
           this.updateCurrentUser(response.Response.data.Usuario);
           return response.Response.data;
         } else {
@@ -53,7 +59,9 @@ export class AuthService {
     sessionStorage.removeItem('Token');
     sessionStorage.removeItem('Id');
     sessionStorage.removeItem('NombreUsuario');
-    this.updateCurrentUser({ Id: '', NombreUsuario: '' });
+    sessionStorage.removeItem('Rol');
+    sessionStorage.removeItem('IdRol')
+    this.updateCurrentUser({ Id: '', NombreUsuario: '' ,Rol:'', IdRol:''});
   }
 
   getToken() {
@@ -69,13 +77,28 @@ export class AuthService {
     sessionStorage.setItem('NombreUsuario', username);
     console.log('Username set in sessionStorage:', username);
   }
-
+  
+  setRol(rol: string) {
+    sessionStorage.setItem('Rol', rol);
+    console.log('Rol set in sessionStorage:', rol);
+  }
+  setIdRol(Idrol: string) {
+    sessionStorage.setItem('IdRol', Idrol);
+    console.log('IdRol set in sessionStorage:', Idrol);
+  }
   getIdUsername(): string {
     return sessionStorage.getItem('Id') ?? '';
   }
 
   getUsername(): string {
     return sessionStorage.getItem('NombreUsuario') ?? '';
+  }
+
+  getRol():string{
+    return sessionStorage.getItem('Rol') ?? '';
+  }
+  getIdRol():string{
+    return sessionStorage.getItem('IdRol') ?? '';
   }
 
   isLoggedIn(): boolean {

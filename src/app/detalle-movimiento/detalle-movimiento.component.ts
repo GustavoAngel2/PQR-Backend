@@ -36,7 +36,7 @@ export class DetalleMovimientoComponent implements OnInit, AfterViewInit {
     FechaFin: '',
     FechaInicio: ''
   };
-  loggedInUser: currentUser = { Id: '', NombreUsuario: '' };
+  loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

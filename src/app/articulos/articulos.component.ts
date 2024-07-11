@@ -51,7 +51,7 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
   usuario: number = 0;
   ComboUm: any;
 
-  loggedInUser: currentUser = { Id: '', NombreUsuario: '' };
+  loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
 
   ngOnInit() {
     this.getData();

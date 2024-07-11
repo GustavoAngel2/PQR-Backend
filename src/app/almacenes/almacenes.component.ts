@@ -51,7 +51,7 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
   usuario: number = 0;
   encargado: number = 0;
 
-  loggedInUser: currentUser = { Id: '', NombreUsuario: '' };
+  loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
 
   ngOnInit() {
     this.getData();
