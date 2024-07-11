@@ -42,7 +42,7 @@ export class DetallePerfilComponent implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource<DetallePerfil>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
 
-  loggedInUser: currentUser = { Id: '', NombreUsuario: '' };
+  loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
 
 
   ngOnInit() {

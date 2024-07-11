@@ -32,7 +32,7 @@ export class CategoriaModuloComponent  implements OnInit, AfterViewInit         
   nombreCatModulo: string ='';
   descripcion:string ='';
   usuario:number =0;
-  loggedInUser: currentUser = { Id: '', NombreUsuario: '' };
+  loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
 
   ngOnInit() {
     this.getData()

@@ -30,7 +30,7 @@ export class ClientesComponent implements OnInit, AfterViewInit {
   email: string ="";
   rfc : string ="";
   coordenadas :string ="";
-  loggedInUser: currentUser = { Id: '', NombreUsuario: '' };
+  loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
