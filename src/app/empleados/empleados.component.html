@@ -1,3 +1,5 @@
+<!-- Plantilla HTML -->
+
 <div class="title-container">
   <br>
   <label class="title">Empleados</label>
@@ -5,57 +7,86 @@
   <img src="./assets/Almacenes.png" class="module-logo">
 </div>
 
-<div class="actionbar">
-  <mat-form-field class="search-bar">
+<div class="form-place">
+  <div class="form-container">
+    <div class="form-title">
+      <h1 mat-dialog-title>Nuevo Empleado</h1>
+    </div>
+    <div class="form-content">
+      <mat-form-field>
+        <mat-label>Persona</mat-label>
+        <mat-select [(ngModel)]="empleados.IdPersona" [compareWith]="compareFn" name="IdPersona">
+          <mat-option *ngFor="let per of ComboPersona" [value]="per.Id">{{ per.Nombre }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <mat-label>Sucursal</mat-label>
+        <mat-select [(ngModel)]="empleados.IdSucursal" [compareWith]="compareFn" name="IdSucursal">
+          <mat-option *ngFor="let scr of ComboSucursal" [value]="scr.Id">{{ scr.Nombre }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <mat-label>Puesto</mat-label>
+        <mat-select [(ngModel)]="empleados.IdPuesto" [compareWith]="compareFn" name="IdPuesto">
+          <mat-option *ngFor="let pt of ComboPuesto" [value]="pt.Id">{{ pt.Nombre }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <br>
+  <div class="actionbar">
+    <button style="margin-top: -20px;" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Actualizar<i class="underline"></i></button>
+    <button  [hidden]="!datosCargados" style="margin-top: -20px;" class="btn-cancel"><i class="bi bi-cloud-upload-fill icon"></i>Cancelar</button>
+    <button (click)="insertar()" [hidden]="datosCargados" style="margin-top: -20px;" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
+  </div>
+  <br>
+  <div class="table-container">
+    <mat-form-field class="search-bar">
       <mat-label>Filtrar</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
-  </mat-form-field>
-  <button (click)="abrirInsertarModal()" class="btn right">Insertar<i class="underline"></i></button>
+    </mat-form-field>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+    <table mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="Id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let empleado">{{ empleado.Id }}</td>
+      </ng-container>
+      <ng-container matColumnDef="Persona">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+        <td mat-cell *matCellDef="let empleado">{{ empleado.Persona }}</td>
+      </ng-container>
+      <ng-container matColumnDef="Sucursal">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Sucursal</th>
+        <td mat-cell *matCellDef="let empleado">{{ empleado.Sucursal }}</td>
+      </ng-container>
+      <ng-container matColumnDef="Puesto">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Puesto</th>
+        <td mat-cell *matCellDef="let empleado">{{ empleado.Puesto }}</td>
+      </ng-container>
+      <ng-container matColumnDef="usuarioActualiza">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>UsuarioActualiza</th>
+        <td mat-cell *matCellDef="let empleado">{{ empleado.usuarioActualiza }}</td>
+      </ng-container>
+      <ng-container matColumnDef="fechaRegistro">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha de Registro</th>
+        <td mat-cell *matCellDef="let empleado">{{ empleado.fechaRegistro }}</td>
+      </ng-container>
+      <ng-container matColumnDef="fechaActualiza">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha de Actualización</th>
+        <td mat-cell *matCellDef="let empleado">{{ empleado.fechaActualiza }}</td>
+      </ng-container>
+      <ng-container matColumnDef="Acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let empleado">
+          <mat-icon class="action-btn green" (click)="cargarDatos(empleado)">edit</mat-icon>
+          <mat-icon class="action-btn red" (click)="eliminarEmpleado(empleado.Id)">delete</mat-icon>
+        </td>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </table>
+  </div>
 </div>
-<br>
-<div class="table-container">
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
-  <table mat-table [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="Id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-      <td mat-cell *matCellDef="let empleados">{{ empleados.Id }}</td>
-    </ng-container>
-    <ng-container matColumnDef="Persona">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
-      <td mat-cell *matCellDef="let empleado">{{ empleado.Persona }}</td>
-    </ng-container>
-    <ng-container matColumnDef="Sucursal">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Sucursal</th>
-      <td mat-cell *matCellDef="let empleado">{{ empleado.Sucursal }}</td>
-    </ng-container>
-    <ng-container matColumnDef="Puesto">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Puesto</th>
-      <td mat-cell *matCellDef="let empleado">{{ empleado.Puesto }}</td>
-    </ng-container>
-    <ng-container matColumnDef="usuarioActualiza">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        UsuarioActualiza
-      </th>
-      <td mat-cell *matCellDef="let empleado">
-        {{ empleado.usuarioActualiza }}
-      </td>
-    </ng-container>
-    <ng-container matColumnDef="fechaRegistro">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>fechaRegistro</th>
-      <td mat-cell *matCellDef="let empleado">{{ empleado.fechaRegistro }}</td>
-    </ng-container>
-    <ng-container matColumnDef="fechaActualiza">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>fechaActualiza</th>
-      <td mat-cell *matCellDef="let empleado">{{ empleado.fechaActualiza }}</td>
-    </ng-container>
-    <ng-container matColumnDef="Acciones">
-      <th mat-header-cell *matHeaderCellDef>Acciones</th>
-      <td mat-cell *matCellDef="let elemento">
-        <mat-icon class="action-btn green" (click)="abrirEditarModal(elemento)">edit</mat-icon>
-        <mat-icon class="action-btn red" (click)="eliminarCliente(elemento.Id)">delete</mat-icon>
-      </td>
-    </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-  </table>
-</div>
+

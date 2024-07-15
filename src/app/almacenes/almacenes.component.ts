@@ -8,6 +8,7 @@ import { MatSort } from '@angular/material/sort';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 import { dialogParameters } from '../models/dialog.model';
 import { DialogsComponent } from '../dialogs/dialogs.component';
+import { AuthService, currentUser } from '../auth.service';
 
 @Component({
   selector: 'app-almacenes',
@@ -37,7 +38,11 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   
 
-  constructor(private AlmacenesService: AlmacenesService, public dialog: MatDialog,) {
+  constructor(
+    private AlmacenesService: AlmacenesService, 
+    private authService: AuthService, 
+    public dialog: MatDialog,
+  ){
     this.dataSource = new MatTableDataSource<Almacen>();
   }
 
@@ -46,11 +51,20 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
   usuario: number = 0;
   encargado: number = 0;
 
+  loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
+
+  ngOnInit() {
+    this.getData();
+    this.loggedInUser = this.authService.getCurrentUser(); // Obtener el usuario logeado
+    console.log('Usuario logeado:', this.loggedInUser);
+  }
+
+
   insertar(): void {
     const nuevoAlmacen = {
       nombre: this.nombreAlmacen,
       direccion: this.direccion,
-      usuario: this.usuario,
+      usuario: parseInt(this.loggedInUser.Id, 10),
       encargado: this.encargado
     };
 
@@ -61,7 +75,7 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
         this.limpiar();
         this.dialogBody = {
           title : 'Almacenes',
-          message: 'Registro insertado correctamente!',
+          message: response.message,
           buttons:'ok'
         }
         this.showDialog(this.dialogBody)
@@ -72,9 +86,7 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngOnInit() {
-    this.getData();
-  }
+ 
 
   getData() {
     this.dataSource.filterPredicate = (data: Almacen, filter: string) => {

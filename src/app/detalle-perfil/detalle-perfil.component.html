@@ -27,10 +27,10 @@
               <option value="0">sin acceso</option>
             </select>
           </mat-form-field>
-          <mat-form-field>
+<!--           <mat-form-field>
               <mat-label>Usuario Actualiza</mat-label>
               <input  type="number" matInput placeholder="Id del usuario que actualiza" [(ngModel)]="usuarioActualiza">
-          </mat-form-field>
+          </mat-form-field> -->
     </div>
 </div>
 <div class="actionbar">
@@ -44,7 +44,7 @@
 <br>
 <br>
 <div class="table-container">
-<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+<mat-paginator [pageSizeOptions]="[10, 25, 100]" showFirstLastButtons></mat-paginator>
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>

@@ -10,6 +10,9 @@ import { DetallePerfilUpdateComponent } from '../detalle-perfil-update/detalle-p
 import { RolesService } from '../data.service';
 import { ModulosService } from '../data.service';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
+import { AuthService, currentUser } from '../auth.service';
+
+
 @Component({
   selector: 'app-detalle-perfil',
   templateUrl: './detalle-perfil.component.html',
@@ -32,13 +35,20 @@ export class DetallePerfilComponent implements OnInit, AfterViewInit {
     private DetallePerfilService: DetallePerfilService, 
     public dialog:MatDialog, 
     private modulosService: ModulosService, 
+    private authService: AuthService  ,
     private rolesService :RolesService
+    
   ) {
     this.dataSource = new MatTableDataSource<DetallePerfil>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
 
+  loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
+
+
   ngOnInit() {
     this.getData();
+    this.loggedInUser = this.authService.getCurrentUser(); // Obtener el usuario logeado
+    console.log('Usuario logeado:', this.loggedInUser);
   }
     ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -107,13 +117,15 @@ export class DetallePerfilComponent implements OnInit, AfterViewInit {
       idPerfil: this.idPerfil,
       idModulo: this.idModulo,
       acceso: this.acceso,
-      usuarioActualiza: this.usuarioActualiza
+      usuarioActualiza: parseInt(this.loggedInUser.Id, 10),
     };
 
     this.DetallePerfilService.insertarDetallePerfil(nuevoDetallePerfil).subscribe({
       next: (response) => {
-
         this.getData();
+        this.idPerfil = 0;
+        this.idModulo = 0;
+        this.acceso = 0;
       },
       error: (error) => {
         console.error('Hubo un error al insertar el almacen: ', error);

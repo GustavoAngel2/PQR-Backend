@@ -7,6 +7,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { CategoriaModuloUpdateComponent } from '../categoria-modulo-update/categoria-modulo-update.component';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
+import { AuthService, currentUser } from '../auth.service';
+
 
 
 @Component({
@@ -22,7 +24,7 @@ export class CategoriaModuloComponent  implements OnInit, AfterViewInit         
   @ViewChild(MatSort) sort!: MatSort;
 
 
-  constructor(private CategoriaModuloService: CategoriaModuloService, public dialog:MatDialog) {
+  constructor(private CategoriaModuloService: CategoriaModuloService, private authService: AuthService  ,public dialog:MatDialog) {
     this.dataSource = new MatTableDataSource<CategoriaModulo>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
 
@@ -30,13 +32,19 @@ export class CategoriaModuloComponent  implements OnInit, AfterViewInit         
   nombreCatModulo: string ='';
   descripcion:string ='';
   usuario:number =0;
+  loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
 
+  ngOnInit() {
+    this.getData()
+    this.loggedInUser = this.authService.getCurrentUser(); // Obtener el usuario logeado
+    console.log('Usuario logeado:', this.loggedInUser);
+  }
 
   insertar():void{
     const nuevoCatMod ={
       nombre:this.nombreCatModulo,
       descripcion:this.descripcion,
-      usuario:this.usuario,
+      usuario: parseInt(this.loggedInUser.Id, 10),
     };
 
     this.CategoriaModuloService.insertCategoriaModulo(nuevoCatMod).subscribe({
@@ -53,9 +61,7 @@ export class CategoriaModuloComponent  implements OnInit, AfterViewInit         
   }
 
 
-  ngOnInit() {
-    this.getData()
-  }
+
 
 getData(){
   this.dataSource.filterPredicate = (data: CategoriaModulo, filter: string) => {

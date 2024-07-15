@@ -5,8 +5,6 @@
     <img src="./assets/Articulos.png" class="module-logo">
 </div>
 
-
-
 <div class="form-place">
     <div class="form-container">
         <div class="form-title">
@@ -40,7 +38,7 @@
     <mat-paginator [pageSizeOptions]="[10, 25, 100]" showFirstLastButtons></mat-paginator>
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
             <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.Id}} </td>
         </ng-container>
         <ng-container matColumnDef="idMovimiento">
@@ -48,15 +46,15 @@
             <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.IdTipoMov}} </td>
         </ng-container>
         <ng-container matColumnDef="idAlmacen">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Codigo </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Almacen </th>
             <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.IdAlmacen}} </td>
         </ng-container>
         <ng-container matColumnDef="FechaMovimiento">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> USUARIO </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha del Movimiento </th>
             <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.fechaMovimiento}} </td>
         </ng-container>
         <ng-container matColumnDef="UsuarioActualiza">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> USUARIO </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
             <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.Usuario}} </td>
         </ng-container>
         <ng-container matColumnDef="Acciones">
