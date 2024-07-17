@@ -9,6 +9,7 @@ import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 import { dialogParameters } from '../models/dialog.model';
 import { DialogsComponent } from '../dialogs/dialogs.component';
 import { AuthService, currentUser } from '../auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-almacenes',
@@ -42,6 +43,7 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
     private AlmacenesService: AlmacenesService, 
     private authService: AuthService, 
     public dialog: MatDialog,
+    private toastr: ToastrService
   ){
     this.dataSource = new MatTableDataSource<Almacen>();
   }
@@ -73,12 +75,11 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
         console.log(response)
         this.getData();
         this.limpiar();
-        this.dialogBody = {
-          title : 'Almacenes',
-          message: response.message,
-          buttons:'ok'
+        if(response.StatusCode == 200){
+          this.toastr.success(response.message, 'Almacenes');
+        } else {
+          this.toastr.error(response.message,'Almacenes')
         }
-        this.showDialog(this.dialogBody)
       },
       error: (error) => {
         console.error('Hubo un error al insertar el almacen', error);
