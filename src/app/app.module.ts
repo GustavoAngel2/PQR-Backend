@@ -150,6 +150,8 @@ import { DialogsComponent } from './dialogs/dialogs.component';
     provideToastr({
       timeOut: 10000,
       positionClass: 'toast-top-right',
+      progressBar: true,
+      preventDuplicates: true
     }),
     provideAnimations()
   ],
