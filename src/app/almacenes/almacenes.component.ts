@@ -189,7 +189,6 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
   limpiar(): void{
     this.nombreAlmacen = "";
     this.direccion = "";
-    this.usuario = 0;
     this.encargado = 0;
     this.datosCargados =false;
   }
