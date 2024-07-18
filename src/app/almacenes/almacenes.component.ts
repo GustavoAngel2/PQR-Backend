@@ -70,7 +70,6 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
     } else {
       this.AlmacenesService.insertarAlmacenes(nuevoAlmacen).subscribe({
         next: (response) => {
-          console.log(response)
           this.getData();
           this.limpiar();
           if(response.StatusCode == 200){
@@ -189,7 +188,6 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
   limpiar(): void{
     this.nombreAlmacen = "";
     this.direccion = "";
-    this.usuario = 0;
     this.encargado = 0;
     this.datosCargados =false;
   }

@@ -148,7 +148,7 @@ import { DialogsComponent } from './dialogs/dialogs.component';
     AuthService, // Proveedor del AuthService
     UserService,
     provideToastr({
-      timeOut: 10000,
+      timeOut: 3000,
       positionClass: 'toast-top-right',
       progressBar: true,
       preventDuplicates: true
