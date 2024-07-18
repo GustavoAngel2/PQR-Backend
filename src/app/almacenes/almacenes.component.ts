@@ -70,7 +70,6 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
     } else {
       this.AlmacenesService.insertarAlmacenes(nuevoAlmacen).subscribe({
         next: (response) => {
-          console.log(response)
           this.getData();
           this.limpiar();
           if(response.StatusCode == 200){
