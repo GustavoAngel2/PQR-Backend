@@ -9,6 +9,7 @@ import { dialogParameters } from '../models/dialog.model';
 import { DialogsComponent } from '../dialogs/dialogs.component';
 import { AuthService, currentUser } from '../auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 
 @Component({
   selector: "app-empleados",
@@ -134,20 +135,29 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
     });
   }
 
-  eliminarEmpleado(Id: number) {
-    if (confirm("¿Estás seguro de que deseas eliminar este empleado?")) {
-      this.EmpleadosService.deleteEmpleado(Id).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.dataSource.data = this.dataSource.data.filter(
-            (empleado: empleado) => empleado.Id !== Id
-          );
-        },
-        error: (error) => {
-          console.error("Hubo un error al eliminar el empleado", error);
-        },
-      });
-    }
+  showDeleteDialog(Id: number, Name: string) {
+    const dialogRef = this.dialog.open(DeleteMenuComponent, {
+      width: '550px',
+      data: Name
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == "yes") {
+        this.EmpleadosService.deleteEmpleado(Id).subscribe({
+          next: (response) => {
+            if (response.StatusCode === 200) {
+              this.toastr.success(response.message, 'Empleados');
+            } else {
+              this.toastr.error(response.message, 'Empleados');
+            }
+            this.getData()
+          },
+          error: (error) => {
+            console.error("Hubo un error al eliminar el empleado", error);
+          },
+        });
+      }
+    });
   }
 
   getData() {
