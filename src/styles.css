@@ -313,7 +313,7 @@ option{
   margin: 0.5%;
   padding: 32px;
   width: 94%;
-  background-color: #cc4a1fa4;
+  background-color: #cc4a1f;
   border-radius: 50px;
 /*   border: 4px solid rgb(138, 57, 7);
  */}
@@ -329,7 +329,7 @@ option{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
   justify-items: center;
 }
 

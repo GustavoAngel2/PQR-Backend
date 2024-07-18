@@ -121,11 +121,11 @@ export class ClientesService {
       nombre: ClientesData.Nombre,
       direccion: ClientesData.Direccion,
       usuario: ClientesData.Usuario,
-      telefono: ClientesData.telefono,
-      rfc: ClientesData.rfc,
-      curp:ClientesData.curp,
-      email: ClientesData.email,
-      coordenadas: ClientesData.coordenadas,
+      telefono: ClientesData.Telefono,
+      rfc: ClientesData.RFC,
+      curp:ClientesData.CURP,
+      email: ClientesData.Email,
+      coordenadas: ClientesData.Coordenadas,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
     return this.http.put<ApiResponse>(`${this.apiUrl}/Clientes/Update`, body);

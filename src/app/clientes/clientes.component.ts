@@ -20,11 +20,11 @@ export class ClientesComponent implements OnInit, AfterViewInit {
     Nombre: "",
     Direccion: "",
     Usuario: 0,
-    telefono: 0,
-    curp: "",
-    email: "",
-    rfc: "",
-    coordenadas: "",
+    Telefono: 0,
+    CURP: "",
+    Email: "",
+    RFC: "",
+    Coordenadas: "",
   };
   datosCargados: boolean = false;
   displayedColumns: string[] = ['Id', 'Nombre', 'Direccion', 'Usuario', 'FechaAct', 'FechaReg', 'Telefono', 'Curp', 'Rfc', 'Email', 'Coordenadas', 'Acciones'];
@@ -149,11 +149,11 @@ export class ClientesComponent implements OnInit, AfterViewInit {
       Nombre: this.nombreCliente,
       Direccion: this.direccion,
       Usuario: parseInt(this.loggedInUser.Id, 10),
-      telefono: this.telefono,
-      curp: this.curp,
-      rfc: this.rfc,
-      email: this.email,
-      coordenadas: this.coordenadas
+      Telefono: this.telefono,
+      CURP: this.curp,
+      RFC: this.rfc,
+      Email: this.email,
+      Coordenadas: this.coordenadas
     };
 
     console.log('Actualizando cliente:', clienteActualizado);
@@ -178,11 +178,11 @@ export class ClientesComponent implements OnInit, AfterViewInit {
     this.cliente.Id = clientes.Id;
     this.nombreCliente = clientes.Nombre;
     this.direccion = clientes.Direccion;
-    this.telefono = clientes.telefono;
-    this.curp = clientes.curp;
-    this.rfc = clientes.rfc;
-    this.email = clientes.email;
-    this.coordenadas = clientes.coordenadas;
+    this.telefono = clientes.Telefono;
+    this.curp = clientes.CURP;
+    this.rfc = clientes.RFC;
+    this.email = clientes.Email;
+    this.coordenadas = clientes.Coordenadas;
     this.usuario = clientes.Usuario;
     this.datosCargados = true;
     console.log('Datos cargados:', clientes);
