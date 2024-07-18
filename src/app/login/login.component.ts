@@ -27,11 +27,12 @@ export class LoginComponent {
           this.router.navigate(['/inicio']);
         } else {
           this.error = 'Usuario o contraseña incorrecto.';
+          console.log(this.error)
         }
       },
       err => {
         this.error = 'Error en el servidor. Por favor, inténtelo más tarde.';
-        console.error('Detalles del error:', err);
+        this.toastr.error(`Usuario o contraseña incorrectos`)
       }
     );
   }

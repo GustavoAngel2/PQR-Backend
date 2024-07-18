@@ -4,7 +4,7 @@
     text-align: center;
     color: #fff;
     font-size: 16px;
-    background-color: #00000043;
+    background-color: #0000007d;
     width: 128px;
     height: 128px;
     border-radius: 6PX;
@@ -12,7 +12,7 @@
 }
 
 .home-btn:hover {
-    background-color: #0000006d;
+    background-color: #000000b9;
     transition:.5s;
 }
   
