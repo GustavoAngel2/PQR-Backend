@@ -164,7 +164,7 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
       Id: this.almacen.Id,
       Nombre: this.nombreAlmacen,
       Direccion: this.direccion,
-      Usuario: this.usuario,
+      Usuario: parseInt(this.loggedInUser.Id, 10),
       Encargado: this.encargado
     };
   

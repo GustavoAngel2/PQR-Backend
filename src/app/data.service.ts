@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse, UpdateAlmacen } from './models/almacen.model';
@@ -20,7 +20,6 @@ import { UpdateCategoriaModulo } from './models/categoriaModulo.model';
 import { AuthInfo } from './models/login.model'; 
 import { ApiResponse2 } from './models/login.model';
 import { AuthService } from './auth.service';
-
 
 
 @Injectable({
@@ -437,12 +436,14 @@ export class ExistenciasService {
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient,private authService: AuthService) {}
 
-  getExistencias(IdAlmacen: 0): Observable<ApiResponse> {
+  getExistencias(IdAlmacen: number): Observable<ArrayBuffer> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.post<ApiResponse>(`${this.apiUrl}/Existencias/Get?Almacen=0`,{ IdAlmacen },{headers});
+
+    const params = new HttpParams().set('Almacen', IdAlmacen.toString());
+    return this.http.get<ArrayBuffer>(`${this.apiUrl}/Existencias/Get`, { params, headers });
   }
 
   insertExistencias(ExistenciasData: {
@@ -464,7 +465,7 @@ export class ExistenciasService {
   }
   deleteExistencias(id: number): Observable<any> {
     
-    return this.http.post(`${this.apiUrl}/Existencias/Delete`, { id });
+    return this.http.put(`${this.apiUrl}/Existencias/Delete`, { id });
   }
   updateExistencias(
     ExistenciasData: UpdateExistencia
@@ -522,7 +523,7 @@ export class movInventarioService {
   }
   deleteMovInventario(id: number): Observable<any> {
     
-    return this.http.post(`${this.apiUrl}/MovInventario/Delete`, { id });
+    return this.http.put(`${this.apiUrl}/MovInventario/Delete`, { id });
   }
   updateMovInventario(
     MovInvData: UpdateMovInventario

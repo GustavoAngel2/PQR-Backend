@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { CategoriaModuloService } from '../data.service';
-import { CategoriaModulo } from '../models/categoriaModulo.model';
+import { CategoriaModulo, UpdateCategoriaModulo } from '../models/categoriaModulo.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -16,7 +16,16 @@ import { AuthService, currentUser } from '../auth.service';
   templateUrl: './categoria-modulo.component.html',
   styleUrls: ['./categoria-modulo.component.css']
 })
-export class CategoriaModuloComponent  implements OnInit, AfterViewInit                                              {
+export class CategoriaModuloComponent  implements OnInit, AfterViewInit {
+  categoriaModulo:UpdateCategoriaModulo ={
+    Id :0,
+    Nombre:"",
+    Descripcion:"",
+    Usuario :0,
+  }
+  datosCargados: boolean = false;
+
+
   displayedColumns: string[] = ['Id', 'Nombre', 'Descripcion', 'FechaRegistro', 'FechaActualiza','Usuario','Acciones'];
   dataSource: MatTableDataSource<CategoriaModulo>;
 
@@ -83,6 +92,28 @@ getData(){
   });
 }
 
+
+
+  actualizar(): void {
+    const CatModAct: UpdateCategoriaModulo = {
+      Id: this.categoriaModulo.Id,
+      Descripcion: this.descripcion,
+      Nombre: this.nombreCatModulo,
+      Usuario: parseInt(this.loggedInUser.Id, 10)
+    };
+
+    console.log('Actualizando Categoria:', CatModAct);
+    this.CategoriaModuloService.updateCategoriaModulo(CatModAct).subscribe({
+      next: (response) => {
+        console.log('Respuesta del servidor:', response);
+        this.getData(); // Actualizar datos después de la actualización
+        this.limpiar();
+      },
+      error: (error) => {
+        console.error('Error al actualizar la categoria', error);
+      }
+    });
+  }
     ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -118,16 +149,19 @@ getData(){
   });
 }
 
-  abrirEditarModal(catmodulo: CategoriaModulo) {
-    const dialogRef = this.dialog.open(CategoriaModuloUpdateComponent, {
-      width: '550px',
-      data: catmodulo // Pasa el objeto de departamento a la modal
-    });
-  
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        
-      }
-    });
-  }
+cargarDatos(categoriaModulo: UpdateCategoriaModulo) {
+  this.categoriaModulo.Id = categoriaModulo.Id;
+  this.nombreCatModulo = categoriaModulo.Nombre;
+  this.descripcion = categoriaModulo.Descripcion;
+  this.usuario = parseInt(categoriaModulo.Descripcion);
+  this.datosCargados = true;
+
+}
+ 
+limpiar():void {
+  this.nombreCatModulo = "";
+  this.descripcion =""
+  this.datosCargados = false;
+}
+
 }

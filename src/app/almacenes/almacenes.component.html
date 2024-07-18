@@ -14,15 +14,18 @@
     <div class="form-content">
         <mat-form-field>
             <mat-label>Nombre</mat-label>
-            <input matInput placeholder="Ingresa el nombre" [(ngModel)]="nombreAlmacen">
+            <input matInput placeholder="Ingresa el nombre" [(ngModel)]="nombreAlmacen" required>
+            <mat-error *ngIf="nombreAlmacen === ''">El nombre es requerido</mat-error>
           </mat-form-field>
           <mat-form-field>
             <mat-label>Direccion</mat-label>
-            <input matInput placeholder="Ingresa la direccion" [(ngModel)]="direccion">
+            <input matInput placeholder="Ingresa la direccion" [(ngModel)]="direccion" required>
+            <mat-error *ngIf="direccion === ''">La dirección es requerida</mat-error>
           </mat-form-field>
           <mat-form-field>
             <mat-label>Encargado</mat-label>
-            <input matInput placeholder="Encargado" [(ngModel)]="encargado">
+            <input matInput placeholder="Encargado" [(ngModel)]="encargado" required>
+            <mat-error *ngIf="encargado === 0">El encargado es requerido</mat-error>
           </mat-form-field>
     </div>
 </div>
@@ -30,7 +33,7 @@
 </div>
 <br>
 <div class="actionbar">
-    <button (click)="actualizar()" style="margin-top: -20px;" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Actualizar<i class="underline"></i></button>
+    <button [hidden]="!datosCargados" (click)="actualizar()" style="margin-top: -20px;" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Actualizar<i class="underline"></i></button>
     <button [hidden]="!datosCargados" (click)="limpiar()" style="margin-top: -20px;" class="btn-cancel "><i class="bi bi-cloud-upload-fill icon"></i>Cancelar</button>
     <button (click)="insertar()" style="margin-top: -20px;" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
 </div>

@@ -9,7 +9,6 @@ import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 import { UMService } from '../data.service';
 import { AuthService, currentUser } from '../auth.service';
 
-
 @Component({
   selector: 'app-articulos',
   templateUrl: './articulos.component.html',
@@ -27,7 +26,7 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
   };
   datosCargados: boolean = false;
 
-  displayedColumns: string[] = ['Id', 'Codigo', 'Descripcion', 'UM', 'Usuario','Costo','Precio','Fecha Registro','Fecha Actualiza','Acciones'];
+  displayedColumns: string[] = ['Id', 'Codigo', 'Descripcion', 'UM', 'Usuario', 'Costo', 'Precio', 'Fecha Registro', 'Fecha Actualiza', 'Acciones'];
   dataSource: MatTableDataSource<articulos>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -49,9 +48,9 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
   costo: number = 0;
   precio: number = 0;
   usuario: number = 0;
-  ComboUm: any;
+  ComboUm: any[] = [];
 
-  loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
+  loggedInUser: currentUser = { Id: '', NombreUsuario: '', Rol: '', IdRol: '' };
 
   ngOnInit() {
     this.getData();
@@ -66,7 +65,7 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
       UM: this.um, // Cambiar `um` a `UM`
       costo: this.costo,
       precio: this.precio,
-      Usuario: parseInt(this.loggedInUser.Id,10) // Cambiar `usuario` a `Usuario`
+      Usuario: parseInt(this.loggedInUser.Id, 10) // Cambiar `usuario` a `Usuario`
     };
     this.articulosService.insertarArticulos(nuevoArticulo).subscribe({
       next: (response) => {
@@ -81,12 +80,10 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
     });
   }
 
-
-
-  getData(){
+  getData() {
     this.umService.getUM().subscribe((data: any) => {
       this.ComboUm = data;
-      console.log(this.ComboUm)
+      console.log(this.ComboUm);
     });
     this.dataSource.filterPredicate = (data: articulos, filter: string) => {
       return data.Descripcion.toLowerCase().includes(filter) || 
@@ -113,10 +110,10 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
       data: Name
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result == "yes"){
+      if (result == "yes") {
         this.articulosService.deleteArticulos(Id).subscribe({
           next: (response) => {
-            this.getData()
+            this.getData();
           },
           error: (error) => {
             console.error('Hubo un error: ', error);
@@ -148,7 +145,7 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
       UM: this.um,
       Costo: this.costo,
       Precio: this.precio,
-      Usuario: this.usuario
+      Usuario: parseInt(this.loggedInUser.Id, 10)
     };
 
     console.log('Actualizando articulo:', articuloActualizado);
@@ -165,20 +162,24 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
   }
 
   cargarDatos(articulo: updateArticulos) {
-    this.articulo = { ...articulo };
+    this.articulo.Id = articulo.Id;
+    this.codigo = articulo.Codigo;
+    this.descripcion = articulo.Descripcion;
+    this.um = articulo.UM;
+    this.costo = articulo.Costo;
+    this.precio = articulo.Precio;
+    this.usuario = articulo.Usuario;
     this.datosCargados = true;
   }
 
   limpiar(): void {
-    this.articulo = {
-      Id: 0,
-      Codigo: '', 
-      Descripcion: '',
-      UM: 0,
-      Costo: 0,
-      Precio: 0,
-      Usuario: 0
-    };
+    this.codigo = "";
+    this.descripcion = "";
+    this.um = 0;
+    this.costo = 0;
+    this.precio = 0;
+    this.usuario = 0;
     this.datosCargados = false;
+
   }
 }
