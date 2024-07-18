@@ -8,7 +8,7 @@ import { MatSort } from '@angular/material/sort';
 import { CategoriaModuloUpdateComponent } from '../categoria-modulo-update/categoria-modulo-update.component';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 import { AuthService, currentUser } from '../auth.service';
-
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -33,7 +33,12 @@ export class CategoriaModuloComponent  implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
 
-  constructor(private CategoriaModuloService: CategoriaModuloService, private authService: AuthService  ,public dialog:MatDialog) {
+  constructor(
+    private CategoriaModuloService: CategoriaModuloService, 
+    private authService: AuthService ,
+    public dialog:MatDialog, 
+    private toastr: ToastrService
+  ) {
     this.dataSource = new MatTableDataSource<CategoriaModulo>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
 
