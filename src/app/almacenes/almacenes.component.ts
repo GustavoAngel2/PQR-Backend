@@ -135,25 +135,17 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
       if (result == "yes") {
         this.AlmacenesService.deleteAlmacenes(Id).subscribe({
           next: (response) => {
+            if(response.StatusCode == 200){
+              this.toastr.success(response.message, 'Almacenes');
+            } else {
+              this.toastr.error(response.message,'Almacenes')
+            }
             this.getData();
           },
           error: (error) => {
             console.error('Hubo un error al eliminar el almacén', error);
           }
         });
-      }
-    });
-  }
-
-  showDialog(data:dialogParameters) {
-    const dialogRef = this.dialog.open(DialogsComponent, {
-      width: '550px',
-      data: data
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result == "yes") {
-        this.getData();
       }
     });
   }
@@ -171,9 +163,13 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
     this.AlmacenesService.updateAlmacenes(almacenActualizado).subscribe({
       next: (response) => {
         console.log('Respuesta del servidor:', response);
-        
         this.getData(); // Actualizar datos después de la actualización
         this.limpiar();
+        if(response.StatusCode == 200){
+          this.toastr.success(response.message, 'Almacenes');
+        } else {
+          this.toastr.error(response.message,'Almacenes')
+        }
       },
       error: (error) => {
         console.error('Error al actualizar el almacen', error);

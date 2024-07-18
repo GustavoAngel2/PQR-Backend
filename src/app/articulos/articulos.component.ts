@@ -75,13 +75,13 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
         console.log(response)
         if(response.StatusCode == 200){
           this.descripcion = "";
-        this.codigo = "";
-        this.um = 0;
-        this.costo = 0;
-        this.precio = 0;
-        this.usuario = 0;
-        this.getData();
-        this.toastr.success(response.message, 'Articulos')
+          this.codigo = "";
+          this.um = 0;
+          this.costo = 0;
+          this.precio = 0;
+          this.usuario = 0;
+          this.getData();
+          this.toastr.success(response.message, 'Articulos')
         } else {
           this.toastr.info(response.message, 'Articulos')
         }
