@@ -8,6 +8,7 @@ import { MatSort } from '@angular/material/sort';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 import { UMService } from '../data.service';
 import { AuthService, currentUser } from '../auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -37,7 +38,8 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
     private articulosService: ArticulosService, 
     public dialog: MatDialog,
     private umService: UMService,
-    private authService: AuthService  
+    private authService: AuthService,  
+    private toastr: ToastrService
   ) {
     this.dataSource = new MatTableDataSource<articulos>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
@@ -70,13 +72,19 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
     };
     this.articulosService.insertarArticulos(nuevoArticulo).subscribe({
       next: (response) => {
-        this.descripcion = "";
+        console.log(response)
+        if(response.StatusCode == 200){
+          this.descripcion = "";
         this.codigo = "";
         this.um = 0;
         this.costo = 0;
         this.precio = 0;
         this.usuario = 0;
         this.getData();
+        this.toastr.success(response.message, 'Articulos')
+        } else {
+          this.toastr.info(response.message, 'Articulos')
+        }
       }
     });
   }

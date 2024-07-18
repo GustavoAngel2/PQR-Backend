@@ -25,11 +25,6 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
     Usuario: 0,
     Encargado: 0
   };
-  dialogBody: dialogParameters = {
-    title:'test',
-    message:'This is a test',
-    buttons:'ok'
-  }
   datosCargados: boolean = false;
 
   displayedColumns: string[] = ['Id', 'Nombre', 'Direccion', 'Encargado', 'Usuario', 'FechaAct', 'FechaReg', 'Acciones'];
@@ -69,22 +64,26 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
       usuario: parseInt(this.loggedInUser.Id, 10),
       encargado: this.encargado
     };
-
-    this.AlmacenesService.insertarAlmacenes(nuevoAlmacen).subscribe({
-      next: (response) => {
-        console.log(response)
-        this.getData();
-        this.limpiar();
-        if(response.StatusCode == 200){
-          this.toastr.success(response.message, 'Almacenes');
-        } else {
-          this.toastr.error(response.message,'Almacenes')
+    
+    if(this.nombreAlmacen == '' && this.direccion == '' && this.encargado == 0){
+      this.toastr.error('No deje los datos en blanco','Almacenes')
+    } else {
+      this.AlmacenesService.insertarAlmacenes(nuevoAlmacen).subscribe({
+        next: (response) => {
+          console.log(response)
+          this.getData();
+          this.limpiar();
+          if(response.StatusCode == 200){
+            this.toastr.success(response.message, 'Almacenes');
+          } else {
+            this.toastr.error(response.message,'Almacenes')
+          }
+        },
+        error: (error) => {
+          console.error('Hubo un error al insertar el almacen', error);
         }
-      },
-      error: (error) => {
-        console.error('Hubo un error al insertar el almacen', error);
-      }
-    });
+      });
+    }
   }
 
  
@@ -172,12 +171,7 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
     this.AlmacenesService.updateAlmacenes(almacenActualizado).subscribe({
       next: (response) => {
         console.log('Respuesta del servidor:', response);
-        this.dialogBody = {
-          title : 'Almacenes',
-          message: 'Registro modificado correctamente!',
-          buttons:'ok'
-        }
-        this.showDialog(this.dialogBody)
+        
         this.getData(); // Actualizar datos después de la actualización
         this.limpiar();
       },
