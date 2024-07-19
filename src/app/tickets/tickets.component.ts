@@ -188,6 +188,10 @@ export class TicketsComponent implements OnInit, AfterViewInit {
               return data.Articulo.toString().toLowerCase().includes(filter.toLowerCase());
             };
             if (response.StatusCode === 200) {
+              this.idTicket = response.response.data;
+              this.getData(); // Llama a getData para obtener los detalles del ticket recién insertado
+              this.toggleUI();
+              this.isTicketFormVisible = false;
               this.toastr.success(response.message, 'Punto de venta');
             } else {
               this.toastr.error(response.message, 'Punto de venta');
@@ -219,10 +223,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         } else {
           this.toastr.error(response.message, 'Empleados');
         }
-        this.idTicket = response.response.data;
-        this.getData(); // Llama a getData para obtener los detalles del ticket recién insertado
-        this.toggleUI();
-        this.isTicketFormVisible = false;
+        
         // Mueve la lógica de obtención de detalles del ticket aquí
         if (this.idTicket) {
           this.detalleticketService.getDetalleTicket(this.idTicket).subscribe({
@@ -398,6 +399,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     this.precioVenta = 0;
     this.cantidad =0;
   }
+  
   private clearDetalleTicket(){
     this.idTicket=0;
       this.idArticulo = '';
