@@ -202,23 +202,9 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
     });
   }
 
-  compareFn(item1: any, item2: any): boolean {
-    return item1 && item2 ? item1.Id === item2.Id : item1 === item2;
-  }
-  
-
-
   cargarDatos(empleado: updateEmpleado) {
-    this.empleados = { ...empleado };
+    this.empleados.Id= empleado.Id;
     this.datosCargados = true;
 
-    this.IdPersona = empleado.IdPersona;
-    this.IdSucursal = empleado.IdSucursal;
-    this.IdPuesto = empleado.IdPuesto;
-
-    console.log('Datos del empleado para cargar:', empleado);
-    console.log('ComboPersona:', this.ComboPersona.Id);
-    console.log('ComboSucursal:', this.ComboSucursal.Id);
-    console.log('ComboPuesto:', this.ComboPuesto.Id);
   }
 }
