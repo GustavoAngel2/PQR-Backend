@@ -145,9 +145,9 @@ import { DialogsComponent } from './dialogs/dialogs.component';
     UserService,
     provideToastr({
       timeOut: 3000,
-      positionClass: 'toast-top-right',
+      positionClass: 'toast-top-center',
       progressBar: true,
-      preventDuplicates: true
+      preventDuplicates: false
     }),
     provideAnimations()
   ],

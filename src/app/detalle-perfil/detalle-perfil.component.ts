@@ -151,6 +151,11 @@ export class DetallePerfilComponent implements OnInit, AfterViewInit {
         this.idPerfil = 0;
         this.idModulo = 0;
         this.acceso = 0;
+        if(response.StatusCode == 200){
+          this.toastr.success(response.message, 'Detalle Perfil');
+        } else {
+          this.toastr.error(response.message,'Detalle Perfil')
+        }
       },
       error: (error) => {
         console.error('Hubo un error al insertar el almacen: ', error);

@@ -187,6 +187,11 @@ export class TicketsComponent implements OnInit, AfterViewInit {
             this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
               return data.Articulo.toString().toLowerCase().includes(filter.toLowerCase());
             };
+            if (response.StatusCode === 200) {
+              this.toastr.success(response.message, 'Punto de venta');
+            } else {
+              this.toastr.error(response.message, 'Punto de venta');
+            }
             this.getData()
           },
           error: (error) => {

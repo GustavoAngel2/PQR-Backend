@@ -5,7 +5,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { CategoriaModuloUpdateComponent } from '../categoria-modulo-update/categoria-modulo-update.component';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 import { AuthService, currentUser } from '../auth.service';
 import { ToastrService } from 'ngx-toastr';
@@ -66,6 +65,11 @@ export class CategoriaModuloComponent  implements OnInit, AfterViewInit {
         this.nombreCatModulo ="";
         this.descripcion ="";
         this.usuario = 0 ;
+        if(response.StatusCode == 200){
+          this.toastr.success(response.message, 'Categorias de modulos');
+        } else {
+          this.toastr.error(response.message,'Categorias de modulos')
+        }
         this.getData();
       },
       error: (error) => {
@@ -111,6 +115,11 @@ getData(){
     this.CategoriaModuloService.updateCategoriaModulo(CatModAct).subscribe({
       next: (response) => {
         console.log('Respuesta del servidor:', response);
+        if(response.StatusCode == 200){
+          this.toastr.success(response.message, 'Categorias de modulos');
+        } else {
+          this.toastr.error(response.message,'Categorias de modulos')
+        }
         this.getData(); // Actualizar datos después de la actualización
         this.limpiar();
       },
@@ -143,6 +152,11 @@ getData(){
     if (result == "yes"){
       this.CategoriaModuloService.deleteCategoriaModulo(Id).subscribe({
         next: (response) => {
+          if(response.StatusCode == 200){
+            this.toastr.success(response.message, 'Categorias de modulos');
+          } else {
+            this.toastr.error(response.message,'Categorias de modulos')
+          }
           this.getData()
         },
         error: (error) => {
