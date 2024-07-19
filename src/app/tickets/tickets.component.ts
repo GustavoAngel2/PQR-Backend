@@ -7,10 +7,9 @@ import { MatSort } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { ClientesService, TicketsSevice, DetalleTicketService, TiposMovService, ArticulosService, SucursalesService } from '../data.service';
-import { tickets } from '../models/tickets.model';
 import { DetalleTicket } from '../models/detalleTicket.model';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
-
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-tickets',
@@ -78,7 +77,8 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     private articulosService: ArticulosService,
     private tiposMovService: TiposMovService,
     private detalleticketService: DetalleTicketService,
-    private clientesService: ClientesService
+    private clientesService: ClientesService,
+    private toastr: ToastrService
   ) {
     this.dataSource = new MatTableDataSource<DetalleTicket>();
   }
@@ -209,6 +209,11 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     this.ticketsService.insertarTickets(nuevoAlmacen).subscribe({
       next: (response) => {
         console.log(response)
+        if (response.StatusCode === 200) {
+          this.toastr.success(response.message, 'Empleados');
+        } else {
+          this.toastr.error(response.message, 'Empleados');
+        }
         this.idTicket = response.response.data;
         this.getData(); // Llama a getData para obtener los detalles del ticket recién insertado
         this.toggleUI();
@@ -255,6 +260,11 @@ export class TicketsComponent implements OnInit, AfterViewInit {
           // Luego, continuar con la inserción del detalle del ticket
           this.detalleticketService.insertDetalleTicket(nuevoDetalleTicket).subscribe({
             next: (response) => {
+              if (response.StatusCode === 200) {
+                this.toastr.success(response.message, 'Empleados');
+              } else {
+                this.toastr.error(response.message, 'Empleados');
+              }
               this.getData();
             },
             error: (error) => {
