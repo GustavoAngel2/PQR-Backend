@@ -203,8 +203,10 @@ export class DetallePerfilComponent implements OnInit, AfterViewInit {
     }
   }
   
-  cargarDatos():void {
+  cargarDatos(detallePerfil:UpdateDetallePerfil) {
+    this.detPerfil.Id = detallePerfil.Id
     this.datosCargados = true;
+    console.log(detallePerfil.Id)
   }
   limpiar(): void{
     this.datosCargados =false;

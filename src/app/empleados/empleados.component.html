@@ -30,7 +30,7 @@
       <mat-form-field>
         <mat-label>Puesto</mat-label>
         <mat-select [(ngModel)]="empleados.IdPuesto" [compareWith]="compareFn" name="IdPuesto">
-          <mat-option *ngFor="let pt of ComboPuesto" [value]="pt.Id">{{ pt.Nombre }}</mat-option>
+          <mat-option *ngFor="let pt of ComboPuesto" [value]="pt.Id">{{ pt.nombre }}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
