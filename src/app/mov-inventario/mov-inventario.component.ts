@@ -1,67 +1,70 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { UpdateMovInventario } from '../models/movInventario.model';
-import { movInventarioService } from '../data.service';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { DetalleMovService } from '../data.service';
-import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
-import { AlmacenesService } from '../data.service';
-import { TiposMovService } from '../data.service';
-import { ArticulosService } from '../data.service';
-import { DetalleMov } from '../models/detalleMov.model';
-import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
-import { SearchMovModel } from '../models/detalleMov.model';
-
+import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
+import { UpdateMovInventario } from "../models/movInventario.model";
+import { movInventarioService } from "../data.service";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatDialog } from "@angular/material/dialog";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { DetalleMovService } from "../data.service";
+import { DeleteMenuComponent } from "../delete-menu/delete-menu.component";
+import { AlmacenesService } from "../data.service";
+import { TiposMovService } from "../data.service";
+import { ArticulosService } from "../data.service";
+import { DetalleMov } from "../models/detalleMov.model";
+import { Observable } from "rxjs";
+import { startWith, map } from "rxjs/operators";
+import { FormControl } from "@angular/forms";
+import { SearchMovModel } from "../models/detalleMov.model";
 
 @Component({
-  selector: 'app-mov-inventario',
-  templateUrl: './mov-inventario.component.html',
-  styleUrls: ['./mov-inventario.component.css']
+  selector: "app-mov-inventario",
+  templateUrl: "./mov-inventario.component.html",
+  styleUrls: ["./mov-inventario.component.css"],
 })
 export class MovInventarioComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Id', 'Codigo', 'Cantidad','Costo' , 'FechaActualiza', 'UsuarioActualiza'];
+  displayedColumns: string[] = [
+    "Id",
+    "Codigo",
+    "Cantidad",
+    "Costo",
+    "FechaActualiza",
+    "UsuarioActualiza",
+  ];
   dataSource: MatTableDataSource<DetalleMov>;
   idTipoMov: number = 0;
   idAlmacen: number = 0;
   idDestino: number = 0;
   usuarioActualiza: number = 0;
-  ComboTipoMov:any;
-  ComboAlmacen:any;
+  ComboTipoMov: any;
+  ComboAlmacen: any;
   tipoMov: UpdateMovInventario = {
     Id: 0,
     idAlmacen: 0,
     idTipoMov: 0,
-    idDestino: 0,
     usuarioActualiza: 0,
   };
   datosCargados: boolean = false;
   isOnStepTwo: boolean = false;
 
   idMovimiento: any;
-  codigo: string = '';
+  codigo: string = "";
   cantidad: number = 0;
   costo: number = 0;
-  ComboMov:any;
-  ComboCodigo:any;
-  CodigoControl = new FormControl('');
-  IdArticuloControl = new FormControl('');
+  ComboMov: any;
+  ComboCodigo: any;
+  CodigoControl = new FormControl("");
+  IdArticuloControl = new FormControl("");
 
-  selectedArticulo: any;  // Declarar la propiedad selectedArticulo
-  selectedCodigo:any ;
+  selectedArticulo: any; // Declarar la propiedad selectedArticulo
+  selectedCodigo: any;
   filteredArticulosCod!: Observable<any[]>;
   filteredArticulos!: Observable<any[]>;
 
-
   search: SearchMovModel = {
-    IdAlmacen : 0,
-    FechaFin : '2024-01-01',
-    FechaInicio : '2024-12-30'
+    IdAlmacen: 0,
+    FechaFin: "2024-01-01",
+    FechaInicio: "2024-12-30",
   };
-  
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -78,31 +81,29 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    
     this.filteredArticulos = this.IdArticuloControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterArticulos(value || ''))
+      startWith(""),
+      map((value) => this._filterArticulos(value || ""))
     );
 
     this.filteredArticulosCod = this.CodigoControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterArticulosCod(value || ''))
+      startWith(""),
+      map((value) => this._filterArticulosCod(value || ""))
     );
 
-    this.IdArticuloControl.valueChanges.subscribe(value => {
+    this.IdArticuloControl.valueChanges.subscribe((value) => {
       if (!value) {
         this.clearArticuloFields();
       }
     });
 
-    this.CodigoControl.valueChanges.subscribe(value => {
+    this.CodigoControl.valueChanges.subscribe((value) => {
       if (!value) {
         this.clearArticuloFields();
       }
     });
 
     this.getData();
-   
   }
 
   ngAfterViewInit() {
@@ -120,11 +121,12 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
   }
 
   getData() {
-
-    this.movInventarioService.getMovInventario(this.search).subscribe((data: any) => {
-      this.ComboMov = data;
-      console.log(this.ComboMov);
-    });
+    this.movInventarioService
+      .getMovInventario(this.search)
+      .subscribe((data: any) => {
+        this.ComboMov = data;
+        console.log(this.ComboMov);
+      });
 
     this.articulosService.getArticulos().subscribe((data2: any) => {
       this.ComboCodigo = data2;
@@ -140,24 +142,23 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
       this.ComboAlmacen = data2;
       console.log(this.ComboAlmacen);
     });
-
   }
 
   abrirDeleteDialog(Id: number, Name: string) {
     const dialogRef = this.dialog.open(DeleteMenuComponent, {
-      width: '550px',
-      data: Name
+      width: "550px",
+      data: Name,
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result == "yes") {
         this.detalleMovService.deleteDetalleMov(Id).subscribe({
           next: (response) => {
             this.updateTable();
           },
           error: (error) => {
-            console.error('Hubo un error al eliminar el almacén', error);
-          }
+            console.error("Hubo un error al eliminar el almacén", error);
+          },
         });
       }
     });
@@ -182,18 +183,18 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
       idTipoMov: this.idTipoMov,
       idAlmacen: this.idAlmacen,
       idDestino: this.idDestino,
-      usuarioActualiza: this.usuarioActualiza
+      usuarioActualiza: this.usuarioActualiza,
     };
     this.movInventarioService.insertMovInventario(nuevoMovInv).subscribe({
       next: (response) => {
         this.idMovimiento = response.response.data;
-        console.log(nuevoMovInv)
-        this.isOnStepTwo = true
+        console.log(nuevoMovInv);
+        this.isOnStepTwo = true;
         this.getData();
       },
       error: (error) => {
-        console.error('Hubo un error al insertar el almacen', error);
-      }
+        console.error("Hubo un error al insertar el almacen", error);
+      },
     });
   }
 
@@ -203,20 +204,20 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
       codigo: this.codigo,
       cantidad: this.cantidad,
       costo: this.costo,
-      usuarioActualiza: this.usuarioActualiza
+      usuarioActualiza: this.usuarioActualiza,
     };
-  
-    console.log('Attempting to insert new detalle mov:', nuevoDetalleMov);
-  
+
+    console.log("Attempting to insert new detalle mov:", nuevoDetalleMov);
+
     this.detalleMovService.insertarDetalleMov(nuevoDetalleMov).subscribe({
       next: (response) => {
-        console.log('Insert detalle mov response:', response);
+        console.log("Insert detalle mov response:", response);
         this.updateTable();
       },
       error: (error) => {
-        console.error('Error inserting detalle mov:', error);
+        console.error("Error inserting detalle mov:", error);
         // Additional error handling logic, if needed
-      }
+      },
     });
   }
 
@@ -226,73 +227,76 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
     this.tipoMov.usuarioActualiza = this.usuarioActualiza;
     this.movInventarioService.updateMovInventario(this.tipoMov).subscribe({
       next: (response) => {
-        console.log('Respuesta del servidor:', response);
+        console.log("Respuesta del servidor:", response);
         this.getData();
       },
       error: (error) => {
-        console.error('Error al actualizar el almacen', error);
-      }
+        console.error("Error al actualizar el almacen", error);
+      },
     });
   }
 
-  updateTable(){
+  updateTable() {
     this.detalleMovService.getDetalleMov(this.idMovimiento).subscribe({
       next: (response) => {
-        console.log('Respuesta del servidor:', response); 
-        if (response && Array.isArray(response)&&response.length>0) {
+        console.log("Respuesta del servidor:", response);
+        if (response && Array.isArray(response) && response.length > 0) {
           this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
         } else {
-          console.log('no contiene datos');
+          console.log("no contiene datos");
         }
       },
       error: (error) => {
         console.error(error);
-      }
+      },
     });
   }
 
   articuloCodSelected(event: any) {
     const articuloCod = event.option.value;
-    console.log('Artículo seleccionado:', articuloCod);
+    console.log("Artículo seleccionado:", articuloCod);
     this.selectedCodigo = articuloCod;
     this.selectedArticulo = articuloCod;
     this.codigo = articuloCod.Codigo;
-    
   }
-  
+
   displayArticuloCodFn(articulo: any): string {
-    return articulo && articulo.Codigo ? articulo.Codigo : '';
+    return articulo && articulo.Codigo ? articulo.Codigo : "";
   }
-  
+
   private _filterArticulosCod(value: string): any[] {
     const filterValue = value.toLowerCase();
-    return this.ComboCodigo.filter((option: any) => option.Codigo.toLowerCase().includes(filterValue));
+    return this.ComboCodigo.filter((option: any) =>
+      option.Codigo.toLowerCase().includes(filterValue)
+    );
   }
 
   private clearArticuloFields() {
-    this.codigo = '';
+    this.codigo = "";
     this.selectedCodigo = null;
     this.selectedArticulo = null;
   }
 
-  reload(){
+  reload() {
     location.reload();
   }
 
   articuloSelected(event: any) {
     const articulo = event.option.value;
     console.log(articulo);
-    this.codigo = articulo.Codigo;  // Asegúrate de asignar el código del artículo aquí
+    this.codigo = articulo.Codigo; // Asegúrate de asignar el código del artículo aquí
     this.selectedCodigo = articulo;
     this.selectedArticulo = articulo;
     this.costo = articulo.Precio;
     console.log(articulo.Precio);
   }
   displayArticuloFn(articulo: any): string {
-    return articulo ? articulo.Descripcion : '';
+    return articulo ? articulo.Descripcion : "";
   }
   private _filterArticulos(value: any): any[] {
-    const filterValue = (typeof value === 'string' ? value : '').toLowerCase();
-    return this.ComboCodigo.filter((option:any) => option.Descripcion.toLowerCase().includes(filterValue));
+    const filterValue = (typeof value === "string" ? value : "").toLowerCase();
+    return this.ComboCodigo.filter((option: any) =>
+      option.Descripcion.toLowerCase().includes(filterValue)
+    );
   }
 }
