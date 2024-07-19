@@ -208,6 +208,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   
     this.ticketsService.insertarTickets(nuevoAlmacen).subscribe({
       next: (response) => {
+        console.log(response)
         this.idTicket = response.response.data;
         this.getData(); // Llama a getData para obtener los detalles del ticket recién insertado
         this.toggleUI();

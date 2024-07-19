@@ -9,7 +9,7 @@
 <div class="form-place">
     <div class="form-container">
         <div class="form-title">
-            <h1 mat-dialog-title>Nuevo Almacen</h1>
+            <h1 mat-dialog-title>Nueva Categoria Modulo</h1>
         </div>
         <div class="form-content">
             <mat-form-field>
@@ -20,23 +20,22 @@
                 <mat-label>Descripcion</mat-label>
                 <input matInput placeholder="Ingresa la descripcion" [(ngModel)]="descripcion"/>
               </mat-form-field>
-              <mat-form-field>
-                <mat-label>Usuario</mat-label>
-                <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuario" />
-              </mat-form-field>
         </div>
     </div>
 </div>
 
 <div class="actionbar">
-    <mat-form-field class="search-bar">
-        <mat-label>Filtrar</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
-    </mat-form-field>   
+    <button [hidden]="!datosCargados" (click)="actualizar()" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Actualizar<i class="underline"></i></button>
+    <button [hidden]="!datosCargados" (click)="limpiar()" style="margin-top: -20px;" class="btn-cancel "><i class="bi bi-cloud-upload-fill icon"></i>Cancelar</button>
     <button (click)="insertar()" class="btn"><i class="bi bi-bookmark-plus-fill"></i> Insertar<i class="underline"></i></button>
 </div>
 <br>
+<mat-form-field class="search-bar">
+    <mat-label>Filtrar</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
+</mat-form-field>
 <div class="table-container">
+   
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Id">
@@ -66,7 +65,7 @@
         <ng-container matColumnDef="Acciones">
             <th mat-header-cell *matHeaderCellDef> Acciones </th>
             <td mat-cell *matCellDef="let elemento">
-                <mat-icon class="action-btn green" (click)="abrirEditarModal(elemento)">edit</mat-icon>
+                <mat-icon class="action-btn green" (click)="cargarDatos(elemento)">edit</mat-icon>
                 <mat-icon class="action-btn red" (click)="abrirDeleteDialog(elemento.Id,elemento.Nombre)">delete</mat-icon>
             </td>
         </ng-container>

@@ -9,7 +9,7 @@
 <div class="form-place">
     <div class="form-container">
         <div class="form-title">
-            <h1 mat-dialog-title>Nuevo Almacen</h1>
+            <h1 mat-dialog-title>Nuevo Articulo</h1>
         </div>
         <div class="form-content">
             <mat-form-field>
@@ -35,10 +35,10 @@
                 <mat-label>Precio</mat-label>
                 <input matInput placeholder="Ingresa el precio" [(ngModel)]="precio">
             </mat-form-field>
-            <mat-form-field>
+<!--             <mat-form-field>
                 <mat-label>Usuario</mat-label>
                 <input matInput placeholder="Ingresa el usuario" [(ngModel)]="usuario">
-            </mat-form-field>
+            </mat-form-field> -->
         </div>
     </div>
 </div>
@@ -46,17 +46,18 @@
 
 
 <div class="actionbar">
-    <button (click)="actualizar()" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Actualizar<i class="underline"></i></button>
+    <button [hidden]="!datosCargados" (click)="actualizar()" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Actualizar<i class="underline"></i></button>
     <button [hidden]="!datosCargados" (click)="limpiar()" style="margin-top: -20px;" class="btn-cancel "><i class="bi bi-cloud-upload-fill icon"></i>Cancelar</button>
     <button (click)="insertar()" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
 
 </div>
 <br>
+<mat-form-field class="search-bar">
+    <mat-label>Filtrar</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
+</mat-form-field>
 <div class="table-container">
-    <mat-form-field class="search-bar">
-        <mat-label>Filtrar</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
-    </mat-form-field>
+    
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Id">

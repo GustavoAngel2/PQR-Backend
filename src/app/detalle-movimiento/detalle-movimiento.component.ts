@@ -1,17 +1,17 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { AlmacenesService, DetalleMovService } from '../data.service';
+import { AlmacenesService, DetalleMovService, movInventarioService } from '../data.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
-import { movInventarioService } from '../data.service';
 import { MovInventario } from '../models/movInventario.model';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DetalleMoviemientoViewComponent } from '../detalle-movimiento-view/detalle-moviemiento-view.component';
 import { SearchMovModel } from '../models/detalleMov.model';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { AuthService, currentUser } from '../auth.service'; // Asegúrate de tener este servicio o el que utilices para autenticación
 
 @Component({
   selector: 'app-detalle-movimiento',
@@ -36,6 +36,7 @@ export class DetalleMovimientoComponent implements OnInit, AfterViewInit {
     FechaFin: '',
     FechaInicio: ''
   };
+  loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -44,7 +45,8 @@ export class DetalleMovimientoComponent implements OnInit, AfterViewInit {
     private DetalleMovService: DetalleMovService,
     public dialog: MatDialog,
     private movInventarioService: movInventarioService,
-    private almacenesService: AlmacenesService
+    private almacenesService: AlmacenesService,
+    private authService: AuthService // Inyecta el servicio de autenticación
   ) {
     this.dataSource = new MatTableDataSource<MovInventario>();
     this.dateHandler = new Date();
@@ -55,6 +57,7 @@ export class DetalleMovimientoComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.loggedInUser = this.authService.getCurrentUser(); // Obtén el usuario logueado
     this.almacenesService.getAlmacenes().subscribe((data2: any) => {
       this.ComboAlmacen = data2;
       console.log(this.ComboAlmacen);
@@ -143,7 +146,33 @@ export class DetalleMovimientoComponent implements OnInit, AfterViewInit {
   }
 
   exportToPDF(): void {
+
+    
     const doc = new jsPDF();
+  
+    doc.setFont("times", "normal");
+    doc.setFontSize(12);
+
+
+    // Agrega el nombre del usuario logueado en la parte superior del documento PDF
+    doc.text(`Folio: ${this.loggedInUser.Id}`, 10, 10);
+    doc.text(`Nombre: ${this.loggedInUser.NombreUsuario}`, 10, 20);
+    doc.text(`Fecha: ${this.fechaInicio} - ${this.fechaFin}`, 10, 30);
+
+
+       // Añade la imagen de la marca de agua (Base64)
+    
+       const imgWidth = 200;
+       const imgHeight = 200;
+       const pageWidth = doc.internal.pageSize.getWidth();
+       const pageHeight = doc.internal.pageSize.getHeight();
+       const xPos = (pageWidth - imgWidth) / 2;
+       const yPos = (pageHeight - imgHeight) / 2;
+     
+       doc.addImage( 'PNG', xPos, yPos, imgWidth, imgHeight, '', 'SLOW');
+     
+
+    // Define las columnas y las filas de la tabla
     const columns = this.displayedColumns.filter(column => column !== 'Acciones').map(col => this.getColumnName(col));
     const rows = this.dataSource.filteredData.map(mov => [
       mov.Id,
@@ -152,12 +181,15 @@ export class DetalleMovimientoComponent implements OnInit, AfterViewInit {
       this.formatDate(new Date(mov.fechaMovimiento)),
       mov.Usuario
     ]);
-
+  
+    // Agrega un espacio antes de la tabla
     autoTable(doc, {
       head: [columns],
-      body: rows
+      body: rows,
+      startY: 50 // Ajusta este valor para agregar espacio entre el texto del usuario y la tabla
     });
-
+  
+  
     doc.save('Movimientos.pdf');
   }
 

@@ -24,6 +24,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ToastrModule } from 'ngx-toastr';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideToastr } from 'ngx-toastr';
 
 //Componentes
 
@@ -136,13 +139,21 @@ import { DialogsComponent } from './dialogs/dialogs.component';
     MatPaginatorModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, // Registro del interceptor
     AuthGuard, // Proveedor del AuthGuard
     AuthService, // Proveedor del AuthService
-    UserService
+    UserService,
+    provideToastr({
+      timeOut: 3000,
+      positionClass: 'toast-top-right',
+      progressBar: true,
+      preventDuplicates: true
+    }),
+    provideAnimations()
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -8,6 +8,8 @@ import { MatSort } from '@angular/material/sort';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 import { dialogParameters } from '../models/dialog.model';
 import { DialogsComponent } from '../dialogs/dialogs.component';
+import { AuthService, currentUser } from '../auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-almacenes',
@@ -23,11 +25,6 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
     Usuario: 0,
     Encargado: 0
   };
-  dialogBody: dialogParameters = {
-    title:'test',
-    message:'This is a test',
-    buttons:'ok'
-  }
   datosCargados: boolean = false;
 
   displayedColumns: string[] = ['Id', 'Nombre', 'Direccion', 'Encargado', 'Usuario', 'FechaAct', 'FechaReg', 'Acciones'];
@@ -37,7 +34,12 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   
 
-  constructor(private AlmacenesService: AlmacenesService, public dialog: MatDialog,) {
+  constructor(
+    private AlmacenesService: AlmacenesService, 
+    private authService: AuthService, 
+    public dialog: MatDialog,
+    private toastr: ToastrService
+  ){
     this.dataSource = new MatTableDataSource<Almacen>();
   }
 
@@ -46,35 +48,44 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
   usuario: number = 0;
   encargado: number = 0;
 
+  loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
+
+  ngOnInit() {
+    this.getData();
+    this.loggedInUser = this.authService.getCurrentUser(); // Obtener el usuario logeado
+    console.log('Usuario logeado:', this.loggedInUser);
+  }
+
+
   insertar(): void {
     const nuevoAlmacen = {
       nombre: this.nombreAlmacen,
       direccion: this.direccion,
-      usuario: this.usuario,
+      usuario: parseInt(this.loggedInUser.Id, 10),
       encargado: this.encargado
     };
-
-    this.AlmacenesService.insertarAlmacenes(nuevoAlmacen).subscribe({
-      next: (response) => {
-        console.log(response)
-        this.getData();
-        this.limpiar();
-        this.dialogBody = {
-          title : 'Almacenes',
-          message: 'Registro insertado correctamente!',
-          buttons:'ok'
+    
+    if(this.nombreAlmacen == '' && this.direccion == '' && this.encargado == 0){
+      this.toastr.error('No deje los datos en blanco','Almacenes')
+    } else {
+      this.AlmacenesService.insertarAlmacenes(nuevoAlmacen).subscribe({
+        next: (response) => {
+          this.getData();
+          this.limpiar();
+          if(response.StatusCode == 200){
+            this.toastr.success(response.message, 'Almacenes');
+          } else {
+            this.toastr.error(response.message,'Almacenes')
+          }
+        },
+        error: (error) => {
+          console.error('Hubo un error al insertar el almacen', error);
         }
-        this.showDialog(this.dialogBody)
-      },
-      error: (error) => {
-        console.error('Hubo un error al insertar el almacen', error);
-      }
-    });
+      });
+    }
   }
 
-  ngOnInit() {
-    this.getData();
-  }
+ 
 
   getData() {
     this.dataSource.filterPredicate = (data: Almacen, filter: string) => {
@@ -123,6 +134,11 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
       if (result == "yes") {
         this.AlmacenesService.deleteAlmacenes(Id).subscribe({
           next: (response) => {
+            if(response.StatusCode == 200){
+              this.toastr.success(response.message, 'Almacenes');
+            } else {
+              this.toastr.error(response.message,'Almacenes')
+            }
             this.getData();
           },
           error: (error) => {
@@ -133,25 +149,12 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
     });
   }
 
-  showDialog(data:dialogParameters) {
-    const dialogRef = this.dialog.open(DialogsComponent, {
-      width: '550px',
-      data: data
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result == "yes") {
-        this.getData();
-      }
-    });
-  }
-
   actualizar(): void {
     const almacenActualizado: UpdateAlmacen = {
       Id: this.almacen.Id,
       Nombre: this.nombreAlmacen,
       Direccion: this.direccion,
-      Usuario: this.usuario,
+      Usuario: parseInt(this.loggedInUser.Id, 10),
       Encargado: this.encargado
     };
   
@@ -159,14 +162,13 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
     this.AlmacenesService.updateAlmacenes(almacenActualizado).subscribe({
       next: (response) => {
         console.log('Respuesta del servidor:', response);
-        this.dialogBody = {
-          title : 'Almacenes',
-          message: 'Registro modificado correctamente!',
-          buttons:'ok'
-        }
-        this.showDialog(this.dialogBody)
         this.getData(); // Actualizar datos después de la actualización
         this.limpiar();
+        if(response.StatusCode == 200){
+          this.toastr.success(response.message, 'Almacenes');
+        } else {
+          this.toastr.error(response.message,'Almacenes')
+        }
       },
       error: (error) => {
         console.error('Error al actualizar el almacen', error);
@@ -186,7 +188,6 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
   limpiar(): void{
     this.nombreAlmacen = "";
     this.direccion = "";
-    this.usuario = 0;
     this.encargado = 0;
     this.datosCargados =false;
   }
