@@ -27,14 +27,14 @@
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
-        <mat-form-field>
+      <!--   <mat-form-field>
             <mat-label>Vendedor</mat-label>
             <input matInput [formControl]="IdVendedorControl" placeholder="Ingresa la direccion" [(ngModel)]="IdVendedor" name="IdVendedor">
-        </mat-form-field>
-        <mat-form-field>
+        </mat-form-field> -->
+      <!--   <mat-form-field>
           <mat-label>Usuario</mat-label>
           <input matInput type="number" [formControl]="IdUsusarioControl" placeholder="Usuario Actualiza" [(ngModel)]="Usuario" name="Usuario">
-        </mat-form-field>
+        </mat-form-field> -->
         <button [ngClass]="{'disabled-button': isOnStepTwo}" [disabled]="isOnStepTwo" (click)="insertarTicket();" class="btn-form right">Generar ticket<i class="underline"></i></button>
       </div>
 
@@ -78,10 +78,10 @@
           <mat-label>Precio de venta</mat-label>
           <input matInput [formControl]="PrecioControl" placeholder="Ingresa el precio de venta" [(ngModel)]="precioVenta" name="precioVenta">
         </mat-form-field>
-        <mat-form-field>
+     <!--    <mat-form-field>
           <mat-label>Usuario</mat-label>
-          <input matInput [formControl]="IdUsuarioDetalleControl" placeholder="Usuario Actualiza" [(ngModel)]="usuario" name="usuario">
-        </mat-form-field>
+          <input matInput hide [formControl]="IdUsuarioDetalleControl" placeholder="Usuario Actualiza" [(ngModel)]="usuario" name="usuario">
+        </mat-form-field> -->
         <button [ngClass]="{'disabled-button': isOnStepOne}" [disabled]="isOnStepOne" (click)="toggleUI();  refrescarPagina()" class="btn-form">Terminar<i class="underline"></i></button>
         <button [ngClass]="{'disabled-button': isOnStepOne}" [disabled]="isOnStepOne" (click)="insertarDetalleTicket();" class="btn-form">Insertar al ticket<i class="underline"></i></button>
       </div> 
