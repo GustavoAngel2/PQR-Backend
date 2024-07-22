@@ -15,22 +15,25 @@
     <div class="form-content">
       <mat-form-field>
         <mat-label>Persona</mat-label>
-        <mat-select [(ngModel)]="empleados.IdPersona" [compareWith]="compareFn" name="IdPersona">
+        <mat-select [(ngModel)]="empleados.IdPersona"  name="IdPersona">
+          <mat-option value="0">--Seleccione un rol--</mat-option>
           <mat-option *ngFor="let per of ComboPersona" [value]="per.Id">{{ per.Nombre }}</mat-option>
         </mat-select>
       </mat-form-field>
       
       <mat-form-field>
         <mat-label>Sucursal</mat-label>
-        <mat-select [(ngModel)]="empleados.IdSucursal" [compareWith]="compareFn" name="IdSucursal">
+        <mat-select [(ngModel)]="empleados.IdSucursal"  name="IdSucursal">
+          <mat-option value="0">--Seleccione una sucursal--</mat-option>
           <mat-option *ngFor="let scr of ComboSucursal" [value]="scr.Id">{{ scr.Nombre }}</mat-option>
         </mat-select>
       </mat-form-field>
       
       <mat-form-field>
         <mat-label>Puesto</mat-label>
-        <mat-select [(ngModel)]="empleados.IdPuesto" [compareWith]="compareFn" name="IdPuesto">
-          <mat-option *ngFor="let pt of ComboPuesto" [value]="pt.Id">{{ pt.Nombre }}</mat-option>
+        <mat-select [(ngModel)]="empleados.IdPuesto" name="IdPuesto">
+          <mat-option value="">--Seleccione un puesto--</mat-option>
+          <mat-option *ngFor="let pt of ComboPuesto" [value]="pt.Id">{{ pt.nombre }}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>

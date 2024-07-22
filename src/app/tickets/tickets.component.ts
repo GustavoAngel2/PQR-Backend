@@ -10,6 +10,8 @@ import { ClientesService, TicketsSevice, DetalleTicketService, TiposMovService, 
 import { DetalleTicket } from '../models/detalleTicket.model';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService,currentUser } from '../auth.service';
+
 
 @Component({
   selector: 'app-tickets',
@@ -48,6 +50,8 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   isOnStepTwo = false;
 
   isTicketFormVisible= true;
+  loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
+
 
   // New ticket
   IdSucursalControl = new FormControl('');
@@ -76,6 +80,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     private sucursalesService: SucursalesService,
     private articulosService: ArticulosService,
     private tiposMovService: TiposMovService,
+    private authService: AuthService, 
     private detalleticketService: DetalleTicketService,
     private clientesService: ClientesService,
     private toastr: ToastrService
@@ -85,6 +90,8 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getData();
+    this.loggedInUser = this.authService.getCurrentUser(); // Obtener el usuario logeado
+    console.log('Usuario logeado:', this.loggedInUser);
     this.filteredArticulos = this.IdArticuloControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterArticulos(value || ''))
@@ -211,8 +218,8 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     const nuevoAlmacen = {
       IdSucursal: this.IdSucursal,
       IdCliente: this.IdCliente,
-      IdVendedor: this.IdVendedor,
-      usuario: this.Usuario
+      IdVendedor: parseInt(this.loggedInUser.Id, 10),
+      usuario: parseInt(this.loggedInUser.Id, 10)
     };
   
     this.ticketsService.insertarTickets(nuevoAlmacen).subscribe({
@@ -253,7 +260,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       codigo: this.codigo,
       cantidad: this.cantidad,
       precioVenta: this.precioVenta,
-      usuario: this.usuario
+      usuario: parseInt(this.loggedInUser.Id, 10)
     };
   
     if (this.idTicket) {
