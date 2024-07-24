@@ -19,13 +19,12 @@ export interface ApiResponsePuntoV {
   };
 }
 
-export interface ApiResponseMovInv {
+export interface ApiResponseEmpleados {
     StatusCode: number;
     success: boolean;
     fecha: string;
     message: string;
     response: {
-      Msg: string;
-      data: any[];
+      data: string;
     };
 }

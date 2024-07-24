@@ -113,9 +113,9 @@ export class ClientesComponent implements OnInit, AfterViewInit {
           console.log(response);
           this.getData();
           if (response.StatusCode === 200) {
-            this.toastr.success(response.message, 'Clientes');
+            this.toastr.success(response.response.data, 'Clientes');
           } else {
-            this.toastr.error(response.message, 'Clientes');
+            this.toastr.error(response.response.data, 'Clientes');
           }
         },
         error: (error) => {
@@ -136,9 +136,9 @@ export class ClientesComponent implements OnInit, AfterViewInit {
           next: (response) => {
             this.getData();
             if (response.StatusCode === 200) {
-              this.toastr.success(response.message, 'Clientes');
+              this.toastr.success(response.response.data, 'Clientes');
             } else {
-              this.toastr.error(response.message, 'Clientes');
+              this.toastr.error(response.response.data, 'Clientes');
             }
           },
           error: (error) => {
@@ -169,9 +169,9 @@ export class ClientesComponent implements OnInit, AfterViewInit {
         this.getData();
         this.limpiar();
         if (response.StatusCode === 200) {
-          this.toastr.success(response.message, 'Clientes');
+          this.toastr.success(response.response.data, 'Clientes');
         } else {
-          this.toastr.error(response.message, 'Clientes');
+          this.toastr.error(response.response.data, 'Clientes');
         }
       },
       error: (error) => {

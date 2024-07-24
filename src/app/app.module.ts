@@ -41,7 +41,6 @@ import { ClientesComponent } from "./clientes/clientes.component";
 import { ArticulosComponent } from "./articulos/articulos.component";
 import { PersonasComponent } from "./personas/personas.component";
 import { RutasComponent } from "./rutas/rutas.component";
-import { ClientesUpdateComponent } from "./clientes-update/clientes-update.component";
 import { PersonasInsertComponent } from "./personas-insert/personas-insert.component";
 import { PersonasUpdateComponent } from "./personas-update/personas-update.component";
 import { RutasInsertComponent } from "./rutas-insert/rutas-insert.component";
@@ -77,7 +76,6 @@ import { DialogsComponent } from './dialogs/dialogs.component';
     AppComponent,
     AlmacenesComponent,
     ClientesComponent,
-    ClientesUpdateComponent,
     ArticulosComponent,
     PersonasComponent,
     PersonasInsertComponent,
@@ -145,7 +143,7 @@ import { DialogsComponent } from './dialogs/dialogs.component';
     UserService,
     provideToastr({
       timeOut: 3000,
-      positionClass: 'toast-top-center',
+      positionClass: 'toast-top-left',
       progressBar: true,
       preventDuplicates: false
     }),
