@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiResponse, UpdateAlmacen } from './models/almacen.model';
+import {  ApiResponse, UpdateAlmacen } from './models/almacen.model';
 import{ ApiResponseClientes, UpdateClientes } from './models/cliente.model';
 import{ updateArticulos } from './models/articulo.model';
 import { UpdatePersonas } from './models/personas.model';
@@ -19,6 +19,8 @@ import { UpdatePuesto } from "./models/puestos.model";
 import { UpdateCategoriaModulo } from './models/categoriaModulo.model';
 import { AuthInfo } from './models/login.model'; 
 import { ApiResponse2 } from './models/login.model';
+import { ApiResponseAlmacenes } from './models/ApiResponse.models';
+
 import { AuthService } from './auth.service';
 
 
@@ -44,14 +46,14 @@ export class AlmacenesService {
     direccion: string;
     usuario: number;
     encargado: number;
-  }): Observable<ApiResponse> {
+  }): Observable<ApiResponseAlmacenes> {
     const body = {
       nombre: AlmacenesData.nombre,
       direccion: AlmacenesData.direccion,
       usuario: AlmacenesData.usuario,
       encargado: AlmacenesData.encargado
     };
-    return this.http.post<ApiResponse>(`${this.apiUrl}/Almacenes/Insert`, body);
+    return this.http.post<ApiResponseAlmacenes>(`${this.apiUrl}/Almacenes/Insert`, body);
   }
   //esta funcion borra un almacen pidiendo el id del almacen a borrar
   deleteAlmacenes(Id: number): Observable<any> {
@@ -59,7 +61,7 @@ export class AlmacenesService {
     return this.http.put(`${this.apiUrl}/Almacenes/Delete`, { Id });
   }
   //esta funcion sirve para modificar la informacion de un almacen
-  updateAlmacenes(AlmacenesData: UpdateAlmacen): Observable<ApiResponse> {
+  updateAlmacenes(AlmacenesData: UpdateAlmacen): Observable<ApiResponseAlmacenes> {
     const body = {
       id: AlmacenesData.Id,
       nombre: AlmacenesData.Nombre,
@@ -68,7 +70,7 @@ export class AlmacenesService {
       encargado: AlmacenesData.Encargado
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponse>(`${this.apiUrl}/Almacenes/Update`, body);
+    return this.http.put<ApiResponseAlmacenes>(`${this.apiUrl}/Almacenes/Update`, body);
   }
 }
 //----------------------------------------------------------------------------------------------------------------------------------------
