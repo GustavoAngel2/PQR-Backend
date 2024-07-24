@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse, UpdateAlmacen } from './models/almacen.model';
-import{ UpdateClientes } from './models/cliente.model';
+import{ ApiResponseClientes, UpdateClientes } from './models/cliente.model';
 import{ updateArticulos } from './models/articulo.model';
 import { UpdatePersonas } from './models/personas.model';
 import { UpdateRutas } from './models/rutas.model';
@@ -81,12 +81,12 @@ export class ClientesService {
   constructor(private http: HttpClient,private authService: AuthService) {}
 
   //Esta funcion enlista los Clientes de la base de datos
-  getClientes(): Observable<ApiResponse> {
+  getClientes(): Observable<ApiResponseClientes> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ApiResponse>(`${this.apiUrl}/Clientes/Get`, {headers});
+    return this.http.get<ApiResponseClientes>(`${this.apiUrl}/Clientes/Get`, {headers});
   }
 
   //Esta funcion inserta clientes
@@ -99,7 +99,7 @@ export class ClientesService {
     curp: string;
     email:string;
     coordenadas: string;
-  }): Observable<ApiResponse> {
+  }): Observable<ApiResponseClientes> {
     const body = {
       nombre: ClientesData.nombre,
       direccion: ClientesData.direccion,
@@ -110,12 +110,12 @@ export class ClientesService {
       email: ClientesData.email,
       coordenadas: ClientesData.coordenadas,
     };
-    return this.http.post<ApiResponse>(`${this.apiUrl}/Clientes/Insert`, body);
+    return this.http.post<ApiResponseClientes>(`${this.apiUrl}/Clientes/Insert`, body);
   }
   deleteClientes(Id: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/Clientes/Delete`, { Id });
   }
-  updateClientes(ClientesData: UpdateClientes): Observable<ApiResponse> {
+  updateClientes(ClientesData: UpdateClientes): Observable<ApiResponseClientes> {
     const body = {
       id: ClientesData.Id,
       nombre: ClientesData.Nombre,
@@ -128,7 +128,7 @@ export class ClientesService {
       coordenadas: ClientesData.Coordenadas,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponse>(`${this.apiUrl}/Clientes/Update`, body);
+    return this.http.put<ApiResponseClientes>(`${this.apiUrl}/Clientes/Update`, body);
   }
 }
 //----------------------------------------------------------------------------------------------------------------------------------------
