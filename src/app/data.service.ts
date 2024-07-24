@@ -19,7 +19,7 @@ import { UpdatePuesto } from "./models/puestos.model";
 import { UpdateCategoriaModulo } from './models/categoriaModulo.model';
 import { AuthInfo } from './models/login.model'; 
 import { ApiResponse2 } from './models/login.model';
-import { ApiResponseAlmacenes } from './models/ApiResponse.models';
+import { ApiResponseAlmacenes,ApiResponseEmpleados } from './models/ApiResponse.models';
 
 import { AuthService } from './auth.service';
 
@@ -650,32 +650,32 @@ export class EmpleadosService {
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient,private authService: AuthService) {}
 
-  getEmpleado(): Observable<ApiResponse> {
+  getEmpleado(): Observable<ApiResponseEmpleados> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ApiResponse>(`${this.apiUrl}/Empleados/Get`,{headers});
+    return this.http.get<ApiResponseEmpleados>(`${this.apiUrl}/Empleados/Get`,{headers});
   }
   insertarEmpleado(EmpleadoData: {
     IdPersona: number;
     IdSucursal: number;
     IdPuesto: number;
     usuarioActualiza: number;
-  }): Observable<ApiResponse> {
+  }): Observable<ApiResponseEmpleados> {
     const body = {
       IdPersona: EmpleadoData.IdPersona,
       IdSucursal: EmpleadoData.IdSucursal,
       IdPuesto: EmpleadoData.IdPuesto,
       usuarioActualiza: EmpleadoData.usuarioActualiza,
     };
-    return this.http.post<ApiResponse>(`${this.apiUrl}/Empleados/Insert`, body);
+    return this.http.post<ApiResponseEmpleados>(`${this.apiUrl}/Empleados/Insert`, body);
   }
   deleteEmpleado(Id: number): Observable<any> {
     
     return this.http.put(`${this.apiUrl}/Empleados/Delete`, { Id });
   }
-  updateEmpleado(EmpleadoData: updateEmpleado): Observable<ApiResponse> {
+  updateEmpleado(EmpleadoData: updateEmpleado): Observable<ApiResponseEmpleados> {
     const body = {
       Id: EmpleadoData.Id,
       IdPersona: EmpleadoData.IdPersona,
@@ -684,7 +684,7 @@ export class EmpleadosService {
       UsuarioActualiza: EmpleadoData.usuarioActualiza,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponse>(`${this.apiUrl}/Empleados/Update`, body);
+    return this.http.put<ApiResponseEmpleados>(`${this.apiUrl}/Empleados/Update`, body);
   }
 }
 //------------------------------------------------------------------------------------------------------------------------

@@ -124,9 +124,9 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
       next: (response) => {
         this.getData();
         if (response.StatusCode === 200) {
-          this.toastr.success(response.message, 'Empleados');
+          this.toastr.success(response.response.Msg, 'Empleados');
         } else {
-          this.toastr.error(response.message, 'Empleados');
+          this.toastr.error(response.response.Msg, 'Empleados');
         }
       },
       error: (error) => {

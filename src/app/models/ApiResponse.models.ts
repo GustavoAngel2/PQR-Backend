@@ -36,3 +36,12 @@ export interface ApiResponseMovInv {
       Msg: string;
       data: any[]; };
   }
+  export interface ApiResponseEmpleados {
+    StatusCode: number;
+    success: boolean;
+    fecha: string;
+    message: string;
+    response: {
+      Msg: string;
+      data: any[]; };
+  }
