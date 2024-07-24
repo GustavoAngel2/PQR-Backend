@@ -5,8 +5,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { empleado, updateEmpleado } from "../models/empleados.model";
 import { SucursalesService, PersonasService, PuestosService, EmpleadosService } from '../data.service';
-import { dialogParameters } from '../models/dialog.model';
-import { DialogsComponent } from '../dialogs/dialogs.component';
 import { AuthService, currentUser } from '../auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
@@ -123,10 +121,11 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
     this.EmpleadosService.insertarEmpleado(nuevoEmpleado).subscribe({
       next: (response) => {
         this.getData();
+        console.log(response)
         if (response.StatusCode === 200) {
-          this.toastr.success(response.response.Msg, 'Empleados');
+          this.toastr.success(response.response.data, 'Empleados');
         } else {
-          this.toastr.error(response.response.Msg, 'Empleados');
+          this.toastr.error(response.response.data, 'Empleados');
         }
       },
       error: (error) => {
@@ -146,9 +145,9 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
         this.EmpleadosService.deleteEmpleado(Id).subscribe({
           next: (response) => {
             if (response.StatusCode === 200) {
-              this.toastr.success(response.message, 'Empleados');
+              this.toastr.success(response.response.data, 'Empleados');
             } else {
-              this.toastr.error(response.message, 'Empleados');
+              this.toastr.error(response.response.data, 'Empleados');
             }
             this.getData()
           },

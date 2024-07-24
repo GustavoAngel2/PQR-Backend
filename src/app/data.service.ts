@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {  ApiResponse, UpdateAlmacen } from './models/almacen.model';
-import{ ApiResponseClientes, UpdateClientes } from './models/cliente.model';
+import { UpdateAlmacen } from './models/almacen.model';
+import{ UpdateClientes } from './models/cliente.model';
 import{ updateArticulos } from './models/articulo.model';
 import { UpdatePersonas } from './models/personas.model';
 import { UpdateRutas } from './models/rutas.model';
@@ -19,8 +19,7 @@ import { UpdatePuesto } from "./models/puestos.model";
 import { UpdateCategoriaModulo } from './models/categoriaModulo.model';
 import { AuthInfo } from './models/login.model'; 
 import { ApiResponse2 } from './models/login.model';
-import { ApiResponseAlmacenes,ApiResponseEmpleados } from './models/ApiResponse.models';
-
+import { ApiResponse,ApiResponseMovInv,ApiResponsePuntoV } from './models/ApiResponse.models';
 import { AuthService } from './auth.service';
 
 
@@ -46,14 +45,14 @@ export class AlmacenesService {
     direccion: string;
     usuario: number;
     encargado: number;
-  }): Observable<ApiResponseAlmacenes> {
+  }): Observable<ApiResponse> {
     const body = {
       nombre: AlmacenesData.nombre,
       direccion: AlmacenesData.direccion,
       usuario: AlmacenesData.usuario,
       encargado: AlmacenesData.encargado
     };
-    return this.http.post<ApiResponseAlmacenes>(`${this.apiUrl}/Almacenes/Insert`, body);
+    return this.http.post<ApiResponse>(`${this.apiUrl}/Almacenes/Insert`, body);
   }
   //esta funcion borra un almacen pidiendo el id del almacen a borrar
   deleteAlmacenes(Id: number): Observable<any> {
@@ -61,7 +60,7 @@ export class AlmacenesService {
     return this.http.put(`${this.apiUrl}/Almacenes/Delete`, { Id });
   }
   //esta funcion sirve para modificar la informacion de un almacen
-  updateAlmacenes(AlmacenesData: UpdateAlmacen): Observable<ApiResponseAlmacenes> {
+  updateAlmacenes(AlmacenesData: UpdateAlmacen): Observable<ApiResponse> {
     const body = {
       id: AlmacenesData.Id,
       nombre: AlmacenesData.Nombre,
@@ -70,7 +69,7 @@ export class AlmacenesService {
       encargado: AlmacenesData.Encargado
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponseAlmacenes>(`${this.apiUrl}/Almacenes/Update`, body);
+    return this.http.put<ApiResponse>(`${this.apiUrl}/Almacenes/Update`, body);
   }
 }
 //----------------------------------------------------------------------------------------------------------------------------------------
@@ -83,12 +82,12 @@ export class ClientesService {
   constructor(private http: HttpClient,private authService: AuthService) {}
 
   //Esta funcion enlista los Clientes de la base de datos
-  getClientes(): Observable<ApiResponseClientes> {
+  getClientes(): Observable<ApiResponse> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ApiResponseClientes>(`${this.apiUrl}/Clientes/Get`, {headers});
+    return this.http.get<ApiResponse>(`${this.apiUrl}/Clientes/Get`, {headers});
   }
 
   //Esta funcion inserta clientes
@@ -101,7 +100,7 @@ export class ClientesService {
     curp: string;
     email:string;
     coordenadas: string;
-  }): Observable<ApiResponseClientes> {
+  }): Observable<ApiResponse> {
     const body = {
       nombre: ClientesData.nombre,
       direccion: ClientesData.direccion,
@@ -112,12 +111,12 @@ export class ClientesService {
       email: ClientesData.email,
       coordenadas: ClientesData.coordenadas,
     };
-    return this.http.post<ApiResponseClientes>(`${this.apiUrl}/Clientes/Insert`, body);
+    return this.http.post<ApiResponse>(`${this.apiUrl}/Clientes/Insert`, body);
   }
   deleteClientes(Id: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/Clientes/Delete`, { Id });
   }
-  updateClientes(ClientesData: UpdateClientes): Observable<ApiResponseClientes> {
+  updateClientes(ClientesData: UpdateClientes): Observable<ApiResponse> {
     const body = {
       id: ClientesData.Id,
       nombre: ClientesData.Nombre,
@@ -130,7 +129,7 @@ export class ClientesService {
       coordenadas: ClientesData.Coordenadas,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponseClientes>(`${this.apiUrl}/Clientes/Update`, body);
+    return this.http.put<ApiResponse>(`${this.apiUrl}/Clientes/Update`, body);
   }
 }
 //----------------------------------------------------------------------------------------------------------------------------------------
@@ -343,12 +342,12 @@ export class TicketsSevice {
     IdSucursal:number,
     FechaInicio:string,
     FechaFin:string
-  }): Observable<ApiResponse> {
+  }): Observable<ApiResponsePuntoV> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ApiResponse>(`${this.apiUrl}/Tickets/Get?IdSucursal=${TicketData.IdSucursal}&FechaInicio=${TicketData.FechaInicio}&FechaFin=${TicketData.FechaFin}`,{headers});
+    return this.http.get<ApiResponsePuntoV>(`${this.apiUrl}/Tickets/Get?IdSucursal=${TicketData.IdSucursal}&FechaInicio=${TicketData.FechaInicio}&FechaFin=${TicketData.FechaFin}`,{headers});
   }
 
   insertarTickets(TicketsData: {
@@ -356,14 +355,14 @@ export class TicketsSevice {
     IdCliente: number;
     IdVendedor: number;
     usuario: number;
-  }): Observable<ApiResponse> {
+  }): Observable<ApiResponsePuntoV> {
     const body = {
       IdSucursal: TicketsData.IdSucursal,
       IdCliente: TicketsData.IdCliente,
       IdVendedor: TicketsData.IdVendedor,
       usuario: TicketsData.usuario,
     };
-    return this.http.post<ApiResponse>(`${this.apiUrl}/Tickets/Insert`, body);
+    return this.http.post<ApiResponsePuntoV>(`${this.apiUrl}/Tickets/Insert`, body);
   }
 
   deleteTickets(Id: number): Observable<any> {
@@ -371,13 +370,13 @@ export class TicketsSevice {
     return this.http.put(`${this.apiUrl}/Tickets/Delete`, { Id });
   }
 
-  updateTickets(TicketsData: UpdateTickets): Observable<ApiResponse> {
+  updateTickets(TicketsData: UpdateTickets): Observable<ApiResponsePuntoV> {
     const body = {
       Id: TicketsData.Id,
       Estatus: TicketsData.estatus,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponse>(`${this.apiUrl}/Tickets/Update`, body);
+    return this.http.put<ApiResponsePuntoV>(`${this.apiUrl}/Tickets/Update`, body);
   }
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -499,26 +498,26 @@ export class movInventarioService {
     IdAlmacen:number,
     FechaInicio:string,
     FechaFin:string
-  }): Observable<ApiResponse> {
+  }): Observable<ApiResponseMovInv> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ApiResponse>(`${this.apiUrl}/MovInventario/Get?IdAlmacen=${MovInvData.IdAlmacen}&FechaInicio=${MovInvData.FechaInicio}&FechaFin=${MovInvData.FechaFin}`,{headers});
+    return this.http.get<ApiResponseMovInv>(`${this.apiUrl}/MovInventario/Get?IdAlmacen=${MovInvData.IdAlmacen}&FechaInicio=${MovInvData.FechaInicio}&FechaFin=${MovInvData.FechaFin}`,{headers});
   }
   insertMovInventario(MovInvData: {
     idTipoMov: number;
     idAlmacen: number;
     idDestino: number;
     usuarioActualiza: number;
-  }): Observable<ApiResponse> {
+  }): Observable<ApiResponseMovInv> {
     const body = {
       idTipoMov: MovInvData.idTipoMov,
       idAlmacen: MovInvData.idAlmacen,
       idDestino: MovInvData.idDestino,
       usuarioActualiza: MovInvData.usuarioActualiza,
     };
-    return this.http.post<ApiResponse>(
+    return this.http.post<ApiResponseMovInv>(
       `${this.apiUrl}/MovInventario/Insert`,
       body
     );
@@ -529,7 +528,7 @@ export class movInventarioService {
   }
   updateMovInventario(
     MovInvData: UpdateMovInventario
-  ): Observable<ApiResponse> {
+  ): Observable<ApiResponseMovInv> {
     const body = {
       Id: MovInvData.Id,
       idTipoMov: MovInvData.idTipoMov,
@@ -538,7 +537,7 @@ export class movInventarioService {
       usuario: MovInvData.usuarioActualiza,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponse>(
+    return this.http.put<ApiResponseMovInv>(
       `${this.apiUrl}/MovInventario/Update`,
       body
     );
@@ -650,32 +649,32 @@ export class EmpleadosService {
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient,private authService: AuthService) {}
 
-  getEmpleado(): Observable<ApiResponseEmpleados> {
+  getEmpleado(): Observable<ApiResponsePuntoV> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ApiResponseEmpleados>(`${this.apiUrl}/Empleados/Get`,{headers});
+    return this.http.get<ApiResponsePuntoV>(`${this.apiUrl}/Empleados/Get`,{headers});
   }
   insertarEmpleado(EmpleadoData: {
     IdPersona: number;
     IdSucursal: number;
     IdPuesto: number;
     usuarioActualiza: number;
-  }): Observable<ApiResponseEmpleados> {
+  }): Observable<ApiResponsePuntoV> {
     const body = {
       IdPersona: EmpleadoData.IdPersona,
       IdSucursal: EmpleadoData.IdSucursal,
       IdPuesto: EmpleadoData.IdPuesto,
       usuarioActualiza: EmpleadoData.usuarioActualiza,
     };
-    return this.http.post<ApiResponseEmpleados>(`${this.apiUrl}/Empleados/Insert`, body);
+    return this.http.post<ApiResponsePuntoV>(`${this.apiUrl}/Empleados/Insert`, body);
   }
   deleteEmpleado(Id: number): Observable<any> {
     
     return this.http.put(`${this.apiUrl}/Empleados/Delete`, { Id });
   }
-  updateEmpleado(EmpleadoData: updateEmpleado): Observable<ApiResponseEmpleados> {
+  updateEmpleado(EmpleadoData: updateEmpleado): Observable<ApiResponsePuntoV> {
     const body = {
       Id: EmpleadoData.Id,
       IdPersona: EmpleadoData.IdPersona,
@@ -684,7 +683,7 @@ export class EmpleadosService {
       UsuarioActualiza: EmpleadoData.usuarioActualiza,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponseEmpleados>(`${this.apiUrl}/Empleados/Update`, body);
+    return this.http.put<ApiResponsePuntoV>(`${this.apiUrl}/Empleados/Update`, body);
   }
 }
 //------------------------------------------------------------------------------------------------------------------------

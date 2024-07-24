@@ -4,7 +4,8 @@ export interface ApiResponse {
     fecha: string;
     message: string;
     response: {
-      data: any[]; };
+      data: any[];
+  };
 }
 
 export interface ApiResponsePuntoV {
@@ -14,7 +15,8 @@ export interface ApiResponsePuntoV {
     message: string;
     response: {
       Msg: string;
-      data: any[]; };
+      data: any[];
+  };
 }
 
 export interface ApiResponseMovInv {
@@ -24,24 +26,6 @@ export interface ApiResponseMovInv {
     message: string;
     response: {
       Msg: string;
-      data: any[]; };
-  }
-
-  export interface ApiResponseAlmacenes {
-    StatusCode: number;
-    success: boolean;
-    fecha: string;
-    message: string;
-    response: {
-      Msg: string;
-      data: any[]; };
-  }
-  export interface ApiResponseEmpleados {
-    StatusCode: number;
-    success: boolean;
-    fecha: string;
-    message: string;
-    response: {
-      Msg: string;
-      data: any[]; };
-  }
+      data: any[];
+    };
+}
