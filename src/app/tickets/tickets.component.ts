@@ -114,12 +114,6 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       }
     });
 
- /*    this.IdClienteControl.valueChanges.subscribe(value => {
-      if (!value) {
-        this.clearClienteFields();
-      }
-    }); */
-
     this.filteredClientes = this.IdClienteControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterClientes(value || ''))
@@ -199,9 +193,9 @@ export class TicketsComponent implements OnInit, AfterViewInit {
               this.getData(); // Llama a getData para obtener los detalles del ticket recién insertado
               this.toggleUI();
               this.isTicketFormVisible = false;
-              this.toastr.success(response.message, 'Punto de venta');
+              this.toastr.success(response.response.MSG, 'Punto de venta');
             } else {
-              this.toastr.error(response.message, 'Punto de venta');
+              this.toastr.error(response.response.MSG, 'Punto de venta');
             }
             this.getData()
           },
@@ -215,20 +209,20 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
   insertarTicket(): void {
     console.log('IdCliente antes de insertar:', this.IdCliente);
-    const nuevoAlmacen = {
+    const nuevoTicket = {
       IdSucursal: this.IdSucursal,
       IdCliente: this.IdCliente,
       IdVendedor: parseInt(this.loggedInUser.Id, 10),
       usuario: parseInt(this.loggedInUser.Id, 10)
     };
   
-    this.ticketsService.insertarTickets(nuevoAlmacen).subscribe({
+    this.ticketsService.insertarTickets(nuevoTicket).subscribe({
       next: (response) => {
         console.log(response)
         if (response.StatusCode === 200) {
-          this.toastr.success(response.message, 'Empleados');
+          this.toastr.success(response.response.Msg, 'Empleados');
         } else {
-          this.toastr.error(response.message, 'Empleados');
+          this.toastr.error(response.response.Msg, 'Empleados');
         }
         
         // Mueve la lógica de obtención de detalles del ticket aquí
@@ -274,9 +268,9 @@ export class TicketsComponent implements OnInit, AfterViewInit {
           this.detalleticketService.insertDetalleTicket(nuevoDetalleTicket).subscribe({
             next: (response) => {
               if (response.StatusCode === 200) {
-                this.toastr.success(response.message, 'Empleados');
+                this.toastr.success(response.response.Msg, 'Empleados');
               } else {
-                this.toastr.error(response.message, 'Empleados');
+                this.toastr.error(response.response.Msg, 'Empleados');
               }
               this.getData();
             },
