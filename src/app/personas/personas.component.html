@@ -5,6 +5,36 @@
     <img src="./assets/Almacenes.png" class="module-logo">
 </div>
 
+<div class="form-place">
+    <div class="form-container">
+        <div class="form-title">
+            <h1>Añadir persona</h1>
+        </div>
+        <div class="form-content">
+            <mat-form-field>
+                <mat-label>Nombre</mat-label>
+                <input matInput placeholder="Ingresa el nombre" [(ngModel)]="nombre">
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>ApPaterno</mat-label>
+                <input matInput placeholder="Ingresa el nombre" [(ngModel)]="ApPaterno">
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>ApMaterno</mat-label>
+                <input matInput placeholder="Ingresa el nombre" [(ngModel)]="ApMaterno">
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Direccion</mat-label>
+                <input matInput placeholder="Ingresa la direccion" [(ngModel)]="direccion">
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Usuario</mat-label>
+                <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuario">
+              </mat-form-field>
+        </div>
+    </div>
+</div>
+
 <div class="actionbar">
     <mat-form-field class="search-bar">
         <mat-label>Filtrar</mat-label>

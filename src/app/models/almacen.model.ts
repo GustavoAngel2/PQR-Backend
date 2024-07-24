@@ -14,6 +14,7 @@ export interface Almacen {
     fecha: string;
     message: string;
     response: {
+      Msg: string;
       data: Almacen[]; };
   }
 

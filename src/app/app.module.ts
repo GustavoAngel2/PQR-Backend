@@ -57,8 +57,6 @@ import { InicioComponent } from './inicio/inicio.component';
 import { ModulosComponent } from './modulos/modulos.component';
 import { ModulosUpdateComponent } from './modulos-update/modulos-update.component';
 import { EmpleadosComponent } from "./empleados/empleados.component";
-import { EmpleadosInsertComponent } from "./empleados-insert/empleados-insert.component";
-import { EmpleadosUpdateComponent } from "./empleados-update/empleados-update.component";
 import { PuestosComponent } from "./puestos/puestos.component";
 import { PuestosInsertComponent } from "./puestos-insert/puestos-insert.component";
 import { PuestosUpdateComponent } from "./puestos-update/puestos-update.component";
@@ -104,8 +102,6 @@ import { DialogsComponent } from './dialogs/dialogs.component';
     ModulosComponent,
     ModulosUpdateComponent,
     EmpleadosComponent,
-    EmpleadosInsertComponent,
-    EmpleadosUpdateComponent,
     PuestosComponent,
     PuestosInsertComponent,
     PuestosUpdateComponent,
@@ -149,9 +145,9 @@ import { DialogsComponent } from './dialogs/dialogs.component';
     UserService,
     provideToastr({
       timeOut: 3000,
-      positionClass: 'toast-top-right',
+      positionClass: 'toast-top-center',
       progressBar: true,
-      preventDuplicates: true
+      preventDuplicates: false
     }),
     provideAnimations()
   ],

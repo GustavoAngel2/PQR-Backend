@@ -40,9 +40,9 @@
   </div>
   <br>
   <div class="actionbar">
-    <button style="margin-top: -20px;" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Actualizar<i class="underline"></i></button>
-    <button  [hidden]="!datosCargados" style="margin-top: -20px;" class="btn-cancel"><i class="bi bi-cloud-upload-fill icon"></i>Cancelar</button>
-    <button (click)="insertar()" [hidden]="datosCargados" style="margin-top: -20px;" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
+    <button class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Actualizar<i class="underline"></i></button>
+    <button [hidden]="!datosCargados" class="btn-cancel"><i class="bi bi-cloud-upload-fill icon"></i>Cancelar</button>
+    <button (click)="insertar()" [hidden]="datosCargados" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
   </div>
   <br>
   <div class="table-container">
@@ -84,7 +84,7 @@
         <th mat-header-cell *matHeaderCellDef>Acciones</th>
         <td mat-cell *matCellDef="let empleado">
           <mat-icon class="action-btn green" (click)="cargarDatos(empleado)">edit</mat-icon>
-          <mat-icon class="action-btn red" (click)="eliminarEmpleado(empleado.Id)">delete</mat-icon>
+          <mat-icon class="action-btn red" (click)="showDeleteDialog(empleado.Id, empleado.Nombre)">delete</mat-icon>
         </td>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

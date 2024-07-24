@@ -46,9 +46,10 @@ export class ClientesComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private ClientesService: ClientesService, 
-              private authService: AuthService,
-              private toastr: ToastrService,
-              public dialog: MatDialog) {
+    private authService: AuthService,
+    private toastr: ToastrService,
+    public dialog: MatDialog
+  ){
     this.dataSource = new MatTableDataSource<Clientes>();
   }
 
@@ -134,6 +135,11 @@ export class ClientesComponent implements OnInit, AfterViewInit {
         this.ClientesService.deleteClientes(Id).subscribe({
           next: (response) => {
             this.getData();
+            if (response.StatusCode === 200) {
+              this.toastr.success(response.message, 'Clientes');
+            } else {
+              this.toastr.error(response.message, 'Clientes');
+            }
           },
           error: (error) => {
             console.error('Hubo un error al eliminar el Cliente', error);

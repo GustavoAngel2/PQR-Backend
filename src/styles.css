@@ -296,13 +296,9 @@ option{
 
 .search-bar{
   display: block;
-  position: absolute;
-  margin-top: 12px;
+  position: relative;
   height: 70px;
   width: 512px;
-  left: 0;
-  margin-left: 2%;
-  z-index: 99;
 }
 
 .mobile{

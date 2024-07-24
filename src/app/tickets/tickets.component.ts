@@ -7,9 +7,9 @@ import { MatSort } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { ClientesService, TicketsSevice, DetalleTicketService, TiposMovService, ArticulosService, SucursalesService } from '../data.service';
-import { tickets } from '../models/tickets.model';
 import { DetalleTicket } from '../models/detalleTicket.model';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService,currentUser } from '../auth.service';
 
 
@@ -82,7 +82,8 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     private tiposMovService: TiposMovService,
     private authService: AuthService, 
     private detalleticketService: DetalleTicketService,
-    private clientesService: ClientesService
+    private clientesService: ClientesService,
+    private toastr: ToastrService
   ) {
     this.dataSource = new MatTableDataSource<DetalleTicket>();
   }
@@ -112,12 +113,6 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         this.clearArticuloFields();
       }
     });
-
- /*    this.IdClienteControl.valueChanges.subscribe(value => {
-      if (!value) {
-        this.clearClienteFields();
-      }
-    }); */
 
     this.filteredClientes = this.IdClienteControl.valueChanges.pipe(
       startWith(''),
@@ -193,6 +188,15 @@ export class TicketsComponent implements OnInit, AfterViewInit {
             this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
               return data.Articulo.toString().toLowerCase().includes(filter.toLowerCase());
             };
+            if (response.StatusCode === 200) {
+              this.idTicket = response.response.data;
+              this.getData(); // Llama a getData para obtener los detalles del ticket recién insertado
+              this.toggleUI();
+              this.isTicketFormVisible = false;
+              this.toastr.success(response.response.MSG, 'Punto de venta');
+            } else {
+              this.toastr.error(response.response.MSG, 'Punto de venta');
+            }
             this.getData()
           },
           error: (error) => {
@@ -205,20 +209,22 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
   insertarTicket(): void {
     console.log('IdCliente antes de insertar:', this.IdCliente);
-    const nuevoAlmacen = {
+    const nuevoTicket = {
       IdSucursal: this.IdSucursal,
       IdCliente: this.IdCliente,
       IdVendedor: parseInt(this.loggedInUser.Id, 10),
       usuario: parseInt(this.loggedInUser.Id, 10)
     };
   
-    this.ticketsService.insertarTickets(nuevoAlmacen).subscribe({
+    this.ticketsService.insertarTickets(nuevoTicket).subscribe({
       next: (response) => {
         console.log(response)
-        this.idTicket = response.response.data;
-        this.getData(); // Llama a getData para obtener los detalles del ticket recién insertado
-        this.toggleUI();
-        this.isTicketFormVisible = false;
+        if (response.StatusCode === 200) {
+          this.toastr.success(response.response.Msg, 'Empleados');
+        } else {
+          this.toastr.error(response.response.Msg, 'Empleados');
+        }
+        
         // Mueve la lógica de obtención de detalles del ticket aquí
         if (this.idTicket) {
           this.detalleticketService.getDetalleTicket(this.idTicket).subscribe({
@@ -261,6 +267,11 @@ export class TicketsComponent implements OnInit, AfterViewInit {
           // Luego, continuar con la inserción del detalle del ticket
           this.detalleticketService.insertDetalleTicket(nuevoDetalleTicket).subscribe({
             next: (response) => {
+              if (response.StatusCode === 200) {
+                this.toastr.success(response.response.Msg, 'Empleados');
+              } else {
+                this.toastr.error(response.response.Msg, 'Empleados');
+              }
               this.getData();
             },
             error: (error) => {
@@ -389,6 +400,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     this.precioVenta = 0;
     this.cantidad =0;
   }
+  
   private clearDetalleTicket(){
     this.idTicket=0;
       this.idArticulo = '';

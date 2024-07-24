@@ -12,8 +12,8 @@
   height: calc(100% - 10px);
   width: calc(100% - 10px);
   gap: 6px;
-  display: grid;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -75,10 +75,9 @@
   text-align: center;
   color: #fff;
   font-size: 17px;
+  height: 32px;
   background-color: #00000070;
   width: 100%;
-  padding-top: 32px;
-  padding-bottom: 32px;
   border: 0;
   transition: 0.5s;
 }

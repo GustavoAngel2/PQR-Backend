@@ -3,13 +3,13 @@ import { MatTableDataSource } from "@angular/material/table";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { EmpleadosInsertComponent } from "../empleados-insert/empleados-insert.component";
-import { EmpleadosUpdateComponent } from "../empleados-update/empleados-update.component";
 import { empleado, updateEmpleado } from "../models/empleados.model";
 import { SucursalesService, PersonasService, PuestosService, EmpleadosService } from '../data.service';
 import { dialogParameters } from '../models/dialog.model';
 import { DialogsComponent } from '../dialogs/dialogs.component';
 import { AuthService, currentUser } from '../auth.service';
+import { ToastrService } from 'ngx-toastr';
+import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 
 @Component({
   selector: "app-empleados",
@@ -48,12 +48,6 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
     usuarioActualiza: 0
   };
 
-  dialogBody: dialogParameters = {
-    title: 'test',
-    message: 'This is a test',
-    buttons: 'ok'
-  }
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -63,7 +57,8 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
     private sucursalesService: SucursalesService,
     private puestoService: PuestosService,
     private authService: AuthService,
-    private personasService: PersonasService
+    private personasService: PersonasService,
+    private toastr: ToastrService
   ) {
     this.dataSource = new MatTableDataSource<empleado>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
@@ -117,16 +112,6 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
     }
   }
 
-  abrirInsertarModal() {
-    const dialogRef = this.dialog.open(EmpleadosInsertComponent, {
-      width: "550px",
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      // Manejar los resultados cuando la modal se cierre
-    });
-  }
-
   insertar(): void {
     const nuevoEmpleado = {
       IdPersona: this.IdPersona,
@@ -138,12 +123,11 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
     this.EmpleadosService.insertarEmpleado(nuevoEmpleado).subscribe({
       next: (response) => {
         this.getData();
-        this.dialogBody = {
-          title: 'Empleados',
-          message: 'Registro insertado correctamente!',
-          buttons: 'ok'
+        if (response.StatusCode === 200) {
+          this.toastr.success(response.message, 'Empleados');
+        } else {
+          this.toastr.error(response.message, 'Empleados');
         }
-        this.showDialog(this.dialogBody)
       },
       error: (error) => {
         console.error('Hubo un error al insertar el empleado', error);
@@ -151,31 +135,27 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
     });
   }
 
-  eliminarEmpleado(Id: number) {
-    if (confirm("¿Estás seguro de que deseas eliminar este empleado?")) {
-      this.EmpleadosService.deleteEmpleado(Id).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.dataSource.data = this.dataSource.data.filter(
-            (empleado: empleado) => empleado.Id !== Id
-          );
-        },
-        error: (error) => {
-          console.error("Hubo un error al eliminar el empleado", error);
-        },
-      });
-    }
-  }
-
-  showDialog(data: dialogParameters) {
-    const dialogRef = this.dialog.open(DialogsComponent, {
+  showDeleteDialog(Id: number, Name: string) {
+    const dialogRef = this.dialog.open(DeleteMenuComponent, {
       width: '550px',
-      data: data
+      data: Name
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result == "yes") {
-        this.getData();
+        this.EmpleadosService.deleteEmpleado(Id).subscribe({
+          next: (response) => {
+            if (response.StatusCode === 200) {
+              this.toastr.success(response.message, 'Empleados');
+            } else {
+              this.toastr.error(response.message, 'Empleados');
+            }
+            this.getData()
+          },
+          error: (error) => {
+            console.error("Hubo un error al eliminar el empleado", error);
+          },
+        });
       }
     });
   }

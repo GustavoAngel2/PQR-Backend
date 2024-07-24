@@ -15,7 +15,7 @@ import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { SearchMovModel } from '../models/detalleMov.model';
-
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-mov-inventario',
@@ -72,7 +72,8 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
     private almacenesService: AlmacenesService,
     private tiposMovService: TiposMovService,
     private detalleMovService: DetalleMovService,
-    private articulosService: ArticulosService
+    private articulosService: ArticulosService,
+    private toastr: ToastrService
   ) {
     this.dataSource = new MatTableDataSource<DetalleMov>();
   }
@@ -153,6 +154,11 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
       if (result == "yes") {
         this.detalleMovService.deleteDetalleMov(Id).subscribe({
           next: (response) => {
+            if(response.StatusCode == 200){
+              this.toastr.success(response.message, 'Movimientos de inventario');
+            } else {
+              this.toastr.error(response.message,'Movimientos de inventario')
+            }
             this.updateTable();
           },
           error: (error) => {
@@ -186,10 +192,16 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
     };
     this.movInventarioService.insertMovInventario(nuevoMovInv).subscribe({
       next: (response) => {
-        this.idMovimiento = response.response.data;
+        console.log(response)
         console.log(nuevoMovInv)
-        this.isOnStepTwo = true
-        this.getData();
+        if(response.StatusCode == 200){
+          this.toastr.success(response.message, 'Movimientos de inventario');
+          this.idMovimiento = response.response.data;
+          this.isOnStepTwo = true
+          this.getData();
+        } else {
+          this.toastr.error(response.message,'Movimientos de inventario')
+        }
       },
       error: (error) => {
         console.error('Hubo un error al insertar el almacen', error);
@@ -210,7 +222,11 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
   
     this.detalleMovService.insertarDetalleMov(nuevoDetalleMov).subscribe({
       next: (response) => {
-        console.log('Insert detalle mov response:', response);
+        if(response.StatusCode == 200){
+          this.toastr.success(response.message, 'Movimientos de inventario');
+        } else {
+          this.toastr.error(response.message,'Movimientos de inventario')
+        }
         this.updateTable();
       },
       error: (error) => {
@@ -226,7 +242,11 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
     this.tipoMov.usuarioActualiza = this.usuarioActualiza;
     this.movInventarioService.updateMovInventario(this.tipoMov).subscribe({
       next: (response) => {
-        console.log('Respuesta del servidor:', response);
+        if(response.StatusCode == 200){
+          this.toastr.success(response.message, 'Movimientos de inventario');
+        } else {
+          this.toastr.error(response.message,'Movimientos de inventario')
+        }
         this.getData();
       },
       error: (error) => {
