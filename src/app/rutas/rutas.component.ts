@@ -14,7 +14,7 @@ import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
   styleUrls: ['./rutas.component.css']
 })
 export class RutasComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Id', 'Ruta', 'Conductor','NoLicencia', 'Matricula', 'FechaAct','FechaReg','Acciones'];
+  displayedColumns: string[] = ['Id', 'Ruta', 'Conductor','NoLicencia', 'Matricula', 'NoSeguro', 'FechaAct','FechaReg','Acciones'];
   dataSource: MatTableDataSource<Rutas>;
   ruta: string = '';
   usuario: number = 0;
