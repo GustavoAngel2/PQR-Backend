@@ -22,7 +22,7 @@ export class ExistenciasComponent  implements OnInit, AfterViewInit{
   dataSource: MatTableDataSource<Existencia>;
 
   codigo: string = '';
-  almacen: number = 0 ;
+  almacen: string = '' ;
   cantidad: number = 0;
   usuario: number = 0;
   ComboCodigo:any;
@@ -47,6 +47,14 @@ export class ExistenciasComponent  implements OnInit, AfterViewInit{
   }
 
   loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
+
+  existencias:UpdateExistencia ={
+    Id:0,
+    Codigo:'',
+    Almacen:0,
+    Cantidad:0,
+    Usuario:0
+  }
 
 
   ngOnInit() {
@@ -78,20 +86,23 @@ export class ExistenciasComponent  implements OnInit, AfterViewInit{
       usuario: parseInt(this.loggedInUser.Id, 10),
       
     };
+
       this.existenciasService.insertExistencias(nuevoExistencia).subscribe({
         next: (response) => {
           this.getData();
+          this.limpiar();
           console.log(response)
           if(response.StatusCode == 200){
-            this.toastr.success(response.response.data.toString(), 'Almacenes');
+            this.toastr.success(response.response.data, 'Almacenes');
           } else {
-            this.toastr.error(response.response.data.toString(),'Almacenes')
+            this.toastr.error(response.response.data,'Almacenes')
           }
         },
         error: (error) => {
           console.error('Hubo un error al insertar el almacen', error);
         }
       });
+  
   }
 
 
@@ -140,10 +151,11 @@ export class ExistenciasComponent  implements OnInit, AfterViewInit{
       if (result == "yes") {
         this.existenciasService.deleteExistencias(Id).subscribe({
           next: (response) => {
+            console.log(response)
             if(response.StatusCode == 200){
-              this.toastr.success(response.message, 'Existencias');
+              this.toastr.success(response.response.data, 'Existencias');
             } else {
-              this.toastr.error(response.message,'Existencias')
+              this.toastr.error(response.response.data,'Existencias')
             }
             this.getData();
           },
@@ -155,13 +167,45 @@ export class ExistenciasComponent  implements OnInit, AfterViewInit{
     });
   }
 
+  actualizar(): void {
+    const existenciaActualizada: UpdateExistencia = {
+      Id: this.existencias.Id,
+      Codigo: this.codigo,
+      Almacen: parseInt(this.almacen),
+      Cantidad: this.cantidad,
+      Usuario: parseInt(this.loggedInUser.Id, 10),
+    };
+  
+    console.log('Actualizando existencia:', existenciaActualizada);
+    this.existenciasService.updateExistencias(existenciaActualizada).subscribe({
+      next: (response) => {
+        console.log('Respuesta del servidor:', response);
+        this.getData(); // Actualizar datos después de la actualización
+        this.limpiar();
+        if(response.StatusCode == 200){
+          this.toastr.success(response.response.data, 'Existencias');
+        } else {
+          this.toastr.error(response.response.data,'Existencias')
+        }
+      },
+      error: (error) => {
+        console.error('Error al actualizar la Existencia', error);
+      }
+    });
+  }
+
   cargarDatos(existencia: UpdateExistencia) {
-    
+    this.existencias.Id=existencia.Id
     this.datosCargados = true;
+    this.codigo = existencia.Codigo.toString()
+    this.cantidad = existencia.Cantidad
+    console.log('Existencia a actualizar: ',this.existencias.Id)
   }
 
   limpiar(): void{
-    
+    this.codigo = '';
+    this.almacen = '';
+    this.cantidad= 0;
     this.datosCargados =false;
   }
 

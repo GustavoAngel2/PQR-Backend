@@ -461,7 +461,7 @@ export class ExistenciasService {
 
   insertExistencias(ExistenciasData: {
     codigo: string;
-    almacen: number;
+    almacen: string;
     cantidad: number;
     usuario: number;
   }): Observable<ApiResponseExistencias> {
