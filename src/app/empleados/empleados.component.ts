@@ -200,16 +200,16 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
       usuarioActualiza: parseInt(this.loggedInUser.Id, 10),
     };
   
-    console.log('Actualizando almacen:', empleadoActualizado);
+    console.log('Actualizando Empleado:', empleadoActualizado);
     this.EmpleadosService.updateEmpleado(empleadoActualizado).subscribe({
       next: (response) => {
         console.log('Respuesta del servidor:', response);
         this.getData(); // Actualizar datos después de la actualización
         this.limpiar();
         if(response.StatusCode == 200){
-          this.toastr.success(response.message, 'Almacenes');
+          this.toastr.success(response.response.data, 'Empleados');
         } else {
-          this.toastr.error(response.message,'Almacenes')
+          this.toastr.error(response.response.data,'Empleados')
         }
       },
       error: (error) => {
