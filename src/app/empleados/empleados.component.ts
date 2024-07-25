@@ -183,8 +183,44 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
   }
 
   cargarDatos(empleado: updateEmpleado) {
+
     this.empleados.Id= empleado.Id;
     this.datosCargados = true;
+    console.log(this.empleados.Id)
 
+  }
+
+
+  actualizar(): void {
+    const empleadoActualizado: updateEmpleado = {
+      Id: this.empleados.Id,
+      IdPersona: this.empleados.IdPersona,
+      IdSucursal: this.empleados.IdSucursal,
+      IdPuesto: this.empleados.IdPuesto,
+      usuarioActualiza: parseInt(this.loggedInUser.Id, 10),
+    };
+  
+    console.log('Actualizando almacen:', empleadoActualizado);
+    this.EmpleadosService.updateEmpleado(empleadoActualizado).subscribe({
+      next: (response) => {
+        console.log('Respuesta del servidor:', response);
+        this.getData(); // Actualizar datos después de la actualización
+        this.limpiar();
+        if(response.StatusCode == 200){
+          this.toastr.success(response.message, 'Almacenes');
+        } else {
+          this.toastr.error(response.message,'Almacenes')
+        }
+      },
+      error: (error) => {
+        console.error('Error al actualizar el almacen', error);
+      }
+    });
+  }
+
+
+  limpiar(): void{
+
+    this.datosCargados =false;
   }
 }

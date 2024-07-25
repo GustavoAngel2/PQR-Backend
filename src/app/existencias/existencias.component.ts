@@ -1,12 +1,16 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { Existencia } from '../models/existencia.model';
+import { Existencia, UpdateExistencia } from '../models/existencia.model';
 import { ExistenciasService } from '../data.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ExistenciasInsertComponent } from '../existencias-insert/existencias-insert.component';
-import { ExistenciasUpdateComponent } from '../existencias-update/existencias-update.component';
+import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
+import { ArticulosService } from '../data.service';
+import { AlmacenesService } from '../data.service';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService, currentUser } from '../auth.service';
+
 
 @Component({
   selector: 'app-existencias',
@@ -17,14 +21,99 @@ export class ExistenciasComponent  implements OnInit, AfterViewInit{
   displayedColumns: string[] = ['Id', 'Codigo', 'Almacen', 'Cantidad', 'Usuario', 'FechaRegistro', 'FechaActualiza', 'Acciones'];
   dataSource: MatTableDataSource<Existencia>;
 
+  codigo: string = '';
+  almacen: number = 0 ;
+  cantidad: number = 0;
+  usuario: number = 0;
+  ComboCodigo:any;
+  ComboAlmacen:any;
+
+  datosCargados: boolean = false;
+
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private existenciasService: ExistenciasService, public dialog:MatDialog) {
+  constructor(
+    private existenciasService: ExistenciasService,
+    public dialog:MatDialog,
+    private authService: AuthService, 
+    private ArticuloService: ArticulosService,
+    private AlmacenesService : AlmacenesService,
+    private toastr: ToastrService
+  ) 
+    {
     this.dataSource = new MatTableDataSource<Existencia>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
 
+  loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
+
+
   ngOnInit() {
+  this.getData();
+  this.loggedInUser = this.authService.getCurrentUser(); // Obtener el usuario logeado
+    console.log('Usuario logeado:', this.loggedInUser);
+  }
+
+
+    ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+  // Método para realizar el filtrado
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  insertar(): void {
+    const nuevoExistencia = {
+      codigo: this.codigo,
+      almacen: this.almacen,  
+      cantidad: this.cantidad,
+      usuario: parseInt(this.loggedInUser.Id, 10),
+      
+    };
+    if(this.codigo == '' && this.almacen ==0 && this.cantidad == 0){
+      this.toastr.error('No deje los datos en blanco','Almacenes')
+    } else {
+      this.existenciasService.insertExistencias(nuevoExistencia).subscribe({
+        next: (response) => {
+          this.getData();
+          console.log(response)
+          if(response.StatusCode == 200){
+            this.toastr.success(response.response.data.toString(), 'Almacenes');
+          } else {
+            this.toastr.error(response.response.data.toString(),'Almacenes')
+          }
+        },
+        error: (error) => {
+          console.error('Hubo un error al insertar el almacen', error);
+        }
+      });
+    }
+  }
+
+
+  getData() {
+    this.dataSource.filterPredicate = (data: Existencia , filter: string) => {
+      return data.Codigo.toLowerCase().includes(filter) || 
+             data.Id.toString().includes(filter) || 
+             data.Almacen.toLowerCase().includes(filter);
+    };
+
+    this.ArticuloService.getArticulos().subscribe((data: any) => {
+      this.ComboCodigo = data;
+      console.log(this.ComboCodigo)
+    });
+     this.AlmacenesService.getAlmacenes().subscribe((data2: any) => {
+      this.ComboAlmacen = data2;
+      console.log(this.ComboAlmacen)
+    });
     this.dataSource.filterPredicate = (data: Existencia, filter: string) => {
       return data.Almacen.toLowerCase().includes(filter)// Puedes añadir más campos si es necesario
     };
@@ -41,55 +130,43 @@ export class ExistenciasComponent  implements OnInit, AfterViewInit{
         console.error(error);
       }
     });
-  }
-    ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-  // Método para realizar el filtrado
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
-  abrirInsertarModal() {
-    const dialogRef = this.dialog.open(ExistenciasInsertComponent, {
-      width: '550px',
-      // Puedes pasar datos al componente de la modal si es necesario
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      // Manejar los resultados cuando la modal se cierre
-    });
-  }
-  eliminarExistencia(id: number) {
-    // Aquí puedes agregar una confirmación antes de eliminar si lo deseas
-    if (confirm('¿Estás seguro de que deseas eliminar esta existencia?')) {
-      this.existenciasService.deleteExistencias(id).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.dataSource.data = this.dataSource.data.filter((existencia: Existencia) => existencia.Id !== id);
-        },
-        error: (error) => {
-          // Manejar el error aquí
-          console.error('Hubo un error al eliminar el departamento', error);
-        }
-      });
-    }
-  }
-  abrirEditarModal(existencia: Existencia) {
-    const dialogRef = this.dialog.open(ExistenciasUpdateComponent, {
+
+  abrirDeleteDialog(Id: number, Name: string) {
+    const dialogRef = this.dialog.open(DeleteMenuComponent, {
       width: '550px',
-      data: existencia // Pasa el objeto de departamento a la modal
+      data: Name
     });
-  
+    console.log(Id)
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        
+      if (result == "yes") {
+        this.existenciasService.deleteExistencias(Id).subscribe({
+          next: (response) => {
+            if(response.StatusCode == 200){
+              this.toastr.success(response.message, 'Existencias');
+            } else {
+              this.toastr.error(response.message,'Existencias')
+            }
+            this.getData();
+          },
+          error: (error) => {
+            console.error('Hubo un error al eliminar la Existencia', error);
+          }
+        });
       }
     });
   }
+
+  cargarDatos(existencia: UpdateExistencia) {
+    
+    this.datosCargados = true;
+  }
+
+  limpiar(): void{
+    
+    this.datosCargados =false;
+  }
+
 }

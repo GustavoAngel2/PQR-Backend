@@ -19,7 +19,7 @@ import { UpdatePuesto } from "./models/puestos.model";
 import { UpdateCategoriaModulo } from './models/categoriaModulo.model';
 import { AuthInfo } from './models/login.model'; 
 import { ApiResponse2 } from './models/login.model';
-import { ApiResponse,ApiResponseEmpleados,ApiResponsePuntoV } from './models/ApiResponse.models';
+import { ApiResponse,ApiResponseEmpleados,ApiResponsePuntoV,ApiResponseExistencias } from './models/ApiResponse.models';
 import { AuthService } from './auth.service';
 
 
@@ -437,14 +437,14 @@ export class ExistenciasService {
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient,private authService: AuthService) {}
 
-  getExistencias(IdAlmacen: number): Observable<ArrayBuffer> {
+  getExistencias(IdAlmacen: number): Observable<ApiResponseExistencias> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
 
     const params = new HttpParams().set('Almacen', IdAlmacen.toString());
-    return this.http.get<ArrayBuffer>(`${this.apiUrl}/Existencias/Get`, { params, headers });
+    return this.http.get<ApiResponseExistencias>(`${this.apiUrl}/Existencias/Get`, { params, headers });
   }
 
   insertExistencias(ExistenciasData: {
@@ -452,14 +452,14 @@ export class ExistenciasService {
     almacen: number;
     cantidad: number;
     usuario: number;
-  }): Observable<ApiResponse> {
+  }): Observable<ApiResponseExistencias> {
     const body = {
       codigo: ExistenciasData.codigo,
       almacen: ExistenciasData.almacen,
       cantidad: ExistenciasData.cantidad,
       usuario: ExistenciasData.usuario,
     };
-    return this.http.post<ApiResponse>(
+    return this.http.post<ApiResponseExistencias>(
       `${this.apiUrl}/Existencias/Insert`,
       body
     );
@@ -470,7 +470,7 @@ export class ExistenciasService {
   }
   updateExistencias(
     ExistenciasData: UpdateExistencia
-  ): Observable<ApiResponse> {
+  ): Observable<ApiResponseExistencias> {
     const body = {
       id: ExistenciasData.Id,
       codigo: ExistenciasData.Codigo,
@@ -479,7 +479,7 @@ export class ExistenciasService {
       usuario: ExistenciasData.Usuario,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponse>(
+    return this.http.put<ApiResponseExistencias>(
       `${this.apiUrl}/Existencias/Update`,
       body
     );
