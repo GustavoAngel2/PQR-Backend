@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { RutasService } from '../data.service';
-import{Rutas, deleteRutas} from '../models/rutas.model'
+import{Rutas} from '../models/rutas.model'
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { RutasInsertComponent } from '../rutas-insert/rutas-insert.component';
 import { RutasUpdateComponent } from '../rutas-update/rutas-update.component';
-
+import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 
 @Component({
   selector: 'app-rutas',
@@ -15,9 +14,14 @@ import { RutasUpdateComponent } from '../rutas-update/rutas-update.component';
   styleUrls: ['./rutas.component.css']
 })
 export class RutasComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Id', 'Nombre', 'Usuario', 'FechaAct','FechaReg','Acciones'];
+  displayedColumns: string[] = ['Id', 'Ruta', 'Conductor','NoLicencia', 'Matricula', 'FechaAct','FechaReg','Acciones'];
   dataSource: MatTableDataSource<Rutas>;
-
+  ruta: string = '';
+  usuario: number = 0;
+  matricula: string = '';
+  nombreConductor: string = '';
+  numLicencia: string = '';
+  numSeguro: string = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -59,13 +63,24 @@ export class RutasComponent implements OnInit, AfterViewInit {
     }
   }
   abrirInsertarModal() {
-    const dialogRef = this.dialog.open(RutasInsertComponent, {
-      width: '550px',
-      // Puedes pasar datos al componente de la modal si es necesario
-    });
+    const nuevaRuta = {
+      nombre: this.ruta,
+      matricula: this.matricula,
+      conductor: this.nombreConductor,
+      noLicencia: this.numLicencia,
+      noSeguro: this.numSeguro,
+      usuario: this.usuario,
+    };
 
-    dialogRef.afterClosed().subscribe(result => {
-      // Manejar los resultados cuando la modal se cierre
+    // Aquí asumo que tienes un método en tu servicio para insertar el departamento
+    this.RutasService.insertarRutas(nuevaRuta).subscribe({
+      next: (response) => {
+        console.log(response)
+      },
+      error: (error) => {
+        // Manejar el error aquí
+        console.error('Hubo un error al insertar el almacen', error);
+      }
     });
   }
   eliminarRutas(Id: number) {
@@ -92,6 +107,27 @@ export class RutasComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         
+      }
+    });
+  }
+
+  abrirDeleteDialog(Id: number, Name: string) {
+    const dialogRef = this.dialog.open(DeleteMenuComponent, {
+      width: '550px',
+      data: Name
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == "yes") {
+        this.RutasService.deleteRutas(Id).subscribe({
+          next: (response) => {
+            console.log(response);
+            this.dataSource.data = this.dataSource.data.filter((rutas: Rutas) => rutas.Id !== Id);
+          },
+          error: (error) => {
+            // Manejar el error aquí
+            console.error('Hubo un error al eliminar el departamento', error);
+          }
+        });
       }
     });
   }
