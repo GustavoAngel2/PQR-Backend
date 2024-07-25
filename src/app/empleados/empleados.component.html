@@ -41,8 +41,8 @@
 </div>
 <br>
 <div class="actionbar">
-  <button class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Actualizar<i class="underline"></i></button>
-  <button [hidden]="!datosCargados" class="btn-cancel"><i class="bi bi-cloud-upload-fill icon"></i>Cancelar</button>
+  <button  [hidden]="!datosCargados" (click)="actualizar()" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Actualizar<i class="underline"></i></button>
+  <button [hidden]="!datosCargados" (click)="limpiar()" class="btn-cancel"><i class="bi bi-cloud-upload-fill icon"></i>Cancelar</button>
   <button (click)="insertar()" [hidden]="datosCargados" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
 </div>
 <br>

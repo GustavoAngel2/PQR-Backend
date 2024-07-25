@@ -28,3 +28,13 @@ export interface ApiResponseEmpleados {
       data: string;
     };
 }
+
+export interface ApiResponseExistencias {
+  StatusCode: number;
+  success: boolean;
+  fecha: string;
+  message: string;
+  response: {
+    data: string;
+};
+}
