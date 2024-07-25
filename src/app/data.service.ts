@@ -252,10 +252,18 @@ export class RutasService {
   }
   insertarRutas(RutasData: {
     nombre: string;
+    matricula: string;
+    conductor: string;
+    noLicencia: string;
+    noSeguro: string;
     usuario: number;
   }): Observable<ApiResponse> {
     const body = {
       nombre: RutasData.nombre,
+      matricula: RutasData.matricula,
+      conductor: RutasData.conductor,
+      noLicencia: RutasData.noLicencia,
+      noSeguro: RutasData.noSeguro,
       usuario: RutasData.usuario,
     };
     return this.http.post<ApiResponse>(`${this.apiUrl}/Rutas/Insert`, body);

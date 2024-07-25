@@ -2,7 +2,6 @@
 
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { RouterModule, Routes } from "@angular/router";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -43,7 +42,6 @@ import { PersonasComponent } from "./personas/personas.component";
 import { RutasComponent } from "./rutas/rutas.component";
 import { PersonasInsertComponent } from "./personas-insert/personas-insert.component";
 import { PersonasUpdateComponent } from "./personas-update/personas-update.component";
-import { RutasInsertComponent } from "./rutas-insert/rutas-insert.component";
 import { RutasUpdateComponent } from "./rutas-update/rutas-update.component";
 import { ExistenciasComponent } from "./existencias/existencias.component";
 import { ExistenciasInsertComponent } from "./existencias-insert/existencias-insert.component";
@@ -81,7 +79,6 @@ import { DialogsComponent } from './dialogs/dialogs.component';
     PersonasInsertComponent,
     PersonasUpdateComponent,
     RutasComponent,
-    RutasInsertComponent,
     RutasUpdateComponent,
     DetalleMovimientoComponent,
     DetalleMoviemientoViewComponent,
