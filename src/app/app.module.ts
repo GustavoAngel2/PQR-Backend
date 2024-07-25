@@ -42,7 +42,6 @@ import { PersonasComponent } from "./personas/personas.component";
 import { RutasComponent } from "./rutas/rutas.component";
 import { PersonasInsertComponent } from "./personas-insert/personas-insert.component";
 import { PersonasUpdateComponent } from "./personas-update/personas-update.component";
-import { RutasUpdateComponent } from "./rutas-update/rutas-update.component";
 import { ExistenciasComponent } from "./existencias/existencias.component";
 import { ExistenciasInsertComponent } from "./existencias-insert/existencias-insert.component";
 import { ExistenciasUpdateComponent } from "./existencias-update/existencias-update.component";
@@ -79,7 +78,6 @@ import { DialogsComponent } from './dialogs/dialogs.component';
     PersonasInsertComponent,
     PersonasUpdateComponent,
     RutasComponent,
-    RutasUpdateComponent,
     DetalleMovimientoComponent,
     DetalleMoviemientoViewComponent,
     TicketsComponent,

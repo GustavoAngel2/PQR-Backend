@@ -274,9 +274,13 @@ export class RutasService {
   }
   updateRutas(RutasData: UpdateRutas): Observable<ApiResponse> {
     const body = {
-      Id: RutasData.Id,
-      Nombre: RutasData.Nombre,
-      Usuario: RutasData.Usuario,
+      id: RutasData.Id,
+      nombre: RutasData.Nombre,
+      matricula: RutasData.Matricula,
+      conductor: RutasData.Conductor,
+      noLicencia: RutasData.NoLicencia,
+      noSeguro: RutasData.NoSeguro,
+      usuario: RutasData.Usuario,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
     return this.http.put<ApiResponse>(`${this.apiUrl}/Rutas/Update`, body);
