@@ -82,8 +82,8 @@
           <mat-label>Usuario</mat-label>
           <input matInput hide [formControl]="IdUsuarioDetalleControl" placeholder="Usuario Actualiza" [(ngModel)]="usuario" name="usuario">
         </mat-form-field> -->
-        <button [ngClass]="{'disabled-button': isOnStepOne}" [disabled]="isOnStepOne" (click)="toggleUI();  refrescarPagina()" class="btn-form">Terminar<i class="underline"></i></button>
-        <button [ngClass]="{'disabled-button': isOnStepOne}" [disabled]="isOnStepOne" (click)="insertarDetalleTicket();" class="btn-form">Insertar al ticket<i class="underline"></i></button>
+        <button [ngClass]="{'disabled-button': isOnStepTwo}" [disabled]="isOnStepOne" (click)="toggleUI();  refrescarPagina()" class="btn-form">Terminar<i class="underline"></i></button>
+        <button [ngClass]="{'disabled-button': isOnStepTwo}" [disabled]="isOnStepTwo" (click)="insertarDetalleTicket();" class="btn-form">Insertar al ticket<i class="underline"></i></button>
       </div> 
 </div>
 

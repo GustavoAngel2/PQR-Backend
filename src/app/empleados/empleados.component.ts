@@ -112,9 +112,9 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
 
   insertar(): void {
     const nuevoEmpleado = {
-      IdPersona: this.IdPersona,
-      IdSucursal: this.IdSucursal,
-      IdPuesto: this.IdPuesto,
+      IdPersona: this.empleados.IdPersona,
+      IdSucursal: this.empleados.IdSucursal,
+      IdPuesto: this.empleados.IdPuesto,
       usuarioActualiza: parseInt(this.loggedInUser.Id, 10),
     };
 
@@ -122,6 +122,7 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
       next: (response) => {
         this.getData();
         console.log(response)
+        console.log ('ids: ',nuevoEmpleado)
         if (response.StatusCode === 200) {
           this.toastr.success(response.response.data, 'Empleados');
         } else {

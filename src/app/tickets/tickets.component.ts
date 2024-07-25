@@ -206,88 +206,94 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       }
     });
   }
-
   insertarTicket(): void {
     console.log('IdCliente antes de insertar:', this.IdCliente);
     const nuevoTicket = {
-      IdSucursal: this.IdSucursal,
-      IdCliente: this.IdCliente,
-      IdVendedor: parseInt(this.loggedInUser.Id, 10),
-      usuario: parseInt(this.loggedInUser.Id, 10)
+        IdSucursal: this.IdSucursal,
+        IdCliente: this.IdCliente,
+        IdVendedor: parseInt(this.loggedInUser.Id, 10),
+        usuario: parseInt(this.loggedInUser.Id, 10)
     };
-  
+
     this.ticketsService.insertarTickets(nuevoTicket).subscribe({
-      next: (response) => {
-        console.log(response)
-        if (response.StatusCode === 200) {
-          this.toastr.success(response.response.Msg, 'Empleados');
-        } else {
-          this.toastr.error(response.response.Msg, 'Empleados');
-        }
-        
-        // Mueve la lógica de obtención de detalles del ticket aquí
-        if (this.idTicket) {
-          this.detalleticketService.getDetalleTicket(this.idTicket).subscribe({
-            next: (data: any) => {
-              this.detalleticket = data;
-              console.log('Detalles del ticket:', this.detalleticket);
-            },
-            error: (error) => {
-              console.error('Hubo un error al obtener los detalles del ticket', error);
+        next: (response) => {
+            console.log(response);
+            if (response.StatusCode === 200) {
+                this.toastr.success(response.response.Msg, 'Punto de venta');
+                this.idTicket = response.response.data; // Asigna el idTicket del response
+                console.log('Nuevo idTicket:', this.idTicket);
+
+                // Oculta el formulario de ticket y muestra el formulario de detalle de ticket
+                this.isTicketFormVisible = false;
+
+                // Mueve la lógica de obtención de detalles del ticket aquí
+                if (this.idTicket) {
+                    this.detalleticketService.getDetalleTicket(this.idTicket).subscribe({
+                        next: (data: any) => {
+                            this.detalleticket = data;
+                            console.log('Detalles del ticket:', this.detalleticket);
+                        },
+                        error: (error) => {
+                            console.error('Hubo un error al obtener los detalles del ticket', error);
+                        }
+                    });
+                }
+            } else {
+                this.toastr.error(response.response.Msg, 'Punto de venta');
             }
-          });
+        },
+        error: (error) => {
+            console.error('Hubo un error al insertar el ticket', error);
         }
-      },
-      error: (error) => {
-        console.error('Hubo un error al insertar el ticket', error);
-      }
     });
-  }
+}
+
   
   refrescarPagina(): void {
     window.location.reload();
   }
-
   insertarDetalleTicket() {
     const nuevoDetalleTicket = {
-      idTicket: this.idTicket,
-      codigo: this.codigo,
-      cantidad: this.cantidad,
-      precioVenta: this.precioVenta,
-      usuario: parseInt(this.loggedInUser.Id, 10)
+        idTicket: this.idTicket,
+        codigo: this.codigo,
+        cantidad: this.cantidad,
+        precioVenta: this.precioVenta,
+        usuario: parseInt(this.loggedInUser.Id, 10)
     };
-  
+
     if (this.idTicket) {
-      // Si this.idTicket tiene un valor, continuar con la solicitud GET
-      this.detalleticketService.getDetalleTicket(this.idTicket).subscribe({
-        next: (data: DetalleTicket[]) => {
-          this.detalleticket = data;
-          console.log('Detalles del ticket:', this.detalleticket);
-  
-          // Luego, continuar con la inserción del detalle del ticket
-          this.detalleticketService.insertDetalleTicket(nuevoDetalleTicket).subscribe({
-            next: (response) => {
-              if (response.StatusCode === 200) {
-                this.toastr.success(response.response.Msg, 'Empleados');
-              } else {
-                this.toastr.error(response.response.Msg, 'Empleados');
-              }
-              this.getData();
+        // Si this.idTicket tiene un valor, continuar con la solicitud GET
+        this.detalleticketService.getDetalleTicket(this.idTicket).subscribe({
+            next: (data: DetalleTicket[]) => {
+                this.detalleticket = data;
+                console.log('Detalles del ticket:', this.detalleticket);
+                
+                // Luego, continuar con la inserción del detalle del ticket
+                this.detalleticketService.insertDetalleTicket(nuevoDetalleTicket).subscribe({
+                    next: (response) => {
+                      console.log('este es el response: ', response)
+                        if (response.StatusCode === 200) {
+                            this.toastr.success(response.response.data.toString(), 'Punto de Venta');
+                        } else {
+                            this.toastr.error(response.response.data.toString(), 'Punto de Venta');
+                        }
+                        this.getData();
+                    },
+                    error: (error) => {
+                        console.error('Hubo un error al insertar el detalle del ticket', error);
+                    }
+                });
+                this.clearArticuloFields();
             },
             error: (error) => {
-              console.error('Hubo un error al insertar el detalle del ticket', error);
+                console.error('Error al obtener detalle del ticket:', error);
             }
-          });
-          this.clearArticuloFields();
-        },
-        error: (error) => {
-          console.error('Error al obtener detalle del ticket:', error);
-        }
-      });
+        });
     } else {
-      console.error('idTicket no está definido');
+        console.error('idTicket no está definido');
     }
-  }
+}
+
   
   terminar(){
     this.toggleUI();
