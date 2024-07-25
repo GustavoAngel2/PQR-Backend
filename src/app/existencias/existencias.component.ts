@@ -78,9 +78,6 @@ export class ExistenciasComponent  implements OnInit, AfterViewInit{
       usuario: parseInt(this.loggedInUser.Id, 10),
       
     };
-    if(this.codigo == '' && this.almacen ==0 && this.cantidad == 0){
-      this.toastr.error('No deje los datos en blanco','Almacenes')
-    } else {
       this.existenciasService.insertExistencias(nuevoExistencia).subscribe({
         next: (response) => {
           this.getData();
@@ -95,7 +92,6 @@ export class ExistenciasComponent  implements OnInit, AfterViewInit{
           console.error('Hubo un error al insertar el almacen', error);
         }
       });
-    }
   }
 
 

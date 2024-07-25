@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { RutasService } from '../data.service';
-import{Rutas} from '../models/rutas.model'
+import { Rutas } from '../models/rutas.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { RutasUpdateComponent } from '../rutas-update/rutas-update.component';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
+import { AuthService, currentUser } from '../auth.service';
 
 @Component({
   selector: 'app-rutas',
@@ -16,21 +16,42 @@ import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 export class RutasComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['Id', 'Ruta', 'Conductor','NoLicencia', 'Matricula', 'NoSeguro', 'FechaAct','FechaReg','Acciones'];
   dataSource: MatTableDataSource<Rutas>;
+  id: number = 0;
   ruta: string = '';
   usuario: number = 0;
   matricula: string = '';
   nombreConductor: string = '';
   numLicencia: string = '';
   numSeguro: string = '';
+  isModifying: boolean = false;
 
+  loggedUser: currentUser = { Id: '', NombreUsuario: '', IdRol: '', Rol: '' }
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private RutasService: RutasService, public dialog:MatDialog) {
+  constructor(private RutasService: RutasService, public authService:AuthService, public dialog:MatDialog) {
     this.dataSource = new MatTableDataSource<Rutas>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
 
   ngOnInit() {
+    this.loggedUser = this.authService.getCurrentUser();
+    this.getData()
+  }
+    ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+  // Método para realizar el filtrado
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  getData(){
     this.dataSource.filterPredicate = (data: Rutas, filter: string) => {
       return data.Nombre.toLowerCase().includes(filter) || 
              data.Id.toString().includes(filter); // Puedes añadir más campos si es necesario
@@ -49,19 +70,7 @@ export class RutasComponent implements OnInit, AfterViewInit {
       }
     });
   }
-    ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-  // Método para realizar el filtrado
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
   abrirInsertarModal() {
     const nuevaRuta = {
       nombre: this.ruta,
@@ -76,6 +85,7 @@ export class RutasComponent implements OnInit, AfterViewInit {
     this.RutasService.insertarRutas(nuevaRuta).subscribe({
       next: (response) => {
         console.log(response)
+        this.getData()
       },
       error: (error) => {
         // Manejar el error aquí
@@ -83,32 +93,16 @@ export class RutasComponent implements OnInit, AfterViewInit {
       }
     });
   }
-  eliminarRutas(Id: number) {
-    // Aquí puedes agregar una confirmación antes de eliminar si lo deseas
-    if (confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
-      this.RutasService.deleteRutas(Id).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.dataSource.data = this.dataSource.data.filter((rutas: Rutas) => rutas.Id !== Id);
-        },
-        error: (error) => {
-          // Manejar el error aquí
-          console.error('Hubo un error al eliminar el departamento', error);
-        }
-      });
-    }
-  }
-  abrirEditarModal(rutas: Rutas) {
-    const dialogRef = this.dialog.open(RutasUpdateComponent, {
-      width: '550px',
-      data: rutas // Pasa el objeto de departamento a la modal
-    });
-  
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        
-      }
-    });
+
+  cargarDatos(rutas: Rutas) {
+    this.id = rutas.Id
+    this.ruta = rutas.Nombre
+    this.usuario = parseInt(this.loggedUser.Id, 10),
+    this.matricula = rutas.Matricula
+    this.nombreConductor = rutas.Conductor
+    this.numLicencia = rutas.NoLicencia
+    this.numSeguro = rutas.NoSeguro
+    this.isModifying = true
   }
 
   abrirDeleteDialog(Id: number, Name: string) {
@@ -121,13 +115,35 @@ export class RutasComponent implements OnInit, AfterViewInit {
         this.RutasService.deleteRutas(Id).subscribe({
           next: (response) => {
             console.log(response);
-            this.dataSource.data = this.dataSource.data.filter((rutas: Rutas) => rutas.Id !== Id);
+            this.getData()
           },
           error: (error) => {
             // Manejar el error aquí
             console.error('Hubo un error al eliminar el departamento', error);
           }
         });
+      }
+    });
+  }
+
+  update(){
+    const Ruta = {
+      Id: this.id,
+      Nombre: this.ruta,
+      Matricula: this.matricula,
+      Conductor: this.nombreConductor,
+      NoLicencia: this.numLicencia,
+      NoSeguro: this.numSeguro,
+      Usuario: parseInt(this.loggedUser.Id, 10)
+    };
+    this.RutasService.updateRutas(Ruta).subscribe({
+      next: (response) => {
+        console.log(response)
+        this.getData
+        this.isModifying = false
+      },
+      error: (error) => {
+        console.error(error);
       }
     });
   }
