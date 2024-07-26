@@ -24,7 +24,7 @@ export interface usuarios {
     Contrasena: string;
     Rol: string;
     idPersona: string;
-    Usuario: string;
+    Usuario: number;
   }
   export interface DeleteUsuario{
     Id: number;

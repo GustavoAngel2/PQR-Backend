@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { UsuarioService } from '../data.service';
-import { usuarios } from '../models/usuarios.models';
+import { UpdateUsuario, usuarios } from '../models/usuarios.models';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -29,6 +29,17 @@ export class UsuariosComponent implements OnInit{
   ComboRoles: any;
   ComboPersonas:any;
   loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
+  datosCargados: boolean = false;
+
+
+  usuarios:UpdateUsuario ={
+    Id:0,
+    Nombre:'',
+    Contrasena:'',
+    Rol:'',
+    idPersona:'',
+    Usuario:0
+  }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -95,7 +106,7 @@ export class UsuariosComponent implements OnInit{
   }
 
 
-  eliminarAlmacen(Id: number) {
+  eliminarUsuario(Id: number) {
     // Aquí puedes agregar una confirmación antes de eliminar si lo deseas
     if (confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
       this.UsuarioService.deleteUsuarios(Id).subscribe({
@@ -110,19 +121,34 @@ export class UsuariosComponent implements OnInit{
       });
     }
   }
-  abrirEditarModal(usuario: usuarios) {
-    const dialogRef = this.dialog.open(UsuarioUpdateComponent, {
-      width: '550px',
-      data: usuario // Pasa el objeto de departamento a la modal
-    });
+
+  actualizar(): void {
+    const usuarioActualizado: UpdateUsuario = {
+      Id: this.usuarios.Id,
+      Nombre: this.nombre,
+      Contrasena: this.contrasena,
+      Rol: this.rol.toString(),
+      idPersona: this.idPersona.toString(),
+      Usuario: parseInt(this.loggedInUser.Id, 10),
+    };
   
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        
+    console.log('Actualizando existencia:', usuarioActualizado);
+    this.UsuarioService.updateUsuarios(usuarioActualizado).subscribe({
+      next: (response) => {
+        console.log('Respuesta del servidor:', response);
+        this.getData(); // Actualizar datos después de la actualización
+        this.limpiar();
+        if(response.StatusCode == 200){
+          this.toastr.success(response.response.data, 'Usuarios');
+        } else {
+          this.toastr.error(response.response.data,'Usuarios')
+        }
+      },
+      error: (error) => {
+        console.error('Error al actualizar la Existencia', error);
       }
     });
   }
-
 
  insertar(): void {
     const nuevoUsuario = {
@@ -137,11 +163,36 @@ export class UsuariosComponent implements OnInit{
       next: (response) => {
         this.getData();
         console.log(response);
+        if(response.StatusCode == 200){
+          this.toastr.success(response.response.data, 'Usuarios');
+        } else {
+          this.toastr.error(response.response.data,'Usuarios')
+        }
       },
       error: (error) => {
         console.error("Hubo un error al insertar el usuario", error);
       },
     });
+  }
+
+
+  
+  cargarDatos(usuario: UpdateUsuario) {
+    this.usuarios.Id =usuario.Id
+    this.datosCargados = true;
+    this.nombre = usuario.Nombre;
+    this.contrasena = '';
+    this.rol= parseInt(usuario.Rol);
+    this.idPersona = parseInt(usuario.idPersona)
+    console.log('Usuario a actualizar: ',this.usuarios.Id)
+  }
+
+  limpiar(): void{
+    this.nombre = '';
+    this.contrasena = '';
+    this.rol= 0;
+    this.idPersona=0;
+    this.datosCargados =false;
   }
 }
 

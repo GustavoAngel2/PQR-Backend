@@ -437,6 +437,7 @@ export class UsuarioService {
       Nombre: UsuarioData.Nombre,
       Contrasena: UsuarioData.Contrasena,
       Rol: UsuarioData.Rol,
+      idPersona: UsuarioData.idPersona,
       Usuario: UsuarioData.Usuario,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
