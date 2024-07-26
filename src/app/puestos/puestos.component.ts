@@ -7,6 +7,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { PuestosInsertComponent } from "../puestos-insert/puestos-insert.component";
 import { PuestosUpdateComponent } from "../puestos-update/puestos-update.component";
+import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: "app-puestos",
@@ -19,17 +21,21 @@ export class PuestosComponent implements OnInit, AfterViewInit {
     "nombre",
     "descripcion",
     "salario",
-    "usuarioActualiza",
     "fechaRegistro",
     "fechaActualiza",
     "Acciones",
   ];
   dataSource: MatTableDataSource<Puesto>;
+  nombre: string = "";
+  descripcion: string = "";
+  salario: number = 0;
+  usuarioActualiza: number = 0;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
+    private toastr: ToastrService,
     private puestosService: PuestosService,
     public dialog: MatDialog
   ) {
@@ -37,26 +43,7 @@ export class PuestosComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.dataSource.filterPredicate = (data: Puesto, filter: string) => {
-      return (
-        data.nombre.toLowerCase().includes(filter) ||
-        data.descripcion.toLowerCase().includes(filter) ||
-        data.Id.toString().includes(filter)
-      ); // Puedes añadir más campos si es necesario
-    };
-    this.puestosService.getPuestos().subscribe({
-      next: (response) => {
-        console.log("Respuesta del servidor:", response);
-        if (response && Array.isArray(response) && response.length > 0) {
-          this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
-        } else {
-          console.log("no contiene datos");
-        }
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    });
+    this.getData()
   }
     ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -98,6 +85,7 @@ export class PuestosComponent implements OnInit, AfterViewInit {
       });
     }
   }
+
   abrirEditarModal(articulos: Puesto) {
     const dialogRef = this.dialog.open(PuestosUpdateComponent, {
       width: "550px",
@@ -109,4 +97,73 @@ export class PuestosComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
+  abrirDeleteDialog(Id: number, Name: string) {
+    const dialogRef = this.dialog.open(DeleteMenuComponent, {
+      width: '550px',
+      data: Name
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == "yes") {
+        this.puestosService.deletePuestos(Id).subscribe({
+          next: (response) => {
+            if(response.StatusCode == 200){
+              this.toastr.success(response.message, 'Almacenes');
+            } else {
+              this.toastr.error(response.message,'Almacenes')
+            }
+            this.getData();
+          },
+          error: (error) => {
+            console.error('Hubo un error al eliminar el almacén', error);
+          }
+        });
+      }
+    });
+  }
+
+  getData(){
+    this.dataSource.filterPredicate = (data: Puesto, filter: string) => {
+      return (
+        data.nombre.toLowerCase().includes(filter) ||
+        data.descripcion.toLowerCase().includes(filter) ||
+        data.Id.toString().includes(filter)
+      ); // Puedes añadir más campos si es necesario
+    };
+    this.puestosService.getPuestos().subscribe({
+      next: (response) => {
+        console.log("Respuesta del servidor:", response);
+        if (response && Array.isArray(response) && response.length > 0) {
+          this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
+        } else {
+          console.log("no contiene datos");
+        }
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+  }
+
+  insertar(){
+    const nuevoPuesto = {
+      nombre: this.nombre,
+      descripcion: this.descripcion,
+      salario: this.salario,
+      usuarioActualiza: this.usuarioActualiza,
+    };
+
+    // Aquí asumo que tienes un método en tu servicio para insertar el departamento
+    this.puestosService.insertarPuestos(nuevoPuesto).subscribe({
+      next: (response) => {
+        this.getData()
+      },
+      error: (error) => {
+        // Manejar el error aquí
+        console.error("Hubo un error al insertar el almacen", error);
+      },
+    });
+  }
 }
+
