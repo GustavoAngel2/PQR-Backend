@@ -20,7 +20,7 @@ export interface CategoriaModulo {
     Id: number;
     Nombre: string;
     Descripcion: string;
-    Usuario: String;
+    Usuario: number;
   }
 
    export interface deleteCategoriaModulo{

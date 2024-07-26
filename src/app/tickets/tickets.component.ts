@@ -7,8 +7,10 @@ import { MatSort } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { ClientesService, TicketsSevice, DetalleTicketService, TiposMovService, ArticulosService, SucursalesService } from '../data.service';
-import { tickets } from '../models/tickets.model';
 import { DetalleTicket } from '../models/detalleTicket.model';
+import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService,currentUser } from '../auth.service';
 
 
 @Component({
@@ -44,9 +46,12 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   ComboClientes: any[] = [];
   filteredClientes!: Observable<any[]>;
   filteredArticulosCod!: Observable<any[]>;
-
+  isOnStepOne = true;
+  isOnStepTwo = false;
 
   isTicketFormVisible= true;
+  loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
+
 
   // New ticket
   IdSucursalControl = new FormControl('');
@@ -75,14 +80,18 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     private sucursalesService: SucursalesService,
     private articulosService: ArticulosService,
     private tiposMovService: TiposMovService,
+    private authService: AuthService, 
     private detalleticketService: DetalleTicketService,
-    private clientesService: ClientesService
+    private clientesService: ClientesService,
+    private toastr: ToastrService
   ) {
     this.dataSource = new MatTableDataSource<DetalleTicket>();
   }
 
   ngOnInit() {
     this.getData();
+    this.loggedInUser = this.authService.getCurrentUser(); // Obtener el usuario logeado
+    console.log('Usuario logeado:', this.loggedInUser);
     this.filteredArticulos = this.IdArticuloControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterArticulos(value || ''))
@@ -105,12 +114,6 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       }
     });
 
- /*    this.IdClienteControl.valueChanges.subscribe(value => {
-      if (!value) {
-        this.clearClienteFields();
-      }
-    }); */
-
     this.filteredClientes = this.IdClienteControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterClientes(value || ''))
@@ -120,6 +123,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.refreshUI();
   }
 
   applyFilter(event: Event) {
@@ -148,7 +152,6 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         this.totalTicket = 0; 
       }
     });
-<<<<<<< HEAD
     this.articulosService.getArticulos().subscribe((data2: any) => {
       this.ComboCodigo = data2;
       console.log(this.ComboCodigo);
@@ -185,6 +188,15 @@ export class TicketsComponent implements OnInit, AfterViewInit {
             this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
               return data.Articulo.toString().toLowerCase().includes(filter.toLowerCase());
             };
+            if (response.StatusCode === 200) {
+              this.idTicket = response.response.data;
+              this.getData(); // Llama a getData para obtener los detalles del ticket recién insertado
+              this.toggleUI();
+              this.isTicketFormVisible = false;
+              this.toastr.success(response.response.MSG, 'Punto de venta');
+            } else {
+              this.toastr.error(response.response.MSG, 'Punto de venta');
+            }
             this.getData()
           },
           error: (error) => {
@@ -193,150 +205,135 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         });
       }
     });
-=======
-
-      this.articulosService.getArticulos().subscribe((data2: any) => {
-        this.ComboCodigo = data2;
-        console.log(this.ComboCodigo);
-      });
-      this.sucursalesService.getSucursales().subscribe((data3: any) => {
-        this.ComboSucursales = data3;
-        console.log(this.ComboSucursales);
-      });
-      this.tiposMovService.getTiposMov().subscribe((data4: any) => {
-        this.ComboTipoMov = data4;
-        console.log(this.ComboTipoMov);
-      });
-
-      this.clientesService.getClientes().subscribe((data5: any) => {
-        this.ComboClientes = data5;
-        console.log(this.ComboClientes);
-      });
-
-      this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
-        return data.Articulo.toString().includes(filter);
-      };
-
-/*   */
-    }
-
-    
-
-
-
-  eliminarAlmacen(Id: number) {
-    if (confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
-      this.detalleticketService.deleteDetalleTicket(Id).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
-            return data.Articulo.toString().toLowerCase().includes(filter.toLowerCase());
-          };
-        },
-        error: (error) => {
-          console.error('Hubo un error al eliminar el departamento', error);
-        }
-      });
-    }
->>>>>>> origin/Arkan
   }
-
   insertarTicket(): void {
     console.log('IdCliente antes de insertar:', this.IdCliente);
-    const nuevoAlmacen = {
-      IdSucursal: this.IdSucursal,
-      IdCliente: this.IdCliente,
-      IdVendedor: this.IdVendedor,
-      usuario: this.Usuario
+    const nuevoTicket = {
+        IdSucursal: this.IdSucursal,
+        IdCliente: this.IdCliente,
+        IdVendedor: parseInt(this.loggedInUser.Id, 10),
+        usuario: parseInt(this.loggedInUser.Id, 10)
     };
-    this.dataSource = new MatTableDataSource<DetalleTicket>();
-    this.ticketsService.insertarTickets(nuevoAlmacen).subscribe({
-      next: (response) => {
-        this.idTicket = response.response.data;
-        this.getData(); 
-        this.toggleUI();
-        this.isTicketFormVisible = false;
-        // Mueve la lógica de obtención de detalles del ticket aquí
-        if (this.idTicket) {
-          this.detalleticketService.getDetalleTicket(this.idTicket).subscribe({
-            next: (data: any) => {
-              this.detalleticket = data;
-              console.log('Detalles del ticket:', this.detalleticket);
-            },
-            error: (error) => {
-              console.error('Hubo un error al obtener los detalles del ticket', error);
+
+    this.ticketsService.insertarTickets(nuevoTicket).subscribe({
+        next: (response) => {
+            console.log(response);
+            if (response.StatusCode === 200) {
+                this.toastr.success(response.response.Msg, 'Punto de venta');
+                this.idTicket = response.response.data; // Asigna el idTicket del response
+                console.log('Nuevo idTicket:', this.idTicket);
+
+                // Oculta el formulario de ticket y muestra el formulario de detalle de ticket
+                this.isTicketFormVisible = false;
+
+                // Mueve la lógica de obtención de detalles del ticket aquí
+                if (this.idTicket) {
+                    this.detalleticketService.getDetalleTicket(this.idTicket).subscribe({
+                        next: (data: any) => {
+                            this.detalleticket = data;
+                            console.log('Detalles del ticket:', this.detalleticket);
+                        },
+                        error: (error) => {
+                            console.error('Hubo un error al obtener los detalles del ticket', error);
+                        }
+                    });
+                }
+            } else {
+                this.toastr.error(response.response.Msg, 'Punto de venta');
             }
-          });
+        },
+        error: (error) => {
+            console.error('Hubo un error al insertar el ticket', error);
         }
-      },
-      error: (error) => {
-        console.error('Hubo un error al insertar el ticket', error);
-      }
     });
-  }
+}
+
   
   refrescarPagina(): void {
     window.location.reload();
   }
-
   insertarDetalleTicket() {
     const nuevoDetalleTicket = {
-      idTicket: this.idTicket,
-      codigo: this.codigo,
-      cantidad: this.cantidad,
-      precioVenta: this.precioVenta,
-      usuario: this.usuario
+        idTicket: this.idTicket,
+        codigo: this.codigo,
+        cantidad: this.cantidad,
+        precioVenta: this.precioVenta,
+        usuario: parseInt(this.loggedInUser.Id, 10)
     };
-  
+
     if (this.idTicket) {
-      // Si this.idTicket tiene un valor, continuar con la solicitud GET
-      this.detalleticketService.getDetalleTicket(this.idTicket).subscribe({
-        next: (data: DetalleTicket[]) => {
-          this.detalleticket = data;
-          console.log('Detalles del ticket:', this.detalleticket);
-  
-          // Luego, continuar con la inserción del detalle del ticket
-          this.detalleticketService.insertDetalleTicket(nuevoDetalleTicket).subscribe({
-            next: (response) => {
-              this.getData();
+        // Si this.idTicket tiene un valor, continuar con la solicitud GET
+        this.detalleticketService.getDetalleTicket(this.idTicket).subscribe({
+            next: (data: DetalleTicket[]) => {
+                this.detalleticket = data;
+                console.log('Detalles del ticket:', this.detalleticket);
+                
+                // Luego, continuar con la inserción del detalle del ticket
+                this.detalleticketService.insertDetalleTicket(nuevoDetalleTicket).subscribe({
+                    next: (response) => {
+                      console.log('este es el response: ', response)
+                        if (response.StatusCode === 200) {
+                            this.toastr.success(response.response.data.toString(), 'Punto de Venta');
+                        } else {
+                            this.toastr.error(response.response.data.toString(), 'Punto de Venta');
+                        }
+                        this.getData();
+                    },
+                    error: (error) => {
+                        console.error('Hubo un error al insertar el detalle del ticket', error);
+                    }
+                });
+                this.clearArticuloFields();
             },
             error: (error) => {
-              console.error('Hubo un error al insertar el detalle del ticket', error);
+                console.error('Error al obtener detalle del ticket:', error);
             }
-          });
-          this.clearArticuloFields();
-        },
-        error: (error) => {
-          console.error('Error al obtener detalle del ticket:', error);
-        }
-      });
+        });
     } else {
-      console.error('idTicket no está definido');
+        console.error('idTicket no está definido');
     }
-  }
-<<<<<<< HEAD
+}
+
   
   terminar(){
     this.toggleUI();
     this.clearDetalleTicket();
   }
-=======
-
-
-
->>>>>>> origin/Arkan
   
   toggleUI() {
+    this.isOnStepTwo = !this.isOnStepTwo;
+    this.isOnStepOne = !this.isOnStepOne;
+    this.refreshUI();
     this.isTicketFormVisible=true;
   }
 
-toggleUI2() {
+  refreshUI() {
+    if (this.isOnStepTwo) {
+      this.IdClienteControl.disable();
+      this.IdSucursalControl.disable();
+      this.IdUsusarioControl.disable();
+      this.IdVendedorControl.disable();
 
-  this.isTicketFormVisible=true;
-  this.dataSource.data = [];
-  this.totalTicket= 0;
-}
+      this.CantidadControl.enable();
+      this.IdUsuarioDetalleControl.enable();
+      this.IdTicketControl.disable();
+      this.IdArticuloControl.enable();
+      this.CodigoControl.enable();
+      this.PrecioControl.disable();
+    } else {
+      this.IdClienteControl.enable();
+      this.IdSucursalControl.enable();
+      this.IdUsusarioControl.enable();
+      this.IdVendedorControl.enable();
 
+      this.CantidadControl.enable();
+      this.IdUsuarioDetalleControl.enable();
+      this.IdTicketControl.disable();
+      this.IdArticuloControl.enable();
+      this.CodigoControl.enable();
+      this.PrecioControl.disable();
+    }
+  }
 
   articuloSelected(event: any) {
     const articulo = event.option.value;
@@ -409,6 +406,7 @@ toggleUI2() {
     this.precioVenta = 0;
     this.cantidad =0;
   }
+  
   private clearDetalleTicket(){
     this.idTicket=0;
       this.idArticulo = '';

@@ -11,12 +11,11 @@ export class AppComponent implements OnInit, OnDestroy {
   actualUser: currentUser = { Id: "", NombreUsuario: "",Rol:"", IdRol:""};
   userSubscription!: Subscription;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,) {}
 
   ngOnInit() {
     this.userSubscription = this.authService.currentUser.subscribe(user => {
       this.actualUser = user;
-      console.log('User updated:', this.actualUser);
     });
   }
 

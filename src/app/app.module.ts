@@ -2,7 +2,6 @@
 
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { RouterModule, Routes } from "@angular/router";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -24,6 +23,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ToastrModule } from 'ngx-toastr';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideToastr } from 'ngx-toastr';
 
 //Componentes
 
@@ -38,11 +40,8 @@ import { ClientesComponent } from "./clientes/clientes.component";
 import { ArticulosComponent } from "./articulos/articulos.component";
 import { PersonasComponent } from "./personas/personas.component";
 import { RutasComponent } from "./rutas/rutas.component";
-import { ClientesUpdateComponent } from "./clientes-update/clientes-update.component";
 import { PersonasInsertComponent } from "./personas-insert/personas-insert.component";
 import { PersonasUpdateComponent } from "./personas-update/personas-update.component";
-import { RutasInsertComponent } from "./rutas-insert/rutas-insert.component";
-import { RutasUpdateComponent } from "./rutas-update/rutas-update.component";
 import { ExistenciasComponent } from "./existencias/existencias.component";
 import { ExistenciasInsertComponent } from "./existencias-insert/existencias-insert.component";
 import { ExistenciasUpdateComponent } from "./existencias-update/existencias-update.component";
@@ -54,8 +53,6 @@ import { InicioComponent } from './inicio/inicio.component';
 import { ModulosComponent } from './modulos/modulos.component';
 import { ModulosUpdateComponent } from './modulos-update/modulos-update.component';
 import { EmpleadosComponent } from "./empleados/empleados.component";
-import { EmpleadosInsertComponent } from "./empleados-insert/empleados-insert.component";
-import { EmpleadosUpdateComponent } from "./empleados-update/empleados-update.component";
 import { PuestosComponent } from "./puestos/puestos.component";
 import { PuestosInsertComponent } from "./puestos-insert/puestos-insert.component";
 import { PuestosUpdateComponent } from "./puestos-update/puestos-update.component";
@@ -76,14 +73,11 @@ import { DialogsComponent } from './dialogs/dialogs.component';
     AppComponent,
     AlmacenesComponent,
     ClientesComponent,
-    ClientesUpdateComponent,
     ArticulosComponent,
     PersonasComponent,
     PersonasInsertComponent,
     PersonasUpdateComponent,
     RutasComponent,
-    RutasInsertComponent,
-    RutasUpdateComponent,
     DetalleMovimientoComponent,
     DetalleMoviemientoViewComponent,
     TicketsComponent,
@@ -101,8 +95,6 @@ import { DialogsComponent } from './dialogs/dialogs.component';
     ModulosComponent,
     ModulosUpdateComponent,
     EmpleadosComponent,
-    EmpleadosInsertComponent,
-    EmpleadosUpdateComponent,
     PuestosComponent,
     PuestosInsertComponent,
     PuestosUpdateComponent,
@@ -136,13 +128,21 @@ import { DialogsComponent } from './dialogs/dialogs.component';
     MatPaginatorModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }, // Registro del interceptor
     AuthGuard, // Proveedor del AuthGuard
     AuthService, // Proveedor del AuthService
-    UserService
+    UserService,
+    provideToastr({
+      timeOut: 3000,
+      positionClass: 'toast-top-left',
+      progressBar: true,
+      preventDuplicates: false
+    }),
+    provideAnimations()
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

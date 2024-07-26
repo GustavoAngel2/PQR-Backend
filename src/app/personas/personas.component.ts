@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { ClientesService, PersonasService } from '../data.service';
+import { PersonasService } from '../data.service';
 import { Personas,DeletePersonas } from '../models/personas.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,6 +16,11 @@ import { PersonasUpdateComponent } from '../personas-update/personas-update.comp
 export class PersonasComponent implements OnInit, AfterViewInit{
   displayedColumns: string[] = ['Id', 'Nombre', 'ApPaterno','ApMaterno','Direccion', 'Usuario', 'FechaAct','FechaReg','Acciones'];
   dataSource: MatTableDataSource<Personas>;
+  nombre: string = '';
+  ApPaterno : string = '';
+  ApMaterno : string = '';
+  direccion: string = '';
+  usuario: number = 0;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
