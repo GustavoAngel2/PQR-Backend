@@ -19,7 +19,7 @@ import { UpdatePuesto } from "./models/puestos.model";
 import { UpdateCategoriaModulo } from './models/categoriaModulo.model';
 import { AuthInfo } from './models/login.model'; 
 import { ApiResponse2 } from './models/login.model';
-import { ApiResponse,ApiResponseEmpleados,ApiResponsePuntoV,ApiResponseExistencias,ApiResponseModulos } from './models/ApiResponse.models';
+import { ApiResponse,ApiResponseEmpleados,ApiResponsePuntoV,ApiResponseExistencias,ApiResponseModulos,ApiResponseUsuarios } from './models/ApiResponse.models';
 import { AuthService } from './auth.service';
 
 
@@ -395,40 +395,43 @@ export class TicketsSevice {
 @Injectable({
   providedIn: "root",
 })
-export class UsuarioSevice {
-  //Se especifica la url base de la API
+export class UsuarioService {
+  // Se especifica la url base de la API
   private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient,private authService: AuthService) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
-  getUsuarios(): Observable<ApiResponse> {
+  getUsuarios(): Observable<ApiResponseUsuarios> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ApiResponse>(`${this.apiUrl}/Usuarios/Get`,{headers});
+    return this.http.get<ApiResponseUsuarios>(`${this.apiUrl}/Usuarios/Get`, { headers });
   }
 
   insertarUsuario(UsuarioData: {
     nombre: string;
     contrasena: string;
     rol: number;
+    idPersona: number;  // Cambiado a idPersona
     usuario: number;
-  }): Observable<ApiResponse> {
+  }): Observable<ApiResponseUsuarios> {
     const body = {
       Nombre: UsuarioData.nombre,
       Contrasena: UsuarioData.contrasena,
       Rol: UsuarioData.rol,
+      idPersona: UsuarioData.idPersona,  // Cambiado a idPersona
       Usuario: UsuarioData.usuario,
     };
-    return this.http.post<ApiResponse>(`${this.apiUrl}/Usuarios/Insert`, body);
+    return this.http.post<ApiResponseUsuarios>(`${this.apiUrl}/Usuarios/Insert`, body);
   }
+
 
   deleteUsuarios(Id: number): Observable<any> {
     
     return this.http.put(`${this.apiUrl}/Usuarios/Delete`, { Id });
   }
 
-  updateUsuarios(UsuarioData: UpdateUsuario): Observable<ApiResponse> {
+  updateUsuarios(UsuarioData: UpdateUsuario): Observable<ApiResponseUsuarios> {
     const body = {
       Id: UsuarioData.Id,
       Nombre: UsuarioData.Nombre,
@@ -437,7 +440,7 @@ export class UsuarioSevice {
       Usuario: UsuarioData.Usuario,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponse>(`${this.apiUrl}/Usuarios/Update`, body);
+    return this.http.put<ApiResponseUsuarios>(`${this.apiUrl}/Usuarios/Update`, body);
   }
 }
 //-------------------------------------------------------------------------------------------------------------------------//

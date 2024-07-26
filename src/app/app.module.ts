@@ -34,7 +34,6 @@ import { DetalleMovimientoComponent } from "./detalle-movimiento/detalle-movimie
 import { DetalleMoviemientoViewComponent } from "./detalle-movimiento-view/detalle-moviemiento-view.component";
 import { TicketsComponent } from "./tickets/tickets.component";
 import { UsuariosComponent } from "./usuarios/usuarios.component";
-import { UsuariosInsertComponent } from "./usuarios-insert/usuarios-insert.component";
 import { UsuarioUpdateComponent } from "./usuario-update/usuario-update.component";
 import { ClientesComponent } from "./clientes/clientes.component";
 import { ArticulosComponent } from "./articulos/articulos.component";
@@ -82,7 +81,6 @@ import { DialogsComponent } from './dialogs/dialogs.component';
     DetalleMoviemientoViewComponent,
     TicketsComponent,
     UsuariosComponent,
-    UsuariosInsertComponent,
     UsuarioUpdateComponent,
     ExistenciasComponent,
     ExistenciasInsertComponent,

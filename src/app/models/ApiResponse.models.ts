@@ -48,3 +48,13 @@ export interface ApiResponseModulos {
     data: string;
 };
 }
+
+export interface ApiResponseUsuarios {
+  StatusCode: number;
+  success: boolean;
+  fecha: string;
+  message: string;
+  response: {
+    data: any;
+};
+}

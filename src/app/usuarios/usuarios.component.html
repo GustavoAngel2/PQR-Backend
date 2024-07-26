@@ -22,13 +22,17 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Rol</mat-label>
-        <select matNativeControl [(ngModel)]="ComboRoles" placeholder="--Seleccione un usuario--" (change)="dev($event)" class="form-control">
-          <option *ngFor="let rol of ComboRoles" value={{rol.Id}}>{{ rol.Rol }}</option>
+        <select matNativeControl [(ngModel)]="rol">
+          <option value="0">Seleccione</option>
+          <option *ngFor="let rol of ComboRoles" [value]="rol.Id">{{ rol.Rol }}</option>
         </select>
       </mat-form-field>
       <mat-form-field>
-        <mat-label>Usuario</mat-label>
-        <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuario"/>
+        <mat-label>Persona</mat-label>
+        <select matNativeControl [(ngModel)]="idPersona">
+          <option value="0">Seleccione</option>
+          <option *ngFor="let persona of ComboPersonas" [value]="persona.Id">{{ persona.Nombre }}</option>
+        </select>
       </mat-form-field>
     </div>
   </div>
