@@ -38,3 +38,13 @@ export interface ApiResponseExistencias {
     data: string;
 };
 }
+
+export interface ApiResponseModulos {
+  StatusCode: number;
+  success: boolean;
+  fecha: string;
+  message: string;
+  response: {
+    data: string;
+};
+}

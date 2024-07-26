@@ -22,7 +22,7 @@ export interface ApiResponse {
   };
 }
 
-export interface UpdateRutas{
+export interface UpdateRutas {
   Id: number;
   Nombre: string;
   Usuario: number;
@@ -31,6 +31,7 @@ export interface UpdateRutas{
   NoLicencia: string;
   Conductor: string;
 }
+
 
 export interface deleteRutas{
   Id: number;
