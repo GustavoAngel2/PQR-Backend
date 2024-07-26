@@ -14,13 +14,13 @@ export interface Clientes {
     coordenadas: string;
   }
 
-  export interface ApiResponse {
+  export interface ApiResponseClientes {
     StatusCode: number;
     success: boolean;
     fecha: string;
     message: string;
     response: {
-      data: Clientes };
+      data: Clientes[]; };
   }
 
   export interface UpdateClientes{
@@ -28,11 +28,11 @@ export interface Clientes {
     Nombre: string;
     Direccion: string;
     Usuario: number;
-    telefono:number;
-    rfc: string;
-    curp: string;
-    email:string;
-    coordenadas: string;
+    Telefono:number;
+    RFC: string;
+    CURP: string;
+    Email:string;
+    Coordenadas: string;
   }
 
    export interface deleteClientes{

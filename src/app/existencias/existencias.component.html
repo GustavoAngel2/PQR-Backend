@@ -5,14 +5,49 @@
     <img src="./assets/Almacenes.png" class="module-logo">
 </div>
 
-<div class="actionbar">
-    <mat-form-field class="search-bar">
-        <mat-label>Filtrar</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
-    </mat-form-field>
-    <button (click)="abrirInsertarModal()" class="btn right">Insertar<i class="underline"></i></button>
+
+<div class="form-place">
+    <div class="form-container">
+    <div class="form-title">
+        <h1 mat-dialog-title>Nuevo Almacen</h1>
+    </div>
+    <div class="form-content">
+        <mat-form-field>
+            <mat-label>Producto</mat-label>
+            <select matNativeControl [(ngModel)]="codigo">
+              <option value="0">--Seleccione un producto--</option>
+              <option *ngFor="let cc of ComboCodigo" [value]="cc.Codigo">{{ cc.Descripcion }}</option>
+            </select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Almacen</mat-label>
+            <select matNativeControl [(ngModel)]="almacen">
+              <option value="0">--Seleccione un almacen--</option>
+              <option *ngFor="let almacen of ComboAlmacen" [value]="almacen.Id">{{ almacen.Nombre }}</option>
+            </select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Cantidad</mat-label>
+            <input matInput placeholder="Ingresa la cantidad" [(ngModel)]="cantidad">
+          </mat-form-field>        
+    </div>
+</div>
 </div>
 <br>
+
+
+<div class="actionbar">
+    <button [hidden]="!datosCargados" (click)="actualizar()"  style="margin-top: -20px;" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Actualizar<i class="underline"></i></button>
+    <button [hidden]="!datosCargados" (click)="limpiar()" style="margin-top: -20px;" class="btn-cancel "><i class="bi bi-cloud-upload-fill icon"></i>Cancelar</button>
+    <button [hidden]="datosCargados" (click)="insertar()" style="margin-top: -20px;" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
+</div>
+<br>
+
+
+<mat-form-field class="search-bar">
+    <mat-label>Filtrar</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
+</mat-form-field>
 <div class="table-container">
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
     <table mat-table [dataSource]="dataSource" matSort>
@@ -46,10 +81,9 @@
         </ng-container>
         <ng-container matColumnDef="Acciones">
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
-        <td mat-cell *matCellDef="let elemento">
-
-            <mat-icon class="action-btn green" (click)="abrirEditarModal(elemento)">edit</mat-icon>
-            <mat-icon class="action-btn red" (click)="eliminarExistencia(elemento.Id)">delete</mat-icon>
+        <td mat-cell *matCellDef="let existencia">
+            <mat-icon class="action-btn green" (click)="cargarDatos(existencia)" >edit</mat-icon>
+            <mat-icon class="action-btn red" (click)="abrirDeleteDialog(existencia.Id, existencia.Codigo)">delete</mat-icon>
         </td>
         </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

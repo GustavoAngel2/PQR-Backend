@@ -5,8 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { UsuariosInsertComponent } from '../usuarios-insert/usuarios-insert.component';
 import { UsuarioUpdateComponent } from '../usuario-update/usuario-update.component';
+import { RolesService } from '../data.service';
 
 
 @Component({
@@ -15,13 +15,21 @@ import { UsuarioUpdateComponent } from '../usuario-update/usuario-update.compone
   styleUrls: ['./usuarios.component.css']
 })
 export class UsuariosComponent implements OnInit{
-  displayedColumns: string[] = ['Id', 'Nombre', 'Contrasena', 'Rol', 'Usuario', 'FechaAct','FechaReg','Acciones'];
+  displayedColumns: string[] = ['Id', 'Nombre', 'Rol', 'Usuario', 'FechaAct','FechaReg','Acciones'];
   dataSource: MatTableDataSource<usuarios>;
+  nombre: string = "";
+  contrasena: string = "";
+  rol: number = 0;
+  usuario: number = 0;
+  ComboRoles: any;
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private UsuarioService: UsuarioSevice, public dialog:MatDialog) {
+  constructor(private UsuarioService: UsuarioSevice, 
+    public dialog:MatDialog,
+    private rolesService: RolesService) {
     this.dataSource = new MatTableDataSource<usuarios>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
 
@@ -30,19 +38,11 @@ export class UsuariosComponent implements OnInit{
       return data.Nombre.toLowerCase().includes(filter) || 
              data.Id.toString().includes(filter); // Puedes añadir más campos si es necesario
     };
-    this.UsuarioService.getUsuarios().subscribe({
-      next: (response) => {
-        console.log('Respuesta del servidor:', response); 
-        if (response && Array.isArray(response)&&response.length>0) {
-          this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
-        } else {
-          console.log('no contiene datos');
-        }
-      },
-      error: (error) => {
-        console.error(error);
-      }
+    this.rolesService.getRoles().subscribe((data: any) => {
+      this.ComboRoles = data;
+      console.log(this.ComboRoles)
     });
+    this.getData();
   }
     ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -57,14 +57,19 @@ export class UsuariosComponent implements OnInit{
       this.dataSource.paginator.firstPage();
     }
   }
-  abrirInsertarModal() {
-    const dialogRef = this.dialog.open(UsuariosInsertComponent, {
-      width: '550px',
-      // Puedes pasar datos al componente de la modal si es necesario
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      // Manejar los resultados cuando la modal se cierre
+  getData(){
+    this.UsuarioService.getUsuarios().subscribe({
+      next: (response) => {
+        console.log('Respuesta del servidor:', response); 
+        if (response && Array.isArray(response)&&response.length>0) {
+          this.dataSource.data = response; // Asigna los datos al atributo 'data' de dataSource
+        } else {
+          console.log('no contiene datos');
+        }
+      },
+      error: (error) => {
+        console.error(error);
+      }
     });
   }
   eliminarAlmacen(Id: number) {
@@ -94,4 +99,29 @@ export class UsuariosComponent implements OnInit{
       }
     });
   }
+
+  dev(e:any):void{
+    this.rol=e.target.value
+  }
+
+  insertar(): void {
+    const nuevoUsuario = {
+      nombre: this.nombre,
+      contrasena: this.contrasena,
+      rol: this.rol,
+      usuario: this.usuario,
+    };
+
+    // Aquí asumo que tienes un método en tu servicio para insertar el departamento
+    this.UsuarioService.insertarUsuario(nuevoUsuario).subscribe({
+      next: (response) => {
+        this.getData()
+      },
+      error: (error) => {
+        // Manejar el error aquí
+        console.error("Hubo un error al insertar el almacen", error);
+      },
+    });
+  }
 }
+

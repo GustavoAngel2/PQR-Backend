@@ -1,56 +1,69 @@
 <div class="title-container">
     <br>
-    <label class="title">Detalle de movimientos</label>
+    <label class="title">Información de movimientos</label>
     <br>
     <img src="./assets/Articulos.png" class="module-logo">
 </div>
 
-<div class="actionbar">
-    <mat-form-field class="search-bar">
-        <mat-label>Filtrar</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
-    </mat-form-field>
-    <button (click)="abrirInsertarModal()" class="btn right">Insertar<i class="underline"></i></button>
+<div class="form-place">
+    <div class="form-container">
+        <div class="form-title">
+            <p> Buscar </p>
+        </div>
+        <div class="form-content">
+            <mat-form-field appearance="fill">
+                <mat-label>Almacen</mat-label>
+                <mat-select [(ngModel)]="idAlmacen">
+                    <mat-option [value]="0">--Seleccione un Almacen--</mat-option>
+                    <mat-option *ngFor="let alm of ComboAlmacen" [value]="alm.Id">{{ alm.Nombre }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [(ngModel)]="dateHandler" (dateInput)="setDate()" [matDatepicker]="picker" placeholder="Fecha de inicio MM/DD/AAAA">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [(ngModel)]="dateHandler2" (dateInput)="setDate()" [matDatepicker]="picker2" placeholder="Fecha limite MM/DD/AAAA">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+            <button class="btn" (click)="getMov()">Buscar</button>
+        </div>
+    </div>
 </div>
-<br>
 
 <div class="table-container">
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+    <button class="btn" (click)="exportToPDF()"><mat-icon> table_chart</mat-icon> Exportar</button>
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]" showFirstLastButtons></mat-paginator>
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
             <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.Id}} </td>
         </ng-container>
-        <ng-container matColumnDef="NombreMovimiento">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre Movimiento </th>
-            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.NombreMovimiento}} </td>
+        <ng-container matColumnDef="idMovimiento">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id Movimiento </th>
+            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.IdTipoMov}} </td>
         </ng-container>
-        <ng-container matColumnDef="Cantidad">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad </th>
-            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.Cantidad}} </td>
+        <ng-container matColumnDef="idAlmacen">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Almacen </th>
+            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.IdAlmacen}} </td>
         </ng-container>
-        <ng-container matColumnDef="Costo">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Costo </th>
-            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.Costo}} </td>
-        </ng-container>
-        <ng-container matColumnDef="FechaActualiza">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> FechaAct </th>
-            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.FechaActualiza}} </td>
+        <ng-container matColumnDef="FechaMovimiento">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha del Movimiento </th>
+            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.fechaMovimiento}} </td>
         </ng-container>
         <ng-container matColumnDef="UsuarioActualiza">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
-            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.UsuarioActualiza}} </td>
+            <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.Usuario}} </td>
         </ng-container>
         <ng-container matColumnDef="Acciones">
-        <th mat-header-cell *matHeaderCellDef> Acciones </th>
-        <td mat-cell *matCellDef="let elemento">
-
-            <mat-icon class="action-btn green" (click)="abrirEditarModal(elemento)">edit</mat-icon>
-            <mat-icon class="action-btn red" (click)="eliminarDetalleMov(elemento.Id)">delete</mat-icon>
-        </td>
-        </ng-container>
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let elemento">
+                <mat-icon (click)="verContMov(elemento.Id)">pageview</mat-icon>
+            </td>
+            </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </table>
 </div>
-

@@ -2,7 +2,7 @@ import { TicketsSevice } from "../data.service";
 
 export interface tickets {
     Id: number;
-    Surcursal: string;
+    Sucursal: string;
     Cliente: string;
     Vendedor: string;
     Usuario: string;
@@ -17,7 +17,9 @@ export interface tickets {
     fecha: string;
     message: string;
     response: {
-      data: tickets[]; };
+      Msg: string;
+      data: tickets[];
+    };
   }
   export interface InsetTickets{
     
@@ -34,3 +36,9 @@ export interface tickets {
    export interface deleteTickets{
      Id: number;
    }
+   
+  export interface SearchTicketsModel{
+    IdSucursal:number
+    FechaInicio:string
+    FechaFin:string
+  }

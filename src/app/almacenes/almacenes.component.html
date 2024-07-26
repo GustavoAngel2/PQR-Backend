@@ -6,23 +6,51 @@
     <br>
 </div>
 
-<div class="actionbar">
-    <mat-form-field class="search-bar">
-        <mat-label>Filtrar</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
-    </mat-form-field>
-    <button (click)="abrirInsertarModal()" class="btn right"><i class="bi bi-box2-heart-fill"></i> Insertar<i class="underline"></i></button>
+<div class="form-place">
+    <div class="form-container">
+    <div class="form-title">
+        <h1 mat-dialog-title>Nuevo Almacen</h1>
+    </div>
+    <div class="form-content">
+        <mat-form-field>
+            <mat-label>Nombre</mat-label>
+            <input matInput placeholder="Ingresa el nombre" [(ngModel)]="nombreAlmacen" required>
+            <mat-error *ngIf="nombreAlmacen === ''">El nombre es requerido</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Direccion</mat-label>
+            <input matInput placeholder="Ingresa la direccion" [(ngModel)]="direccion" required>
+            <mat-error *ngIf="direccion === ''">La dirección es requerida</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Encargado</mat-label>
+            <input matInput placeholder="Encargado" [(ngModel)]="encargado" required>
+            <mat-error *ngIf="encargado === 0">El encargado es requerido</mat-error>
+          </mat-form-field>
+    </div>
+</div>
+
 </div>
 <br>
+<div class="actionbar">
+    <button [hidden]="!datosCargados" (click)="actualizar()" style="margin-top: -20px;" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Actualizar<i class="underline"></i></button>
+    <button [hidden]="!datosCargados" (click)="limpiar()" style="margin-top: -20px;" class="btn-cancel "><i class="bi bi-cloud-upload-fill icon"></i>Cancelar</button>
+    <button [hidden]="datosCargados" (click)="insertar()" style="margin-top: -20px;" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
+</div>
+<br>
+<mat-form-field class="search-bar">
+    <mat-label>Filtrar</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
+</mat-form-field>
 <div class="table-container">
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]" showFirstLastButtons></mat-paginator>
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
             <td mat-cell *matCellDef="let almacen"> {{almacen.Id}} </td>
         </ng-container>
         <ng-container matColumnDef="Nombre">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
             <td mat-cell *matCellDef="let almacen"> {{almacen.Nombre}} </td>
         </ng-container>
         <ng-container matColumnDef="Direccion">
@@ -47,9 +75,9 @@
         </ng-container>
         <ng-container matColumnDef="Acciones">
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
-        <td mat-cell *matCellDef="let elemento">
-            <mat-icon class="action-btn"(click)="abrirEditarModal(elemento)">edit</mat-icon>
-            <mat-icon class="action-btn red" (click)="eliminarAlmacen(elemento.Id)">delete</mat-icon>
+        <td class="iconsColumn" mat-cell *matCellDef="let elemento">
+            <mat-icon class="action-btn" (click)="cargarDatos(elemento)">edit</mat-icon>
+            <mat-icon class="action-btn" (click)="abrirDeleteDialog(elemento.Id, elemento.Nombre)">delete</mat-icon>
         </td>
         </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

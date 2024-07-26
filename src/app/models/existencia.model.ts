@@ -21,7 +21,7 @@ export interface Existencia {
 
   export interface UpdateExistencia{
     Id: number;
-    Codigo: number;
+    Codigo: string;
     Almacen: number;
     Cantidad: number;
     Usuario: number;
