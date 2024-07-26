@@ -9,7 +9,6 @@ import { startWith, map } from 'rxjs/operators';
 import { ClientesService, TicketsSevice, DetalleTicketService, TiposMovService, ArticulosService, SucursalesService } from '../data.service';
 import { tickets } from '../models/tickets.model';
 import { DetalleTicket } from '../models/detalleTicket.model';
-import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 
 
 @Component({
@@ -45,8 +44,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   ComboClientes: any[] = [];
   filteredClientes!: Observable<any[]>;
   filteredArticulosCod!: Observable<any[]>;
-  isOnStepOne = true;
-  isOnStepTwo = false;
+
 
   isTicketFormVisible= true;
 
@@ -122,7 +120,6 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.refreshUI();
   }
 
   applyFilter(event: Event) {
@@ -151,6 +148,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         this.totalTicket = 0; 
       }
     });
+<<<<<<< HEAD
     this.articulosService.getArticulos().subscribe((data2: any) => {
       this.ComboCodigo = data2;
       console.log(this.ComboCodigo);
@@ -195,6 +193,52 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         });
       }
     });
+=======
+
+      this.articulosService.getArticulos().subscribe((data2: any) => {
+        this.ComboCodigo = data2;
+        console.log(this.ComboCodigo);
+      });
+      this.sucursalesService.getSucursales().subscribe((data3: any) => {
+        this.ComboSucursales = data3;
+        console.log(this.ComboSucursales);
+      });
+      this.tiposMovService.getTiposMov().subscribe((data4: any) => {
+        this.ComboTipoMov = data4;
+        console.log(this.ComboTipoMov);
+      });
+
+      this.clientesService.getClientes().subscribe((data5: any) => {
+        this.ComboClientes = data5;
+        console.log(this.ComboClientes);
+      });
+
+      this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
+        return data.Articulo.toString().includes(filter);
+      };
+
+/*   */
+    }
+
+    
+
+
+
+  eliminarAlmacen(Id: number) {
+    if (confirm('¿Estás seguro de que deseas eliminar este departamento?')) {
+      this.detalleticketService.deleteDetalleTicket(Id).subscribe({
+        next: (response) => {
+          console.log(response);
+          this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
+            return data.Articulo.toString().toLowerCase().includes(filter.toLowerCase());
+          };
+        },
+        error: (error) => {
+          console.error('Hubo un error al eliminar el departamento', error);
+        }
+      });
+    }
+>>>>>>> origin/Arkan
   }
 
   insertarTicket(): void {
@@ -205,11 +249,11 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       IdVendedor: this.IdVendedor,
       usuario: this.Usuario
     };
-  
+    this.dataSource = new MatTableDataSource<DetalleTicket>();
     this.ticketsService.insertarTickets(nuevoAlmacen).subscribe({
       next: (response) => {
         this.idTicket = response.response.data;
-        this.getData(); // Llama a getData para obtener los detalles del ticket recién insertado
+        this.getData(); 
         this.toggleUI();
         this.isTicketFormVisible = false;
         // Mueve la lógica de obtención de detalles del ticket aquí
@@ -270,46 +314,29 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       console.error('idTicket no está definido');
     }
   }
+<<<<<<< HEAD
   
   terminar(){
     this.toggleUI();
     this.clearDetalleTicket();
   }
+=======
+
+
+
+>>>>>>> origin/Arkan
   
   toggleUI() {
-    this.isOnStepTwo = !this.isOnStepTwo;
-    this.isOnStepOne = !this.isOnStepOne;
-    this.refreshUI();
     this.isTicketFormVisible=true;
   }
 
-  refreshUI() {
-    if (this.isOnStepTwo) {
-      this.IdClienteControl.disable();
-      this.IdSucursalControl.disable();
-      this.IdUsusarioControl.disable();
-      this.IdVendedorControl.disable();
+toggleUI2() {
 
-      this.CantidadControl.enable();
-      this.IdUsuarioDetalleControl.enable();
-      this.IdTicketControl.disable();
-      this.IdArticuloControl.enable();
-      this.CodigoControl.enable();
-      this.PrecioControl.disable();
-    } else {
-      this.IdClienteControl.enable();
-      this.IdSucursalControl.enable();
-      this.IdUsusarioControl.enable();
-      this.IdVendedorControl.enable();
+  this.isTicketFormVisible=true;
+  this.dataSource.data = [];
+  this.totalTicket= 0;
+}
 
-      this.CantidadControl.enable();
-      this.IdUsuarioDetalleControl.enable();
-      this.IdTicketControl.disable();
-      this.IdArticuloControl.enable();
-      this.CodigoControl.enable();
-      this.PrecioControl.disable();
-    }
-  }
 
   articuloSelected(event: any) {
     const articulo = event.option.value;

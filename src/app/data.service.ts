@@ -283,12 +283,20 @@ export class DetalleMovService {
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient,private authService: AuthService) {}
 
+<<<<<<< HEAD
   getDetalleMov(Id: number): Observable<ArrayBuffer> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
     return this.http.get<ArrayBuffer>(`${this.apiUrl}/DetalleMovimiento/Get?id_Movimientos=${Id}`,{headers});
+=======
+  getDetalleMov(Id: 0): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(
+      `${this.apiUrl}/DetalleMovimiento/Get?Id=0`,
+      { Id }
+    );
+>>>>>>> origin/Arkan
   }
   insertarDetalleMov(DetalleMovData: {
     idMovimiento: number;
@@ -506,13 +514,11 @@ export class movInventarioService {
   insertMovInventario(MovInvData: {
     idTipoMov: number;
     idAlmacen: number;
-    idDestino: number;
     usuarioActualiza: number;
   }): Observable<ApiResponse> {
     const body = {
       idTipoMov: MovInvData.idTipoMov,
       idAlmacen: MovInvData.idAlmacen,
-      idDestino: MovInvData.idDestino,
       usuarioActualiza: MovInvData.usuarioActualiza,
     };
     return this.http.post<ApiResponse>(
@@ -531,7 +537,6 @@ export class movInventarioService {
       Id: MovInvData.Id,
       idTipoMov: MovInvData.idTipoMov,
       idAlmacen: MovInvData.idAlmacen,
-      idDestino: MovInvData.idDestino,
       usuario: MovInvData.usuarioActualiza,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
