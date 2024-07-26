@@ -1,20 +1,17 @@
 <div class="title-container">
     <br>
-    <label class="title">Detalle de ticket</label>
+    <label class="title">Detalle de Tickets</label>
     <br>
     <img src="./assets/Almacenes.png" class="module-logo">
 </div>
 
 <div class="form-place">
     <div class="form-container">
-        <div class="form-title">
-            <p> Buscar </p>
-        </div>
         <div class="form-content">
             <mat-form-field appearance="fill">
-                <mat-label>Sucursal</mat-label>
+                <mat-label>Almacén</mat-label>
                 <mat-select [(ngModel)]="idSucursal">
-                    <mat-option [value]="0">--Seleccione una sucursal--</mat-option>
+                    <mat-option [value]="0">Seleccione</mat-option>
                     <mat-option *ngFor="let alm of comboSucursal" [value]="alm.Id">{{ alm.Nombre }}</mat-option>
                 </mat-select>
             </mat-form-field>
@@ -43,7 +40,7 @@
             <td mat-cell *matCellDef="let ticket"> {{ticket.Id}} </td>
         </ng-container>
         <ng-container matColumnDef="Sucursal">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Sucursal </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Almacén </th>
             <td mat-cell *matCellDef="let ticket"> {{ticket.Sucursal}} </td>
         </ng-container>
         <ng-container matColumnDef="Cliente">
