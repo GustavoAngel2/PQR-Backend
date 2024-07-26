@@ -8,16 +8,13 @@
 
 <div class="form-place">
     <div class="form-container">
-        <div class="form-title">
-            <h1 mat-dialog-title>Nueva Categoria Modulo</h1>
-        </div>
         <div class="form-content">
             <mat-form-field>
                 <mat-label>Nombre</mat-label>
                 <input matInput placeholder="Ingresa el nombre" [(ngModel)]="nombreCatModulo"/>
             </mat-form-field>
             <mat-form-field>
-              <mat-label>Descripcion</mat-label>
+              <mat-label>Descripción</mat-label>
               <input matInput placeholder="Ingresa la descripcion" [(ngModel)]="descripcion"/>
             </mat-form-field>
         </div>
@@ -47,15 +44,15 @@
             <td mat-cell *matCellDef="let catmodulo"> {{catmodulo.Nombre}} </td>
         </ng-container>
         <ng-container matColumnDef="Descripcion">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripcion </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </th>
             <td mat-cell *matCellDef="let catmodulo"> {{catmodulo.Descripcion}} </td>
         </ng-container>
         <ng-container matColumnDef="FechaRegistro">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> FechaRegistra </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Registro </th>
             <td mat-cell *matCellDef="let catmodulo"> {{catmodulo.FechaRegistro}} </td>
         </ng-container>
         <ng-container matColumnDef="FechaActualiza">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> FechaActualiza </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Última Actualización </th>
             <td mat-cell *matCellDef="let catmodulo"> {{catmodulo.FechaActualiza}} </td>
         </ng-container>
         <ng-container matColumnDef="Usuario">

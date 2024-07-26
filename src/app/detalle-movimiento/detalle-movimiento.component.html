@@ -1,20 +1,17 @@
 <div class="title-container">
     <br>
-    <label class="title">Información de movimientos</label>
+    <label class="title">Información de Movimientos</label>
     <br>
     <img src="./assets/Articulos.png" class="module-logo">
 </div>
 
 <div class="form-place">
     <div class="form-container">
-        <div class="form-title">
-            <p> Buscar </p>
-        </div>
         <div class="form-content">
             <mat-form-field appearance="fill">
                 <mat-label>Almacen</mat-label>
                 <mat-select [(ngModel)]="idAlmacen">
-                    <mat-option [value]="0">--Seleccione un Almacen--</mat-option>
+                    <mat-option [value]="0">Seleccione</mat-option>
                     <mat-option *ngFor="let alm of ComboAlmacen" [value]="alm.Id">{{ alm.Nombre }}</mat-option>
                 </mat-select>
             </mat-form-field>
@@ -42,11 +39,11 @@
             <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.Id}} </td>
         </ng-container>
         <ng-container matColumnDef="idMovimiento">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id Movimiento </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id del Movimiento </th>
             <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.IdTipoMov}} </td>
         </ng-container>
         <ng-container matColumnDef="idAlmacen">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Almacen </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Almacén </th>
             <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.IdAlmacen}} </td>
         </ng-container>
         <ng-container matColumnDef="FechaMovimiento">

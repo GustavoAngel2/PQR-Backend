@@ -8,21 +8,18 @@
 
 <div class="form-place">
     <div class="form-container">
-    <div class="form-title">
-        <h1 mat-dialog-title>Nuevo Almacen</h1>
-    </div>
     <div class="form-content">
         <mat-form-field>
             <mat-label>Producto</mat-label>
             <select matNativeControl [(ngModel)]="codigo">
-              <option value="0">--Seleccione un producto--</option>
+              <option value="0">Seleccione</option>
               <option *ngFor="let cc of ComboCodigo" [value]="cc.Codigo">{{ cc.Descripcion }}</option>
             </select>
           </mat-form-field>
           <mat-form-field>
-            <mat-label>Almacen</mat-label>
+            <mat-label>Almacén</mat-label>
             <select matNativeControl [(ngModel)]="almacen">
-              <option value="0">--Seleccione un almacen--</option>
+              <option value="0">Seleccione</option>
               <option *ngFor="let almacen of ComboAlmacen" [value]="almacen.Id">{{ almacen.Nombre }}</option>
             </select>
           </mat-form-field>
@@ -52,32 +49,32 @@
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
             <td mat-cell *matCellDef="let existencia"> {{existencia.Id}} </td>
         </ng-container>
         <ng-container matColumnDef="Codigo">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> CODIGO </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Código </th>
             <td mat-cell *matCellDef="let existencia"> {{existencia.Codigo}} </td>
         </ng-container>
         <ng-container matColumnDef="Almacen">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ALMACEN </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Almacén </th>
             <td mat-cell *matCellDef="let existencia"> {{existencia.Almacen}} </td>
         </ng-container>
         <ng-container matColumnDef="Cantidad">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> CANTIDAD </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad </th>
             <td mat-cell *matCellDef="let existencia"> {{existencia.Cantidad}} </td>
         </ng-container>
-        <ng-container matColumnDef="Usuario">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> USUARIO </th>
-            <td mat-cell *matCellDef="let existencia"> {{existencia.Usuario}} </td>
-        </ng-container>
         <ng-container matColumnDef="FechaRegistro">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> FECHA DE REGISTRO </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Registro </th>
             <td mat-cell *matCellDef="let existencia"> {{existencia.FechaRegistro}} </td>
         </ng-container>
         <ng-container matColumnDef="FechaActualiza">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> FECHA DE ACTUALIZACION </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Última Actualización </th>
             <td mat-cell *matCellDef="let existencia"> {{existencia.FechaActualiza}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Usuario">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
+            <td mat-cell *matCellDef="let existencia"> {{existencia.Usuario}} </td>
         </ng-container>
         <ng-container matColumnDef="Acciones">
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
