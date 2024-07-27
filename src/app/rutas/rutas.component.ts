@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { RutasService } from '../data.service';
-import { Rutas } from '../models/rutas.model';
+import { Rutas, UpdateRutas } from '../models/rutas.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
@@ -26,6 +26,18 @@ export class RutasComponent implements OnInit, AfterViewInit {
   isModifying: boolean = false;
 
   loggedUser: currentUser = { Id: '', NombreUsuario: '', IdRol: '', Rol: '' }
+
+
+  rutas:UpdateRutas ={
+    Id:0,
+    Nombre: '',
+    Matricula: '',
+    Conductor: '',
+    NoLicencia: '',
+    NoSeguro: '',
+    Usuario: parseInt(this.loggedUser.Id, 10)
+  }
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -94,7 +106,7 @@ export class RutasComponent implements OnInit, AfterViewInit {
     });
   }
 
-  cargarDatos(rutas: Rutas) {
+  cargarDatos(rutas: UpdateRutas) {
     this.id = rutas.Id
     this.ruta = rutas.Nombre
     this.usuario = parseInt(this.loggedUser.Id, 10),
@@ -126,25 +138,27 @@ export class RutasComponent implements OnInit, AfterViewInit {
     });
   }
 
-  update(){
-    const Ruta = {
-      Id: this.id,
+  update() {
+    const Ruta: UpdateRutas =  {
+      Id: this.id, // Asegúrate de que 'this.id' es un número
       Nombre: this.ruta,
       Matricula: this.matricula,
       Conductor: this.nombreConductor,
       NoLicencia: this.numLicencia,
       NoSeguro: this.numSeguro,
-      Usuario: parseInt(this.loggedUser.Id, 10)
+      Usuario: parseInt(this.loggedUser.Id, 10) // Convierte 'this.loggedUser.Id' a número
     };
+  
     this.RutasService.updateRutas(Ruta).subscribe({
       next: (response) => {
-        console.log(response)
-        this.getData
-        this.isModifying = false
+        console.log(response);
+        this.getData();
+        this.isModifying = false;
       },
       error: (error) => {
         console.error(error);
       }
     });
   }
+  
 }

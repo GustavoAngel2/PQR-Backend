@@ -23,7 +23,8 @@ export interface usuarios {
     Nombre: string;
     Contrasena: string;
     Rol: string;
-    Usuario: string;
+    idPersona: string;
+    Usuario: number;
   }
   export interface DeleteUsuario{
     Id: number;

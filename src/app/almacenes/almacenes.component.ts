@@ -63,25 +63,24 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
       encargado: this.encargado
     };
     
-    if(this.nombreAlmacen == '' && this.direccion == '' && this.encargado == 0){
-      this.toastr.error('No deje los datos en blanco','Almacenes')
-    } else {
+
       this.AlmacenesService.insertarAlmacenes(nuevoAlmacen).subscribe({
         next: (response) => {
           console.log(response)
+          console.log(nuevoAlmacen)
           this.getData();
           this.limpiar();
           if(response.StatusCode == 200){
-            this.toastr.success(response.message, 'Almacenes');
+            this.toastr.success(response.response.data.toString(), 'Almacenes');
           } else {
-            this.toastr.error(response.message,'Almacenes')
+            this.toastr.error(response.response.data.toString(),'Almacenes')
           }
         },
         error: (error) => {
           console.error('Hubo un error al insertar el almacen', error);
         }
       });
-    }
+    
   }
 
  
@@ -133,10 +132,11 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
       if (result == "yes") {
         this.AlmacenesService.deleteAlmacenes(Id).subscribe({
           next: (response) => {
+            console.log(response)
             if(response.StatusCode == 200){
-              this.toastr.success(response.message, 'Almacenes');
+              this.toastr.success(response.response.data, 'Almacenes');
             } else {
-              this.toastr.error(response.message,'Almacenes')
+              this.toastr.error(response.response.data,'Almacenes')
             }
             this.getData();
           },

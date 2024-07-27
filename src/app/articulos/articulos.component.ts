@@ -82,7 +82,7 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
           this.getData();
           this.toastr.success(response.response.data, 'Articulos')
         } else {
-          this.toastr.info(response.response.data, 'Articulos')
+          this.toastr.error(response.response.data, 'Articulos')
         }
       }
     });

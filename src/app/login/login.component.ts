@@ -17,8 +17,6 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router, private toastr: ToastrService) {}
 
   login() {
-    this.toastr.info(`Iniciando sesión...`)
-    this.error = '';
     const credentials = { username: this.username, idUsername: this.idUsername, userpassword: this.userpassword };
     console.log(credentials);
     this.authService.login(credentials).subscribe(
