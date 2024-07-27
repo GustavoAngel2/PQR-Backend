@@ -40,7 +40,6 @@ import { ClientesComponent } from "./clientes/clientes.component";
 import { ArticulosComponent } from "./articulos/articulos.component";
 import { PersonasComponent } from "./personas/personas.component";
 import { RutasComponent } from "./rutas/rutas.component";
-import { PersonasInsertComponent } from "./personas-insert/personas-insert.component";
 import { PersonasUpdateComponent } from "./personas-update/personas-update.component";
 import { ExistenciasComponent } from "./existencias/existencias.component";
 import { ExistenciasInsertComponent } from "./existencias-insert/existencias-insert.component";
@@ -54,7 +53,6 @@ import { ModulosComponent } from './modulos/modulos.component';
 import { ModulosUpdateComponent } from './modulos-update/modulos-update.component';
 import { EmpleadosComponent } from "./empleados/empleados.component";
 import { PuestosComponent } from "./puestos/puestos.component";
-import { PuestosInsertComponent } from "./puestos-insert/puestos-insert.component";
 import { PuestosUpdateComponent } from "./puestos-update/puestos-update.component";
 import { CategoriaModuloComponent } from './categoria-modulo/categoria-modulo.component';
 import { CategoriaModuloUpdateComponent } from "./categoria-modulo-update/categoria-modulo-update.component";
@@ -75,7 +73,6 @@ import { DialogsComponent } from './dialogs/dialogs.component';
     ClientesComponent,
     ArticulosComponent,
     PersonasComponent,
-    PersonasInsertComponent,
     PersonasUpdateComponent,
     RutasComponent,
     DetalleMovimientoComponent,
@@ -96,7 +93,6 @@ import { DialogsComponent } from './dialogs/dialogs.component';
     ModulosUpdateComponent,
     EmpleadosComponent,
     PuestosComponent,
-    PuestosInsertComponent,
     PuestosUpdateComponent,
     CategoriaModuloComponent,
     CategoriaModuloUpdateComponent,

@@ -5,7 +5,6 @@ import { MatTableDataSource } from "@angular/material/table";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { PuestosInsertComponent } from "../puestos-insert/puestos-insert.component";
 import { PuestosUpdateComponent } from "../puestos-update/puestos-update.component";
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 import { ToastrService } from 'ngx-toastr';
@@ -56,33 +55,6 @@ export class PuestosComponent implements OnInit, AfterViewInit {
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
-    }
-  }
-  abrirInsertarModal() {
-    const dialogRef = this.dialog.open(PuestosInsertComponent, {
-      width: "550px",
-      // Puedes pasar datos al componente de la modal si es necesario
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      // Manejar los resultados cuando la modal se cierre
-    });
-  }
-  eliminarArticulo(Id: number) {
-    // Aquí puedes agregar una confirmación antes de eliminar si lo deseas
-    if (confirm("¿Estás seguro de que deseas eliminar este departamento?")) {
-      this.puestosService.deletePuestos(Id).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.dataSource.data = this.dataSource.data.filter(
-            (articulo: Puesto) => articulo.Id !== Id
-          );
-        },
-        error: (error) => {
-          // Manejar el error aquí
-          console.error("Hubo un error al eliminar el departamento", error);
-        },
-      });
     }
   }
 
