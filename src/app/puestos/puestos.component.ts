@@ -5,9 +5,9 @@ import { MatTableDataSource } from "@angular/material/table";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { PuestosUpdateComponent } from "../puestos-update/puestos-update.component";
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService, currentUser } from '../auth.service';
 
 @Component({
   selector: "app-puestos",
@@ -25,10 +25,12 @@ export class PuestosComponent implements OnInit, AfterViewInit {
     "Acciones",
   ];
   dataSource: MatTableDataSource<Puesto>;
+  id: number = 0;
   nombre: string = "";
   descripcion: string = "";
   salario: number = 0;
-  usuarioActualiza: number = 0;
+  loggedUser: currentUser = { Id: '', NombreUsuario: '', IdRol: '', Rol: '' }
+  isModifying: boolean = false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -36,6 +38,7 @@ export class PuestosComponent implements OnInit, AfterViewInit {
   constructor(
     private toastr: ToastrService,
     private puestosService: PuestosService,
+    private authService: AuthService,
     public dialog: MatDialog
   ) {
     this.dataSource = new MatTableDataSource<Puesto>(); // Inicializa dataSource como una instancia de MatTableDataSource
@@ -58,18 +61,6 @@ export class PuestosComponent implements OnInit, AfterViewInit {
     }
   }
 
-  abrirEditarModal(articulos: Puesto) {
-    const dialogRef = this.dialog.open(PuestosUpdateComponent, {
-      width: "550px",
-      data: articulos, // Pasa el objeto de departamento a la modal
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-      }
-    });
-  }
-
   abrirDeleteDialog(Id: number, Name: string) {
     const dialogRef = this.dialog.open(DeleteMenuComponent, {
       width: '550px',
@@ -81,9 +72,9 @@ export class PuestosComponent implements OnInit, AfterViewInit {
         this.puestosService.deletePuestos(Id).subscribe({
           next: (response) => {
             if(response.StatusCode == 200){
-              this.toastr.success(response.message, 'Almacenes');
+              this.toastr.success(response.message, 'Puestos');
             } else {
-              this.toastr.error(response.message,'Almacenes')
+              this.toastr.error(response.message,'Puestos')
             }
             this.getData();
           },
@@ -96,6 +87,7 @@ export class PuestosComponent implements OnInit, AfterViewInit {
   }
 
   getData(){
+    this.loggedUser = this.authService.getCurrentUser();
     this.dataSource.filterPredicate = (data: Puesto, filter: string) => {
       return (
         data.nombre.toLowerCase().includes(filter) ||
@@ -123,19 +115,68 @@ export class PuestosComponent implements OnInit, AfterViewInit {
       nombre: this.nombre,
       descripcion: this.descripcion,
       salario: this.salario,
-      usuarioActualiza: this.usuarioActualiza,
+      usuarioActualiza: parseInt(this.loggedUser.Id,10)
     };
 
     // Aquí asumo que tienes un método en tu servicio para insertar el departamento
     this.puestosService.insertarPuestos(nuevoPuesto).subscribe({
       next: (response) => {
+        if(response.StatusCode == 200){
+          this.toastr.success(response.response.data, 'Puestos');
+        } else {
+          this.toastr.error(response.response.data,'Puestos')
+        }
         this.getData()
+        this.limpiar()
       },
       error: (error) => {
         // Manejar el error aquí
         console.error("Hubo un error al insertar el almacen", error);
       },
     });
+  }
+
+  cargarDatos(elemento:Puesto){
+    this.id = elemento.Id;
+    this.nombre = elemento.nombre
+    this.descripcion = elemento.descripcion
+    this.salario = elemento.salario
+    this.isModifying = true
+  }
+
+  update(){
+    const Puesto = {
+      Id: this.id,
+      nombre: this.nombre,
+      descripcion: this.descripcion,
+      salario: this.salario,
+      usuarioActualiza: parseInt(this.loggedUser.Id,10)
+    };
+    
+
+    this.puestosService.updatePuestos(Puesto).subscribe({
+      next: (response) => {
+        if(response.StatusCode == 200){
+          this.toastr.success(response.response.data, 'Puestos');
+        } else {
+          this.toastr.error(response.response.data,'Puestos')
+        }
+        this.getData()
+        this.limpiar()
+
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+  }
+
+  limpiar(){
+    this.id = 0;
+    this.nombre = ''
+    this.descripcion = ''
+    this.salario = 0
+    this.isModifying = false
   }
 }
 

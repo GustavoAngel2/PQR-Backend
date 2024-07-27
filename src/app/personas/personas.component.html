@@ -7,6 +7,10 @@
 
 <div class="form-place">
     <div class="form-container">
+        <div class="form-title">
+            <h1 [hidden]="isModifying">Registrar persona</h1>
+            <h1 [hidden]="!isModifying">Editar persona con id: {{this.id}}</h1>
+        </div>
         <div class="form-content">
             <mat-form-field>
                 <mat-label>Nombre</mat-label>
@@ -37,7 +41,9 @@
         <mat-label>Filtrar</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
     </mat-form-field>
-    <button (click)="insertar()" class="btn right">Insertar<i class="underline"></i></button>
+    <button [hidden]="!isModifying"(click)="editar()" class="btn right">Update<i class="underline"></i></button>
+    <button [hidden]="!isModifying" (click)="limpiar()"  class="btn-cancel "><i class="bi bi-cloud-upload-fill icon"></i>Cancelar</button>
+    <button [hidden]="isModifying"(click)="insertar()" class="btn right">Insertar<i class="underline"></i></button>
 </div>
 <br>
 <div class="table-container">
@@ -78,7 +84,7 @@
         <ng-container matColumnDef="Acciones">
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
         <td mat-cell *matCellDef="let elemento">
-            <mat-icon class="action-btn" (click)="abrirEditarModal(elemento)">edit</mat-icon>
+            <mat-icon class="action-btn" (click)="cargar(elemento)">edit</mat-icon>
             <mat-icon class="action-btn" (click)="abrirDeleteDialog(elemento.Id, elemento.Nombre)">delete</mat-icon>
         </td>
         </ng-container>

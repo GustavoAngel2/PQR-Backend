@@ -199,39 +199,39 @@ export class PersonasService {
     });
     return this.http.get<ApiResponseEmpleados>(`${this.apiUrl}/Personas/Get`,{headers});
   }
-  insertarClientes(PersonasData: {
+  insertarPersona(PersonaData: {
     nombre: string;
     ApPaterno: string;
     ApMaterno: string;
     direccion: string;
     usuario: number;
-  }): Observable<ApiResponse> {
+  }): Observable<ApiResponseEmpleados> {
     const body = {
-      nombre: PersonasData.nombre,
-      ApPaterno: PersonasData.ApPaterno,
-      ApMaterno: PersonasData.ApMaterno,
-      direccion: PersonasData.direccion,
-      usuario: PersonasData.usuario,
-      Direccion: PersonasData.direccion,
-      Usuario: PersonasData.usuario,
+      nombre: PersonaData.nombre,
+      ApPaterno: PersonaData.ApPaterno,
+      ApMaterno: PersonaData.ApMaterno,
+      direccion: PersonaData.direccion,
+      usuario: PersonaData.usuario,
+      Direccion: PersonaData.direccion,
+      Usuario: PersonaData.usuario,
     };
-    return this.http.post<ApiResponse>(`${this.apiUrl}/Personas/Insert`, body);
+    return this.http.post<ApiResponseEmpleados>(`${this.apiUrl}/Personas/Insert`, body);
   }
   deletePersonas(Id: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/Personas/Delete`, { Id });
   }
-  updatePersonas(PersonasData: UpdatePersonas): Observable<ApiResponse> {
+  updatePersonas(PersonaData: UpdatePersonas): Observable<ApiResponseEmpleados> {
     const body = {
-      id: PersonasData.Id,
-      nombre: PersonasData.Nombre,
-      ApPaterno: PersonasData.ApPaterno,
-      ApMaterno: PersonasData.ApMaterno,
-      direccion: PersonasData.Direccion,
-      usuario: PersonasData.Usuario,
-      Direccion: PersonasData.Direccion,
+      id: PersonaData.Id,
+      nombre: PersonaData.Nombre,
+      ApPaterno: PersonaData.ApPaterno,
+      ApMaterno: PersonaData.ApMaterno,
+      direccion: PersonaData.Direccion,
+      usuario: PersonaData.Usuario,
+      Direccion: PersonaData.Direccion,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponse>(`${this.apiUrl}/Personas/Update`, body);
+    return this.http.put<ApiResponseEmpleados>(`${this.apiUrl}/Personas/Update`, body);
   }
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -257,7 +257,7 @@ export class RutasService {
     noLicencia: string;
     noSeguro: string;
     usuario: number;
-  }): Observable<ApiResponse> {
+  }): Observable<ApiResponseEmpleados> {
     const body = {
       nombre: RutasData.nombre,
       matricula: RutasData.matricula,
@@ -266,13 +266,13 @@ export class RutasService {
       noSeguro: RutasData.noSeguro,
       usuario: RutasData.usuario,
     };
-    return this.http.post<ApiResponse>(`${this.apiUrl}/Rutas/Insert`, body);
+    return this.http.post<ApiResponseEmpleados>(`${this.apiUrl}/Rutas/Insert`, body);
   }
-  deleteRutas(Id: number): Observable<any> {
+  deleteRutas(Id: number): Observable<ApiResponseEmpleados> {
     
-    return this.http.put(`${this.apiUrl}/Rutas/Delete`, { Id });
+    return this.http.put<ApiResponseEmpleados>(`${this.apiUrl}/Rutas/Delete`, { Id });
   }
-  updateRutas(RutasData: UpdateRutas): Observable<ApiResponse> {
+  updateRutas(RutasData: UpdateRutas): Observable<ApiResponseEmpleados> {
     const body = {
       id: RutasData.Id,
       nombre: RutasData.Nombre,
@@ -283,7 +283,7 @@ export class RutasService {
       usuario: RutasData.Usuario,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponse>(`${this.apiUrl}/Rutas/Update`, body);
+    return this.http.put<ApiResponseEmpleados>(`${this.apiUrl}/Rutas/Update`, body);
   }
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -727,29 +727,29 @@ export class PuestosService {
     descripcion: string;
     salario: number;
     usuarioActualiza: number;
-  }): Observable<ApiResponse> {
+  }): Observable<ApiResponseEmpleados> {
     const body = {
       nombre: PuestosData.nombre,
       descripcion: PuestosData.descripcion,
       salario: PuestosData.salario,
       usuarioActualiza: PuestosData.usuarioActualiza,
     };
-    return this.http.post<ApiResponse>(`${this.apiUrl}/Puestos/Insert`, body);
+    return this.http.post<ApiResponseEmpleados>(`${this.apiUrl}/Puestos/Insert`, body);
   }
   deletePuestos(Id: number): Observable<any> {
     
     return this.http.put(`${this.apiUrl}/Puestos/Delete`, { Id });
   }
-  updatePuestos(PuestosData: UpdatePuesto): Observable<ApiResponse> {
+  updatePuestos(PuestosData: UpdatePuesto): Observable<ApiResponseEmpleados> {
     const body = {
       Id: PuestosData.Id,
       nombre: PuestosData.nombre,
-      desripcion: PuestosData.descripcion,
+      descripcion: PuestosData.descripcion,
       salario: PuestosData.salario,
       usuarioActualiza: PuestosData.usuarioActualiza,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponse>(`${this.apiUrl}/Puestos/Update`, body);
+    return this.http.put<ApiResponseEmpleados>(`${this.apiUrl}/Puestos/Update`, body);
   }
 }
 //------------------------------------------------------------------------------------------------------------------------

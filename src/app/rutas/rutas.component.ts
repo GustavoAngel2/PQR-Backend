@@ -7,6 +7,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 import { AuthService, currentUser } from '../auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-rutas',
@@ -41,7 +42,7 @@ export class RutasComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private RutasService: RutasService, public authService:AuthService, public dialog:MatDialog) {
+  constructor(private RutasService: RutasService, public authService:AuthService, public toastr:ToastrService, public dialog:MatDialog) {
     this.dataSource = new MatTableDataSource<Rutas>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
 
@@ -96,7 +97,11 @@ export class RutasComponent implements OnInit, AfterViewInit {
     // Aquí asumo que tienes un método en tu servicio para insertar el departamento
     this.RutasService.insertarRutas(nuevaRuta).subscribe({
       next: (response) => {
-        console.log(response)
+        if(response.StatusCode == 200){
+          this.toastr.success(response.response.data, 'Rutas');
+        } else {
+          this.toastr.error(response.response.data,'Rutas')
+        }
         this.getData()
       },
       error: (error) => {
@@ -117,6 +122,17 @@ export class RutasComponent implements OnInit, AfterViewInit {
     this.isModifying = true
   }
 
+  limpiar(){
+    this.id = 0
+    this.ruta = ''
+    this.usuario = parseInt(this.loggedUser.Id, 10),
+    this.matricula = ''
+    this.nombreConductor = ''
+    this.numLicencia = ''
+    this.numSeguro = ''
+    this.isModifying = false
+  }
+
   abrirDeleteDialog(Id: number, Name: string) {
     const dialogRef = this.dialog.open(DeleteMenuComponent, {
       width: '550px',
@@ -126,7 +142,12 @@ export class RutasComponent implements OnInit, AfterViewInit {
       if (result == "yes") {
         this.RutasService.deleteRutas(Id).subscribe({
           next: (response) => {
-            console.log(response);
+            if(response.StatusCode == 200){
+              this.toastr.success(response.response.data, 'Rutas');
+            } else {
+              this.toastr.error(response.response.data,'Rutas')
+            }
+            console.log(response)
             this.getData()
           },
           error: (error) => {
@@ -151,8 +172,13 @@ export class RutasComponent implements OnInit, AfterViewInit {
   
     this.RutasService.updateRutas(Ruta).subscribe({
       next: (response) => {
-        console.log(response);
+        if(response.StatusCode == 200){
+          this.toastr.success(response.response.data, 'Rutas');
+        } else {
+          this.toastr.error(response.response.data,'Rutas')
+        }
         this.getData();
+        this.limpiar();
         this.isModifying = false;
       },
       error: (error) => {
