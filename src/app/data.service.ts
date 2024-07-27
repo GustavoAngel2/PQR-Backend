@@ -224,11 +224,10 @@ export class PersonasService {
     const body = {
       id: PersonaData.Id,
       nombre: PersonaData.Nombre,
-      ApPaterno: PersonaData.ApPaterno,
-      ApMaterno: PersonaData.ApMaterno,
+      apPaterno: PersonaData.ApPaterno,
+      apMaterno: PersonaData.ApMaterno,
       direccion: PersonaData.Direccion,
-      usuario: PersonaData.Usuario,
-      Direccion: PersonaData.Direccion,
+      usuario: PersonaData.Usuario
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
     return this.http.put<ApiResponseEmpleados>(`${this.apiUrl}/Personas/Update`, body);

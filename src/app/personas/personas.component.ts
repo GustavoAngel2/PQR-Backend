@@ -35,6 +35,7 @@ export class PersonasComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit() {
+    this.loggedUser = this.authService.getCurrentUser()
     this.getData()
   }
   ngAfterViewInit() {
@@ -76,7 +77,7 @@ export class PersonasComponent implements OnInit, AfterViewInit{
       nombre: this.nombre,
       ApPaterno:this.ApPaterno,
       ApMaterno:this.ApMaterno,
-      direccion: this.direccion,  
+      direccion: this.direccion,
       usuario: parseInt(this.loggedUser.Id,10)  
     };
 
@@ -147,7 +148,7 @@ export class PersonasComponent implements OnInit, AfterViewInit{
       ApPaterno:this.ApPaterno,
       ApMaterno:this.ApMaterno,
       Direccion: this.direccion,  
-      Usuario: parseInt(this.loggedUser.Id,10)  
+      Usuario: parseInt(this.loggedUser.Id,10)
     };
 
     this.PersonasService.updatePersonas(persona).subscribe({
@@ -157,6 +158,7 @@ export class PersonasComponent implements OnInit, AfterViewInit{
         } else {
           this.toastr.error(response.response.data,'Personas')
         }
+        console.log(response);
         this.getData();
         this.limpiar();
       },
