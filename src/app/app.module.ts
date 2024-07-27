@@ -40,22 +40,16 @@ import { ArticulosComponent } from "./articulos/articulos.component";
 import { PersonasComponent } from "./personas/personas.component";
 import { RutasComponent } from "./rutas/rutas.component";
 import { ExistenciasComponent } from "./existencias/existencias.component";
-import { ExistenciasInsertComponent } from "./existencias-insert/existencias-insert.component";
-import { ExistenciasUpdateComponent } from "./existencias-update/existencias-update.component";
 import { MovInventarioComponent } from "./mov-inventario/mov-inventario.component";
 import { DetalleTicketComponent } from "./detalle-ticket/detalle-ticket.component";
 import { DetalleTicketInsertComponent } from "./detalle-ticket-insert/detalle-ticket-insert.component";
 import { LoginComponent } from "./login/login.component";
 import { InicioComponent } from './inicio/inicio.component';
 import { ModulosComponent } from './modulos/modulos.component';
-import { ModulosUpdateComponent } from './modulos-update/modulos-update.component';
 import { EmpleadosComponent } from "./empleados/empleados.component";
 import { PuestosComponent } from "./puestos/puestos.component";
 import { CategoriaModuloComponent } from './categoria-modulo/categoria-modulo.component';
-import { CategoriaModuloUpdateComponent } from "./categoria-modulo-update/categoria-modulo-update.component";
 import { DetallePerfilComponent } from './detalle-perfil/detalle-perfil.component';
-import { DetallePerfilInsertComponent } from './detalle-perfil-insert-component/detalle-perfil-insert-component.component';
-import { DetallePerfilUpdateComponent } from './detalle-perfil-update/detalle-perfil-update.component';
 import { DeleteMenuComponent } from './delete-menu/delete-menu.component';
 import { AuthGuard } from './auth.guard'; // Importa AuthGuard
 import { AuthService } from './auth.service'; // Importa AuthService
@@ -77,22 +71,16 @@ import { DialogsComponent } from './dialogs/dialogs.component';
     UsuariosComponent,
     UsuarioUpdateComponent,
     ExistenciasComponent,
-    ExistenciasInsertComponent,
-    ExistenciasUpdateComponent,
     MovInventarioComponent,
     DetalleTicketComponent,
     DetalleTicketInsertComponent,
     LoginComponent,
     InicioComponent,
     ModulosComponent,
-    ModulosUpdateComponent,
     EmpleadosComponent,
     PuestosComponent,
     CategoriaModuloComponent,
-    CategoriaModuloUpdateComponent,
     DetallePerfilComponent,
-    DetallePerfilInsertComponent,
-    DetallePerfilUpdateComponent,
     DeleteMenuComponent,
     DialogsComponent,
   ],

@@ -5,7 +5,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ModulosUpdateComponent } from '../modulos-update/modulos-update.component';
 import { CategoriaModuloService } from '../data.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService, currentUser } from '../auth.service';
@@ -141,16 +140,5 @@ export class ModulosComponent implements OnInit, AfterViewInit {
       });
     }
   }
-  abrirEditarModal(modulo: Modulo) {
-    const dialogRef = this.dialog.open(ModulosUpdateComponent, {
-      width: '550px',
-      data: modulo // Pasa el objeto de departamento a la modal
-    });
-  
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        
-      }
-    });
-  }
+
 }

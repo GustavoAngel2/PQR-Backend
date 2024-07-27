@@ -5,8 +5,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { DetallePerfilInsertComponent } from '../detalle-perfil-insert-component/detalle-perfil-insert-component.component';
-import { DetallePerfilUpdateComponent } from '../detalle-perfil-update/detalle-perfil-update.component';
 import { RolesService } from '../data.service';
 import { ModulosService } from '../data.service';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
