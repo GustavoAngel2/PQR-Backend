@@ -5,8 +5,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { empleado, updateEmpleado } from "../models/empleados.model";
 import { SucursalesService, PersonasService, PuestosService, EmpleadosService } from '../data.service';
-import { dialogParameters } from '../models/dialog.model';
-import { DialogsComponent } from '../dialogs/dialogs.component';
 import { AuthService, currentUser } from '../auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
@@ -114,19 +112,21 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
 
   insertar(): void {
     const nuevoEmpleado = {
-      IdPersona: this.IdPersona,
-      IdSucursal: this.IdSucursal,
-      IdPuesto: this.IdPuesto,
+      IdPersona: this.empleados.IdPersona,
+      IdSucursal: this.empleados.IdSucursal,
+      IdPuesto: this.empleados.IdPuesto,
       usuarioActualiza: parseInt(this.loggedInUser.Id, 10),
     };
 
     this.EmpleadosService.insertarEmpleado(nuevoEmpleado).subscribe({
       next: (response) => {
         this.getData();
+        console.log(response)
+        console.log ('ids: ',nuevoEmpleado)
         if (response.StatusCode === 200) {
-          this.toastr.success(response.message, 'Empleados');
+          this.toastr.success(response.response.data, 'Empleados');
         } else {
-          this.toastr.error(response.message, 'Empleados');
+          this.toastr.error(response.response.data, 'Empleados');
         }
       },
       error: (error) => {
@@ -146,9 +146,9 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
         this.EmpleadosService.deleteEmpleado(Id).subscribe({
           next: (response) => {
             if (response.StatusCode === 200) {
-              this.toastr.success(response.message, 'Empleados');
+              this.toastr.success(response.response.data, 'Empleados');
             } else {
-              this.toastr.error(response.message, 'Empleados');
+              this.toastr.error(response.response.data, 'Empleados');
             }
             this.getData()
           },
@@ -182,23 +182,45 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
     });
   }
 
-  compareFn(item1: any, item2: any): boolean {
-    return item1 && item2 ? item1.Id === item2.Id : item1 === item2;
-  }
-  
-
-
   cargarDatos(empleado: updateEmpleado) {
-    this.empleados = { ...empleado };
+
+    this.empleados.Id= empleado.Id;
     this.datosCargados = true;
+    console.log(this.empleados.Id)
 
-    this.IdPersona = empleado.IdPersona;
-    this.IdSucursal = empleado.IdSucursal;
-    this.IdPuesto = empleado.IdPuesto;
+  }
 
-    console.log('Datos del empleado para cargar:', empleado);
-    console.log('ComboPersona:', this.ComboPersona.Id);
-    console.log('ComboSucursal:', this.ComboSucursal.Id);
-    console.log('ComboPuesto:', this.ComboPuesto.Id);
+
+  actualizar(): void {
+    const empleadoActualizado: updateEmpleado = {
+      Id: this.empleados.Id,
+      IdPersona: this.empleados.IdPersona,
+      IdSucursal: this.empleados.IdSucursal,
+      IdPuesto: this.empleados.IdPuesto,
+      usuarioActualiza: parseInt(this.loggedInUser.Id, 10),
+    };
+  
+    console.log('Actualizando Empleado:', empleadoActualizado);
+    this.EmpleadosService.updateEmpleado(empleadoActualizado).subscribe({
+      next: (response) => {
+        console.log('Respuesta del servidor:', response);
+        this.getData(); // Actualizar datos después de la actualización
+        this.limpiar();
+        if(response.StatusCode == 200){
+          this.toastr.success(response.response.data, 'Empleados');
+        } else {
+          this.toastr.error(response.response.data,'Empleados')
+        }
+      },
+      error: (error) => {
+        console.error('Error al actualizar el almacen', error);
+      }
+    });
+  }
+
+
+  limpiar(): void{
+
+    this.datosCargados =false;
   }
 }

@@ -80,9 +80,9 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
           this.precio = 0;
           this.usuario = 0;
           this.getData();
-          this.toastr.success(response.message, 'Articulos')
+          this.toastr.success(response.response.data, 'Articulos')
         } else {
-          this.toastr.info(response.message, 'Articulos')
+          this.toastr.error(response.response.data, 'Articulos')
         }
       }
     });
@@ -121,7 +121,12 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
       if (result == "yes") {
         this.articulosService.deleteArticulos(Id).subscribe({
           next: (response) => {
-            this.getData();
+            if(response.StatusCode == 200){
+              this.getData();
+              this.toastr.success(response.response.data, 'Articulos')
+            } else {
+              this.toastr.info(response.response.data, 'Articulos')
+            }
           },
           error: (error) => {
             console.error('Hubo un error: ', error);
@@ -161,7 +166,13 @@ export class ArticulosComponent implements OnInit, AfterViewInit {
       next: (response) => {
         console.log('Respuesta del servidor:', response);
         this.getData(); // Actualizar datos después de la actualización
-        this.limpiar();
+        if(response.StatusCode == 200){
+          this.limpiar();
+          this.getData();
+          this.toastr.success(response.response.data, 'Articulos')
+        } else {
+          this.toastr.info(response.response.data, 'Articulos')
+        }
       },
       error: (error) => {
         console.error('Error al actualizar el artículo', error);

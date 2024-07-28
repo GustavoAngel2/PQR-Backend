@@ -1,6 +1,6 @@
 <div class="title-container">
     <br>
-    <label class="title">Movimientos de inventario</label>
+    <label class="title">Movimientos de Inventario</label>
     <br>
     <img src="./assets/Almacenes.png" class="module-logo">
 </div>
@@ -8,29 +8,29 @@
 <div class="form-place" *ngIf="!isOnStepTwo">
     <div class="form-container">
         <div class="form-title">
-            <p [hidden]="!datosCargados"> Editando movimiento con Id: {{this.tipoMov.Id}} </p>
+            <p [hidden]="!datosCargados"> Editando Movimiento con Id: {{this.tipoMov.Id}} </p>
             <p [hidden]="datosCargados">Nuevo movimiento</p>
         </div>
         <div class="form-content">
             <mat-form-field appearance="fill">
                 <mat-label>Tipo de Movimiento</mat-label>
                 <mat-select [(ngModel)]="idTipoMov">
-                    <mat-option [value]="0">--Seleccione un tipo de Movimiento--</mat-option>
+                    <mat-option [value]="0">Seleccione</mat-option>
                     <mat-option *ngFor="let tm of ComboTipoMov" [value]="tm.Id">{{ tm.Nombre }}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field appearance="fill">
-                <mat-label *ngIf="idTipoMov == 1 || idTipoMov == 2">Almacen de Origen</mat-label>
+                <mat-label *ngIf="idTipoMov == 1 || idTipoMov == 2">¿A qué Almacén?</mat-label>
                 <mat-label *ngIf="idTipoMov !== 1 && idTipoMov !== 2">Almacen</mat-label>
                 <mat-select [(ngModel)]="idAlmacen">
-                    <mat-option [value]="0">--Seleccione un Almacen--</mat-option>
+                    <mat-option [value]="0">Seleccione</mat-option>
                     <mat-option *ngFor="let alm of ComboAlmacen" [value]="alm.Id">{{ alm.Nombre }}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field appearance="fill" *ngIf="idTipoMov == 1 || idTipoMov == 2">
-                <mat-label>Almacen de destino</mat-label>
+                <mat-label>Almacen de Destino u Origen</mat-label>
                 <mat-select [(ngModel)]="idDestino">
-                    <mat-option [value]="0">--Almacen de destino (en caso de aplicar)--</mat-option>
+                    <mat-option [value]="0">Seleccione (en caso de aplicar)</mat-option>
                     <mat-option *ngFor="let alm of ComboAlmacen" [value]="alm.Id">{{ alm.Nombre }}</mat-option>
                 </mat-select>
             </mat-form-field>
@@ -50,7 +50,7 @@
         </div>
         <div class="form-content">
             <mat-form-field appearance="fill">
-                <mat-label>idMovimiento</mat-label>
+                <mat-label>Id del Movimiento</mat-label>
                 <input [disabled]="true" matInput placeholder="Cantidad" [(ngModel)]="idMovimiento">
             </mat-form-field>
             <mat-form-field class="example-full-width">
@@ -102,15 +102,15 @@
     <mat-paginator [pageSizeOptions]="[10, 25, 100]" showFirstLastButtons></mat-paginator>
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
             <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.Id}} </td>
         </ng-container>
         <ng-container matColumnDef="idMovimiento">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id Movimiento </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id del Movimiento </th>
             <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.idMovimiento}} </td>
         </ng-container>
         <ng-container matColumnDef="Codigo">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Codigo </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Código </th>
             <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.Codigo}} </td>
         </ng-container>
         <ng-container matColumnDef="Cantidad">
@@ -122,11 +122,11 @@
             <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.Costo}} </td>
         </ng-container>
         <ng-container matColumnDef="FechaActualiza">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> USUARIO </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Última Actualización </th>
             <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.FechaActualiza}} </td>
         </ng-container>
         <ng-container matColumnDef="UsuarioActualiza">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> USUARIO </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
             <td mat-cell *matCellDef="let detalleMov"> {{detalleMov.UsuarioActualiza}} </td>
         </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

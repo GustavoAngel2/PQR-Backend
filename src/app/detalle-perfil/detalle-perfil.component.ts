@@ -5,8 +5,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { DetallePerfilInsertComponent } from '../detalle-perfil-insert-component/detalle-perfil-insert-component.component';
-import { DetallePerfilUpdateComponent } from '../detalle-perfil-update/detalle-perfil-update.component';
 import { RolesService } from '../data.service';
 import { ModulosService } from '../data.service';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
@@ -151,6 +149,11 @@ export class DetallePerfilComponent implements OnInit, AfterViewInit {
         this.idPerfil = 0;
         this.idModulo = 0;
         this.acceso = 0;
+        if(response.StatusCode == 200){
+          this.toastr.success(response.message, 'Detalle Perfil');
+        } else {
+          this.toastr.error(response.message,'Detalle Perfil')
+        }
       },
       error: (error) => {
         console.error('Hubo un error al insertar el almacen: ', error);
@@ -203,8 +206,10 @@ export class DetallePerfilComponent implements OnInit, AfterViewInit {
     }
   }
   
-  cargarDatos():void {
+  cargarDatos(detallePerfil:UpdateDetallePerfil) {
+    this.detPerfil.Id = detallePerfil.Id
     this.datosCargados = true;
+    console.log(detallePerfil.Id)
   }
   limpiar(): void{
     this.datosCargados =false;

@@ -5,49 +5,91 @@
     <img src="./assets/Almacenes.png" class="module-logo">
 </div>
 
+<div class="form-place">
+    <div class="form-container">
+    <div class="form-title">
+        <h1 [hidden]="isModifying"> Nueva ruta </h1>
+        <h1 [hidden]="!isModifying">Editando ruta con id: {{this.id}}</h1>
+    </div>
+    <br>
+    <div class="form-content">
+        <mat-form-field>
+            <mat-label>Nombre de la Ruta</mat-label>
+            <input matInput placeholder="Ingrese la ruta" [(ngModel)]="ruta">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Nombre del conductor</mat-label>
+            <input matInput placeholder="Ingrese el nombre del conductor" [(ngModel)]="nombreConductor">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Matrícula</mat-label>
+            <input matInput placeholder="Ingrese la matricula" [(ngModel)]="matricula">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Licencia</mat-label>
+            <input matInput placeholder="Ingrese la licencia" [(ngModel)]="numLicencia">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>No. de Seguro</mat-label>
+            <input matInput placeholder="Ingrese el numero de seguro" [(ngModel)]="numSeguro">
+        </mat-form-field>
+    </div>
+    </div>
+</div>
+
 <div class="actionbar">
     <mat-form-field class="search-bar">
         <mat-label>Filtrar</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
     </mat-form-field>
-    <button (click)="abrirInsertarModal()" class="btn right">Insertar<i class="underline"></i></button>
+    <button [hidden]="!isModifying"(click)="update()" class="btn right">Update<i class="underline"></i></button>
+    <button [hidden]="!isModifying" (click)="limpiar()"  class="btn-cancel "><i class="bi bi-cloud-upload-fill icon"></i>Cancelar</button>
+    <button [hidden]="isModifying"(click)="abrirInsertarModal()" class="btn right">Insertar<i class="underline"></i></button>
 </div>
 <br>
 <div class="table-container">
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
     <table mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
             <td mat-cell *matCellDef="let ruta"> {{ruta.Id}} </td>
         </ng-container>
-        <ng-container matColumnDef="Nombre">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
+        <ng-container matColumnDef="Ruta">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Ruta </th>
             <td mat-cell *matCellDef="let ruta"> {{ruta.Nombre}} </td>
         </ng-container>
-        <ng-container matColumnDef="Direccion">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Direccion </th>
-            <td mat-cell *matCellDef="let ruta"> {{ruta.Direccion}} </td>
+        <ng-container matColumnDef="Conductor">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Conductor </th>
+            <td mat-cell *matCellDef="let ruta"> {{ruta.Conductor}} </td>
         </ng-container>
-        <ng-container matColumnDef="Usuario">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
-            <td mat-cell *matCellDef="let ruta"> {{ruta.Usuario}} </td>
+        <ng-container matColumnDef="Matricula">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Matrícula </th>
+            <td mat-cell *matCellDef="let ruta"> {{ruta.Matricula}} </td>
+        </ng-container>
+        <ng-container matColumnDef="NoLicencia">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. de licencia </th>
+            <td mat-cell *matCellDef="let ruta"> {{ruta.NoLicencia}} </td>
+        </ng-container>
+        <ng-container matColumnDef="NoSeguro">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. de seguro </th>
+            <td mat-cell *matCellDef="let ruta"> {{ruta.NoSeguro}} </td>
         </ng-container>
         <ng-container matColumnDef="FechaAct">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> FechaAct </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Última Actualización </th>
             <td mat-cell *matCellDef="let ruta"> {{ruta.FechaActualiza}} </td>
         </ng-container>
         <ng-container matColumnDef="FechaReg">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> FechaReg </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Registro </th>
             <td mat-cell *matCellDef="let ruta"> {{ruta.FechaRegristro}} </td>
         </ng-container>
         <ng-container matColumnDef="Acciones">
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
         <td mat-cell *matCellDef="let elemento">
-            <mat-icon class="action-btn green" (click)="abrirEditarModal(elemento)">edit</mat-icon>
-            <mat-icon class="action-btn red" (click)="eliminarRutas(elemento.Id)">delete</mat-icon>
+            <mat-icon class="action-btn" (click)="cargarDatos(elemento)">edit</mat-icon>
+            <mat-icon class="action-btn" (click)="abrirDeleteDialog(elemento.Id, elemento.Nombre)">delete</mat-icon>
         </td>
         </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </table>
-  </div>
+</div>

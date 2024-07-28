@@ -5,8 +5,9 @@ import { MatTableDataSource } from "@angular/material/table";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { PuestosInsertComponent } from "../puestos-insert/puestos-insert.component";
-import { PuestosUpdateComponent } from "../puestos-update/puestos-update.component";
+import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService, currentUser } from '../auth.service';
 
 @Component({
   selector: "app-puestos",
@@ -19,24 +20,74 @@ export class PuestosComponent implements OnInit, AfterViewInit {
     "nombre",
     "descripcion",
     "salario",
-    "usuarioActualiza",
     "fechaRegistro",
     "fechaActualiza",
     "Acciones",
   ];
   dataSource: MatTableDataSource<Puesto>;
+  id: number = 0;
+  nombre: string = "";
+  descripcion: string = "";
+  salario: number = 0;
+  loggedUser: currentUser = { Id: '', NombreUsuario: '', IdRol: '', Rol: '' }
+  isModifying: boolean = false;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
+    private toastr: ToastrService,
     private puestosService: PuestosService,
+    private authService: AuthService,
     public dialog: MatDialog
   ) {
     this.dataSource = new MatTableDataSource<Puesto>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
 
   ngOnInit() {
+    this.getData()
+  }
+    ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+  // Método para realizar el filtrado
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  abrirDeleteDialog(Id: number, Name: string) {
+    const dialogRef = this.dialog.open(DeleteMenuComponent, {
+      width: '550px',
+      data: Name
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == "yes") {
+        this.puestosService.deletePuestos(Id).subscribe({
+          next: (response) => {
+            if(response.StatusCode == 200){
+              this.toastr.success(response.message, 'Puestos');
+            } else {
+              this.toastr.error(response.message,'Puestos')
+            }
+            this.getData();
+          },
+          error: (error) => {
+            console.error('Hubo un error al eliminar el almacén', error);
+          }
+        });
+      }
+    });
+  }
+
+  getData(){
+    this.loggedUser = this.authService.getCurrentUser();
     this.dataSource.filterPredicate = (data: Puesto, filter: string) => {
       return (
         data.nombre.toLowerCase().includes(filter) ||
@@ -58,55 +109,74 @@ export class PuestosComponent implements OnInit, AfterViewInit {
       },
     });
   }
-    ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-  // Método para realizar el filtrado
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-  abrirInsertarModal() {
-    const dialogRef = this.dialog.open(PuestosInsertComponent, {
-      width: "550px",
-      // Puedes pasar datos al componente de la modal si es necesario
-    });
+  insertar(){
+    const nuevoPuesto = {
+      nombre: this.nombre,
+      descripcion: this.descripcion,
+      salario: this.salario,
+      usuarioActualiza: parseInt(this.loggedUser.Id,10)
+    };
 
-    dialogRef.afterClosed().subscribe((result) => {
-      // Manejar los resultados cuando la modal se cierre
+    // Aquí asumo que tienes un método en tu servicio para insertar el departamento
+    this.puestosService.insertarPuestos(nuevoPuesto).subscribe({
+      next: (response) => {
+        if(response.StatusCode == 200){
+          this.toastr.success(response.response.data, 'Puestos');
+        } else {
+          this.toastr.error(response.response.data,'Puestos')
+        }
+        this.getData()
+        this.limpiar()
+      },
+      error: (error) => {
+        // Manejar el error aquí
+        console.error("Hubo un error al insertar el almacen", error);
+      },
     });
   }
-  eliminarArticulo(Id: number) {
-    // Aquí puedes agregar una confirmación antes de eliminar si lo deseas
-    if (confirm("¿Estás seguro de que deseas eliminar este departamento?")) {
-      this.puestosService.deletePuestos(Id).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.dataSource.data = this.dataSource.data.filter(
-            (articulo: Puesto) => articulo.Id !== Id
-          );
-        },
-        error: (error) => {
-          // Manejar el error aquí
-          console.error("Hubo un error al eliminar el departamento", error);
-        },
-      });
-    }
-  }
-  abrirEditarModal(articulos: Puesto) {
-    const dialogRef = this.dialog.open(PuestosUpdateComponent, {
-      width: "550px",
-      data: articulos, // Pasa el objeto de departamento a la modal
-    });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-      }
+  cargarDatos(elemento:Puesto){
+    this.id = elemento.Id;
+    this.nombre = elemento.nombre
+    this.descripcion = elemento.descripcion
+    this.salario = elemento.salario
+    this.isModifying = true
+  }
+
+  update(){
+    const Puesto = {
+      Id: this.id,
+      nombre: this.nombre,
+      descripcion: this.descripcion,
+      salario: this.salario,
+      usuarioActualiza: parseInt(this.loggedUser.Id,10)
+    };
+    
+
+    this.puestosService.updatePuestos(Puesto).subscribe({
+      next: (response) => {
+        if(response.StatusCode == 200){
+          this.toastr.success(response.response.data, 'Puestos');
+        } else {
+          this.toastr.error(response.response.data,'Puestos')
+        }
+        this.getData()
+        this.limpiar()
+
+      },
+      error: (error) => {
+        console.error(error);
+      },
     });
+  }
+
+  limpiar(){
+    this.id = 0;
+    this.nombre = ''
+    this.descripcion = ''
+    this.salario = 0
+    this.isModifying = false
   }
 }
+

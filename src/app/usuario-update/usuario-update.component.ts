@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { UpdateUsuario } from '../models/usuarios.models';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { UsuarioSevice } from '../data.service';
+import { UsuarioService } from '../data.service';
 
 @Component({
   selector: 'app-usuario-update',
@@ -12,7 +12,7 @@ export class UsuarioUpdateComponent implements OnInit {
   usuario: UpdateUsuario;
   constructor(
     public dialogRef: MatDialogRef<UsuarioUpdateComponent>,
-    private usuarioService: UsuarioSevice,
+    private usuarioService: UsuarioService,
     @Inject(MAT_DIALOG_DATA) public data: UpdateUsuario
 
   ) {

@@ -7,16 +7,13 @@
 
 <div class="form-place">
   <div class="form-container">
-    <div class="form-title">
-      <h1></h1>
-    </div>
     <div class="form-content">
       <mat-form-field>
         <mat-label>Nombre</mat-label>
         <input matInput placeholder="Ingresa el nombre" [(ngModel)]="nombre" />
       </mat-form-field>
       <mat-form-field style="display: none;">
-        <mat-label>rol</mat-label>
+        <mat-label>Rol</mat-label>
         <input matInput placeholder="Ingresa el nombre" [(ngModel)]="rol" />
       </mat-form-field>
       <mat-form-field>
@@ -25,35 +22,44 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Rol</mat-label>
-        <select matNativeControl [(ngModel)]="ComboRoles" placeholder="--Seleccione un usuario--" (change)="dev($event)" class="form-control">
-          <option *ngFor="let rol of ComboRoles" value={{rol.Id}}> • {{ rol.Rol }}</option>
+        <select matNativeControl [(ngModel)]="rol">
+          <option value="0">Seleccione</option>
+          <option *ngFor="let rol of ComboRoles" [value]="rol.Id">{{ rol.Rol }}</option>
         </select>
       </mat-form-field>
       <mat-form-field>
-        <mat-label>Usuario</mat-label>
-        <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuario"/>
+        <mat-label>Persona</mat-label>
+        <select matNativeControl [(ngModel)]="idPersona">
+          <option value="0">Seleccione</option>
+          <option *ngFor="let persona of ComboPersonas" [value]="persona.Id">{{ persona.Nombre }}</option>
+        </select>
       </mat-form-field>
     </div>
   </div>
 </div>
+<br>
 
 <div class="actionbar">
-  <mat-form-field class="search-bar">
-      <mat-label>Filtrar</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
-  </mat-form-field>
-  <button (click)="insertar()" class="btn right">Insertar<i class="underline"></i></button>
+  <button [hidden]="!datosCargados" (click)="actualizar()"  style="margin-top: -20px;" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Actualizar<i class="underline"></i></button>
+  <button [hidden]="!datosCargados" (click)="limpiar()" style="margin-top: -20px;" class="btn-cancel "><i class="bi bi-cloud-upload-fill icon"></i>Cancelar</button>
+  <button [hidden]="datosCargados" (click)="insertar()" style="margin-top: -20px;" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
 </div>
 <br>
+
+
+<mat-form-field class="search-bar">
+  <mat-label>Filtrar</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
+</mat-form-field>
 <div class="table-container">
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="Id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
       <td mat-cell *matCellDef="let usuario">{{ usuario.Id }}</td>
     </ng-container>
     <ng-container matColumnDef="Nombre">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>NOMBRE</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
       <td mat-cell *matCellDef="let usuario">{{ usuario.Nombre }}</td>
     </ng-container>
     <ng-container matColumnDef="Rol">
@@ -65,20 +71,18 @@
       <td mat-cell *matCellDef="let usuario">{{ usuario.Usuario }}</td>
     </ng-container>
     <ng-container matColumnDef="FechaAct">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>FechaAct</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Última Actualización</th>
       <td mat-cell *matCellDef="let usuario">{{ usuario.FechaAct }}</td>
     </ng-container>
     <ng-container matColumnDef="FechaReg">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>FechaReg</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha de Registro</th>
       <td mat-cell *matCellDef="let usuario">{{ usuario.FechaReg }}</td>
     </ng-container>
     <ng-container matColumnDef="Acciones">
       <th mat-header-cell *matHeaderCellDef>Acciones</th>
-      <td mat-cell *matCellDef="let elemento">
-        <mat-icon class="action-btn green" (click)="abrirEditarModal(elemento)"
-          >edit</mat-icon
-        >
-        <mat-icon class="action-btn red" (click)="eliminarAlmacen(elemento.Id)"
+      <td mat-cell *matCellDef="let usuario">
+        <mat-icon class="action-btn green" (click)="cargarDatos(usuario)">edit</mat-icon>
+        <mat-icon class="action-btn red" (click)="eliminarUsuario(usuario.Id)"
           >delete</mat-icon
         >
       </td>

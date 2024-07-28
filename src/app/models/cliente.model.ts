@@ -14,13 +14,13 @@ export interface Clientes {
     coordenadas: string;
   }
 
-  export interface ApiResponse {
+  export interface ApiResponseClientes {
     StatusCode: number;
     success: boolean;
     fecha: string;
     message: string;
     response: {
-      data: Clientes };
+      data: Clientes[]; };
   }
 
   export interface UpdateClientes{

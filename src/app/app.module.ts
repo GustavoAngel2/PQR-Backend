@@ -2,7 +2,6 @@
 
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { RouterModule, Routes } from "@angular/router";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -35,36 +34,22 @@ import { DetalleMovimientoComponent } from "./detalle-movimiento/detalle-movimie
 import { DetalleMoviemientoViewComponent } from "./detalle-movimiento-view/detalle-moviemiento-view.component";
 import { TicketsComponent } from "./tickets/tickets.component";
 import { UsuariosComponent } from "./usuarios/usuarios.component";
-import { UsuariosInsertComponent } from "./usuarios-insert/usuarios-insert.component";
 import { UsuarioUpdateComponent } from "./usuario-update/usuario-update.component";
 import { ClientesComponent } from "./clientes/clientes.component";
 import { ArticulosComponent } from "./articulos/articulos.component";
 import { PersonasComponent } from "./personas/personas.component";
 import { RutasComponent } from "./rutas/rutas.component";
-import { ClientesUpdateComponent } from "./clientes-update/clientes-update.component";
-import { PersonasInsertComponent } from "./personas-insert/personas-insert.component";
-import { PersonasUpdateComponent } from "./personas-update/personas-update.component";
-import { RutasInsertComponent } from "./rutas-insert/rutas-insert.component";
-import { RutasUpdateComponent } from "./rutas-update/rutas-update.component";
 import { ExistenciasComponent } from "./existencias/existencias.component";
-import { ExistenciasInsertComponent } from "./existencias-insert/existencias-insert.component";
-import { ExistenciasUpdateComponent } from "./existencias-update/existencias-update.component";
 import { MovInventarioComponent } from "./mov-inventario/mov-inventario.component";
 import { DetalleTicketComponent } from "./detalle-ticket/detalle-ticket.component";
 import { DetalleTicketInsertComponent } from "./detalle-ticket-insert/detalle-ticket-insert.component";
 import { LoginComponent } from "./login/login.component";
 import { InicioComponent } from './inicio/inicio.component';
 import { ModulosComponent } from './modulos/modulos.component';
-import { ModulosUpdateComponent } from './modulos-update/modulos-update.component';
 import { EmpleadosComponent } from "./empleados/empleados.component";
 import { PuestosComponent } from "./puestos/puestos.component";
-import { PuestosInsertComponent } from "./puestos-insert/puestos-insert.component";
-import { PuestosUpdateComponent } from "./puestos-update/puestos-update.component";
 import { CategoriaModuloComponent } from './categoria-modulo/categoria-modulo.component';
-import { CategoriaModuloUpdateComponent } from "./categoria-modulo-update/categoria-modulo-update.component";
 import { DetallePerfilComponent } from './detalle-perfil/detalle-perfil.component';
-import { DetallePerfilInsertComponent } from './detalle-perfil-insert-component/detalle-perfil-insert-component.component';
-import { DetallePerfilUpdateComponent } from './detalle-perfil-update/detalle-perfil-update.component';
 import { DeleteMenuComponent } from './delete-menu/delete-menu.component';
 import { AuthGuard } from './auth.guard'; // Importa AuthGuard
 import { AuthService } from './auth.service'; // Importa AuthService
@@ -77,39 +62,25 @@ import { DialogsComponent } from './dialogs/dialogs.component';
     AppComponent,
     AlmacenesComponent,
     ClientesComponent,
-    ClientesUpdateComponent,
     ArticulosComponent,
     PersonasComponent,
-    PersonasInsertComponent,
-    PersonasUpdateComponent,
     RutasComponent,
-    RutasInsertComponent,
-    RutasUpdateComponent,
     DetalleMovimientoComponent,
     DetalleMoviemientoViewComponent,
     TicketsComponent,
     UsuariosComponent,
-    UsuariosInsertComponent,
     UsuarioUpdateComponent,
     ExistenciasComponent,
-    ExistenciasInsertComponent,
-    ExistenciasUpdateComponent,
     MovInventarioComponent,
     DetalleTicketComponent,
     DetalleTicketInsertComponent,
     LoginComponent,
     InicioComponent,
     ModulosComponent,
-    ModulosUpdateComponent,
     EmpleadosComponent,
     PuestosComponent,
-    PuestosInsertComponent,
-    PuestosUpdateComponent,
     CategoriaModuloComponent,
-    CategoriaModuloUpdateComponent,
     DetallePerfilComponent,
-    DetallePerfilInsertComponent,
-    DetallePerfilUpdateComponent,
     DeleteMenuComponent,
     DialogsComponent,
   ],
@@ -145,9 +116,9 @@ import { DialogsComponent } from './dialogs/dialogs.component';
     UserService,
     provideToastr({
       timeOut: 3000,
-      positionClass: 'toast-top-right',
+      positionClass: 'toast-top-center',
       progressBar: true,
-      preventDuplicates: true
+      preventDuplicates: false
     }),
     provideAnimations()
   ],

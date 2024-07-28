@@ -5,12 +5,37 @@
   <img src="./assets/Almacenes.png" class="module-logo">
 </div>
 
+<div class="form-place">
+  <div class="form-container">
+    <div class="form-title">
+      <h1 [hidden]="isModifying">Nuevo Puesto</h1>
+      <h1 [hidden]="!isModifying">Editando puesto con id: {{this.id}}</h1>
+    </div>
+    <div class="form-content">
+      <mat-form-field>
+        <mat-label>nombre</mat-label>
+        <input matInput placeholder="Ingresa el nombre" [(ngModel)]="nombre">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>descripcion</mat-label>
+        <input matInput placeholder="Ingresa la descripcion" [(ngModel)]="descripcion">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>salario</mat-label>
+        <input matInput placeholder="Ingresa el salario" [(ngModel)]="salario">
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
 <div class="actionbar">
   <mat-form-field class="search-bar">
       <mat-label>Filtrar</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
   </mat-form-field>
-  <button (click)="abrirInsertarModal()" class="btn right">Insertar<i class="underline"></i></button>
+  <button [hidden]="!isModifying"(click)="update()" class="btn right">Update<i class="underline"></i></button>
+  <button [hidden]="!isModifying" (click)="limpiar()"  class="btn-cancel "><i class="bi bi-cloud-upload-fill icon"></i>Cancelar</button>
+  <button [hidden]="isModifying"(click)="insertar()" class="btn right">Insertar<i class="underline"></i></button>
 </div>
 <br>
 <div class="table-container">
@@ -21,7 +46,7 @@
       <td mat-cell *matCellDef="let puesto">{{ puesto.Id }}</td>
     </ng-container>
     <ng-container matColumnDef="nombre">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Puesto</th>
       <td mat-cell *matCellDef="let puesto">{{ puesto.nombre }}</td>
     </ng-container>
     <ng-container matColumnDef="descripcion">
@@ -32,23 +57,19 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Salario</th>
       <td mat-cell *matCellDef="let puesto">{{ puesto.salario }}</td>
     </ng-container>
-    <ng-container matColumnDef="usuarioActualiza">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Usuario</th>
-      <td mat-cell *matCellDef="let puesto">{{ puesto.usuarioActualiza }}</td>
-    </ng-container>
     <ng-container matColumnDef="fechaRegistro">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>FechaRegistro</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha de registro</th>
       <td mat-cell *matCellDef="let puesto">{{ puesto.fechaRegistro }}</td>
     </ng-container>
     <ng-container matColumnDef="fechaActualiza">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>FechaActualiza</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha de modificacion</th>
       <td mat-cell *matCellDef="let puesto">{{ puesto.fechaActualiza }}</td>
     </ng-container>
     <ng-container matColumnDef="Acciones">
       <th mat-header-cell *matHeaderCellDef>Acciones</th>
       <td mat-cell *matCellDef="let elemento">
-        <mat-icon class="action-btn green" (click)="abrirEditarModal(elemento)">edit</mat-icon>
-        <mat-icon class="action-btn red" (click)="eliminarArticulo(elemento.Id)">delete</mat-icon>
+        <mat-icon class="action-btn green" (click)="cargarDatos(elemento)">edit</mat-icon>
+        <mat-icon class="action-btn red" (click)="abrirDeleteDialog(elemento.Id,elemento.nombre)">delete</mat-icon>
       </td>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

@@ -17,7 +17,9 @@ export interface tickets {
     fecha: string;
     message: string;
     response: {
-      data: tickets[]; };
+      Msg: string;
+      data: tickets[];
+    };
   }
   export interface InsetTickets{
     

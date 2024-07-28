@@ -1,11 +1,14 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { AlmacenesService, ModulosService } from '../data.service';
-import { Modulo } from '../models/modulo.model';
+import { Modulo, UpdateModulo } from '../models/modulo.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ModulosUpdateComponent } from '../modulos-update/modulos-update.component';
+import { CategoriaModuloService } from '../data.service';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService, currentUser } from '../auth.service';
+
 
 @Component({
   selector: 'app-almacenes',
@@ -16,19 +19,46 @@ export class ModulosComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['Id', 'NombreModulo', 'CategoriaModulo', 'Usuario', 'FechaAct','FechaReg','Acciones'];
   dataSource: MatTableDataSource<Modulo>;
 
+  nombreModulo: string='';
+  categoriaModulo: number=0;
+  usuario: number=0;
+  comboCatMod:any;
+
+  datosCargados: boolean = false;
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private ModulosService: ModulosService, public dialog:MatDialog) {
+  constructor(private ModulosService: ModulosService,
+    private catModService: CategoriaModuloService,
+    private toastr: ToastrService,
+    private authService: AuthService,
+    public dialog:MatDialog) {
     this.dataSource = new MatTableDataSource<Modulo>(); // Inicializa dataSource como una instancia de MatTableDataSource
+  }
+
+  loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
+
+
+  modulos: UpdateModulo={
+    Id:0,
+    NombreModulo:'',
+    CategoriaModulo:0,
+    Usuario:0
   }
 
   ngOnInit() {
     this.getData();
+    this.loggedInUser = this.authService.getCurrentUser(); // Obtener el usuario logeado
+    console.log('Usuario logeado:', this.loggedInUser);
   }
 
 
   getData(){
+    this.catModService.getCategoriaModulo().subscribe((data: any) => {
+      this.comboCatMod = data;
+      console.log(this.comboCatMod)
+    });
     this.dataSource.filterPredicate = (data: Modulo, filter: string) => {
       // Convertir a minúsculas para evitar problemas de coincidencia
       const filterLowerCase = filter.toLowerCase();
@@ -52,6 +82,32 @@ export class ModulosComponent implements OnInit, AfterViewInit {
         console.error(error); 
       }
     });
+  }
+
+  
+  insertar(): void {
+    const nuevoModulo = {
+      nombreModulo: this.nombreModulo,
+      categoriaModulo: this.categoriaModulo,  
+      usuario: parseInt(this.loggedInUser.Id, 10),     
+    };
+
+      this.ModulosService.InsertModulos(nuevoModulo).subscribe({
+        next: (response) => {
+          this.getData();
+          
+          console.log(response, nuevoModulo)
+          if(response.StatusCode == 200){
+            this.toastr.success(response.response.data, 'Almacenes');
+          } else {
+            this.toastr.error(response.response.data,'Almacenes')
+          }
+        },
+        error: (error) => {
+          console.error('Hubo un error al insertar el almacen', error);
+        }
+      });
+  
   }
 
 
@@ -84,16 +140,5 @@ export class ModulosComponent implements OnInit, AfterViewInit {
       });
     }
   }
-  abrirEditarModal(modulo: Modulo) {
-    const dialogRef = this.dialog.open(ModulosUpdateComponent, {
-      width: '550px',
-      data: modulo // Pasa el objeto de departamento a la modal
-    });
-  
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        
-      }
-    });
-  }
+
 }

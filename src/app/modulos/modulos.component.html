@@ -5,14 +5,42 @@
     <img src="./assets/Almacenes.png" class="module-logo">
 </div>
 
-<div class="actionbar">
-    <mat-form-field class="search-bar">
-        <mat-label>Filtrar</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
-    </mat-form-field>
-    <button  class="btn right">Insertar<i class="underline"></i></button>
+
+<div class="form-place">
+    <div class="form-container">
+    <div class="form-title">
+        <h1 mat-dialog-title>Nueva existencia</h1>
+    </div>
+    <div class="form-content">
+        <mat-form-field>
+            <mat-label>Nombre Modulo</mat-label>
+            <input matInput placeholder="Ingresa el nombre" [(ngModel)]="nombreModulo">
+          </mat-form-field>
+           <mat-form-field>
+          <mat-label>Categoria</mat-label>
+            <select matNativeControl [(ngModel)]="categoriaModulo">
+              <option value="0">--Seleccione una categoria--</option>
+              <option *ngFor="let cm of comboCatMod" [value]="cm.Id">{{ cm.Nombre }}</option>
+            </select>
+          </mat-form-field>         
+    </div>
+</div>
 </div>
 <br>
+
+<div class="actionbar">
+    <button [hidden]="!datosCargados"   style="margin-top: -20px;" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Actualizar<i class="underline"></i></button>
+    <button [hidden]="!datosCargados"  style="margin-top: -20px;" class="btn-cancel "><i class="bi bi-cloud-upload-fill icon"></i>Cancelar</button>
+    <button [hidden]="datosCargados" (click)="insertar()" style="margin-top: -20px;" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
+</div>
+<br>
+
+
+
+<mat-form-field class="search-bar">
+    <mat-label>Filtrar</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input    >
+</mat-form-field>
 <div class="table-container">
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
     <table mat-table [dataSource]="dataSource" matSort>
