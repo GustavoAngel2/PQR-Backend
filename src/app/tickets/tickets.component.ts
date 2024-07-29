@@ -26,7 +26,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
   // Tickets
   IdSucursal: number = 0;
-  IdCliente: number = 1;
+  IdCliente: number = 0;
   IdVendedor: number = 0;
   Usuario: number = 0;
 
