@@ -4,7 +4,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { empleado, updateEmpleado } from "../models/empleados.model";
-import { SucursalesService, PersonasService, PuestosService, EmpleadosService } from '../data.service';
+import { AlmacenesService, PersonasService, PuestosService, EmpleadosService } from '../data.service';
 import { AuthService, currentUser } from '../auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
@@ -52,7 +52,7 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
   constructor(
     private EmpleadosService: EmpleadosService,
     public dialog: MatDialog,
-    private sucursalesService: SucursalesService,
+    private almacenesService: AlmacenesService,
     private puestoService: PuestosService,
     private authService: AuthService,
     private personasService: PersonasService,
@@ -75,7 +75,7 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
       }
     });
 
-    this.sucursalesService.getSucursales().subscribe({
+    this.almacenesService.getAlmacenes().subscribe({
       next: (data) => {
         this.ComboSucursal = data;
         console.log('ComboSucursal:', this.ComboSucursal);
@@ -133,6 +133,7 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
         console.error('Hubo un error al insertar el empleado', error);
       }
     });
+    this.limpiar()
   }
 
   showDeleteDialog(Id: number, Name: string) {
@@ -216,11 +217,14 @@ export class EmpleadosComponent implements OnInit, AfterViewInit{
         console.error('Error al actualizar el almacen', error);
       }
     });
+    this.limpiar();
   }
 
 
   limpiar(): void{
-
+    this.empleados.IdPersona =0;
+    this.empleados.IdPuesto =0;
+    this.empleados.IdSucursal=0;
     this.datosCargados =false;
   }
 }

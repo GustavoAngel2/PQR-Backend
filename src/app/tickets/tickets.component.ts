@@ -6,10 +6,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-import { ClientesService, TicketsSevice, DetalleTicketService, TiposMovService, ArticulosService, SucursalesService } from '../data.service';
+import { ClientesService, TicketsSevice, DetalleTicketService, TiposMovService, ArticulosService, AlmacenesService } from '../data.service';
 import { DetalleTicket } from '../models/detalleTicket.model';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 import { ToastrService } from 'ngx-toastr';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import { AuthService,currentUser } from '../auth.service';
 
 
@@ -48,7 +50,10 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   filteredArticulosCod!: Observable<any[]>;
   isOnStepOne = true;
   isOnStepTwo = false;
-
+  fechaInicio: string = '';
+  fechaFin: string = '';
+  dateHandler: Date = new Date();
+  dateHandler2: Date = new Date();
   isTicketFormVisible= true;
   loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
 
@@ -77,7 +82,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   constructor(
     private ticketsService: TicketsSevice,
     public dialog: MatDialog,
-    private sucursalesService: SucursalesService,
+    private almacenesService: AlmacenesService,
     private articulosService: ArticulosService,
     private tiposMovService: TiposMovService,
     private authService: AuthService, 
@@ -156,7 +161,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       this.ComboCodigo = data2;
       console.log(this.ComboCodigo);
     });
-    this.sucursalesService.getSucursales().subscribe((data3: any) => {
+    this.almacenesService.getAlmacenes().subscribe((data3: any) => {
       this.ComboSucursales = data3;
       console.log(this.ComboSucursales);
     });
@@ -218,6 +223,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     this.ticketsService.insertarTickets(nuevoTicket).subscribe({
         next: (response) => {
             console.log(response);
+            
             if (response.StatusCode === 200) {
                 this.toastr.success(response.response.Msg, 'Punto de venta');
                 this.idTicket = response.response.data; // Asigna el idTicket del response
@@ -248,10 +254,62 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     });
 }
 
-  
+
+format() {
+  this.fechaInicio = this.formatDate(this.dateHandler);
+  this.fechaFin = this.formatDate(this.dateHandler2);
+}
+formatDate(date: Date): string {
+  const day = this.padZero(date.getDate());
+  const month = this.padZero(date.getMonth() + 1);
+  const year = date.getFullYear();
+  return `${year}-${month}-${day}`;
+}
+
+padZero(num: number): string {
+  return num < 10 ? `0${num}` : `${num}`;
+}
+
   refrescarPagina(): void {
+    this.exportToPDF()
     window.location.reload();
   }
+
+
+  exportToPDF(): void {
+    const doc = new jsPDF();
+    const columns = this.displayedColumns.filter(column => column !== 'Acciones').map(col => this.getColumnName(col));
+    const rows = this.dataSource.filteredData.map(ticket => [
+      ticket.Id,
+      ticket.idTicket,
+      ticket.codigo,
+      ticket.cantidad,
+      ticket.Estatus,
+      ticket.usuario
+    ]);
+
+    autoTable(doc, {
+      head: [columns],
+      body: rows
+    });
+
+    doc.save('Tickets.pdf');
+  }
+
+
+  private getColumnName(column: string): string {
+    switch (column) {
+      case 'Id': return 'ID';
+      case 'Sucursal': return 'Sucursal';
+      case 'Cliente': return 'Cliente';
+      case 'Vendedor': return 'Vendedor';
+      case 'Fecha': return 'Fecha';
+      case 'Estatus': return 'Estatus';
+      case 'usuario': return 'Usuario';
+      default: return column;
+    }
+  }
+
   insertarDetalleTicket() {
     const nuevoDetalleTicket = {
         idTicket: this.idTicket,
@@ -266,7 +324,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         this.detalleticketService.getDetalleTicket(this.idTicket).subscribe({
             next: (data: DetalleTicket[]) => {
                 this.detalleticket = data;
-                console.log('Detalles del ticket:', this.detalleticket);
+                console.log('Detalles del ticket:', nuevoDetalleTicket);
                 
                 // Luego, continuar con la inserción del detalle del ticket
                 this.detalleticketService.insertDetalleTicket(nuevoDetalleTicket).subscribe({

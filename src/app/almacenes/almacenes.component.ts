@@ -8,6 +8,7 @@ import { MatSort } from '@angular/material/sort';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 import { AuthService, currentUser } from '../auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { PersonasService } from '../data.service';
 
 @Component({
   selector: 'app-almacenes',
@@ -34,6 +35,7 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
 
   constructor(
     private AlmacenesService: AlmacenesService, 
+    private PersonasService: PersonasService,
     private authService: AuthService, 
     public dialog: MatDialog,
     private toastr: ToastrService
@@ -45,6 +47,7 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
   direccion: string = '';
   usuario: number = 0;
   encargado: number = 0;
+  comboEncargado :any;
 
   loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
 
@@ -90,7 +93,10 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
       return data.Nombre.toLowerCase().includes(filter) || 
              data.Id.toString().includes(filter);
     };
-
+    this.PersonasService.getPersonas().subscribe((data: any) => {
+      this.comboEncargado = data;
+      console.log(this.comboEncargado)
+    });
     this.AlmacenesService.getAlmacenes().subscribe({
       next: (response) => {
         console.log('Respuesta del servidor:', response); 
@@ -164,9 +170,9 @@ export class AlmacenesComponent implements OnInit, AfterViewInit {
         this.getData(); // Actualizar datos después de la actualización
         this.limpiar();
         if(response.StatusCode == 200){
-          this.toastr.success(response.message, 'Almacenes');
+          this.toastr.success(response.response.data.toString(), 'Almacenes');
         } else {
-          this.toastr.error(response.message,'Almacenes')
+          this.toastr.error(response.response.data.toString(),'Almacenes')
         }
       },
       error: (error) => {
