@@ -253,8 +253,8 @@ export class RutasService {
     nombre: string;
     matricula: string;
     conductor: string;
-    noLicencia: string;
-    noSeguro: string;
+    noLicencia: number;
+    noSeguro: number;
     usuario: number;
   }): Observable<ApiResponseEmpleados> {
     const body = {

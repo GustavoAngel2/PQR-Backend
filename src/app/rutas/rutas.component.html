@@ -15,15 +15,15 @@
     <div class="form-content">
         <mat-form-field>
             <mat-label>Nombre de la Ruta</mat-label>
-            <input matInput placeholder="Ingrese la ruta" [(ngModel)]="ruta">
+            <input matInput placeholder="Ingrese la ruta" maxlength="55" [(ngModel)]="ruta">
         </mat-form-field>
         <mat-form-field>
             <mat-label>Nombre del conductor</mat-label>
-            <input matInput placeholder="Ingrese el nombre del conductor" [(ngModel)]="nombreConductor">
+            <input matInput placeholder="Ingrese el nombre del conductor" maxlength="55" [(ngModel)]="nombreConductor">
         </mat-form-field>
         <mat-form-field>
             <mat-label>Matrícula</mat-label>
-            <input matInput placeholder="Ingrese la matricula" [(ngModel)]="matricula">
+            <input matInput placeholder="Ingrese la matricula" maxlength="7" [(ngModel)]="matricula">
         </mat-form-field>
         <mat-form-field>
             <mat-label>Licencia</mat-label>

@@ -15,7 +15,7 @@ import { AuthService,currentUser } from '../auth.service';
   styleUrls: ['./personas.component.css']
 })
 export class PersonasComponent implements OnInit, AfterViewInit{
-  displayedColumns: string[] = ['Id', 'Nombre', 'ApPaterno','ApMaterno','Direccion', 'Usuario', 'FechaAct','FechaReg','Acciones'];
+  displayedColumns: string[] = ['Id', 'Nombre', 'ApPaterno','ApMaterno','Direccion', 'FechaAct','FechaReg','Acciones'];
   dataSource: MatTableDataSource<Personas>;
   id: number = 0;
   nombre: string = '';

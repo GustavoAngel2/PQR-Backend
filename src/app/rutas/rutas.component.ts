@@ -22,8 +22,8 @@ export class RutasComponent implements OnInit, AfterViewInit {
   usuario: number = 0;
   matricula: string = '';
   nombreConductor: string = '';
-  numLicencia: string = '';
-  numSeguro: string = '';
+  numLicencia: number = 0;
+  numSeguro: number = 0;
   isModifying: boolean = false;
 
   loggedUser: currentUser = { Id: '', NombreUsuario: '', IdRol: '', Rol: '' }
@@ -34,8 +34,8 @@ export class RutasComponent implements OnInit, AfterViewInit {
     Nombre: '',
     Matricula: '',
     Conductor: '',
-    NoLicencia: '',
-    NoSeguro: '',
+    NoLicencia: 0,
+    NoSeguro: 0,
     Usuario: parseInt(this.loggedUser.Id, 10)
   }
 
@@ -91,8 +91,9 @@ export class RutasComponent implements OnInit, AfterViewInit {
       conductor: this.nombreConductor,
       noLicencia: this.numLicencia,
       noSeguro: this.numSeguro,
-      usuario: this.usuario,
+      usuario: parseInt(this.loggedUser.Id,10),
     };
+    console.log(nuevaRuta)
 
     // Aquí asumo que tienes un método en tu servicio para insertar el departamento
     this.RutasService.insertarRutas(nuevaRuta).subscribe({
@@ -128,8 +129,8 @@ export class RutasComponent implements OnInit, AfterViewInit {
     this.usuario = parseInt(this.loggedUser.Id, 10),
     this.matricula = ''
     this.nombreConductor = ''
-    this.numLicencia = ''
-    this.numSeguro = ''
+    this.numLicencia = 0
+    this.numSeguro = 0
     this.isModifying = false
   }
 
