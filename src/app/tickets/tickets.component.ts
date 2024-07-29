@@ -26,7 +26,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
   // Tickets
   IdSucursal: number = 0;
-  IdCliente: number = 0;
+  IdCliente: number = 1;
   IdVendedor: number = 0;
   Usuario: number = 0;
 
@@ -97,10 +97,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     this.getData();
     this.loggedInUser = this.authService.getCurrentUser(); // Obtener el usuario logeado
     console.log('Usuario logeado:', this.loggedInUser);
-    this.filteredArticulos = this.IdArticuloControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterArticulos(value || ''))
-    );
+
 
     this.filteredArticulosCod = this.CodigoControl.valueChanges.pipe(
       startWith(''),
