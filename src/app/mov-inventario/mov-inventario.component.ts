@@ -16,6 +16,7 @@ import { startWith, map } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { SearchMovModel } from '../models/detalleMov.model';
 import { ToastrService } from 'ngx-toastr';
+import { currentUser, AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-mov-inventario',
@@ -28,7 +29,6 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
   idTipoMov: number = 0;
   idAlmacen: number = 0;
   idDestino: number = 0;
-  usuarioActualiza: number = 0;
   ComboTipoMov:any;
   ComboAlmacen:any;
   tipoMov: UpdateMovInventario = {
@@ -54,7 +54,7 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
   selectedCodigo:any ;
   filteredArticulosCod!: Observable<any[]>;
   filteredArticulos!: Observable<any[]>;
-
+  loggedUser: currentUser = { Id: '', NombreUsuario: '', IdRol: '', Rol: '' }
 
   search: SearchMovModel = {
     IdAlmacen : 0,
@@ -73,9 +73,11 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
     private tiposMovService: TiposMovService,
     private detalleMovService: DetalleMovService,
     private articulosService: ArticulosService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private authService: AuthService
   ) {
     this.dataSource = new MatTableDataSource<DetalleMov>();
+    this.loggedUser = authService.getCurrentUser();
   }
 
   ngOnInit() {
@@ -177,7 +179,6 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
 
     this.idTipoMov = elemento.IdTipoMov;
     this.idAlmacen = elemento.IdAlmacen;
-    this.usuarioActualiza = elemento.Usuario;
 
     this.datosCargados = true;
     console.log(elemento);
@@ -188,7 +189,7 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
       idTipoMov: this.idTipoMov,
       idAlmacen: this.idAlmacen,
       idDestino: this.idDestino,
-      usuarioActualiza: this.usuarioActualiza
+      usuarioActualiza: parseInt(this.loggedUser.Id,10)
     };
     this.movInventarioService.insertMovInventario(nuevoMovInv).subscribe({
       next: (response) => {
@@ -215,17 +216,18 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
       codigo: this.codigo,
       cantidad: this.cantidad,
       costo: this.costo,
-      usuarioActualiza: this.usuarioActualiza
+      usuarioActualiza: parseInt(this.loggedUser.Id,10)
     };
   
     console.log('Attempting to insert new detalle mov:', nuevoDetalleMov);
   
     this.detalleMovService.insertarDetalleMov(nuevoDetalleMov).subscribe({
       next: (response) => {
+        console.log(response)
         if(response.StatusCode == 200){
-          this.toastr.success(response.message, 'Movimientos de inventario');
+          this.toastr.success(response.response.data, 'Movimientos de inventario');
         } else {
-          this.toastr.error(response.message,'Movimientos de inventario')
+          this.toastr.error(response.response.data,'Movimientos de inventario')
         }
         this.updateTable();
       },
@@ -239,13 +241,13 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
   actualizar() {
     this.tipoMov.idAlmacen = this.idAlmacen;
     this.tipoMov.idTipoMov = this.idTipoMov;
-    this.tipoMov.usuarioActualiza = this.usuarioActualiza;
+    this.tipoMov.usuarioActualiza = parseInt(this.loggedUser.Id,10);
     this.movInventarioService.updateMovInventario(this.tipoMov).subscribe({
       next: (response) => {
         if(response.StatusCode == 200){
-          this.toastr.success(response.message, 'Movimientos de inventario');
+          this.toastr.success(response.response.Msg, 'Movimientos de inventario');
         } else {
-          this.toastr.error(response.message,'Movimientos de inventario')
+          this.toastr.error(response.response.Msg,'Movimientos de inventario')
         }
         this.getData();
       },

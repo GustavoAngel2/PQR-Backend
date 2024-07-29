@@ -267,10 +267,9 @@ padZero(num: number): string {
   return num < 10 ? `0${num}` : `${num}`;
 }
 
-  refrescarPagina(): void {
-    this.exportToPDF()
-    window.location.reload();
-  }
+refrescarPagina(): void {
+  window.location.reload();
+}
 
 
   exportToPDF(): void {
