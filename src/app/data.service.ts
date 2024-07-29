@@ -307,7 +307,7 @@ export class DetalleMovService {
     cantidad: number;
     costo: number;
     usuarioActualiza: number;
-  }): Observable<ApiResponse> {
+  }): Observable<ApiResponseEmpleados> {
     const body = {
       idMovimiento: DetalleMovData.idMovimiento,
       codigo: DetalleMovData.codigo,
@@ -315,7 +315,7 @@ export class DetalleMovService {
       costo: DetalleMovData.costo,
       usuarioActualiza: DetalleMovData.usuarioActualiza,
     };
-    return this.http.post<ApiResponse>(
+    return this.http.post<ApiResponseEmpleados>(
       `${this.apiUrl}/DetalleMovimiento/Insert`,
       body
     );
@@ -324,7 +324,7 @@ export class DetalleMovService {
     
     return this.http.put(`${this.apiUrl}/DetalleMovimiento/Delete`, { Id });
   }
-  updateDetalleMov(DetalleMovData: UpdateDetalleMov): Observable<ApiResponse> {
+  updateDetalleMov(DetalleMovData: UpdateDetalleMov): Observable<ApiResponseEmpleados> {
     const body = {
       Id: DetalleMovData.Id,
       idMovimiento: DetalleMovData.idMovimiento,
@@ -334,7 +334,7 @@ export class DetalleMovService {
       usuarioActualiza: DetalleMovData.usuarioActualiza,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponse>(
+    return this.http.put<ApiResponseEmpleados>(
       `${this.apiUrl}/DetalleMovimiento/Update`,
       body
     );
