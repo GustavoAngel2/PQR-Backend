@@ -3,7 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { DetalleTicketService, TicketsSevice, SucursalesService } from '../data.service';
+import {TicketsSevice, SucursalesService } from '../data.service';
 import { DetalleTicketInsertComponent } from '../detalle-ticket-insert/detalle-ticket-insert.component';
 import { SearchTicketsModel, tickets } from '../models/tickets.model';
 import jsPDF from 'jspdf';
@@ -47,8 +47,9 @@ export class DetalleTicketComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.format();
-    this.sucursaleService.getSucursales().subscribe((data2: any) => {
+    this.almacenesService.getAlmacenes().subscribe((data2: any) => {
       this.comboSucursal = data2;
+      console.log(this.comboSucursal);
     });
     this.getTicket();
   }
@@ -146,7 +147,7 @@ export class DetalleTicketComponent implements OnInit, AfterViewInit {
   }
 
   exportToExcel(): void {
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.filteredData.map(ticket => ({
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.data.map(ticket => ({
       Id: ticket.Id,
       Sucursal: ticket.Sucursal,
       Cliente: ticket.Cliente,

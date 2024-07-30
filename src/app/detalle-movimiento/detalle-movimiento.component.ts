@@ -148,26 +148,20 @@ export class DetalleMovimientoComponent implements OnInit, AfterViewInit {
 
   
 
-  exportToExel() {
-    const fileName = 'Movimientos ' + this.formatDate(this.dateHandler) + '.xlsx';
-    const tableElement = document.getElementById('table-data') as HTMLTableElement;
+  exportToExel(): void {
+    const fileName = `Movimientos_${this.formatDate(this.dateHandler)}.xlsx`;
 
-    // Clonar la tabla para modificarla sin afectar la visualización
-    const clonedTable = tableElement.cloneNode(true) as HTMLTableElement;
+    // Filtrar y mapear los datos para excluir la columna de acciones
+    const filteredData = this.dataSource.data.map(mov => ({
+        Id: mov.Id,
+        Sucursal: mov.IdAlmacen,
+        Mov: mov.IdTipoMov,
+        Fecha: this.formatDate(new Date(mov.FechaActualiza)),
+        Usuario: mov.Usuario
+    }));
 
-    // Obtener todas las filas de la tabla clonada
-    const rows = clonedTable.querySelectorAll('tr');
-
-    // Iterar sobre las filas para eliminar la columna de acciones
-    rows.forEach(row => {
-        const actionCell = row.querySelectorAll('td, th')[this.displayedColumns.indexOf('Acciones')];
-        if (actionCell) {
-            row.removeChild(actionCell);
-        }
-    });
-
-    // Convertir la tabla modificada en una hoja de trabajo de Excel
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(clonedTable);
+    // Convertir los datos filtrados a una hoja de trabajo de Excel
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(filteredData);
 
     // Ajustar el ancho de las columnas automáticamente
     const maxWidth = 20; // Puedes ajustar este valor según sea necesario
@@ -189,12 +183,11 @@ export class DetalleMovimientoComponent implements OnInit, AfterViewInit {
 
     // Crear un nuevo libro de trabajo y agregar la hoja de trabajo
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Pagina 1');
+    XLSX.utils.book_append_sheet(wb, ws, 'Movimientos');
 
     // Guardar el archivo de Excel
     XLSX.writeFile(wb, fileName);
 }
-
 
 
   exportToPDF(): void {
