@@ -34,10 +34,6 @@
                     <mat-option *ngFor="let alm of ComboAlmacen" [value]="alm.Id">{{ alm.Nombre }}</mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Usuario</mat-label>
-                <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuarioActualiza">
-            </mat-form-field>
             <button [hidden]="datosCargados" (click)="insertarMov()" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
         </div>
     </div>
@@ -76,10 +72,6 @@
             <mat-form-field appearance="fill">
                 <mat-label>Costo</mat-label>
                 <input [disabled]="true" matInput placeholder="Costo" [(ngModel)]="costo">
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Usuario</mat-label>
-                <input matInput placeholder="Usuario Actualiza" [(ngModel)]="usuarioActualiza">
             </mat-form-field>
             <br>
             <button (click)="reload()" class="btn">Terminar<i class="underline"></i></button>

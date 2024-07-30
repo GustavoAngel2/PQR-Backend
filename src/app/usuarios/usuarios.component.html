@@ -18,7 +18,7 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Contraseña</mat-label>
-        <input matInput placeholder="Contraseña" [(ngModel)]="contrasena" />
+        <input type="password" matInput placeholder="Contraseña" [(ngModel)]="contrasena" />
       </mat-form-field>
       <mat-form-field>
         <mat-label>Rol</mat-label>
@@ -31,7 +31,7 @@
         <mat-label>Persona</mat-label>
         <select matNativeControl [(ngModel)]="idPersona">
           <option value="0">Seleccione</option>
-          <option *ngFor="let persona of ComboPersonas" [value]="persona.Id">{{ persona.Nombre }}</option>
+          <option *ngFor="let persona of ComboPersonas" [value]="persona.Id">{{ persona.Persona }}</option>
         </select>
       </mat-form-field>
     </div>

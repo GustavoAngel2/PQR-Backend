@@ -9,7 +9,7 @@ import { UsuarioUpdateComponent } from '../usuario-update/usuario-update.compone
 import { RolesService } from '../data.service';
 import { AuthService, currentUser } from '../auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { PersonasService } from '../data.service';
+import { EmpleadosService } from '../data.service';
 import { MatDialogRef } from "@angular/material/dialog";
 
 
@@ -49,7 +49,7 @@ export class UsuariosComponent implements OnInit{
     private authService: AuthService, 
     private toastr: ToastrService,
     private rolesService: RolesService,
-    private personasService:PersonasService) {
+    private empleadosService:EmpleadosService) {
     this.dataSource = new MatTableDataSource<usuarios>(); // Inicializa dataSource como una instancia de MatTableDataSource
   }
 
@@ -86,7 +86,7 @@ export class UsuariosComponent implements OnInit{
       this.ComboRoles = data;
       console.log(this.ComboRoles)
     });
-    this.personasService.getPersonas().subscribe((data: any) => {
+    this.empleadosService.getEmpleado().subscribe((data: any) => {
       this.ComboPersonas = data;
       console.log(this.ComboPersonas)
     });

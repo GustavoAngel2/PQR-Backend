@@ -19,10 +19,12 @@
             <input matInput placeholder="Ingresa la direccion" [(ngModel)]="direccion" required>
             <mat-error *ngIf="direccion === ''">La dirección es requerida</mat-error>
           </mat-form-field>
-          <mat-form-field>
+            <mat-form-field>
             <mat-label>Encargado</mat-label>
-            <input matInput placeholder="Encargado" [(ngModel)]="encargado" required>
-            <mat-error *ngIf="encargado === 0">El encargado es requerido</mat-error>
+            <select matNativeControl [(ngModel)]="encargado" required>
+              <option value="0">Seleccione</option>
+              <option *ngFor="let per of comboEncargado" [value]="per.Id">{{ per.Nombre }}</option>
+            </select>
           </mat-form-field>
     </div>
 </div>

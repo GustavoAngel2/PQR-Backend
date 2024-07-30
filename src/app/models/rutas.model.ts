@@ -26,9 +26,9 @@ export interface UpdateRutas {
   Id: number;
   Nombre: string;
   Usuario: number;
-  NoSeguro: string;
+  NoSeguro: number;
   Matricula: string;
-  NoLicencia: string;
+  NoLicencia: number;
   Conductor: string;
 }
 

@@ -112,6 +112,7 @@ export class ClientesComponent implements OnInit, AfterViewInit {
         next: (response) => {
           console.log(response);
           this.getData();
+          this.limpiar();
           if (response.StatusCode === 200) {
             this.toastr.success(response.response.data, 'Clientes');
           } else {
@@ -135,6 +136,7 @@ export class ClientesComponent implements OnInit, AfterViewInit {
         this.ClientesService.deleteClientes(Id).subscribe({
           next: (response) => {
             this.getData();
+            this.limpiar()
             if (response.StatusCode === 200) {
               this.toastr.success(response.response.data, 'Clientes');
             } else {
