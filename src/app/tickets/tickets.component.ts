@@ -6,8 +6,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { EstadosService } from '../data.service';
+import { AutorizarTicket } from '../data.service';
 import { ClientesService, TicketsSevice, DetalleTicketService, TiposMovService, ArticulosService, AlmacenesService } from '../data.service';
-import { DetalleTicket } from '../models/detalleTicket.model';
+import { Autorizar, DetalleTicket, UpdateDetalleTicket } from '../models/detalleTicket.model';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 import { ToastrService } from 'ngx-toastr';
 import jsPDF from 'jspdf';
@@ -35,6 +37,8 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   totalTicket: number = 0;
   idArticulo: any;
   codigo: any;
+  Estado:any;
+  comboEstados: any[] =[];
   Descripcion: any;
   cantidad: number = 0;
   precioVenta: number = 0;
@@ -66,6 +70,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
   // New ticket
   IdSucursalControl = new FormControl('');
+  IdEstadoControl = new FormControl('');
   IdClienteControl = new FormControl('');
   IdVendedorControl = new FormControl('');
   IdUsusarioControl = new FormControl('');
@@ -92,6 +97,8 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     private articulosService: ArticulosService,
     private tiposMovService: TiposMovService,
     private authService: AuthService, 
+    private AutorizarService: AutorizarTicket,
+    private estadosService: EstadosService,
     private detalleticketService: DetalleTicketService,
     private clientesService: ClientesService,
     private toastr: ToastrService
@@ -174,6 +181,10 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     this.clientesService.getClientes().subscribe((data5: any) => {
       this.ComboClientes = data5;
       console.log(this.ComboClientes);
+    });
+    this.estadosService.getEstados().subscribe((data6: any) => {
+      this.comboEstados = data6;
+      console.log(this.comboEstados);
     });
     this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
       return data.Articulo.toString().includes(filter);
@@ -368,6 +379,31 @@ private getColumnName(column: string): string {
         console.error('idTicket no está definido');
     }
 }
+
+Autorizar() {
+  const autorizar: { Id: number; Estatus: string } = {
+    Id: this.idTicket,
+    Estatus: this.Estado
+  };
+
+  console.log('Actualizando estado del ticket:', autorizar);
+  this.AutorizarService.AutorizarTicket(autorizar).subscribe({
+    next: (response) => {
+      console.log('Respuesta del servidor:', response);
+      this.getData(); // Actualizar datos después de la actualización
+      if (response.StatusCode === 200) {
+        this.toastr.success(response.message.toString(), 'Almacenes');
+      } else {
+        this.toastr.error(response.message.toString(), 'Almacenes');
+      }
+    },
+    error: (error) => {
+      console.error('Error al actualizar el estado del ticket', error);
+    }
+  });
+  window.location.reload();
+}
+
 
   
   terminar(){

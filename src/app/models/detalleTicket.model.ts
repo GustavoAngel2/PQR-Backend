@@ -31,6 +31,9 @@ export interface DetalleTicket {
     Estatus: number;
     Usuario: number;
   }
-
+  export interface Autorizar{
+    Id: number;
+    Estatus: string;
+  }
 
   	

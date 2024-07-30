@@ -87,43 +87,23 @@
 <div class="form-place" *ngIf="isOnStepThree">
   <div class="form-container">
     <div class="form-title">
-      <h1 mat-dialog-title>Nuevo elemento del Ticket</h1>
+      <h1 mat-dialog-title>Autorizar Ticket</h1>
     </div>
     <div class="form-content">
       <mat-form-field>
         <mat-label>Ticket</mat-label>
-        <input matInput [formControl]="IdTicketControl" placeholder="Ingresa el ticket" [(ngModel)]="idTicket" name="idTicket">
-      </mat-form-field>
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Articulo" [formControl]="IdArticuloControl" [matAutocomplete]="autoArticulo" [ngModel]="selectedArticulo" [value]="displayArticuloFn(selectedArticulo)" />
-        <mat-autocomplete #autoArticulo="matAutocomplete" (optionSelected)="articuloSelected($event)" [displayWith]="displayArticuloFn">
-          <mat-option *ngFor="let option of filteredArticulos | async" [value]="option">
-            {{ option.Descripcion }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-      <mat-form-field class="example-full-width">
-        <input matInput type="text" placeholder="Código" [formControl]="CodigoControl" [matAutocomplete]="autoCodigo" [ngModel]="selectedCodigo" [value]="displayArticuloCodFn(selectedCodigo)" />
-        <mat-autocomplete #autoCodigo="matAutocomplete" (optionSelected)="articuloCodSelected($event)" [displayWith]="displayArticuloCodFn">
-          <mat-option *ngFor="let option of filteredArticulosCod | async" [value]="option">
-            {{ option.Codigo }}
-          </mat-option>
-        </mat-autocomplete>
+        <input matInput [formControl]="IdTicketControl" placeholder="Ingresa el ticket" [(ngModel)]="idTicket"  name="idTicket" readonly>
       </mat-form-field>
       <mat-form-field>
-        <mat-label>Cantidad</mat-label>
-        <input matInput type="number" [formControl]="CantidadControl" placeholder="Ingresa la cantidad" [(ngModel)]="cantidad" name="cantidad">
+        <mat-label>Estados</mat-label>
+        <mat-select [formControl]="IdEstadoControl" [(ngModel)]="Estado" name="Estado" required>
+          <mat-option value="0">Seleccione</mat-option>
+          <mat-option *ngFor="let cod of comboEstados" [value]="cod.Id">{{ cod.NombreEstado }}</mat-option>
+        </mat-select>
       </mat-form-field>
-      <mat-form-field>
-        <mat-label>Precio de venta</mat-label>
-        <input matInput [formControl]="PrecioControl" placeholder="Ingresa el precio de venta" [(ngModel)]="precioVenta" name="precioVenta">
-      </mat-form-field>
-   <!--    <mat-form-field>
-        <mat-label>Usuario</mat-label>
-        <input matInput hide [formControl]="IdUsuarioDetalleControl" placeholder="Usuario Actualiza" [(ngModel)]="usuario" name="usuario">
-      </mat-form-field> -->
-      <button (click)="refrescarPagina()" class="btn-form">Terminar<i class="underline"></i></button>
-      <button (click)="insertarDetalleTicket();" class="btn-form">Insertar al Ticket<i class="underline"></i></button>
+
+
+      <button (click)="Autorizar()" class="btn-form">Terminar<i class="underline"></i></button>
     </div> 
 </div>
 </div>
