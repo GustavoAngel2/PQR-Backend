@@ -35,7 +35,6 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
     Id: 0,
     idAlmacen: 0,
     idTipoMov: 0,
-    idDestino: 0,
     usuarioActualiza: 0,
   };
   datosCargados: boolean = false;
@@ -157,9 +156,9 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
         this.detalleMovService.deleteDetalleMov(Id).subscribe({
           next: (response) => {
             if(response.StatusCode == 200){
-              this.toastr.success(response.message, 'Movimientos de inventario');
+              this.toastr.success(response.response.data, 'Movimientos de inventario');
             } else {
-              this.toastr.error(response.message,'Movimientos de inventario')
+              this.toastr.error(response.response.data,'Movimientos de inventario')
             }
             this.updateTable();
           },

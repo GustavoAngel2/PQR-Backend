@@ -7,6 +7,7 @@ import { DetalleTicketService, TicketsSevice, SucursalesService } from '../data.
 import { DetalleTicketInsertComponent } from '../detalle-ticket-insert/detalle-ticket-insert.component';
 import { SearchTicketsModel, tickets } from '../models/tickets.model';
 import jsPDF from 'jspdf';
+import { AlmacenesService } from '../data.service';
 import autoTable from 'jspdf-autotable';
 
 @Component({
@@ -36,6 +37,7 @@ export class DetalleTicketComponent implements OnInit, AfterViewInit {
   constructor(
     private ticketsService: TicketsSevice,
     public dialog: MatDialog,
+    private almacenesService:AlmacenesService,
     public sucursaleService: SucursalesService,
   ) {
     this.dataSource = new MatTableDataSource<tickets>();
@@ -71,6 +73,15 @@ export class DetalleTicketComponent implements OnInit, AfterViewInit {
     this.dataSource.filterPredicate = (data: tickets, filter: string) => {
       return data.Id.toString().includes(filter);
     };
+    this.almacenesService.getAlmacenes().subscribe({
+      next: (data) => {
+        this.comboSucursal = data;
+        console.log('ComboPersona:', this.comboSucursal);
+      },
+      error: (error) => {
+        console.error('Error al obtener personas', error);
+      }
+    });
     this.search.IdSucursal = this.idSucursal;
     this.search.FechaInicio = this.fechaInicio;
     this.search.FechaFin = this.fechaFin;
