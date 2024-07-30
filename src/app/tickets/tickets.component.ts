@@ -392,16 +392,16 @@ Autorizar() {
       console.log('Respuesta del servidor:', response);
       this.getData(); // Actualizar datos después de la actualización
       if (response.StatusCode === 200) {
-        this.toastr.success(response.message.toString(), 'Almacenes');
+        this.toastr.success(response.response.data, 'Almacenes');
+        window.location.reload();
       } else {
-        this.toastr.error(response.message.toString(), 'Almacenes');
+        this.toastr.error(response.response.data.toString(), 'Almacenes');
       }
     },
     error: (error) => {
       console.error('Error al actualizar el estado del ticket', error);
     }
   });
-  window.location.reload();
 }
 
 

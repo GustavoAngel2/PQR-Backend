@@ -31,7 +31,7 @@
           <mat-label>Usuario</mat-label>
           <input matInput type="number" [formControl]="IdUsusarioControl" placeholder="Usuario Actualiza" [(ngModel)]="Usuario" name="Usuario">
         </mat-form-field> -->
-        <button (click)="insertarTicket();" class="btn-form right">Generar ticket<i class="underline"></i></button>
+        <button (click)="insertarTicket();" class="btn right">Generar ticket<i class="underline"></i></button>
       </div>
 
 
@@ -78,8 +78,8 @@
           <mat-label>Usuario</mat-label>
           <input matInput hide [formControl]="IdUsuarioDetalleControl" placeholder="Usuario Actualiza" [(ngModel)]="usuario" name="usuario">
         </mat-form-field> -->
-        <button (click)="refrescarPagina()" class="btn-form">Terminar<i class="underline"></i></button>
-        <button (click)="insertarDetalleTicket();" class="btn-form">Insertar al Ticket<i class="underline"></i></button>
+        <button (click)="refrescarPagina()" class="btn">Terminar<i class="underline"></i></button>
+        <button (click)="insertarDetalleTicket();" class="btn">Insertar al Ticket<i class="underline"></i></button>
       </div> 
     </div>
 </div>
@@ -101,9 +101,7 @@
           <mat-option *ngFor="let cod of comboEstados" [value]="cod.Id">{{ cod.NombreEstado }}</mat-option>
         </mat-select>
       </mat-form-field>
-
-
-      <button (click)="Autorizar()" class="btn-form">Terminar<i class="underline"></i></button>
+      <button (click)="Autorizar()" class="btn">Terminar<i class="underline"></i></button>
     </div> 
 </div>
 </div>
@@ -204,8 +202,8 @@
         <ng-container matColumnDef="Acciones">
             <th mat-header-cell *matHeaderCellDef> Acciones </th>
             <td mat-cell *matCellDef="let elemento">
-                <mat-icon class="action-btn-form" (click)="abrirEditarModal(elemento)">edit</mat-icon>
-                <mat-icon class="action-btn-form" (click)="eliminarAlmacen(elemento.Id)">delete</mat-icon>
+                <mat-icon class="action-btn" (click)="abrirEditarModal(elemento)">edit</mat-icon>
+                <mat-icon class="action-btn" (click)="eliminarAlmacen(elemento.Id)">delete</mat-icon>
             </td>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

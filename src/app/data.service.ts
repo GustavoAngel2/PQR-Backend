@@ -952,13 +952,13 @@ export class AutorizarTicket {
   constructor(private http: HttpClient,private authService: AuthService) {}
 
 
-  AutorizarTicket(Autorizar: Autorizar): Observable<ApiResponse> {
+  AutorizarTicket(Autorizar: Autorizar): Observable<ApiResponseEmpleados> {
     const body = {
       Id: Autorizar.Id,
       Estatus: Autorizar.Estatus
     }
     console.log('Enviando solicitud con el siguiente cuerpo:', body);
-    return this.http.put<ApiResponse>(`${this.apiUrl}/DetalleTicket/Autorizar`, body);
+    return this.http.put<ApiResponseEmpleados>(`${this.apiUrl}/DetalleTicket/Autorizar`, body);
   }
 
 }
