@@ -52,7 +52,9 @@ export class CorteComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.loggedInUser = this.authService.getCurrentUser(); // Obtén el usuario logueado
     this.usuarioService.getUsuarios().subscribe((data2: any) => {
-      this.ComboVendedor = data2.filter((vnd: any) => vnd.Rol == 'Vendedor');
+      this.ComboVendedor = data2.filter((vnd: any) => 
+        ['Vendedor', 'Gerente', 'Administrador'].includes(vnd.Rol)
+    );
       console.log(this.ComboVendedor);
     });
     this.setDate();
