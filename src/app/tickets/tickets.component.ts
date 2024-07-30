@@ -50,12 +50,11 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   filteredArticulosCod!: Observable<any[]>;
   isOnStepOne = true;
   isOnStepTwo = false;
+  isOnStepThree = false;
   fechaInicio: string = '';
   fechaFin: string = '';
   dateHandler: Date = new Date();
   dateHandler2: Date = new Date();
-  isTicketFormVisible= true;
-  isAuthFormVisible = false;
   loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
 
 
@@ -126,7 +125,6 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.refreshUI();
   }
 
   applyFilter(event: Event) {
@@ -194,8 +192,6 @@ export class TicketsComponent implements OnInit, AfterViewInit {
             if (response.StatusCode === 200) {
               this.idTicket = response.response.data;
               this.getData(); // Llama a getData para obtener los detalles del ticket recién insertado
-              this.toggleUI();
-              this.isTicketFormVisible = false;
               this.toastr.success(response.response.MSG, 'Punto de venta');
             } else {
               this.toastr.error(response.response.MSG, 'Punto de venta');
@@ -225,11 +221,11 @@ export class TicketsComponent implements OnInit, AfterViewInit {
             if (response.StatusCode === 200) {
                 this.toastr.success(response.response.Msg, 'Punto de venta');
                 this.idTicket = response.response.data; // Asigna el idTicket del response
+                this.isOnStepOne = false;
+                this.isOnStepTwo = true;
                 console.log('Nuevo idTicket:', this.idTicket);
 
                 // Oculta el formulario de ticket y muestra el formulario de detalle de ticket
-                this.isTicketFormVisible = false;
-                this.isAuthFormVisible= false;
 
                 // Mueve la lógica de obtención de detalles del ticket aquí
                 if (this.idTicket) {
@@ -271,7 +267,8 @@ padZero(num: number): string {
 
 refrescarPagina(): void {
   this.exportToPDF()
-  this.isAuthFormVisible=true
+  this.isOnStepTwo = false
+  this.isOnStepThree = true
 }
 
 
@@ -355,45 +352,11 @@ refrescarPagina(): void {
 
   
   terminar(){
-    this.toggleUI();
+    this.isOnStepTwo = false
+    this.isOnStepThree = true
     this.clearDetalleTicket();
   }
   
-  toggleUI() {
-    this.isOnStepTwo = !this.isOnStepTwo;
-    this.isOnStepOne = !this.isOnStepOne;
-    this.refreshUI();
-    this.isTicketFormVisible=true;
-  }
-
-  refreshUI() {
-    if (this.isOnStepTwo) {
-      this.IdClienteControl.disable();
-      this.IdSucursalControl.disable();
-      this.IdUsusarioControl.disable();
-      this.IdVendedorControl.disable();
-
-      this.CantidadControl.enable();
-      this.IdUsuarioDetalleControl.enable();
-      this.IdTicketControl.disable();
-      this.IdArticuloControl.enable();
-      this.CodigoControl.enable();
-      this.PrecioControl.disable();
-    } else {
-      this.IdClienteControl.enable();
-      this.IdSucursalControl.enable();
-      this.IdUsusarioControl.enable();
-      this.IdVendedorControl.enable();
-
-      this.CantidadControl.enable();
-      this.IdUsuarioDetalleControl.enable();
-      this.IdTicketControl.disable();
-      this.IdArticuloControl.enable();
-      this.CodigoControl.enable();
-      this.PrecioControl.disable();
-    }
-  }
-
   articuloSelected(event: any) {
     const articulo = event.option.value;
     console.log(articulo);
