@@ -7,7 +7,7 @@ import{ updateArticulos } from './models/articulo.model';
 import { UpdatePersonas } from './models/personas.model';
 import { UpdateRutas } from './models/rutas.model';
 import { UpdateDetallePerfil } from './models/detallePerfil.model';
-import { UpdateDetalleMov } from './models/detalleMov.model';
+import { AutorizarMovimiento, UpdateDetalleMov } from './models/detalleMov.model';
 import { SearchCorteModel, UpdateTickets } from './models/tickets.model';
 import { UpdateUsuario } from './models/usuarios.models';
 import { UpdateExistencia } from './models/existencia.model';
