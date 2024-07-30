@@ -75,8 +75,6 @@ export class UsuariosComponent implements OnInit{
     }
   }
 
-
-
   getData(){
     this.dataSource.filterPredicate = (data: usuarios, filter: string) => {
       return data.Nombre.toLowerCase().includes(filter) || 
@@ -162,6 +160,7 @@ export class UsuariosComponent implements OnInit{
     this.UsuarioService.insertarUsuario(nuevoUsuario).subscribe({
       next: (response) => {
         this.getData();
+        this.limpiar()
         console.log(response);
         if(response.StatusCode == 200){
           this.toastr.success(response.response.data, 'Usuarios');
