@@ -962,3 +962,23 @@ export class AutorizarTicket {
   }
 
 }
+//-----------------------------------------------------------------------------------------------------------------------------//
+@Injectable({
+  providedIn: "root",
+})
+export class AutorizarMov {
+  //Se especifica la url base de la API
+  private apiUrl = "http://localhost:5020/api";
+  constructor(private http: HttpClient,private authService: AuthService) {}
+
+
+  AutorizarMov(AutorizarMov: AutorizarMovimiento): Observable<ApiResponse> {
+    const body = {
+      Id: AutorizarMov.Id,
+      Estatus: AutorizarMov.Estatus
+    }
+    console.log('Enviando solicitud con el siguiente cuerpo:', body);
+    return this.http.put<ApiResponse>(`${this.apiUrl}/AutorizarMov/Update`, body);
+  }
+
+}

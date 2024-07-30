@@ -45,3 +45,8 @@ export interface DetalleMov {
    export interface deleteDetalleMov{
      Id: number;
    }
+
+     export interface AutorizarMovimiento{
+    Id: number;
+    Estatus: string;
+  }
