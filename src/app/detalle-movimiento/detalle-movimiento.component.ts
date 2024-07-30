@@ -12,6 +12,7 @@ import { SearchMovModel } from '../models/detalleMov.model';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { AuthService, currentUser } from '../auth.service'; // Asegúrate de tener este servicio o el que utilices para autenticación
+import * as XLSX from 'xlsx'
 
 @Component({
   selector: 'app-detalle-movimiento',
@@ -144,6 +145,57 @@ export class DetalleMovimientoComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
+  
+
+  exportToExel() {
+    const fileName = 'Movimientos ' + this.formatDate(this.dateHandler) + '.xlsx';
+    const tableElement = document.getElementById('table-data') as HTMLTableElement;
+
+    // Clonar la tabla para modificarla sin afectar la visualización
+    const clonedTable = tableElement.cloneNode(true) as HTMLTableElement;
+
+    // Obtener todas las filas de la tabla clonada
+    const rows = clonedTable.querySelectorAll('tr');
+
+    // Iterar sobre las filas para eliminar la columna de acciones
+    rows.forEach(row => {
+        const actionCell = row.querySelectorAll('td, th')[this.displayedColumns.indexOf('Acciones')];
+        if (actionCell) {
+            row.removeChild(actionCell);
+        }
+    });
+
+    // Convertir la tabla modificada en una hoja de trabajo de Excel
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(clonedTable);
+
+    // Ajustar el ancho de las columnas automáticamente
+    const maxWidth = 20; // Puedes ajustar este valor según sea necesario
+    const range = XLSX.utils.decode_range(ws['!ref']!);
+    for (let C = range.s.c; C <= range.e.c; ++C) {
+        let maxLength = 0;
+        for (let R = range.s.r; R <= range.e.r; ++R) {
+            const cellAddress = { c: C, r: R };
+            const cellRef = XLSX.utils.encode_cell(cellAddress);
+            const cell = ws[cellRef];
+            if (cell && cell.v) {
+                const cellValue = cell.v.toString();
+                maxLength = Math.max(maxLength, cellValue.length);
+            }
+        }
+        ws['!cols'] = ws['!cols'] || [];
+        ws['!cols'][C] = { wch: Math.min(maxLength, maxWidth) };
+    }
+
+    // Crear un nuevo libro de trabajo y agregar la hoja de trabajo
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Pagina 1');
+
+    // Guardar el archivo de Excel
+    XLSX.writeFile(wb, fileName);
+}
+
+
 
   exportToPDF(): void {
 

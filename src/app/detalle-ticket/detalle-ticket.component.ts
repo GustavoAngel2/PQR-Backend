@@ -9,6 +9,7 @@ import { SearchTicketsModel, tickets } from '../models/tickets.model';
 import jsPDF from 'jspdf';
 import { AlmacenesService } from '../data.service';
 import autoTable from 'jspdf-autotable';
+import * as XLSX from 'xlsx'
 
 @Component({
   selector: 'app-detalle-ticket',
@@ -142,5 +143,23 @@ export class DetalleTicketComponent implements OnInit, AfterViewInit {
       case 'UsuarioActualiza': return 'Usuario';
       default: return column;
     }
+  }
+
+  exportToExcel(): void {
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.filteredData.map(ticket => ({
+      Id: ticket.Id,
+      Sucursal: ticket.Sucursal,
+      Cliente: ticket.Cliente,
+      Vendedor: ticket.Vendedor,
+      Fecha: this.formatDate(new Date(ticket.Fecha)),
+      Estatus: ticket.Estatus,
+      Usuario: ticket.Usuario
+    })));
+
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Tickets');
+    
+    const fileName = `Tickets_${this.fechaInicio}_${this.fechaFin}.xlsx`;
+    XLSX.writeFile(wb, fileName);
   }
 }
