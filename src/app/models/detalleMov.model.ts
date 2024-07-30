@@ -2,12 +2,12 @@ import { DetalleMovService } from "../data.service";
 
 export interface DetalleMov {
     Id: number;
-    Codigo:string;
-    Cantidad:number;
-    Costo:number;
-    FechaActualiza:Date;
-    UsuarioActualiza: string;
-    Estatus: string;
+    NombreMov: string;
+    Cantidad: number;
+    Costo: number;
+    FechaAct:Date;
+    Usuario: string;
+    Estatus: string
   }
 
   export interface ApiResponse {
