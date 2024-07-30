@@ -55,6 +55,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   dateHandler: Date = new Date();
   dateHandler2: Date = new Date();
   isTicketFormVisible= true;
+  isAuthFormVisible = false;
   loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
 
 
@@ -228,6 +229,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
                 // Oculta el formulario de ticket y muestra el formulario de detalle de ticket
                 this.isTicketFormVisible = false;
+                this.isAuthFormVisible= false;
 
                 // Mueve la lógica de obtención de detalles del ticket aquí
                 if (this.idTicket) {
@@ -268,7 +270,8 @@ padZero(num: number): string {
 }
 
 refrescarPagina(): void {
-  window.location.reload();
+  this.exportToPDF()
+  this.isAuthFormVisible=true
 }
 
 
@@ -277,10 +280,12 @@ refrescarPagina(): void {
     const columns = this.displayedColumns.filter(column => column !== 'Acciones').map(col => this.getColumnName(col));
     const rows = this.dataSource.filteredData.map(ticket => [
       ticket.Id,
-      ticket.idTicket,
-      ticket.codigo,
-      ticket.cantidad,
-      ticket.Estatus,
+      ticket.IdTicket,
+      ticket.Codigo,
+      ticket.Articulo,
+      ticket.Cantidad,
+      ticket.PrecioVenta,
+
       ticket.usuario
     ]);
 

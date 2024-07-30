@@ -2,11 +2,11 @@ import { tickets } from "./tickets.model";
 
 export interface DetalleTicket {
     Id: number;
-    idTicket: number;
-    codigo: string;
+    IdTicket: number;
+    Codigo: string;
     Articulo: string;
-    cantidad: number;
-    precioVenta: number;
+    Cantidad: number;
+    PrecioVenta: number;
     Total: number;
     TotalTicket:number;
     usuario: string;
