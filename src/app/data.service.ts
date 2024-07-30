@@ -548,7 +548,6 @@ export class movInventarioService {
       Id: MovInvData.Id,
       idTipoMov: MovInvData.idTipoMov,
       idAlmacen: MovInvData.idAlmacen,
-      idDestino: MovInvData.idDestino,
       usuario: MovInvData.usuarioActualiza,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
