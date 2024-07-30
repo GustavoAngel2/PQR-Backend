@@ -9,7 +9,7 @@ export interface DetalleTicket {
     PrecioVenta: number;
     Total: number;
     TotalTicket:number;
-    usuario: string;
+    Usuario: string;
     Estatus: string;
   }
 

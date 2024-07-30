@@ -54,8 +54,12 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   fechaFin: string = '';
   dateHandler: Date = new Date();
   dateHandler2: Date = new Date();
+
+
   isTicketFormVisible= true;
   isAuthFormVisible = false;
+
+
   loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
 
 
@@ -271,45 +275,56 @@ padZero(num: number): string {
 
 refrescarPagina(): void {
   this.exportToPDF()
-  this.isAuthFormVisible=true
 }
 
 
-  exportToPDF(): void {
-    const doc = new jsPDF();
-    const columns = this.displayedColumns.filter(column => column !== 'Acciones').map(col => this.getColumnName(col));
-    const rows = this.dataSource.filteredData.map(ticket => [
-      ticket.Id,
-      ticket.IdTicket,
-      ticket.Codigo,
-      ticket.Articulo,
-      ticket.Cantidad,
-      ticket.PrecioVenta,
+exportToPDF(): void {
+  const doc = new jsPDF();
+  const totalText = `Total:  $${this.totalTicket}`;
 
-      ticket.usuario
-    ]);
+  doc.text(totalText, 14, doc.internal.pageSize.height - 20);
 
-    autoTable(doc, {
-      head: [columns],
-      body: rows
-    });
+  // Definir columnas, excluyendo 'Acciones'
+  const columns = this.displayedColumns.filter(column => column !== 'Acciones').map(col => this.getColumnName(col));
+  
+  // Obtener datos de las filas
+  const rows = this.dataSource.filteredData.map(ticket => [
+    ticket.Id,
+    ticket.IdTicket,
+    ticket.Codigo,
+    ticket.Articulo,
+    ticket.Cantidad,
+    ticket.PrecioVenta,
+    ticket.Total,
+    ticket.Usuario,
+    ticket.Estatus
+  ]);
 
-    doc.save('Tickets.pdf');
+  // Crear tabla en el PDF
+  autoTable(doc, {
+    head: [columns],
+    body: rows
+  });
+
+  // Guardar el archivo PDF
+  doc.save('Tickets.pdf');
+}
+
+// Obtener nombres de columnas legibles
+private getColumnName(column: string): string {
+  switch (column) {
+    case 'Id': return 'ID';
+    case 'IdTicket': return 'ID del Ticket';
+    case 'Codigo': return 'Código';
+    case 'Articulo': return 'Artículo';
+    case 'Cantidad': return 'Cantidad';
+    case 'PrecioVenta': return 'Precio Venta';
+    case 'Total': return 'Total';
+    case 'Usuario': return 'Usuario';
+    case 'Estatus': return 'Estatus';
+    default: return column;
   }
-
-
-  private getColumnName(column: string): string {
-    switch (column) {
-      case 'Id': return 'ID';
-      case 'Sucursal': return 'Sucursal';
-      case 'Cliente': return 'Cliente';
-      case 'Vendedor': return 'Vendedor';
-      case 'Fecha': return 'Fecha';
-      case 'Estatus': return 'Estatus';
-      case 'usuario': return 'Usuario';
-      default: return column;
-    }
-  }
+}
 
   insertarDetalleTicket() {
     const nuevoDetalleTicket = {
