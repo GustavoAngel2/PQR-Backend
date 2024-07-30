@@ -5,7 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { corteGet,SearchCorteModel } from '../models/tickets.model';
 import { currentUser,AuthService } from '../auth.service';
-import { EmpleadosService } from '../data.service';
+import { UsuarioService } from '../data.service';
 import { TicketsSevice } from '../data.service';
 
 @Component({
@@ -14,9 +14,9 @@ import { TicketsSevice } from '../data.service';
   styleUrls: ['./corte.component.css']
 })
 export class CorteComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['Id', 'idMovimiento', 'idAlmacen', 'FechaMovimiento', 'UsuarioActualiza', 'Acciones'];
+  displayedColumns: string[] = ['Id', 'idMovimiento', 'idAlmacen', 'FechaMovimiento'];
   dataSource: MatTableDataSource<corteGet>;
-  idVendedor:number = 0;
+  idVendedor:number = 1;
   dateHandler: Date = new Date();
   dateHandler2: Date = new Date();
   fechaInicio: string = '';
@@ -27,9 +27,9 @@ export class CorteComponent implements OnInit, AfterViewInit {
   month: number;
   year: number;
   search: SearchCorteModel = {
-    vendedor: 0,
-    FechaFin: '',
-    FechaInicio: ''
+    vendedor: 1,
+    FechaFin: '07-30-2024',
+    FechaInicio: '07-29-204'
   };
   loggedInUser: currentUser = { Id: '', NombreUsuario: '' ,Rol:'', IdRol:''};
 
@@ -38,7 +38,7 @@ export class CorteComponent implements OnInit, AfterViewInit {
 
   constructor(
     private ticketService: TicketsSevice,
-    private empleadosService: EmpleadosService,
+    private usuarioService: UsuarioService,
     private authService: AuthService // Inyecta el servicio de autenticación
   ) {
     this.dataSource = new MatTableDataSource<corteGet>();
@@ -51,8 +51,8 @@ export class CorteComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.loggedInUser = this.authService.getCurrentUser(); // Obtén el usuario logueado
-    this.empleadosService.getEmpleado().subscribe((data2: any) => {
-      this.ComboVendedor = data2.filter((vnd: any) => vnd.Puesto == 'Vendedor');
+    this.usuarioService.getUsuarios().subscribe((data2: any) => {
+      this.ComboVendedor = data2.filter((vnd: any) => vnd.Rol == 'Vendedor');
       console.log(this.ComboVendedor);
     });
     this.setDate();
@@ -67,7 +67,7 @@ export class CorteComponent implements OnInit, AfterViewInit {
     const day = this.padZero(date.getDate());
     const month = this.padZero(date.getMonth() + 1);
     const year = date.getFullYear();
-    return `${year}-${month}-${day}`;
+    return `${month}-${day}-${year}`;
   }
 
   padZero(num: number): string {
@@ -81,6 +81,8 @@ export class CorteComponent implements OnInit, AfterViewInit {
     this.search.vendedor = this.idVendedor;
     this.search.FechaInicio = this.fechaInicio;
     this.search.FechaFin = this.fechaFin;
+
+    console.log(this.search)
     this.ticketService.getCorte(this.search).subscribe({
       next: (response) => {
         console.log('Respuesta del servidor:', response);
