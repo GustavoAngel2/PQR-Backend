@@ -1,0 +1,65 @@
+<div class="title-container">
+    <br>
+    <label class="title">Corte de caja</label>
+    <br>
+    <img src="./assets/Articulos.png" class="module-logo">
+</div>
+
+<div class="form-place">
+    <div class="form-container">
+        <div class="form-content">
+            <mat-form-field appearance="fill">
+                <mat-label>Vendedor</mat-label>
+                <mat-select [(ngModel)]="idVendedor">
+                    <mat-option [value]="0">Seleccione</mat-option>
+                    <mat-option *ngFor="let vnd of ComboVendedor" [value]="vnd.Id">{{ vnd.Persona }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [(ngModel)]="dateHandler" (dateInput)="setDate()" [matDatepicker]="picker" placeholder="Fecha de inicio MM/DD/AAAA">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [(ngModel)]="dateHandler2" (dateInput)="setDate()" [matDatepicker]="picker2" placeholder="Fecha limite MM/DD/AAAA">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+            <button class="btn" (click)="getCorte()">Buscar</button>
+        </div>
+    </div>
+</div>
+
+<div class="table-container">
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]" showFirstLastButtons></mat-paginator>
+    <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="Id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+            <td mat-cell *matCellDef="let corte"> {{corte.Id}} </td>
+        </ng-container>
+        <ng-container matColumnDef="idMovimiento">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Vendedor </th>
+            <td mat-cell *matCellDef="let corte"> {{corte.Vendedor}} </td>
+        </ng-container>
+        <ng-container matColumnDef="idAlmacen">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Total </th>
+            <td mat-cell *matCellDef="let corte"> {{corte.Total}} </td>
+        </ng-container>
+        <ng-container matColumnDef="FechaMovimiento">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de la venta </th>
+            <td mat-cell *matCellDef="let corte"> {{corte.FechaVenta}} </td>
+        </ng-container>
+        <ng-container matColumnDef="UsuarioActualiza">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
+            <td mat-cell *matCellDef="let corte"> {{corte.Usuario}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Acciones">
+            <th mat-header-cell *matHeaderCellDef> Acciones </th>
+            <td mat-cell *matCellDef="let elemento">
+                <mat-icon>pageview</mat-icon>
+            </td>
+            </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </table>
+</div>

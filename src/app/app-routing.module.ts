@@ -20,6 +20,7 @@ import { PuestosComponent } from "./puestos/puestos.component";
 import { DetallePerfilComponent } from './detalle-perfil/detalle-perfil.component';
 
 import { AuthGuard } from './auth.guard'; // Importa AuthGuard
+import { CorteComponent } from './corte/corte.component';
 
 const routes: Routes = [
   { path: "", redirectTo: '/login', pathMatch: 'full' },
@@ -41,6 +42,7 @@ const routes: Routes = [
  */  { path: "empleados", component: EmpleadosComponent, canActivate: [AuthGuard] },
   { path: "puestos", component: PuestosComponent, canActivate: [AuthGuard] },
   { path: "detallePerfil", component: DetallePerfilComponent, canActivate: [AuthGuard] },
+  { path: 'corte', component: CorteComponent, canActivate: [AuthGuard]},
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/login', pathMatch: 'full' }
 ];

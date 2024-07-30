@@ -8,7 +8,7 @@ import { UpdatePersonas } from './models/personas.model';
 import { UpdateRutas } from './models/rutas.model';
 import { UpdateDetallePerfil } from './models/detallePerfil.model';
 import { UpdateDetalleMov } from './models/detalleMov.model';
-import { UpdateTickets } from './models/tickets.model';
+import { SearchCorteModel, UpdateTickets } from './models/tickets.model';
 import { UpdateUsuario } from './models/usuarios.models';
 import { UpdateExistencia } from './models/existencia.model';
 import { UpdateMovInventario } from './models/movInventario.model';
@@ -388,6 +388,14 @@ export class TicketsSevice {
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
     return this.http.put<ApiResponsePuntoV>(`${this.apiUrl}/Tickets/Update`, body);
+  }
+
+  getCorte(search: SearchCorteModel): Observable<ArrayBuffer> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<ArrayBuffer>(`${this.apiUrl}/Tickets/GetCorte?vendedor=${search.vendedor}&FechaInicio=${search.FechaInicio}&FechaFin=${search.FechaFin}`,{headers});
   }
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------
