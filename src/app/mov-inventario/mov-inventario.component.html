@@ -5,7 +5,7 @@
     <img src="./assets/Almacenes.png" class="module-logo">
 </div>
 
-<div class="form-place" *ngIf="!isOnStepTwo">
+<div class="form-place" *ngIf="isOnStepOne">
     <div class="form-container">
         <div class="form-title">
             <p [hidden]="!datosCargados"> Editando Movimiento con Id: {{this.tipoMov.Id}} </p>
@@ -76,6 +76,17 @@
             <br>
             <button (click)="reload()" class="btn">Terminar<i class="underline"></i></button>
             <button [hidden]="datosCargados" (click)="insertarDetalleMov()" class="btn"><i class="bi bi-cloud-upload-fill icon"></i> Insertar<i class="underline"></i></button>
+        </div>
+    </div>
+</div>
+
+<div class="form-place" *ngIf="isOnStepThree">
+    <div class="form-container">
+        <div class="form-title">
+            <h1 mat-dialog-title>Nuevo Detalle Movimiento</h1>
+        </div>
+        <div class="form-content">
+            <p>Esto Funciona</p>
         </div>
     </div>
 </div>

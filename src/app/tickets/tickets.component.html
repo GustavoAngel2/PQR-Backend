@@ -122,8 +122,8 @@
         <mat-label>Usuario</mat-label>
         <input matInput hide [formControl]="IdUsuarioDetalleControl" placeholder="Usuario Actualiza" [(ngModel)]="usuario" name="usuario">
       </mat-form-field> -->
-      <button [ngClass]="{'disabled-button': isOnStepTwo}" (click)="refrescarPagina()" class="btn-form">Terminar<i class="underline"></i></button>
-      <button [ngClass]="{'disabled-button': isOnStepTwo}" (click)="insertarDetalleTicket();" class="btn-form">Insertar al Ticket<i class="underline"></i></button>
+      <button (click)="refrescarPagina()" class="btn-form">Terminar<i class="underline"></i></button>
+      <button (click)="insertarDetalleTicket();" class="btn-form">Insertar al Ticket<i class="underline"></i></button>
     </div> 
 </div>
 </div>

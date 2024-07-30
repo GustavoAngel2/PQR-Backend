@@ -38,7 +38,9 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
     usuarioActualiza: 0,
   };
   datosCargados: boolean = false;
+  isOnStepOne: boolean = true;
   isOnStepTwo: boolean = false;
+  isOnStepThree: boolean = false;
 
   idMovimiento: any;
   codigo: string = '';
@@ -197,6 +199,7 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
         if(response.StatusCode == 200){
           this.toastr.success(response.message, 'Movimientos de inventario');
           this.idMovimiento = response.response.data;
+          this.isOnStepOne = false
           this.isOnStepTwo = true
           this.getData();
         } else {
@@ -297,7 +300,8 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
   }
 
   reload(){
-    location.reload();
+    this.isOnStepTwo = false
+    this.isOnStepThree = true
   }
 
   articuloSelected(event: any) {
