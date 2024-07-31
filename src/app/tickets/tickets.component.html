@@ -48,7 +48,7 @@
       <div class="form-content">
         <mat-form-field>
           <mat-label>Ticket</mat-label>
-          <input matInput [formControl]="IdTicketControl" placeholder="Ingresa el ticket" [(ngModel)]="idTicket" name="idTicket">
+          <input  matInput [formControl]="IdTicketControl" placeholder="Ingresa el ticket" [(ngModel)]="idTicket" name="idTicket">
         </mat-form-field>
         <mat-form-field class="example-full-width">
           <input matInput placeholder="Articulo" [formControl]="IdArticuloControl" [matAutocomplete]="autoArticulo" [ngModel]="selectedArticulo" [value]="displayArticuloFn(selectedArticulo)" />

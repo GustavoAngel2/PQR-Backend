@@ -108,6 +108,8 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getData();
+    this.IdTicketControl.disable()
+    this.PrecioControl.disable()
     this.loggedInUser = this.authService.getCurrentUser(); // Obtener el usuario logeado
 
     this.filteredArticulosCod = this.CodigoControl.valueChanges.pipe(
@@ -206,9 +208,9 @@ export class TicketsComponent implements OnInit, AfterViewInit {
               return data.Articulo.toString().toLowerCase().includes(filter.toLowerCase());
             };
             if (response.StatusCode === 200) {
-              this.toastr.success(response.response.MSG, 'Punto de venta');
+              this.toastr.success(response.response.data, 'Punto de venta');
             } else {
-              this.toastr.error(response.response.MSG, 'Punto de venta');
+              this.toastr.error(response.response.data, 'Punto de venta');
             }
             console.log(response)
             this.getData()
@@ -258,79 +260,78 @@ export class TicketsComponent implements OnInit, AfterViewInit {
             console.error('Hubo un error al insertar el ticket', error);
         }
     });
-}
+  }
 
 
-format() {
-  this.fechaInicio = this.formatDate(this.dateHandler);
-  this.fechaFin = this.formatDate(this.dateHandler2);
-}
-formatDate(date: Date): string {
-  const day = this.padZero(date.getDate());
-  const month = this.padZero(date.getMonth() + 1);
-  const year = date.getFullYear();
-  return `${year}-${month}-${day}`;
-}
+  format() {
+    this.fechaInicio = this.formatDate(this.dateHandler);
+    this.fechaFin = this.formatDate(this.dateHandler2);
+  }
+  formatDate(date: Date): string {
+    const day = this.padZero(date.getDate());
+    const month = this.padZero(date.getMonth() + 1);
+    const year = date.getFullYear();
+    return `${year}-${month}-${day}`;
+  }
 
-padZero(num: number): string {
-  return num < 10 ? `0${num}` : `${num}`;
-}
+  padZero(num: number): string {
+    return num < 10 ? `0${num}` : `${num}`;
+  }
 
-refrescarPagina(): void {
-  this.exportToPDF()
-  this.isOnStepTwo = false
-  this.isOnStepThree = true
+  refrescarPagina(): void {
+    this.exportToPDF()
+    this.isOnStepTwo = false
+    this.isOnStepThree = true
 
-}
+  }
 
+  exportToPDF(): void {
+    const doc = new jsPDF();
+    const totalText = `Total:  $${this.totalTicket}`;
 
-exportToPDF(): void {
-  const doc = new jsPDF();
-  const totalText = `Total:  $${this.totalTicket}`;
+    doc.text(totalText, 14, doc.internal.pageSize.height - 20);
 
-  doc.text(totalText, 14, doc.internal.pageSize.height - 20);
+    // Definir columnas, excluyendo 'Acciones'
+    const columns = this.displayedColumns.filter(column => column !== 'Acciones').map(col => this.getColumnName(col));
+    
+    // Obtener datos de las filas
+    const rows = this.dataSource.filteredData.map(ticket => [
+      ticket.Id,
+      ticket.IdTicket,
+      ticket.Codigo,
+      ticket.Articulo,
+      ticket.Cantidad,
+      ticket.PrecioVenta,
+      ticket.Total,
+      ticket.Usuario,
+      ticket.Estatus
+    ]);
 
-  // Definir columnas, excluyendo 'Acciones'
-  const columns = this.displayedColumns.filter(column => column !== 'Acciones').map(col => this.getColumnName(col));
-  
-  // Obtener datos de las filas
-  const rows = this.dataSource.filteredData.map(ticket => [
-    ticket.Id,
-    ticket.IdTicket,
-    ticket.Codigo,
-    ticket.Articulo,
-    ticket.Cantidad,
-    ticket.PrecioVenta,
-    ticket.Total,
-    ticket.Usuario,
-    ticket.Estatus
-  ]);
+    // Crear tabla en el PDF
+    autoTable(doc, {
+      head: [columns],
+      body: rows
+    });
 
-  // Crear tabla en el PDF
-  autoTable(doc, {
-    head: [columns],
-    body: rows
-  });
-
-  // Guardar el archivo PDF
-  doc.save('Tickets.pdf');
-}
+    // Guardar el archivo PDF
+    doc.save('Tickets.pdf');
+  }
 
 // Obtener nombres de columnas legibles
-private getColumnName(column: string): string {
-  switch (column) {
-    case 'Id': return 'ID';
-    case 'IdTicket': return 'ID del Ticket';
-    case 'Codigo': return 'Código';
-    case 'Articulo': return 'Artículo';
-    case 'Cantidad': return 'Cantidad';
-    case 'PrecioVenta': return 'Precio Venta';
-    case 'Total': return 'Total';
-    case 'Usuario': return 'Usuario';
-    case 'Estatus': return 'Estatus';
-    default: return column;
+  private getColumnName(column: string): string {
+    switch (column) {
+      case 'Id': return 'ID';
+      case 'IdTicket': return 'ID del Ticket';
+      case 'Codigo': return 'Código';
+      case 'Articulo': return 'Artículo';
+      case 'Cantidad': return 'Cantidad';
+      case 'PrecioVenta': return 'Precio Venta';
+      case 'Total': return 'Total';
+      case 'Usuario': return 'Usuario';
+      case 'Estatus': return 'Estatus';
+      default: return column;
+    }
   }
-}
 
   insertarDetalleTicket() {
     const nuevoDetalleTicket = {
@@ -370,32 +371,30 @@ private getColumnName(column: string): string {
     } else {
         console.error('idTicket no está definido');
     }
-}
+  }
 
-Autorizar() {
-  const autorizar: { Id: number; Estatus: string } = {
-    Id: this.idTicket,
-    Estatus: this.Estado
-  };
+  Autorizar() {
+    const autorizar: { Id: number; Estatus: string } = {
+      Id: this.idTicket,
+      Estatus: this.Estado
+    };
 
-  this.AutorizarService.AutorizarTicket(autorizar).subscribe({
-    next: (response) => {
-      this.getData(); // Actualizar datos después de la actualización
-      if (response.StatusCode === 200) {
-        this.toastr.success(response.response.data, 'Almacenes');
-        window.location.reload();
-      } else {
-        this.toastr.error(response.response.data.toString(), 'Almacenes');
+    this.AutorizarService.AutorizarTicket(autorizar).subscribe({
+      next: (response) => {
+        this.getData(); // Actualizar datos después de la actualización
+        if (response.StatusCode === 200) {
+          this.toastr.success(response.response.data, 'Almacenes');
+          window.location.reload();
+        } else {
+          this.toastr.error(response.response.data.toString(), 'Almacenes');
+        }
+      },
+      error: (error) => {
+        console.error('Error al actualizar el estado del ticket', error);
       }
-    },
-    error: (error) => {
-      console.error('Error al actualizar el estado del ticket', error);
-    }
-  });
-}
+    });
+  }
 
-
-  
   terminar(){
     this.isOnStepTwo = false
     this.isOnStepThree = true
@@ -404,12 +403,11 @@ Autorizar() {
   
   articuloSelected(event: any) {
     const articulo = event.option.value;
-    (articulo);
+
     this.idArticulo = articulo.Id;
     this.codigo = articulo.Codigo;  // Asegúrate de asignar el código del artículo aquí
     this.selectedCodigo = articulo;
     this.selectedArticulo = articulo;
-    (articulo.Precio);
     this.precioVenta = articulo.Precio;
   }
 
@@ -424,9 +422,7 @@ Autorizar() {
 
   clienteSelected(event: any) {
     const cliente = event.option.value;
-    (cliente);
     this.IdCliente = cliente.Id;
-    (cliente.Id);
     this.IdClienteControl.updateValueAndValidity();
     this.selectedCliente = cliente;
   }
@@ -472,12 +468,12 @@ Autorizar() {
   
   private clearDetalleTicket(){
     this.idTicket=0;
-      this.idArticulo = '';
-      this.codigo = '';
-      this.selectedCodigo = null;
-      this.selectedArticulo = null;
-      this.precioVenta = 0;
-      this.cantidad =0;
-    }
+    this.idArticulo = '';
+    this.codigo = '';
+    this.selectedCodigo = null;
+    this.selectedArticulo = null;
+    this.precioVenta = 0;
+    this.cantidad =0;
   }
+}
 
