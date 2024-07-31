@@ -142,12 +142,12 @@ export class ArticulosService {
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient,private authService: AuthService) {}
 
-  getArticulos(): Observable<ApiResponseEmpleados> {
+  getArticulos(): Observable<ApiResponse> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ApiResponseEmpleados>(`${this.apiUrl}/articulos/Get`,{headers});
+    return this.http.get<ApiResponse>(`${this.apiUrl}/articulos/Get`,{headers});
   }
   insertarArticulos(ArticulosData: {
     descripcion: string;

@@ -109,8 +109,6 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.getData();
     this.loggedInUser = this.authService.getCurrentUser(); // Obtener el usuario logeado
-    console.log('Usuario logeado:', this.loggedInUser);
-
 
     this.filteredArticulosCod = this.CodigoControl.valueChanges.pipe(
       startWith(''),
@@ -157,7 +155,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
           this.dataSource.data = response;
           this.totalTicket = response[0].TotalTicket; 
         } else {
-          console.log('no contiene datos');
+          ('no contiene datos');
           this.totalTicket = 0; 
         }
       },
@@ -168,23 +166,23 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     });
     this.articulosService.getArticulos().subscribe((data2: any) => {
       this.ComboCodigo = data2;
-      console.log(this.ComboCodigo);
+      (this.ComboCodigo);
     });
     this.almacenesService.getAlmacenes().subscribe((data3: any) => {
       this.ComboSucursales = data3;
-      console.log(this.ComboSucursales);
+      (this.ComboSucursales);
     });
     this.tiposMovService.getTiposMov().subscribe((data4: any) => {
       this.ComboTipoMov = data4;
-      console.log(this.ComboTipoMov);
+      (this.ComboTipoMov);
     });
     this.clientesService.getClientes().subscribe((data5: any) => {
       this.ComboClientes = data5;
-      console.log(this.ComboClientes);
+      (this.ComboClientes);
     });
     this.estadosService.getEstados().subscribe((data6: any) => {
       this.comboEstados = data6;
-      console.log(this.comboEstados);
+      (this.comboEstados);
     });
     this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
       return data.Articulo.toString().includes(filter);
@@ -193,6 +191,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   }
   
   eliminarDetalle(Id: number,Name: string) {
+    console.log(this.idTicket)
     const dialogRef = this.dialog.open(DeleteMenuComponent, {
       width: '550px',
       data: Name
@@ -202,17 +201,16 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       if (result == "yes") {
         this.detalleticketService.deleteDetalleTicket(Id).subscribe({
           next: (response) => {
-            console.log(response);
+            (response);
             this.dataSource.filterPredicate = (data: DetalleTicket, filter: string) => {
               return data.Articulo.toString().toLowerCase().includes(filter.toLowerCase());
             };
             if (response.StatusCode === 200) {
-              this.idTicket = response.response.data;
-              this.getData(); // Llama a getData para obtener los detalles del ticket recién insertado
               this.toastr.success(response.response.MSG, 'Punto de venta');
             } else {
               this.toastr.error(response.response.MSG, 'Punto de venta');
             }
+            console.log(response)
             this.getData()
           },
           error: (error) => {
@@ -222,8 +220,8 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
   insertarTicket(): void {
-    console.log('IdCliente antes de insertar:', this.IdCliente);
     const nuevoTicket = {
         IdSucursal: this.IdSucursal,
         IdCliente: this.IdCliente,
@@ -233,14 +231,11 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
     this.ticketsService.insertarTickets(nuevoTicket).subscribe({
         next: (response) => {
-            console.log(response);
-            
             if (response.StatusCode === 200) {
                 this.toastr.success(response.response.Msg, 'Punto de venta');
                 this.idTicket = response.response.data; // Asigna el idTicket del response
                 this.isOnStepOne = false;
                 this.isOnStepTwo = true;
-                console.log('Nuevo idTicket:', this.idTicket);
 
                 // Oculta el formulario de ticket y muestra el formulario de detalle de ticket
 
@@ -248,8 +243,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
                 if (this.idTicket) {
                     this.detalleticketService.getDetalleTicket(this.idTicket).subscribe({
                         next: (data: any) => {
-                            this.detalleticket = data;
-                            console.log('Detalles del ticket:', this.detalleticket);
+                            this.getData
                         },
                         error: (error) => {
                             console.error('Hubo un error al obtener los detalles del ticket', error);
@@ -352,12 +346,10 @@ private getColumnName(column: string): string {
         this.detalleticketService.getDetalleTicket(this.idTicket).subscribe({
             next: (data: DetalleTicket[]) => {
                 this.detalleticket = data;
-                console.log('Detalles del ticket:', nuevoDetalleTicket);
                 
                 // Luego, continuar con la inserción del detalle del ticket
                 this.detalleticketService.insertDetalleTicket(nuevoDetalleTicket).subscribe({
                     next: (response) => {
-                      console.log('este es el response: ', response)
                         if (response.StatusCode === 200) {
                             this.toastr.success(response.response.data.toString(), 'Punto de Venta');
                         } else {
@@ -386,10 +378,8 @@ Autorizar() {
     Estatus: this.Estado
   };
 
-  console.log('Actualizando estado del ticket:', autorizar);
   this.AutorizarService.AutorizarTicket(autorizar).subscribe({
     next: (response) => {
-      console.log('Respuesta del servidor:', response);
       this.getData(); // Actualizar datos después de la actualización
       if (response.StatusCode === 200) {
         this.toastr.success(response.response.data, 'Almacenes');
@@ -414,12 +404,12 @@ Autorizar() {
   
   articuloSelected(event: any) {
     const articulo = event.option.value;
-    console.log(articulo);
+    (articulo);
     this.idArticulo = articulo.Id;
     this.codigo = articulo.Codigo;  // Asegúrate de asignar el código del artículo aquí
     this.selectedCodigo = articulo;
     this.selectedArticulo = articulo;
-    console.log(articulo.Precio);
+    (articulo.Precio);
     this.precioVenta = articulo.Precio;
   }
 
@@ -434,9 +424,9 @@ Autorizar() {
 
   clienteSelected(event: any) {
     const cliente = event.option.value;
-    console.log(cliente);
+    (cliente);
     this.IdCliente = cliente.Id;
-    console.log(cliente.Id);
+    (cliente.Id);
     this.IdClienteControl.updateValueAndValidity();
     this.selectedCliente = cliente;
   }
@@ -453,14 +443,10 @@ Autorizar() {
 
   articuloCodSelected(event: any) {
     const articuloCod = event.option.value;
-    console.log('Artículo seleccionado:', articuloCod);
     this.selectedCodigo = articuloCod;
     this.selectedArticulo = articuloCod;
     this.codigo = articuloCod.Codigo;
     this.precioVenta = articuloCod.Precio;
-    console.log('Id del artículo:', articuloCod.Id);
-    console.log('Código del artículo:', articuloCod.Codigo);
-    console.log('Precio del artículo:', articuloCod.Precio);
   }
   
   displayArticuloCodFn(articulo: any): string {
