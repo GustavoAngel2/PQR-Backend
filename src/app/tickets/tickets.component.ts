@@ -116,7 +116,11 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       startWith(''),
       map(value => this._filterArticulosCod(value || ''))
     );
-
+    this.filteredArticulos = this.IdArticuloControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterArticulos(value || ''))
+    );
+    
     this.IdArticuloControl.valueChanges.subscribe(value => {
       if (!value) {
         this.clearArticuloFields();
@@ -285,8 +289,7 @@ padZero(num: number): string {
 refrescarPagina(): void {
   this.exportToPDF()
   this.isOnStepTwo = false
-  this.isOnStepThree = true
-
+  window.location.reload()
 }
 
 
@@ -414,7 +417,7 @@ Autorizar() {
   
   articuloSelected(event: any) {
     const articulo = event.option.value;
-    console.log(articulo);
+    console.log('Descripcion de articulo',articulo);
     this.idArticulo = articulo.Id;
     this.codigo = articulo.Codigo;  // Asegúrate de asignar el código del artículo aquí
     this.selectedCodigo = articulo;
@@ -426,11 +429,10 @@ Autorizar() {
   displayArticuloFn(articulo: any): string {
     return articulo ? articulo.Descripcion : '';
   }
-  
-  private _filterArticulos(value: any): any[] {
-    const filterValue = (typeof value === 'string' ? value : '').toLowerCase();
-    return this.ComboCodigo.filter(option => option.Descripcion.toLowerCase().includes(filterValue));
+  displayArticuloCodFn(articulo: any): string {
+    return articulo && articulo.Codigo ? articulo.Codigo : '';
   }
+
 
   clienteSelected(event: any) {
     const cliente = event.option.value;
@@ -451,6 +453,11 @@ Autorizar() {
     return this.ComboClientes.filter(option => option.Nombre.toLowerCase().includes(filterValue));
   }
 
+  private _filterArticulos(value: any): any[] {
+    const filterValue = (typeof value === 'string' ? value : '').toLowerCase();
+    return this.ComboCodigo.filter(option => option.Descripcion.toLowerCase().includes(filterValue));
+  }
+
   articuloCodSelected(event: any) {
     const articuloCod = event.option.value;
     console.log('Artículo seleccionado:', articuloCod);
@@ -463,9 +470,7 @@ Autorizar() {
     console.log('Precio del artículo:', articuloCod.Precio);
   }
   
-  displayArticuloCodFn(articulo: any): string {
-    return articulo && articulo.Codigo ? articulo.Codigo : '';
-  }
+
   
   private _filterArticulosCod(value: any): any[] {
     if (typeof value !== 'string') {
