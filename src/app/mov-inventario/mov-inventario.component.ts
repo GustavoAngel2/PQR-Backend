@@ -185,7 +185,7 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
   Autorizar() {
     const autorizar: { Id: number; Estatus: string } = {
       Id: this.idMovimiento,
-      Estatus: this.Estado
+      Estatus: '1'
     };
   
     console.log('Actualizando estado del ticket:', autorizar);
@@ -336,8 +336,8 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
   }
 
   reload(){
-    this.isOnStepTwo = false
-    this.isOnStepThree = true
+    this.Autorizar()
+    window.location.reload()
   }
 
   articuloSelected(event: any) {
