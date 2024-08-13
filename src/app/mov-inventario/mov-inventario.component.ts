@@ -12,6 +12,8 @@ import { TiposMovService } from '../data.service';
 import { ArticulosService } from '../data.service';
 import { DetalleMov } from '../models/detalleMov.model';
 import { Observable } from 'rxjs';
+import { AutorizarMov } from '../data.service';
+import { EstadosService } from '../data.service';
 import { startWith, map } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { SearchMovModel } from '../models/detalleMov.model';
@@ -38,14 +40,19 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
     usuarioActualiza: 0,
   };
   datosCargados: boolean = false;
+  isOnStepOne: boolean = true;
   isOnStepTwo: boolean = false;
-
+  isOnStepThree: boolean = false;
+  Estado:any;
+  comboEstados: any[] =[];
   idMovimiento: any;
   codigo: string = '';
   cantidad: number = 0;
   costo: number = 0;
   ComboMov:any;
   ComboCodigo:any;
+  IdEstadoControl = new FormControl('');
+  IdMovControl = new FormControl('');
   CodigoControl = new FormControl('');
   IdArticuloControl = new FormControl('');
 
@@ -72,6 +79,8 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
     private tiposMovService: TiposMovService,
     private detalleMovService: DetalleMovService,
     private articulosService: ArticulosService,
+    private estadosService: EstadosService,
+    private AutorizarService: AutorizarMov,
     private toastr: ToastrService,
     private authService: AuthService
   ) {
@@ -142,7 +151,10 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
       this.ComboAlmacen = data2;
       console.log(this.ComboAlmacen);
     });
-
+    this.estadosService.getEstados().subscribe((data6: any) => {
+      this.comboEstados = data6;
+      console.log(this.comboEstados);
+    });
   }
 
   abrirDeleteDialog(Id: number, Name: string) {
@@ -169,6 +181,32 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
+  Autorizar() {
+    const autorizar: { Id: number; Estatus: string } = {
+      Id: this.idMovimiento,
+      Estatus: this.Estado
+    };
+  
+    console.log('Actualizando estado del ticket:', autorizar);
+    this.AutorizarService.AutorizarMov(autorizar).subscribe({
+      next: (response) => {
+        console.log('Respuesta del servidor:', response);
+        this.getData(); // Actualizar datos después de la actualización
+        if (response.StatusCode === 200) {
+          this.toastr.success(response.message.toString(), 'Movimiento');
+        } else {
+          this.toastr.error(response.message.toString(), 'Movimiento ');
+        }
+      },
+      error: (error) => {
+        console.error('Error al actualizar el estado del ticket', error);
+      }
+    });
+ /*    window.location.reload(); */
+  }
+  
+
 
   cargarDatos(elemento: any) {
     this.tipoMov.Id = elemento.Id;
@@ -197,6 +235,7 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
         if(response.StatusCode == 200){
           this.toastr.success(response.message, 'Movimientos de inventario');
           this.idMovimiento = response.response.data;
+          this.isOnStepOne = false
           this.isOnStepTwo = true
           this.getData();
         } else {
@@ -297,7 +336,8 @@ export class MovInventarioComponent implements OnInit, AfterViewInit {
   }
 
   reload(){
-    location.reload();
+    this.isOnStepTwo = false
+    this.isOnStepThree = true
   }
 
   articuloSelected(event: any) {

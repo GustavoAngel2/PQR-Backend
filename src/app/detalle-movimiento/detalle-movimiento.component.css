@@ -1,0 +1,24 @@
+.column-id {
+    width: 10%!important; /* Ajusta el ancho según sea necesario */
+  }
+  
+  .column-idMovimiento {
+    width: 20%!important; /* Ajusta el ancho según sea necesario */
+  }
+  
+  .column-idAlmacen {
+    width: 20%!important; /* Ajusta el ancho según sea necesario */
+  }
+  
+  .column-fechaMovimiento {
+    width: 20%!important; /* Ajusta el ancho según sea necesario */
+  }
+  
+  .column-usuarioActualiza {
+    width: 20%!important; /* Ajusta el ancho según sea necesario */
+  }
+  
+  .column-acciones {
+    width: 10%!important; /* Ajusta el ancho según sea necesario */
+  }
+  

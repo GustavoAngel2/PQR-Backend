@@ -7,12 +7,12 @@ import{ updateArticulos } from './models/articulo.model';
 import { UpdatePersonas } from './models/personas.model';
 import { UpdateRutas } from './models/rutas.model';
 import { UpdateDetallePerfil } from './models/detallePerfil.model';
-import { UpdateDetalleMov } from './models/detalleMov.model';
-import { UpdateTickets } from './models/tickets.model';
+import { AutorizarMovimiento, UpdateDetalleMov } from './models/detalleMov.model';
+import { SearchCorteModel, UpdateTickets } from './models/tickets.model';
 import { UpdateUsuario } from './models/usuarios.models';
 import { UpdateExistencia } from './models/existencia.model';
 import { UpdateMovInventario } from './models/movInventario.model';
-import { DetalleTicket, UpdateDetalleTicket } from './models/detalleTicket.model';
+import { Autorizar, DetalleTicket, UpdateDetalleTicket } from './models/detalleTicket.model';
 import { UpdateModulo } from './models/modulo.model';
 import { updateEmpleado } from "./models/empleados.model";
 import { UpdatePuesto } from "./models/puestos.model";
@@ -21,6 +21,7 @@ import { AuthInfo } from './models/login.model';
 import { ApiResponse2 } from './models/login.model';
 import { ApiResponse,ApiResponseEmpleados,ApiResponsePuntoV,ApiResponseExistencias,ApiResponseModulos,ApiResponseUsuarios } from './models/ApiResponse.models';
 import { AuthService } from './auth.service';
+import { Estados } from './models/Estados.model';
 
 
 @Injectable({
@@ -141,12 +142,12 @@ export class ArticulosService {
   private apiUrl = "http://localhost:5020/api";
   constructor(private http: HttpClient,private authService: AuthService) {}
 
-  getArticulos(): Observable<ApiResponseEmpleados> {
+  getArticulos(): Observable<ApiResponse> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ApiResponseEmpleados>(`${this.apiUrl}/articulos/Get`,{headers});
+    return this.http.get<ApiResponse>(`${this.apiUrl}/articulos/Get`,{headers});
   }
   insertarArticulos(ArticulosData: {
     descripcion: string;
@@ -388,6 +389,14 @@ export class TicketsSevice {
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
     return this.http.put<ApiResponsePuntoV>(`${this.apiUrl}/Tickets/Update`, body);
+  }
+
+  getCorte(search: SearchCorteModel): Observable<ArrayBuffer> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<ArrayBuffer>(`${this.apiUrl}/Tickets/GetCorte?vendedor=${search.vendedor}&FechaInicio=${search.FechaInicio}&FechaFin=${search.FechaFin}`,{headers});
   }
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -914,4 +923,62 @@ export class LoginService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     });
   }
+}
+//-----------------------------------------------------------------------------------------------------------------------------//
+@Injectable({
+  providedIn: "root",
+})
+export class EstadosService {
+  //Se especifica la url base de la API
+  private apiUrl = "http://localhost:5020/api";
+  constructor(private http: HttpClient,private authService: AuthService) {}
+
+
+  getEstados(): Observable<Estados[]> {
+    const token = this.authService.getToken();
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.get<Estados[]>(`${this.apiUrl}/Estados/Get`,{headers});
+  }
+}
+//-----------------------------------------------------------------------------------------------------------------------------//
+@Injectable({
+  providedIn: "root",
+})
+export class AutorizarTicket {
+  //Se especifica la url base de la API
+  private apiUrl = "http://localhost:5020/api";
+  constructor(private http: HttpClient,private authService: AuthService) {}
+
+
+  AutorizarTicket(Autorizar: Autorizar): Observable<ApiResponseEmpleados> {
+    const body = {
+      Id: Autorizar.Id,
+      Estatus: Autorizar.Estatus
+    }
+    console.log('Enviando solicitud con el siguiente cuerpo:', body);
+    return this.http.put<ApiResponseEmpleados>(`${this.apiUrl}/DetalleTicket/Autorizar`, body);
+  }
+
+}
+//-----------------------------------------------------------------------------------------------------------------------------//
+@Injectable({
+  providedIn: "root",
+})
+export class AutorizarMov {
+  //Se especifica la url base de la API
+  private apiUrl = "http://localhost:5020/api";
+  constructor(private http: HttpClient,private authService: AuthService) {}
+
+
+  AutorizarMov(AutorizarMov: AutorizarMovimiento): Observable<ApiResponse> {
+    const body = {
+      Id: AutorizarMov.Id,
+      Estatus: AutorizarMov.Estatus
+    }
+    console.log('Enviando solicitud con el siguiente cuerpo:', body);
+    return this.http.put<ApiResponse>(`${this.apiUrl}/AutorizarMov/Update`, body);
+  }
+
 }

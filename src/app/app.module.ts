@@ -56,6 +56,7 @@ import { AuthService } from './auth.service'; // Importa AuthService
 import { AuthInterceptor } from "./auth.interceptor";
 import { UserService } from "./user.service";
 import { DialogsComponent } from './dialogs/dialogs.component';
+import { CorteComponent } from './corte/corte.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { DialogsComponent } from './dialogs/dialogs.component';
     DetallePerfilComponent,
     DeleteMenuComponent,
     DialogsComponent,
+    CorteComponent,
   ],
   imports: [
     BrowserModule,

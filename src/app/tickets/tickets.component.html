@@ -6,7 +6,7 @@
 </div>
 
 
-<div class="form-place" *ngIf="isTicketFormVisible">
+<div class="form-place" *ngIf="isOnStepOne" >
 <div class="form-container">
     <div class="form-content">
         <mat-form-field>
@@ -31,7 +31,7 @@
           <mat-label>Usuario</mat-label>
           <input matInput type="number" [formControl]="IdUsusarioControl" placeholder="Usuario Actualiza" [(ngModel)]="Usuario" name="Usuario">
         </mat-form-field> -->
-        <button [ngClass]="{'disabled-button': isOnStepTwo}" [disabled]="isOnStepTwo" (click)="insertarTicket();" class="btn-form right">Generar ticket<i class="underline"></i></button>
+        <button (click)="insertarTicket();" class="btn right">Generar ticket<i class="underline"></i></button>
       </div>
 
 
@@ -40,7 +40,7 @@
 </div>
 <br>
 
-<div class="form-place" *ngIf="!isTicketFormVisible">
+<div class="form-place" *ngIf="isOnStepTwo">
     <div class="form-container">
       <div class="form-title">
         <h1 mat-dialog-title>Nuevo elemento del Ticket</h1>
@@ -48,16 +48,16 @@
       <div class="form-content">
         <mat-form-field>
           <mat-label>Ticket</mat-label>
-          <input matInput [formControl]="IdTicketControl" placeholder="Ingresa el ticket" [(ngModel)]="idTicket" name="idTicket">
+          <input  matInput [formControl]="IdTicketControl" placeholder="Ingresa el ticket" [(ngModel)]="idTicket" name="idTicket">
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Articulo" [formControl]="IdArticuloControl" [matAutocomplete]="autoArticulo" [ngModel]="selectedArticulo" [value]="displayArticuloFn(selectedArticulo)" />
-          <mat-autocomplete #autoArticulo="matAutocomplete" (optionSelected)="articuloSelected($event)" [displayWith]="displayArticuloFn">
-            <mat-option *ngFor="let option of filteredArticulos | async" [value]="option">
-              {{ option.Descripcion }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
+                <input matInput placeholder="Articulo" [formControl]="IdArticuloControl" [matAutocomplete]="autoArticulo" [ngModel]="selectedArticulo" [value]="displayArticuloFn(selectedArticulo)" />
+                <mat-autocomplete #autoArticulo="matAutocomplete" (optionSelected)="articuloSelected($event)" [displayWith]="displayArticuloFn">
+                  <mat-option *ngFor="let option of filteredArticulos | async" [value]="option">
+                    {{ option.Descripcion}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
         <mat-form-field class="example-full-width">
           <input matInput type="text" placeholder="Código" [formControl]="CodigoControl" [matAutocomplete]="autoCodigo" [ngModel]="selectedCodigo" [value]="displayArticuloCodFn(selectedCodigo)" />
           <mat-autocomplete #autoCodigo="matAutocomplete" (optionSelected)="articuloCodSelected($event)" [displayWith]="displayArticuloCodFn">
@@ -78,11 +78,12 @@
           <mat-label>Usuario</mat-label>
           <input matInput hide [formControl]="IdUsuarioDetalleControl" placeholder="Usuario Actualiza" [(ngModel)]="usuario" name="usuario">
         </mat-form-field> -->
-        <button [ngClass]="{'disabled-button': isOnStepTwo}" (click)="toggleUI();  refrescarPagina()" class="btn-form">Terminar<i class="underline"></i></button>
-        <button [ngClass]="{'disabled-button': isOnStepTwo}" (click)="insertarDetalleTicket();" class="btn-form">Insertar al Ticket<i class="underline"></i></button>
+        <button (click)="refrescarPagina()" class="btn">Terminar<i class="underline"></i></button>
+        <button (click)="insertarDetalleTicket();" class="btn">Insertar al Ticket<i class="underline"></i></button>
       </div> 
+    </div>
 </div>
-</div>
+
 
 <br>
 <div class="actionbar">
@@ -91,7 +92,7 @@
         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
     </mat-form-field>
     <div class="form-title">
-      <h1 mat-dialog-title>Total Ticket: {{ totalTicket | currency }}</h1>
+      <h1 mat-dialog-title style="color: rgb(211, 49, 20);">Total Ticket: {{ totalTicket | currency }}</h1>
     </div>
 </div>
 
@@ -138,7 +139,6 @@
       <ng-container matColumnDef="Acciones">
       <th mat-header-cell *matHeaderCellDef> Acciones </th>
       <td mat-cell *matCellDef="let elemento">
-
           <mat-icon class="action-btn" (click)="eliminarDetalle(elemento.Id, elemento.Articulo)">delete</mat-icon>
       </td>
       </ng-container>
@@ -181,13 +181,12 @@
         <ng-container matColumnDef="Acciones">
             <th mat-header-cell *matHeaderCellDef> Acciones </th>
             <td mat-cell *matCellDef="let elemento">
-                <mat-icon class="action-btn-form" (click)="abrirEditarModal(elemento)">edit</mat-icon>
-                <mat-icon class="action-btn-form" (click)="eliminarAlmacen(elemento.Id)">delete</mat-icon>
+                <mat-icon class="action-btn" (click)="abrirEditarModal(elemento)">edit</mat-icon>
+                <mat-icon class="action-btn" (click)="eliminarAlmacen(elemento.Id)">delete</mat-icon>
             </td>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </table>
-<<<<<<< HEAD
 </div>   -->
 

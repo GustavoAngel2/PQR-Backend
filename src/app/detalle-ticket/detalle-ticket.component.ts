@@ -3,12 +3,13 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { DetalleTicketService, TicketsSevice, SucursalesService } from '../data.service';
+import {TicketsSevice, SucursalesService } from '../data.service';
 import { DetalleTicketInsertComponent } from '../detalle-ticket-insert/detalle-ticket-insert.component';
 import { SearchTicketsModel, tickets } from '../models/tickets.model';
 import jsPDF from 'jspdf';
 import { AlmacenesService } from '../data.service';
 import autoTable from 'jspdf-autotable';
+import * as XLSX from 'xlsx'
 
 @Component({
   selector: 'app-detalle-ticket',
@@ -46,8 +47,9 @@ export class DetalleTicketComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.format();
-    this.sucursaleService.getSucursales().subscribe((data2: any) => {
+    this.almacenesService.getAlmacenes().subscribe((data2: any) => {
       this.comboSucursal = data2;
+      console.log(this.comboSucursal);
     });
     this.getTicket();
   }
@@ -142,5 +144,23 @@ export class DetalleTicketComponent implements OnInit, AfterViewInit {
       case 'UsuarioActualiza': return 'Usuario';
       default: return column;
     }
+  }
+
+  exportToExcel(): void {
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.dataSource.data.map(ticket => ({
+      Id: ticket.Id,
+      Sucursal: ticket.Sucursal,
+      Cliente: ticket.Cliente,
+      Vendedor: ticket.Vendedor,
+      Fecha: this.formatDate(new Date(ticket.Fecha)),
+      Estatus: ticket.Estatus,
+      Usuario: ticket.Usuario
+    })));
+
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Tickets');
+    
+    const fileName = `Tickets_${this.fechaInicio}_${this.fechaFin}.xlsx`;
+    XLSX.writeFile(wb, fileName);
   }
 }
