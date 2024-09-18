@@ -7,6 +7,7 @@ export interface DetalleTicket {
     Articulo: string;
     Cantidad: number;
     PrecioVenta: number;
+    UUID:number;
     Total: number;
     TotalTicket:number;
     Usuario: string;

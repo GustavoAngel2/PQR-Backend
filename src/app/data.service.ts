@@ -366,12 +366,14 @@ export class TicketsSevice {
     IdSucursal: number;
     IdCliente: number;
     IdVendedor: number;
+    UUID:number;
     usuario: number;
   }): Observable<ApiResponsePuntoV> {
     const body = {
       IdSucursal: TicketsData.IdSucursal,
       IdCliente: TicketsData.IdCliente,
       IdVendedor: TicketsData.IdVendedor,
+      UUID:TicketsData.UUID,
       usuario: TicketsData.usuario,
     };
     return this.http.post<ApiResponsePuntoV>(`${this.apiUrl}/Tickets/Insert`, body);
@@ -588,6 +590,7 @@ export class DetalleTicketService {
     codigo: number;
     cantidad: number;
     precioVenta: number;
+    UUID:number;
     usuario: number;
   }): Observable<ApiResponsePuntoV> {
     const body = {
@@ -595,6 +598,7 @@ export class DetalleTicketService {
       codigo: DTData.codigo,
       cantidad: DTData.cantidad,
       precioVenta: DTData.precioVenta,
+      UUID:DTData.UUID,
       usuario: DTData.usuario,
     };
     return this.http.post<ApiResponsePuntoV>(
@@ -602,6 +606,8 @@ export class DetalleTicketService {
       body
     );
   }
+
+  
   deleteDetalleTicket(id: number): Observable<any> {
     
     return this.http.put(`${this.apiUrl}/DetalleTicket/Delete`, { id });

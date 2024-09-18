@@ -31,9 +31,10 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   IdCliente: number = 0;
   IdVendedor: number = 0;
   Usuario: number = 0;
-
+  UUID:number =0;
   // Detalle tickets
   idTicket: any;
+  Uuid:any;
   totalTicket: number = 0;
   idArticulo: any;
   codigo: any;
@@ -69,6 +70,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
 
   // New ticket
+  UUID = new FormControl('');
   IdSucursalControl = new FormControl('');
   IdEstadoControl = new FormControl('');
   IdClienteControl = new FormControl('');
@@ -231,6 +233,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     const nuevoTicket = {
         IdSucursal: this.IdSucursal,
         IdCliente: this.IdCliente,
+        UUID: this.UUID,
         IdVendedor: parseInt(this.loggedInUser.Id, 10),
         usuario: parseInt(this.loggedInUser.Id, 10)
     };
@@ -343,6 +346,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         codigo: this.codigo,
         cantidad: this.cantidad,
         precioVenta: this.precioVenta,
+        UUID: this.UUID,
         usuario: parseInt(this.loggedInUser.Id, 10)
     };
 
