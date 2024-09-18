@@ -9,7 +9,7 @@ import { startWith, map } from 'rxjs/operators';
 import { EstadosService } from '../data.service';
 import { AutorizarTicket } from '../data.service';
 import { ClientesService, TicketsSevice, DetalleTicketService, TiposMovService, ArticulosService, AlmacenesService } from '../data.service';
-import { Autorizar, DetalleTicket, UpdateDetalleTicket } from '../models/detalleTicket.model';
+import { DetalleTicket } from '../models/detalleTicket.model';
 import { DeleteMenuComponent } from '../delete-menu/delete-menu.component';
 import { ToastrService } from 'ngx-toastr';
 import jsPDF from 'jspdf';
@@ -59,6 +59,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   fechaFin: string = '';
   dateHandler: Date = new Date();
   dateHandler2: Date = new Date();
+  uuid:string = ''
 
   isTicketFormVisible= true;
   isAuthFormVisible = false;
@@ -232,7 +233,8 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         IdSucursal: this.IdSucursal,
         IdCliente: this.IdCliente,
         IdVendedor: parseInt(this.loggedInUser.Id, 10),
-        usuario: parseInt(this.loggedInUser.Id, 10)
+        usuario: parseInt(this.loggedInUser.Id, 10),
+        UUID: this.uuid
     };
 
     this.ticketsService.insertarTickets(nuevoTicket).subscribe({
@@ -343,7 +345,8 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         codigo: this.codigo,
         cantidad: this.cantidad,
         precioVenta: this.precioVenta,
-        usuario: parseInt(this.loggedInUser.Id, 10)
+        usuario: parseInt(this.loggedInUser.Id, 10),
+        uuid: this.uuid
     };
 
     if (this.idTicket) {
