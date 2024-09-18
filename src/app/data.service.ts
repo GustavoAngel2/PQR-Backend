@@ -585,7 +585,7 @@ export class DetalleTicketService {
       codigo: DTData.codigo,
       cantidad: DTData.cantidad,
       precioVenta: DTData.precioVenta,
-      UUID:DTData.UUID,
+      UUID:DTData.uuid,
       usuario: DTData.usuario,
       uuid:DTData.uuid
     };
