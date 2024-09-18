@@ -25,7 +25,8 @@ export interface InsetTickets{
   IdSucursal: number;
   IdCliente: number ;
   IdVendedor: number;
-  Usuario: number;
+  usuario: number;
+  UUID:string;
 }
 export interface UpdateTickets{
   Id: number;

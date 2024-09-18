@@ -7,6 +7,7 @@ export interface DetalleTicket {
     Articulo: string;
     Cantidad: number;
     PrecioVenta: number;
+    UUID:number;
     Total: number;
     TotalTicket:number;
     Usuario: string;
@@ -20,6 +21,15 @@ export interface DetalleTicket {
     message: string;
     response: {
       data: tickets[]; };
+  }
+
+  export interface InsertDetalleTicket {
+    idTicket: number;
+    codigo: string;
+    cantidad: number;
+    precioVenta: number;
+    uuid: string;
+    usuario: number;
   }
 
   export interface UpdateDetalleTicket{
