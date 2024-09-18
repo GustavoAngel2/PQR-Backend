@@ -8,11 +8,11 @@ import { UpdatePersonas } from './models/personas.model';
 import { UpdateRutas } from './models/rutas.model';
 import { UpdateDetallePerfil } from './models/detallePerfil.model';
 import { AutorizarMovimiento, UpdateDetalleMov } from './models/detalleMov.model';
-import { SearchCorteModel, UpdateTickets } from './models/tickets.model';
+import { InsetTickets, SearchCorteModel, UpdateTickets } from './models/tickets.model';
 import { UpdateUsuario } from './models/usuarios.models';
 import { UpdateExistencia } from './models/existencia.model';
 import { UpdateMovInventario } from './models/movInventario.model';
-import { Autorizar, DetalleTicket, UpdateDetalleTicket } from './models/detalleTicket.model';
+import { Autorizar, DetalleTicket, InsertDetalleTicket, UpdateDetalleTicket } from './models/detalleTicket.model';
 import { UpdateModulo } from './models/modulo.model';
 import { updateEmpleado } from "./models/empleados.model";
 import { UpdatePuesto } from "./models/puestos.model";
@@ -362,19 +362,13 @@ export class TicketsSevice {
     return this.http.get<ApiResponsePuntoV>(`${this.apiUrl}/Tickets/Get?IdSucursal=${TicketData.IdSucursal}&FechaInicio=${TicketData.FechaInicio}&FechaFin=${TicketData.FechaFin}`,{headers});
   }
 
-  insertarTickets(TicketsData: {
-    IdSucursal: number;
-    IdCliente: number;
-    IdVendedor: number;
-    UUID:number;
-    usuario: number;
-  }): Observable<ApiResponsePuntoV> {
+  insertarTickets(TicketsData: InsetTickets): Observable<ApiResponsePuntoV> {
     const body = {
-      IdSucursal: TicketsData.IdSucursal,
-      IdCliente: TicketsData.IdCliente,
-      IdVendedor: TicketsData.IdVendedor,
-      UUID:TicketsData.UUID,
+      idSucursal: TicketsData.IdSucursal,
+      idCliente: TicketsData.IdCliente,
+      idVendedor: TicketsData.IdVendedor,
       usuario: TicketsData.usuario,
+      uuid:TicketsData.UUID
     };
     return this.http.post<ApiResponsePuntoV>(`${this.apiUrl}/Tickets/Insert`, body);
   }
@@ -585,14 +579,7 @@ export class DetalleTicketService {
     });
     return this.http.get<DetalleTicket[]>(`${this.apiUrl}/DetalleTicket/Get?idTicket=${ticketId}`,{headers});
   }
-  insertDetalleTicket(DTData: {
-    idTicket: number;
-    codigo: number;
-    cantidad: number;
-    precioVenta: number;
-    UUID:number;
-    usuario: number;
-  }): Observable<ApiResponsePuntoV> {
+  insertDetalleTicket(DTData: InsertDetalleTicket): Observable<ApiResponsePuntoV> {
     const body = {
       idTicket: DTData.idTicket,
       codigo: DTData.codigo,
@@ -600,6 +587,7 @@ export class DetalleTicketService {
       precioVenta: DTData.precioVenta,
       UUID:DTData.UUID,
       usuario: DTData.usuario,
+      uuid:DTData.uuid
     };
     return this.http.post<ApiResponsePuntoV>(
       `${this.apiUrl}/DetalleTicket/Insert`,

@@ -23,16 +23,10 @@
             <mat-option *ngFor="let cod of ComboClientes" [value]="cod.Id">{{ cod.Nombre }}</mat-option>
           </mat-select>
         </mat-form-field>
-
         <mat-form-field>
           <mat-label>UUID</mat-label>
-          <mat-select [formControl]="IdClienteControl" [(ngModel)]="IdCliente" name="IdCliente" required>
-            <mat-option value="0">Seleccione</mat-option>
-            <mat-option *ngFor="let cod of ComboClientes" [value]="cod.Id">{{ cod.Nombre }}</mat-option>
-          </mat-select>
+          <input matInput type="text" placeholder="Ingresa una id unica universal" [(ngModel)]="uuid" name="uuid">
         </mat-form-field>
-
-
       <!--   <mat-form-field>
             <mat-label>Vendedor</mat-label>
             <input matInput [formControl]="IdVendedorControl" placeholder="Ingresa la direccion" [(ngModel)]="IdVendedor" name="IdVendedor">
@@ -59,6 +53,10 @@
         <mat-form-field>
           <mat-label>Ticket</mat-label>
           <input  matInput [formControl]="IdTicketControl" placeholder="Ingresa el ticket" [(ngModel)]="idTicket" name="idTicket">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>UUID</mat-label>
+          <input matInput disabled="true" type="text" placeholder="Ingresa una id unica universal" [(ngModel)]="uuid" name="uuid">
         </mat-form-field>
         <mat-form-field class="example-full-width">
                 <input matInput placeholder="Articulo" [formControl]="IdArticuloControl" [matAutocomplete]="autoArticulo" [ngModel]="selectedArticulo" [value]="displayArticuloFn(selectedArticulo)" />

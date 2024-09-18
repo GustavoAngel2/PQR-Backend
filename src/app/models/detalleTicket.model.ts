@@ -23,6 +23,15 @@ export interface DetalleTicket {
       data: tickets[]; };
   }
 
+  export interface InsertDetalleTicket {
+    idTicket: number;
+    codigo: string;
+    cantidad: number;
+    precioVenta: number;
+    uuid: string;
+    usuario: number;
+  }
+
   export interface UpdateDetalleTicket{
     Id: number;
     IdTicket: number;
