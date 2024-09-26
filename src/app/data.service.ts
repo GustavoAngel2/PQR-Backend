@@ -27,17 +27,23 @@ import { Estados } from './models/Estados.model';
 @Injectable({
   providedIn: "root",
 })
+
+export class apiURL{
+  getURL():string{
+    return "http://104.254.247.128:8083/api"
+  }
+}
+
 export class AlmacenesService {
   //Se especifica la url base de la API
-  private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient,private authService: AuthService) {}
+  constructor(private http: HttpClient,private authService: AuthService, private api:apiURL) {}
   
   getAlmacenes(): Observable<any> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<any>(`${this.apiUrl}/Almacenes/Get`, { headers });
+    return this.http.get<any>(`${this.api.getURL()}/Almacenes/Get`, { headers });
   }
 
   //esta funcion se utiliza para insertar un almacen, contiene un cuerpo de nombre, direccion y el usuario (su id) que lo crea
@@ -53,12 +59,12 @@ export class AlmacenesService {
       usuario: AlmacenesData.usuario,
       encargado: AlmacenesData.encargado
     };
-    return this.http.post<ApiResponse>(`${this.apiUrl}/Almacenes/Insert`, body);
+    return this.http.post<ApiResponse>(`${this.api.getURL()}/Almacenes/Insert`, body);
   }
   //esta funcion borra un almacen pidiendo el id del almacen a borrar
   deleteAlmacenes(Id: number): Observable<any> {
     
-    return this.http.put(`${this.apiUrl}/Almacenes/Delete`, { Id });
+    return this.http.put(`${this.api.getURL()}/Almacenes/Delete`, { Id });
   }
   //esta funcion sirve para modificar la informacion de un almacen
   updateAlmacenes(AlmacenesData: UpdateAlmacen): Observable<ApiResponse> {
@@ -70,7 +76,7 @@ export class AlmacenesService {
       encargado: AlmacenesData.Encargado
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponse>(`${this.apiUrl}/Almacenes/Update`, body);
+    return this.http.put<ApiResponse>(`${this.api.getURL()}/Almacenes/Update`, body);
   }
 }
 //----------------------------------------------------------------------------------------------------------------------------------------
@@ -79,8 +85,8 @@ export class AlmacenesService {
 })
 export class ClientesService {
   //Se especifica la url base de la API
-  private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient,private authService: AuthService) {}
+  
+  constructor(private http: HttpClient,private authService: AuthService, private api:apiURL) {}
 
   //Esta funcion enlista los Clientes de la base de datos
   getClientes(): Observable<ApiResponseEmpleados> {
@@ -88,7 +94,7 @@ export class ClientesService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ApiResponseEmpleados>(`${this.apiUrl}/Clientes/Get`, {headers});
+    return this.http.get<ApiResponseEmpleados>(`${this.api.getURL()}/Clientes/Get`, {headers});
   }
 
   //Esta funcion inserta clientes
@@ -112,10 +118,10 @@ export class ClientesService {
       email: ClientesData.email,
       coordenadas: ClientesData.coordenadas,
     };
-    return this.http.post<ApiResponseEmpleados>(`${this.apiUrl}/Clientes/Insert`, body);
+    return this.http.post<ApiResponseEmpleados>(`${this.api.getURL()}/Clientes/Insert`, body);
   }
   deleteClientes(Id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/Clientes/Delete`, { Id });
+    return this.http.put(`${this.api.getURL()}/Clientes/Delete`, { Id });
   }
   updateClientes(ClientesData: UpdateClientes): Observable<ApiResponseEmpleados> {
     const body = {
@@ -130,7 +136,7 @@ export class ClientesService {
       coordenadas: ClientesData.Coordenadas,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponseEmpleados>(`${this.apiUrl}/Clientes/Update`, body);
+    return this.http.put<ApiResponseEmpleados>(`${this.api.getURL()}/Clientes/Update`, body);
   }
 }
 //----------------------------------------------------------------------------------------------------------------------------------------
@@ -139,15 +145,15 @@ export class ClientesService {
 })
 export class ArticulosService {
   //Se especifica la url base de la API
-  private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient,private authService: AuthService) {}
+  
+  constructor(private http: HttpClient,private authService: AuthService, private api:apiURL) {}
 
   getArticulos(): Observable<ApiResponse> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ApiResponse>(`${this.apiUrl}/articulos/Get`,{headers});
+    return this.http.get<ApiResponse>(`${this.api.getURL()}/articulos/Get`,{headers});
   }
   insertarArticulos(ArticulosData: {
     descripcion: string;
@@ -165,10 +171,10 @@ export class ArticulosService {
       costo: ArticulosData.costo,
       precio: ArticulosData.precio,
     };
-    return this.http.post<ApiResponseEmpleados>(`${this.apiUrl}/articulos/Insert`, body);
+    return this.http.post<ApiResponseEmpleados>(`${this.api.getURL()}/articulos/Insert`, body);
   }
   deleteArticulos(Id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/articulos/Delete`, { Id });
+    return this.http.put(`${this.api.getURL()}/articulos/Delete`, { Id });
   }
   updateArticulos(ArticulosData: updateArticulos): Observable<ApiResponseEmpleados> {
     const body = {
@@ -181,7 +187,7 @@ export class ArticulosService {
       precio: ArticulosData.Precio,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponseEmpleados>(`${this.apiUrl}/articulos/Update`, body);
+    return this.http.put<ApiResponseEmpleados>(`${this.api.getURL()}/articulos/Update`, body);
   }
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -190,15 +196,15 @@ export class ArticulosService {
 })
 export class PersonasService {
   //Se especifica la url base de la API
-  private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient,private authService: AuthService) {}
+  
+  constructor(private http: HttpClient,private authService: AuthService, private api:apiURL) {}
 
   getPersonas(): Observable<ApiResponseEmpleados> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ApiResponseEmpleados>(`${this.apiUrl}/Personas/Get`,{headers});
+    return this.http.get<ApiResponseEmpleados>(`${this.api.getURL()}/Personas/Get`,{headers});
   }
   insertarPersona(PersonaData: {
     nombre: string;
@@ -216,10 +222,10 @@ export class PersonasService {
       Direccion: PersonaData.direccion,
       Usuario: PersonaData.usuario,
     };
-    return this.http.post<ApiResponseEmpleados>(`${this.apiUrl}/Personas/Insert`, body);
+    return this.http.post<ApiResponseEmpleados>(`${this.api.getURL()}/Personas/Insert`, body);
   }
   deletePersonas(Id: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/Personas/Delete`, { Id });
+    return this.http.put(`${this.api.getURL()}/Personas/Delete`, { Id });
   }
   updatePersonas(PersonaData: UpdatePersonas): Observable<ApiResponseEmpleados> {
     const body = {
@@ -231,7 +237,7 @@ export class PersonasService {
       usuario: PersonaData.Usuario
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponseEmpleados>(`${this.apiUrl}/Personas/Update`, body);
+    return this.http.put<ApiResponseEmpleados>(`${this.api.getURL()}/Personas/Update`, body);
   }
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -240,15 +246,15 @@ export class PersonasService {
 })
 export class RutasService {
   //Se especifica la url base de la API
-  private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient,private authService: AuthService) {}
+  
+  constructor(private http: HttpClient,private authService: AuthService, private api:apiURL) {}
 
   getRutas(): Observable<ApiResponse> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ApiResponse>(`${this.apiUrl}/Rutas/Get`,{headers});
+    return this.http.get<ApiResponse>(`${this.api.getURL()}/Rutas/Get`,{headers});
   }
   insertarRutas(RutasData: {
     nombre: string;
@@ -266,11 +272,11 @@ export class RutasService {
       noSeguro: RutasData.noSeguro,
       usuario: RutasData.usuario,
     };
-    return this.http.post<ApiResponseEmpleados>(`${this.apiUrl}/Rutas/Insert`, body);
+    return this.http.post<ApiResponseEmpleados>(`${this.api.getURL()}/Rutas/Insert`, body);
   }
   deleteRutas(Id: number): Observable<ApiResponseEmpleados> {
     
-    return this.http.put<ApiResponseEmpleados>(`${this.apiUrl}/Rutas/Delete`, { Id });
+    return this.http.put<ApiResponseEmpleados>(`${this.api.getURL()}/Rutas/Delete`, { Id });
   }
   updateRutas(RutasData: UpdateRutas): Observable<ApiResponseEmpleados> {
     const body = {
@@ -283,7 +289,7 @@ export class RutasService {
       usuario: RutasData.Usuario,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponseEmpleados>(`${this.apiUrl}/Rutas/Update`, body);
+    return this.http.put<ApiResponseEmpleados>(`${this.api.getURL()}/Rutas/Update`, body);
   }
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -292,15 +298,15 @@ export class RutasService {
 })
 export class DetalleMovService {
   //Se especifica la url base de la API
-  private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient,private authService: AuthService) {}
+  
+  constructor(private http: HttpClient,private authService: AuthService, private api:apiURL) {}
 
   getDetalleMov(Id: number): Observable<ArrayBuffer> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ArrayBuffer>(`${this.apiUrl}/DetalleMovimiento/Get?id_Movimientos=${Id}`,{headers});
+    return this.http.get<ArrayBuffer>(`${this.api.getURL()}/DetalleMovimiento/Get?id_Movimientos=${Id}`,{headers});
   }
   insertarDetalleMov(DetalleMovData: {
     idMovimiento: number;
@@ -317,13 +323,13 @@ export class DetalleMovService {
       usuarioActualiza: DetalleMovData.usuarioActualiza,
     };
     return this.http.post<ApiResponseEmpleados>(
-      `${this.apiUrl}/DetalleMovimiento/Insert`,
+      `${this.api.getURL()}/DetalleMovimiento/Insert`,
       body
     );
   }
   deleteDetalleMov(Id: number): Observable<any> {
     
-    return this.http.put(`${this.apiUrl}/DetalleMovimiento/Delete`, { Id });
+    return this.http.put(`${this.api.getURL()}/DetalleMovimiento/Delete`, { Id });
   }
   updateDetalleMov(DetalleMovData: UpdateDetalleMov): Observable<ApiResponseEmpleados> {
     const body = {
@@ -336,7 +342,7 @@ export class DetalleMovService {
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
     return this.http.put<ApiResponseEmpleados>(
-      `${this.apiUrl}/DetalleMovimiento/Update`,
+      `${this.api.getURL()}/DetalleMovimiento/Update`,
       body
     );
   }
@@ -347,8 +353,8 @@ export class DetalleMovService {
 })
 export class TicketsSevice {
   //Se especifica la url base de la API
-  private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient,private authService: AuthService) {}
+  
+  constructor(private http: HttpClient,private authService: AuthService, private api:apiURL) {}
 
   getTickets(TicketData:{
     IdSucursal:number,
@@ -359,7 +365,7 @@ export class TicketsSevice {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ApiResponsePuntoV>(`${this.apiUrl}/Tickets/Get?IdSucursal=${TicketData.IdSucursal}&FechaInicio=${TicketData.FechaInicio}&FechaFin=${TicketData.FechaFin}`,{headers});
+    return this.http.get<ApiResponsePuntoV>(`${this.api.getURL()}/Tickets/Get?IdSucursal=${TicketData.IdSucursal}&FechaInicio=${TicketData.FechaInicio}&FechaFin=${TicketData.FechaFin}`,{headers});
   }
 
   insertarTickets(TicketsData: InsetTickets): Observable<ApiResponsePuntoV> {
@@ -370,12 +376,12 @@ export class TicketsSevice {
       usuario: TicketsData.usuario,
       uuid:TicketsData.UUID
     };
-    return this.http.post<ApiResponsePuntoV>(`${this.apiUrl}/Tickets/Insert`, body);
+    return this.http.post<ApiResponsePuntoV>(`${this.api.getURL()}/Tickets/Insert`, body);
   }
 
   deleteTickets(Id: number): Observable<any> {
     
-    return this.http.put(`${this.apiUrl}/Tickets/Delete`, { Id });
+    return this.http.put(`${this.api.getURL()}/Tickets/Delete`, { Id });
   }
 
   updateTickets(TicketsData: UpdateTickets): Observable<ApiResponsePuntoV> {
@@ -384,7 +390,7 @@ export class TicketsSevice {
       Estatus: TicketsData.estatus,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponsePuntoV>(`${this.apiUrl}/Tickets/Update`, body);
+    return this.http.put<ApiResponsePuntoV>(`${this.api.getURL()}/Tickets/Update`, body);
   }
 
   getCorte(search: SearchCorteModel): Observable<ArrayBuffer> {
@@ -392,7 +398,7 @@ export class TicketsSevice {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ArrayBuffer>(`${this.apiUrl}/Tickets/GetCorte?vendedor=${search.vendedor}&FechaInicio=${search.FechaInicio}&FechaFin=${search.FechaFin}`,{headers});
+    return this.http.get<ArrayBuffer>(`${this.api.getURL()}/Tickets/GetCorte?vendedor=${search.vendedor}&FechaInicio=${search.FechaInicio}&FechaFin=${search.FechaFin}`,{headers});
   }
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -401,15 +407,15 @@ export class TicketsSevice {
 })
 export class UsuarioService {
   // Se especifica la url base de la API
-  private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  
+  constructor(private http: HttpClient, private authService: AuthService, private api:apiURL) {}
 
   getUsuarios(): Observable<ApiResponseUsuarios> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ApiResponseUsuarios>(`${this.apiUrl}/Usuarios/Get`, { headers });
+    return this.http.get<ApiResponseUsuarios>(`${this.api.getURL()}/Usuarios/Get`, { headers });
   }
 
   insertarUsuario(UsuarioData: {
@@ -426,13 +432,13 @@ export class UsuarioService {
       idPersona: UsuarioData.idPersona,  // Cambiado a idPersona
       Usuario: UsuarioData.usuario,
     };
-    return this.http.post<ApiResponseUsuarios>(`${this.apiUrl}/Usuarios/Insert`, body);
+    return this.http.post<ApiResponseUsuarios>(`${this.api.getURL()}/Usuarios/Insert`, body);
   }
 
 
   deleteUsuarios(Id: number): Observable<any> {
     
-    return this.http.put(`${this.apiUrl}/Usuarios/Delete`, { Id });
+    return this.http.put(`${this.api.getURL()}/Usuarios/Delete`, { Id });
   }
 
   updateUsuarios(UsuarioData: UpdateUsuario): Observable<ApiResponseUsuarios> {
@@ -445,7 +451,7 @@ export class UsuarioService {
       Usuario: UsuarioData.Usuario,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponseUsuarios>(`${this.apiUrl}/Usuarios/Update`, body);
+    return this.http.put<ApiResponseUsuarios>(`${this.api.getURL()}/Usuarios/Update`, body);
   }
 }
 //-------------------------------------------------------------------------------------------------------------------------//
@@ -454,8 +460,8 @@ export class UsuarioService {
 })
 export class ExistenciasService {
   //Se especifica la url base de la API
-  private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient,private authService: AuthService) {}
+  
+  constructor(private http: HttpClient,private authService: AuthService, private api:apiURL) {}
 
   getExistencias(IdAlmacen: number): Observable<ApiResponseExistencias> {
     const token = this.authService.getToken();
@@ -464,7 +470,7 @@ export class ExistenciasService {
     });
 
     const params = new HttpParams().set('Almacen', IdAlmacen.toString());
-    return this.http.get<ApiResponseExistencias>(`${this.apiUrl}/Existencias/Get`, { params, headers });
+    return this.http.get<ApiResponseExistencias>(`${this.api.getURL()}/Existencias/Get`, { params, headers });
   }
 
   insertExistencias(ExistenciasData: {
@@ -480,13 +486,13 @@ export class ExistenciasService {
       usuario: ExistenciasData.usuario,
     };
     return this.http.post<ApiResponseExistencias>(
-      `${this.apiUrl}/Existencias/Insert`,
+      `${this.api.getURL()}/Existencias/Insert`,
       body
     );
   }
   deleteExistencias(id: number): Observable<any> {
     
-    return this.http.put(`${this.apiUrl}/Existencias/Delete`, { id });
+    return this.http.put(`${this.api.getURL()}/Existencias/Delete`, { id });
   }
   updateExistencias(
     ExistenciasData: UpdateExistencia
@@ -500,7 +506,7 @@ export class ExistenciasService {
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
     return this.http.put<ApiResponseExistencias>(
-      `${this.apiUrl}/Existencias/Update`,
+      `${this.api.getURL()}/Existencias/Update`,
       body
     );
   }
@@ -511,8 +517,8 @@ export class ExistenciasService {
 })
 export class movInventarioService {
   //Se especifica la url base de la API
-  private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient,private authService: AuthService) {}
+  
+  constructor(private http: HttpClient,private authService: AuthService, private api:apiURL) {}
 
   getMovInventario(MovInvData:{
     IdAlmacen:number,
@@ -523,7 +529,7 @@ export class movInventarioService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ApiResponsePuntoV>(`${this.apiUrl}/MovInventario/Get?IdAlmacen=${MovInvData.IdAlmacen}&FechaInicio=${MovInvData.FechaInicio}&FechaFin=${MovInvData.FechaFin}`,{headers});
+    return this.http.get<ApiResponsePuntoV>(`${this.api.getURL()}/MovInventario/Get?IdAlmacen=${MovInvData.IdAlmacen}&FechaInicio=${MovInvData.FechaInicio}&FechaFin=${MovInvData.FechaFin}`,{headers});
   }
   insertMovInventario(MovInvData: {
     idTipoMov: number;
@@ -538,13 +544,13 @@ export class movInventarioService {
       usuarioActualiza: MovInvData.usuarioActualiza,
     };
     return this.http.post<ApiResponsePuntoV>(
-      `${this.apiUrl}/MovInventario/Insert`,
+      `${this.api.getURL()}/MovInventario/Insert`,
       body
     );
   }
   deleteMovInventario(id: number): Observable<any> {
     
-    return this.http.put(`${this.apiUrl}/MovInventario/Delete`, { id });
+    return this.http.put(`${this.api.getURL()}/MovInventario/Delete`, { id });
   }
   updateMovInventario(
     MovInvData: UpdateMovInventario
@@ -557,7 +563,7 @@ export class movInventarioService {
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
     return this.http.put<ApiResponsePuntoV>(
-      `${this.apiUrl}/MovInventario/Update`,
+      `${this.api.getURL()}/MovInventario/Update`,
       body
     );
   }
@@ -568,8 +574,8 @@ export class movInventarioService {
 })
 export class DetalleTicketService {
   //Se especifica la url base de la API
-  private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient,private authService: AuthService) {}
+  
+  constructor(private http: HttpClient,private authService: AuthService, private api:apiURL) {}
 
 
   getDetalleTicket(ticketId: number): Observable<DetalleTicket[]> {
@@ -577,7 +583,7 @@ export class DetalleTicketService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<DetalleTicket[]>(`${this.apiUrl}/DetalleTicket/Get?idTicket=${ticketId}`,{headers});
+    return this.http.get<DetalleTicket[]>(`${this.api.getURL()}/DetalleTicket/Get?idTicket=${ticketId}`,{headers});
   }
   insertDetalleTicket(DTData: InsertDetalleTicket): Observable<ApiResponsePuntoV> {
     const body = {
@@ -589,13 +595,13 @@ export class DetalleTicketService {
       uuid:DTData.uuid
     };
     return this.http.post<ApiResponsePuntoV>(
-      `${this.apiUrl}/DetalleTicket/Insert`,
+      `${this.api.getURL()}/DetalleTicket/Insert`,
       body
     );
   }
   deleteDetalleTicket(id: number): Observable<any> {
     
-    return this.http.put(`${this.apiUrl}/DetalleTicket/Delete`, { id });
+    return this.http.put(`${this.api.getURL()}/DetalleTicket/Delete`, { id });
   }
   updateDetalleTicket(DTData: UpdateDetalleTicket): Observable<ApiResponsePuntoV> {
     const body = {
@@ -609,7 +615,7 @@ export class DetalleTicketService {
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
     return this.http.put<ApiResponsePuntoV>(
-      `${this.apiUrl}/DetalleTicket/Update`,
+      `${this.api.getURL()}/DetalleTicket/Update`,
       body
     );
   }
@@ -621,7 +627,7 @@ export class DetalleTicketService {
 export class ModulosService {
   //se especifica la url base
   private  apiUrl= 'http://localhost:5020/api'; 
-  constructor(private http:HttpClient,private authService: AuthService) { }
+  constructor(private http:HttpClient,private authService: AuthService, private api:apiURL) { }
 
   //Enlista los modulos registrados en la base de datos
   getModulos(): Observable<ApiResponseModulos>{
@@ -629,7 +635,7 @@ export class ModulosService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-  return  this.http.get<ApiResponseModulos>(`${this.apiUrl}/Modulos/Get`,{headers})
+  return  this.http.get<ApiResponseModulos>(`${this.api.getURL()}/Modulos/Get`,{headers})
   }
 InsertModulos(ModulosData: { 
   nombreModulo: string; 
@@ -642,10 +648,10 @@ InsertModulos(ModulosData: {
     categoriaModulo: ModulosData.categoriaModulo,
     usuario: ModulosData.usuario,
   };
-  return this.http.post<ApiResponseModulos>(`${this.apiUrl}/Modulos/Insert`, body)
+  return this.http.post<ApiResponseModulos>(`${this.api.getURL()}/Modulos/Insert`, body)
 }
 deleteModulos(Id : number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/Modulos/Delete`, { Id });
+    return this.http.put(`${this.api.getURL()}/Modulos/Delete`, { Id });
   }
   updateModulos(ModulosData: UpdateModulo): Observable<ApiResponseModulos> {
     const body ={
@@ -655,7 +661,7 @@ deleteModulos(Id : number): Observable<any> {
     usuario: ModulosData.Usuario,
     }
     console.log('Enviando solicitud con el siguiente cuerpo:', body);
-    return this.http.put<ApiResponseModulos>(`${this.apiUrl}/Modulos/Update`, body);
+    return this.http.put<ApiResponseModulos>(`${this.api.getURL()}/Modulos/Update`, body);
   }
 }
 //--------------------------------------------------------------------------------------------//
@@ -664,15 +670,15 @@ deleteModulos(Id : number): Observable<any> {
 })
 export class EmpleadosService {
   //Se especifica la url base de la API
-  private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient,private authService: AuthService) {}
+  
+  constructor(private http: HttpClient,private authService: AuthService, private api:apiURL) {}
 
   getEmpleado(): Observable<ApiResponseEmpleados> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ApiResponseEmpleados>(`${this.apiUrl}/Empleados/Get`,{headers});
+    return this.http.get<ApiResponseEmpleados>(`${this.api.getURL()}/Empleados/Get`,{headers});
   }
   insertarEmpleado(EmpleadoData: {
     IdPersona: number;
@@ -686,11 +692,11 @@ export class EmpleadosService {
       IdPuesto: EmpleadoData.IdPuesto,
       usuarioActualiza: EmpleadoData.usuarioActualiza,
     };
-    return this.http.post<ApiResponseEmpleados>(`${this.apiUrl}/Empleados/Insert`, body);
+    return this.http.post<ApiResponseEmpleados>(`${this.api.getURL()}/Empleados/Insert`, body);
   }
   deleteEmpleado(Id: number): Observable<any> {
     
-    return this.http.put(`${this.apiUrl}/Empleados/Delete`, { Id });
+    return this.http.put(`${this.api.getURL()}/Empleados/Delete`, { Id });
   }
   updateEmpleado(EmpleadoData: updateEmpleado): Observable<ApiResponseEmpleados> {
     const body = {
@@ -701,7 +707,7 @@ export class EmpleadosService {
       UsuarioActualiza: EmpleadoData.usuarioActualiza,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponseEmpleados>(`${this.apiUrl}/Empleados/Update`, body);
+    return this.http.put<ApiResponseEmpleados>(`${this.api.getURL()}/Empleados/Update`, body);
   }
 }
 //------------------------------------------------------------------------------------------------------------------------
@@ -710,15 +716,15 @@ export class EmpleadosService {
 })
 export class PuestosService {
   //Se especifica la url base de la API
-  private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient,private authService: AuthService) {}
+  
+  constructor(private http: HttpClient,private authService: AuthService, private api:apiURL) {}
 
   getPuestos(): Observable<ApiResponse> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ApiResponse>(`${this.apiUrl}/Puestos/Get`,{headers});
+    return this.http.get<ApiResponse>(`${this.api.getURL()}/Puestos/Get`,{headers});
   }
   insertarPuestos(PuestosData: {
     nombre: string;
@@ -732,11 +738,11 @@ export class PuestosService {
       salario: PuestosData.salario,
       usuarioActualiza: PuestosData.usuarioActualiza,
     };
-    return this.http.post<ApiResponseEmpleados>(`${this.apiUrl}/Puestos/Insert`, body);
+    return this.http.post<ApiResponseEmpleados>(`${this.api.getURL()}/Puestos/Insert`, body);
   }
   deletePuestos(Id: number): Observable<any> {
     
-    return this.http.put(`${this.apiUrl}/Puestos/Delete`, { Id });
+    return this.http.put(`${this.api.getURL()}/Puestos/Delete`, { Id });
   }
   updatePuestos(PuestosData: UpdatePuesto): Observable<ApiResponseEmpleados> {
     const body = {
@@ -747,7 +753,7 @@ export class PuestosService {
       usuarioActualiza: PuestosData.usuarioActualiza,
     };
     console.log("Enviando solicitud con el siguiente cuerpo:", body);
-    return this.http.put<ApiResponseEmpleados>(`${this.apiUrl}/Puestos/Update`, body);
+    return this.http.put<ApiResponseEmpleados>(`${this.api.getURL()}/Puestos/Update`, body);
   }
 }
 //------------------------------------------------------------------------------------------------------------------------
@@ -757,14 +763,14 @@ export class PuestosService {
 export class CategoriaModuloService {
   //se especifica la url base de la api
   private  apiUrl= 'http://localhost:5020/api'; 
-  constructor(private http:HttpClient,private authService: AuthService) { }
+  constructor(private http:HttpClient,private authService: AuthService, private api:apiURL) { }
 
   getCategoriaModulo(): Observable<ApiResponse> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ApiResponse>(`${this.apiUrl}/CatModulo/Get`,{headers});
+    return this.http.get<ApiResponse>(`${this.api.getURL()}/CatModulo/Get`,{headers});
   }
 insertCategoriaModulo(CatModuloData: { nombre: string; descripcion: string; usuario: number }): Observable<ApiResponse> {
   
@@ -773,11 +779,11 @@ insertCategoriaModulo(CatModuloData: { nombre: string; descripcion: string; usua
     descripcion: CatModuloData.descripcion,  
     usuario: CatModuloData.usuario
   };
-  return this.http.post<ApiResponse>(`${this.apiUrl}/CatModulo/Insert`, body)
+  return this.http.post<ApiResponse>(`${this.api.getURL()}/CatModulo/Insert`, body)
 }
 deleteCategoriaModulo(id : number): Observable<any> {
     
-    return this.http.put(`${this.apiUrl}/CatModulo/Delete`, { id });
+    return this.http.put(`${this.api.getURL()}/CatModulo/Delete`, { id });
   }
  updateCategoriaModulo(catModuloData: UpdateCategoriaModulo): Observable<ApiResponse> {
   const body ={
@@ -787,7 +793,7 @@ deleteCategoriaModulo(id : number): Observable<any> {
     usuario: catModuloData.Usuario
   };
   console.log('Enviando solicitud con el siguiente cuerpo:', body);
-  return this.http.put<ApiResponse>(`${this.apiUrl}/CatModulo/Update`, body);
+  return this.http.put<ApiResponse>(`${this.api.getURL()}/CatModulo/Update`, body);
 }
 }
 //------------------------------------------------------------------------------------------------------------------------
@@ -797,14 +803,14 @@ deleteCategoriaModulo(id : number): Observable<any> {
 export class DetallePerfilService {
   //se especifica la url base de la api
   private  apiUrl= 'http://localhost:5020/api'; 
-  constructor(private http:HttpClient,private authService: AuthService) { }
+  constructor(private http:HttpClient,private authService: AuthService, private api:apiURL) { }
 
   getDetallePerfil(): Observable<ApiResponse>{
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-  return  this.http.get<ApiResponse>(`${this.apiUrl}/DetallePerfil/Get`,{headers})
+  return  this.http.get<ApiResponse>(`${this.api.getURL()}/DetallePerfil/Get`,{headers})
   }
 insertarDetallePerfil(DetallePerfilData: { idPerfil: number; idModulo: number; acceso: number; usuarioActualiza: number; }): Observable<ApiResponse> {
   
@@ -814,10 +820,10 @@ insertarDetallePerfil(DetallePerfilData: { idPerfil: number; idModulo: number; a
     acceso: DetallePerfilData.acceso,
     usuarioActualiza: DetallePerfilData.usuarioActualiza
   };
-  return this.http.post<ApiResponse>(`${this.apiUrl}/DetallePerfil/Insert`, body)
+  return this.http.post<ApiResponse>(`${this.api.getURL()}/DetallePerfil/Insert`, body)
 }
 deleteDetallePerfil(id : number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/DetallePerfil/Delete`, { id });
+    return this.http.put(`${this.api.getURL()}/DetallePerfil/Delete`, { id });
   }
   updateDetallePerfil(DetallePerfilData: UpdateDetallePerfil): Observable<ApiResponse> {
     const body = {
@@ -829,7 +835,7 @@ deleteDetallePerfil(id : number): Observable<any> {
       usuarioActualiza: DetallePerfilData.usuarioActualiza
     }
     console.log('Enviando solicitud con el siguiente cuerpo:', body);
-    return this.http.put<ApiResponse>(`${this.apiUrl}/DetallePerfil/Update`, body);
+    return this.http.put<ApiResponse>(`${this.api.getURL()}/DetallePerfil/Update`, body);
   }
 }
 //------------------------------------------------------------------------------------------------------------------------
@@ -838,15 +844,15 @@ deleteDetallePerfil(id : number): Observable<any> {
 })
 export class RolesService {
   //Se especifica la url base de la API
-  private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient,private authService: AuthService) {}
+  
+  constructor(private http: HttpClient,private authService: AuthService, private api:apiURL) {}
 
   getRoles(): Observable<ApiResponse> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ApiResponse>(`${this.apiUrl}/Roles/Get`,{headers});
+    return this.http.get<ApiResponse>(`${this.api.getURL()}/Roles/Get`,{headers});
   }
 }
 //------------------------------------------------------------------------------------------------------------------------
@@ -855,15 +861,15 @@ export class RolesService {
 })
 export class UMService {
   //Se especifica la url base de la API
-  private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient,private authService: AuthService) {}
+  
+  constructor(private http: HttpClient,private authService: AuthService, private api:apiURL) {}
 
   getUM(): Observable<ApiResponse> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ApiResponse>(`${this.apiUrl}/UM/Get`,{headers});
+    return this.http.get<ApiResponse>(`${this.api.getURL()}/UM/Get`,{headers});
   }
 }
 //------------------------------------------------------------------------------------------------------------------------
@@ -872,15 +878,15 @@ export class UMService {
 })
 export class SucursalesService {
   //Se especifica la url base de la API
-  private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient,private authService: AuthService) {}
+  
+  constructor(private http: HttpClient,private authService: AuthService, private api:apiURL) {}
 
   getSucursales(): Observable<ApiResponse> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ApiResponse>(`${this.apiUrl}/Sucursales/Get`,{headers});
+    return this.http.get<ApiResponse>(`${this.api.getURL()}/Sucursales/Get`,{headers});
   }
 }
 //------------------------------------------------------------------------------------------------------------------------
@@ -889,15 +895,15 @@ export class SucursalesService {
 })
 export class TiposMovService {
   //Se especifica la url base de la API
-  private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient,private authService: AuthService) {}
+  
+  constructor(private http: HttpClient,private authService: AuthService, private api:apiURL) {}
 
   getTiposMov(): Observable<ApiResponse> {
     const token = this.authService.getToken();
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<ApiResponse>(`${this.apiUrl}/TiposMov/Get`,{headers});
+    return this.http.get<ApiResponse>(`${this.api.getURL()}/TiposMov/Get`,{headers});
   }
 }
 //---------------------------------------------------------------------------------------------------------------------//
@@ -907,10 +913,10 @@ export class TiposMovService {
 export class LoginService {
   private apiUrl = 'http://localhost:5020/api'; // Ajusta la URL según corresponda
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private api:apiURL) {}
 
   SignIn(authInfo: AuthInfo): Observable<ApiResponse2> {
-    return this.http.post<ApiResponse2>(`${this.apiUrl}/SignIn`, {
+    return this.http.post<ApiResponse2>(`${this.api.getURL()}/SignIn`, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     });
   }
@@ -921,8 +927,8 @@ export class LoginService {
 })
 export class EstadosService {
   //Se especifica la url base de la API
-  private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient,private authService: AuthService) {}
+  
+  constructor(private http: HttpClient,private authService: AuthService, private api:apiURL) {}
 
 
   getEstados(): Observable<Estados[]> {
@@ -930,7 +936,7 @@ export class EstadosService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get<Estados[]>(`${this.apiUrl}/Estados/Get`,{headers});
+    return this.http.get<Estados[]>(`${this.api.getURL()}/Estados/Get`,{headers});
   }
 }
 //-----------------------------------------------------------------------------------------------------------------------------//
@@ -939,8 +945,8 @@ export class EstadosService {
 })
 export class AutorizarTicket {
   //Se especifica la url base de la API
-  private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient,private authService: AuthService) {}
+  
+  constructor(private http: HttpClient,private authService: AuthService, private api:apiURL) {}
 
 
   AutorizarTicket(Autorizar: Autorizar): Observable<ApiResponseEmpleados> {
@@ -949,7 +955,7 @@ export class AutorizarTicket {
       Estatus: Autorizar.Estatus
     }
     console.log('Enviando solicitud con el siguiente cuerpo:', body);
-    return this.http.put<ApiResponseEmpleados>(`${this.apiUrl}/DetalleTicket/Autorizar`, body);
+    return this.http.put<ApiResponseEmpleados>(`${this.api.getURL()}/DetalleTicket/Autorizar`, body);
   }
 
 }
@@ -959,8 +965,8 @@ export class AutorizarTicket {
 })
 export class AutorizarMov {
   //Se especifica la url base de la API
-  private apiUrl = "http://localhost:5020/api";
-  constructor(private http: HttpClient,private authService: AuthService) {}
+  
+  constructor(private http: HttpClient,private authService: AuthService, private api:apiURL) {}
 
 
   AutorizarMov(AutorizarMov: AutorizarMovimiento): Observable<ApiResponse> {
@@ -969,7 +975,7 @@ export class AutorizarMov {
       Estatus: AutorizarMov.Estatus
     }
     console.log('Enviando solicitud con el siguiente cuerpo:', body);
-    return this.http.put<ApiResponse>(`${this.apiUrl}/AutorizarMov/Update`, body);
+    return this.http.put<ApiResponse>(`${this.api.getURL()}/AutorizarMov/Update`, body);
   }
 
 }
