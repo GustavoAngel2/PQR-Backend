@@ -57,6 +57,7 @@ import { AuthInterceptor } from "./auth.interceptor";
 import { UserService } from "./user.service";
 import { DialogsComponent } from './dialogs/dialogs.component';
 import { CorteComponent } from './corte/corte.component';
+import { apiURL } from "./erp-settings";
 
 @NgModule({
   declarations: [
@@ -116,6 +117,7 @@ import { CorteComponent } from './corte/corte.component';
     AuthGuard, // Proveedor del AuthGuard
     AuthService, // Proveedor del AuthService
     UserService,
+    apiURL,
     provideToastr({
       timeOut: 3000,
       positionClass: 'toast-top-center',
