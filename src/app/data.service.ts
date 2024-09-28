@@ -22,18 +22,11 @@ import { ApiResponse2 } from './models/login.model';
 import { ApiResponse,ApiResponseEmpleados,ApiResponsePuntoV,ApiResponseExistencias,ApiResponseModulos,ApiResponseUsuarios } from './models/ApiResponse.models';
 import { AuthService } from './auth.service';
 import { Estados } from './models/Estados.model';
-
+import { apiURL } from './erp-settings';
 
 @Injectable({
   providedIn: "root",
 })
-
-export class apiURL{
-  getURL():string{
-    return "http://104.254.247.128:8083/api"
-  }
-}
-
 export class AlmacenesService {
   //Se especifica la url base de la API
   constructor(private http: HttpClient,private authService: AuthService, private api:apiURL) {}
